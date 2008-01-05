@@ -25,6 +25,7 @@ use_orm :datamapper
 use_test :rspec
 
 ### Add your other dependencies here
+dependency "merb_helpers"
 
 # These are some examples of how you might specify dependencies.
 # 

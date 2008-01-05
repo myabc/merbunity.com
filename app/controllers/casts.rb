@@ -19,6 +19,7 @@ class Casts < Application
   end
   
   def create(cast)
+    puts "IT IS #{cast[:uploaded_file]["tempfile"]}"
     @cast = Cast.new(cast)
     if @cast.save
       redirect url(:cast, @cast)

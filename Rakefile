@@ -1,6 +1,6 @@
 require 'rubygems'
 Gem.clear_paths
-Gem.path.unshift(File.dirname(__FILE__) / "gems")
+Gem.path.unshift(File.join(File.dirname(__FILE__), "gems"))
 
 require 'rake'
 require 'rake/rdoctask'

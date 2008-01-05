@@ -1,0 +1,13 @@
+label {
+	display:block;
+}
+
+#main {
+	border:1px solid black;
+	width:700px;
+	margin:auto;
+}
+
+#content {
+	padding:1em;
+}
