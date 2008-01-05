@@ -23,6 +23,7 @@ puts "Compiling routes.."
 Merb::Router.prepare do |r|
   # RESTful routes
   # r.resources :posts
+  r.match("/").to(:controller => "Home", :action => "show").name(:welcome)
 
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based

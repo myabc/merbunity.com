@@ -10,7 +10,7 @@ $LOAD_PATH.unshift(MERB_ROOT / "lib")
 ### if you need a database.
 
 ### Uncomment for DataMapper ORM
-# use_orm :datamapper
+use_orm :datamapper
 
 ### Uncomment for ActiveRecord ORM
 # use_orm :activerecord

@@ -1,0 +1,17 @@
+Story: public access to merbcasts site
+
+  As an anonymous visitor
+  I want to come to the site and see merbcasts
+  So that I can be awesome with Merb
+
+  Scenario: visit home page
+    Given an anonymous user
+    When user visits /
+    Then the visitor should see the page: Home show
+    And the page should have the heading: Merbcasts
+  
+  Scenario: visit the merbcasts index
+    Given an anonymous user
+    When user visits /casts
+    Then the visitor should see the page: Casts index
+
