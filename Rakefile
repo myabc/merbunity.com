@@ -101,6 +101,31 @@ task :aok do
   sh %{rake spec}
 end
 
+
+# Allows all found stories to be run individually by using
+# rake story:run:story_name
+namespace :story do
+  namespace :run do
+    all_stories = []
+    Dir.glob('stories/stories/**/*.rb').each do |path|
+      story = path.split("/").last[0..-4]
+      desc "Run spec story #{story}"
+      task "#{story}".to_sym do
+        sh %{ruby stories/stories/#{story}.rb}
+      end
+      all_stories << story
+    end
+    
+    desc 'Run all stories'
+    task :all do
+      all_stories.each do |story|
+        puts 
+        sh %{ruby stories/stories/#{story}.rb}
+      end
+    end
+  end
+end
+
 unless Gem.cache.search("haml").empty?
   namespace :haml do
     desc "Compiles all sass files into CSS"
