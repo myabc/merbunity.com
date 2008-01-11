@@ -1,5 +1,5 @@
 class Casts < Application
-  provides :xml, :js, :yaml
+  # provides :xml, :js, :yaml
   
   def index
     @casts = Cast.all

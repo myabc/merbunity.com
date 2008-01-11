@@ -3,13 +3,12 @@ require File.join( File.dirname(__FILE__), "..", "spec_helper" )
 describe Cast do
   
   before do
-    Cast.auto_migrate!
     @cast = Cast.new(valid_cast_hash)
   end
   
   after do
-    if File.exists?( MERB_ROOT / "casts")
-      FileUtils.rm_rf(MERB_ROOT / "casts")
+    if File.exists?( Merb.root / "casts")
+      FileUtils.rm_rf(Merb.root / "casts")
     end
   end
 
@@ -30,7 +29,7 @@ describe Cast do
   end
   
   it "should requre that uploaded_file be present" do
-    cast = Cast.new(valid_cast_hash.block(:uploaded_file))
+    cast = Cast.new(valid_cast_hash.except(:uploaded_file))
     cast.save
     cast.errors.on(:uploaded_file).should_not be_nil
   end
@@ -56,7 +55,7 @@ describe Cast do
   it "should set the file_path to MERB_ROOT/year/month" do
     d = Date.today
     @cast.save
-    @cast.file_path.should == (MERB_ROOT / "casts" / "#{d.year}" / "#{d.month}" )
+    @cast.file_path.should == (Merb.root / "casts" / "#{d.year}" / "#{d.month}" )
   end
   
   it "should save the file in MERB_ROOT/year/month" do

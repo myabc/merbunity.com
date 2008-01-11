@@ -21,7 +21,7 @@
 
 # A secret key is required when using the 'cookie' session store (default), 
 # change this value to something unique to your application and keep it private
-:session_secret_key: /USERS/DNEIGHMAN/DOCUMENTS/PROJECTS/PERSONAL_PROJECTS/MERB/MERBCASTS4292
+:session_secret_key: /USERS/DNEIGHMAN/DOCUMENTS/PROJECTS/PERSONAL_PROJECTS/MERB/MERBCASTS897
 
 # Uncomment to use the merb upload progress. The 'path match' will be treated as
 # a regex for any URLs that should be considered for upload monitoring.
@@ -43,6 +43,7 @@
 
 # Uncomment and set this if you want to run a drb server for upload progress
 # or other drb services.
+#:start_drb: true
 #:drb_server_port: 32323
 
 # If you want to protect some or all of your app with  HTTP basic auth then

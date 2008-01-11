@@ -1,0 +1,18 @@
+Story: All things relating to setting up and using casts
+
+  As a user of merbasts 
+  I want to do things with pending casts
+  So that merbcasts can have active casts
+  
+  Scenario: An anonymous author visits the pending index
+  
+  Scenario: An active author visits the pending index
+  
+  Scenario: An active publisher visits the pending page
+  
+  Scenario: An active author visits the show page of a pending cast they authored
+  
+  Scenario: An active author visits the show page of a pending cast they did not author
+  
+  Scenario: An active publisher visits the show page of a pending cast they did not author
+  

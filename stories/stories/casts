@@ -1,0 +1,13 @@
+Story: All things relating to setting up and using casts
+
+  As a user of merbasts 
+  I want to do things with casts
+  So that merbcasts can have casts
+  
+  Scenario: Upload a cast as an anonymous author
+  
+  Scenario: Upload a cast as an active author
+
+  Scenario: Upload a cast as an active publisher
+  
+  

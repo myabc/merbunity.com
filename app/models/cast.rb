@@ -23,12 +23,12 @@ class Cast < DataMapper::Base
   end
   
   def filename
-    return nil unless @id
+    return nil unless @id && original_filename
     "#{@id}_#{original_filename}"
   end
   
   def file_path
-    MERB_ROOT / "casts" / "#{created_at.year}" / "#{created_at.month}"
+    Merb.root / "casts" / "#{created_at.year}" / "#{created_at.month}"
   end
   
   private 
