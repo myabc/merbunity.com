@@ -86,6 +86,15 @@ describe Cast, "states" do
   before(:each) do
     Cast.auto_migrate!
     @cast = Cast.new(valid_cast_hash)
+    
+    @author = Author.new(valid_author_hash)
+    @author.save
+    @author.activate
+    
+    @publisher = Author.new(valid_author_hash)
+    @publisher.save
+    @publisher.activate
+    @publisher.make_publisher!
   end
   
   it "should be a valid cast" do
@@ -104,6 +113,18 @@ describe Cast, "states" do
     cast.errors.on(:author).should_not be_empty
   end
   
+  it "should be pending when the author is not a publisher" do
+    @cast.author = @author
+    @cast.save
+    @cast.should be_pending    
+    @cast.should_not be_published
+  end
   
-  
+  it "should not be pending when the author is a publisher" do
+    @cast.author = @publisher
+    @cast.save
+    @cast.should_not be_pending
+    @cast.should be_published  
+  end
+    
 end

@@ -42,7 +42,6 @@ describe Author, "in merbcasts" do
     author.save
     author.activate
     author.should_not be_publisher
-    
   end
   
 end

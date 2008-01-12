@@ -8,11 +8,14 @@ class Cast < DataMapper::Base
   property :size,                     :integer
   property :original_filename,        :string
   property :created_at,               :datetime
+  property :published_since,                  :datetime
+
   
   validates_presence_of   :uploaded_file, :original_filename, :tmp_file, :groups => [:create]
   validates_presence_of   :author, :groups => [:create]
 
-  after_create :save_file_to_os
+  before_create   :set_initial_published_status
+  after_create    :save_file_to_os
   
   belongs_to :author
 
@@ -35,7 +38,11 @@ class Cast < DataMapper::Base
   end
   
   def pending?
-    true
+    @published_since.nil?
+  end
+  
+  def published?
+    !@published_since.nil?
   end
   
   private 
@@ -43,6 +50,9 @@ class Cast < DataMapper::Base
     FileUtils.mkdir_p(file_path)
     File.copy tmp_file.path, (file_path / filename)
   end
-
+  
+  def set_initial_published_status
+    @published_since = DateTime.now if self.author.publisher?
+  end
 end
 
