@@ -84,7 +84,7 @@ module AuthenticatedSystem
       
       # Authenticates a author by their login name and unencrypted password.  Returns the author or nil.
       def authenticate(login, password)
-        u = find_activated_authenticated_model_with_login(login) # need to get the salt
+        u = find_activated_authenticated_model_with_login(login.downcase) # need to get the salt
         u && u.authenticated?(password) ? u : nil
       end
     end

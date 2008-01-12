@@ -2,6 +2,52 @@ require File.join( File.dirname(__FILE__), "..", "spec_helper" )
 require File.join( File.dirname(__FILE__), "..", "author_spec_helper")
 require File.join( File.dirname(__FILE__), "..", "authenticated_system_spec_helper")
 
+describe Author, "in merbcasts" do
+  include AuthorSpecHelper
+  
+  before(:each) do
+    Author.auto_migrate!
+    AuthorMailer.stub!(:activation_notification).and_return(true)
+    
+    @publisher = Author.new(valid_author_hash)
+    @publisher.save
+    @publisher.activate
+    @publisher.make_publisher!
+  end
+  
+  it "should have many casts" do
+    author = Author.new(valid_author_hash)
+    author.should respond_to(:casts)
+  end
+  
+  it "should be made a publisher" do
+    hash = valid_author_hash
+    author = Author.new(hash)
+    author.save
+    author.activate
+    author.should be_active
+    author.make_publisher!
+    author.should be_publisher    
+  end
+  
+  it "should persist the publisher status" do
+    @publisher.should be_publisher
+    publisher = Author.first_publisher(:login => @publisher.login)
+    publisher.should_not be_nil
+    publisher.should be_publisher
+  end
+  
+  it "should not say that an author is a publisher if they have not yet been made a publisher" do
+    author = Author.new(hash)
+    author.save
+    author.activate
+    author.should_not be_publisher
+    
+  end
+  
+end
+  
+
 describe Author do
   include AuthorSpecHelper
   
@@ -72,10 +118,12 @@ describe Author do
   end  
   
   it "should authenticate a author using a class method" do
-    author = Author.new(valid_author_hash)
+    hash = valid_author_hash
+    author = Author.new(hash)
     author.save
     author.activate
-    Author.authenticate(valid_author_hash[:login], valid_author_hash[:password]).should_not be_nil
+    author.should_not be_new_record
+    Author.authenticate(hash[:login], hash[:password]).should_not be_nil
   end
   
   it "should not authenticate a author using the wrong password" do
@@ -195,8 +243,9 @@ describe Author, "the password fields for Author" do
   end
   
   it "should not require a password when saving an existing author" do
-    author = Author.create(valid_author_hash)
-    author = Author.find_with_conditions(:login => valid_author_hash[:login])
+    hash = valid_author_hash
+    author = Author.create(hash)
+    author = Author.find_with_conditions(:login => hash[:login].downcase)
     author.password.should be_nil
     author.password_confirmation.should be_nil
     author.login = "some_different_login_to_allow_saving"
@@ -239,7 +288,7 @@ describe Author, "activation" do
     @author.save
     @author.activate
     @author.should be_activated
-    Author.find_with_conditions(:login => valid_author_hash[:login]).should be_activated
+    Author.find_with_conditions(:login => @author.login).should be_activated
   end
   
   it "should should show recently activated when the instance is activated" do
@@ -250,8 +299,9 @@ describe Author, "activation" do
   
   it "should not show recently activated when the instance is fresh" do
     @author.activate
+    login = @author.login
     @author = nil
-    Author.find_with_conditions(:login => valid_author_hash[:login]).should_not be_recently_activated
+    Author.find_with_conditions(:login => login).should_not be_recently_activated
   end
   
   it "should send out a welcome email to confirm that the account is activated" do
@@ -303,7 +353,7 @@ describe Author, "remember_me" do
     @author.remember_me_until(time)
     @author.remember_token.should_not be_nil
     @author.save
-    Author.find_with_conditions(:login => valid_author_hash[:login]).remember_token.should_not be_nil
+    Author.find_with_conditions(:login => @author.login).remember_token.should_not be_nil
   end
   
   it "should remember me for" do
@@ -334,12 +384,12 @@ describe Author, "remember_me" do
     @author.remember_me
     @author.save
     
-    @author = Author.find_with_conditions(:login => valid_author_hash[:login])
+    @author = Author.find_with_conditions(:login => @author.login)
     @author.remember_token.should_not be_nil
     
     @author.forget_me
 
-    @author = Author.find_with_conditions(:login => valid_author_hash[:login])
+    @author = Author.find_with_conditions(:login => @author.login)
     @author.remember_token.should be_nil
     @author.remember_token_expires_at.should be_nil
   end

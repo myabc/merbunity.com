@@ -8,7 +8,7 @@ class Casts < Application
   end
   
   def show(id)
-    @cast = Cast[id]
+    @cast = Cast.first(:id => id)
     raise NotFound unless @cast
     render @cast
   end
@@ -20,8 +20,8 @@ class Casts < Application
   end
   
   def create(cast)
-    puts "IT IS #{cast[:uploaded_file].inspect}"
     @cast = Cast.new(cast)
+    @cast.author = current_author
     if @cast.save
       redirect url(:cast, @cast)
     else
@@ -31,13 +31,13 @@ class Casts < Application
   
   def edit(id)
     only_provides :html
-    @cast = Cast[id]
-    raise NotFound unless @cast
+    @cast = Cast.first(:id => id)
+      raise NotFound unless @cast
     render
   end
   
   def update(id, cast)
-    @cast = Cast[id]
+    @cast = Cast.first(:id => id)
     raise NotFound unless @cast
     if @cast.update_attributes(cast)
       redirect url(:cast, @cast)
@@ -47,7 +47,7 @@ class Casts < Application
   end
   
   def destroy(id)
-    @cast = Cast[id]
+    @cast = Cast.fisrt(:id => id)
     raise NotFound unless @cast
     if @cast.destroy!
       redirect url(:casts)

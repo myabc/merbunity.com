@@ -29,7 +29,7 @@ Merb::Router.prepare do |r|
   r.resources :authors
   r.match("/login").to(:controller => "Sessions", :action => "create").name(:login)
   r.match("/logout").to(:controller => "Sessions", :action => "destroy").name(:logout)
-  r.match("/authors/activate/:activation_code").to(:controller => "Users", :action => "activate").name(:author_activation)
+  r.match("/authors/activate/:activation_code").to(:controller => "Authors", :action => "activate").name(:author_activation)
 
   r.resources :casts
   # This is the default route for /:controller/:action/:id

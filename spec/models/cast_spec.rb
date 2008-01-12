@@ -80,3 +80,30 @@ describe Cast do
     @cast.filename.should == "#{@cast.id}_#{@cast.original_filename}"
   end
 end
+
+describe Cast, "states" do
+  
+  before(:each) do
+    Cast.auto_migrate!
+    @cast = Cast.new(valid_cast_hash)
+  end
+  
+  it "should be a valid cast" do
+    @cast.save
+    @cast.errors.should have(0).items   
+  end
+  
+  it "should belong to an author" do
+    @cast.should respond_to(:author)    
+  end
+  
+  it "should be invalid without an author" do
+    cast = Cast.new(valid_cast_hash.without(:author))
+    cast.save
+    cast.errors.should have(1).item
+    cast.errors.on(:author).should_not be_empty
+  end
+  
+  
+  
+end

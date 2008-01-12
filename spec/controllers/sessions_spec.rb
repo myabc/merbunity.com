@@ -71,7 +71,7 @@ describe "Sessions Controller", "index action" do
   end
  
   it 'does not remember me' do
-    post "login", :login => 'quentin', :password => 'test', :remember_me => "0"
+    post "/login", :login => 'quentin', :password => 'test', :remember_me => "0"
     cookies["auth_token"].should be_nil
   end
   
@@ -83,8 +83,8 @@ describe "Sessions Controller", "index action" do
   
   it 'logs in with cookie' do
     @quentin.remember_me
-    get "/login" do |request|
-      request.env[Merb::Const::HTTP_COOKIE] = "auth_token=#{@quentin.remember_token}"
+    get "/login" do |controller|
+      controller.cookies[:auth_token] = @quentin.remember_token
     end
     controller.should be_logged_in
   end

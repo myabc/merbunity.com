@@ -7,7 +7,6 @@ require 'spec/story'
 class MerbStory
   include Merb::Test::Helper
   include Merb::Test::RspecMatchers
-  include Merb::Test::Multipart::TestHelper
   include AuthorSpecHelper 
   include ValidHashHelpers
 end

@@ -10,8 +10,11 @@ class Cast < DataMapper::Base
   property :created_at,               :datetime
   
   validates_presence_of   :uploaded_file, :original_filename, :tmp_file, :groups => [:create]
+  validates_presence_of   :author, :groups => [:create]
 
   after_create :save_file_to_os
+  
+  belongs_to :author
 
   def initialize(hash = {})
     super(hash)
@@ -29,6 +32,10 @@ class Cast < DataMapper::Base
   
   def file_path
     Merb.root / "casts" / "#{created_at.year}" / "#{created_at.month}"
+  end
+  
+  def pending?
+    true
   end
   
   private 

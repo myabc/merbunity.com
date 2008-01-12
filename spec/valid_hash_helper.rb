@@ -3,6 +3,7 @@ module ValidHashHelpers
   def valid_cast_hash
     {
       :name           => String.random,
+      :author         => Author.new(valid_author_hash),
       :description    => String.random,
       :body           => String.random(300),
       :uploaded_file  => {
@@ -15,13 +16,10 @@ module ValidHashHelpers
   end
   
   def valid_multipart_cast_mash
-     hash = valid_cast_hash
-    { 
-      "cast[name]" => hash[:name],
-      "cast[description]" => hash[:description],
-      "cast[body]" => hash[:body],
-      "cast[uploaded_file]" => hash[:uploaded_file]['tempfile']
-    }.to_mash
+    hash = valid_cast_hash
+    hash.delete(:author)
+    hash[:uploaded_file] = hash[:uploaded_file]["tempfile"]
+    {:cast => hash}.to_mash
   end
     
   
