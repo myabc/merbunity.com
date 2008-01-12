@@ -1,5 +1,6 @@
 steps_for(:markup) do
   Then("the visitor should see the page: $controller $action") do |c, a|
+    puts controller.params.inspect
     controller.params[:controller].downcase.should == c.downcase
     controller.params[:action].downcase.should == a.downcase
     controller.template.should match( /#{a}\.html\./i)
