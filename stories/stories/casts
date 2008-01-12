@@ -16,7 +16,7 @@ Story: All things relating to setting up and using casts
 
     When the author visits /casts/new
 
-    Then the visitor should see the page: Casts new
+    Then the author should see the page: Casts new
     And the author should be logged in
     And the page should match the selector once: form[@action="/casts/"][@enctype="multipart/form-data"][@method="post"]
     And the page should have an input named: cast[title]
@@ -55,5 +55,51 @@ Story: All things relating to setting up and using casts
     And the author should be redirected to the new cast
     And the cast should not be: pending
     And the cast should be: published
+    
+  Scenario: Edit a cast as an anonymous author
+    Given an active author
+    And 1 current pending casts in the database
+    And using the first cast found
+    And an anonymous author
+    
+    When the author gets edit for the current cast
+    
+    Then the author should be redirected to: /login
+    
+  Scenario: Edit a cast as an active author who does not own the cast
+    Given an active author named: joe
+    And 1 current pending casts in the database
+    And using the first cast found belonging to: joe
+    And an active author named: midge
+    
+    When the author gets edit for the current cast
+    
+    Then the author should see the error page: NotFound
   
+  Scenario: Edit a cast as an active author who does own the cast
+    Given an active author named: joe
+    And 1 current pending casts in the database
+    And using the first cast found belonging to: joe
+    
+    When the author gets edit for the current cast
+    
+    Then the author should see the page: Casts edit
+    
+  Scenario: Edit a cast as an active publisher who does not own the cast
+    Given an active author named: joe
+    And 1 current published casts in the database
+    And using the first cast found belonging to: joe
+    And an active publisher named: ted
+    
+    When the author gets edit for the current cast
+    
+    Then the author should see the page: Casts edit
+  
+  Scenario: Update a cast as an anonymous author
+    GivenScenario Edit a cast as an anonymous author
+    And update data for cast: title My New Title
+    
+    When the author puts data to the current cast
+    
+    Then the author should see the error page: NotFound
   

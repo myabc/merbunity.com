@@ -126,5 +126,20 @@ describe Cast, "states" do
     @cast.should_not be_pending
     @cast.should be_published  
   end
+  
+  it "should allow itself to be published" do
+    @cast.author = @author
+    @cast.save
+    @cast.publish!
+    @cast.should be_published
+  end
+  
+  it "should persist the fact that it's published" do
+    @cast.author = @author
+    @cast.publish!
+    @cast.save
+    @cast.reload!
+    @cast.should be_published    
+  end
     
 end

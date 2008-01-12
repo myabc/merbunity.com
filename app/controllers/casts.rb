@@ -1,6 +1,6 @@
 class Casts < Application
   # provides :xml, :js, :yaml
-  before :login_required, :only => [:new, :create]
+  before :login_required, :only => [:new, :create, :edit]
   
   def index
     @casts = Cast.all
@@ -33,6 +33,7 @@ class Casts < Application
     only_provides :html
     @cast = Cast.first(:id => id)
       raise NotFound unless @cast
+      raise NotFound if !current_author.publisher? && @cast.author != current_author
     render
   end
   

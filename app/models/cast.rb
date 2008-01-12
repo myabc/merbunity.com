@@ -10,7 +10,6 @@ class Cast < DataMapper::Base
   property :created_at,               :datetime
   property :published_since,                  :datetime
 
-  
   validates_presence_of   :uploaded_file, :original_filename, :tmp_file, :groups => [:create]
   validates_presence_of   :author, :groups => [:create]
 
@@ -43,6 +42,10 @@ class Cast < DataMapper::Base
   
   def published?
     !@published_since.nil?
+  end
+  
+  def publish!
+    @published_since = DateTime.now
   end
   
   private 
