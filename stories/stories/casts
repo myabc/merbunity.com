@@ -1,24 +1,47 @@
 Story: All things relating to setting up and using casts
 
-  As a user of merbasts 
+  As a author of merbasts 
   I want to do things with casts
   So that merbcasts can have casts
   
-  Scenario: Anonymous user visits the Casts New action
-    Given an anonymous user
-  
+  Scenario: Anonymous author visits the Casts New action
+    Given an anonymous author
     
+    When the author visits /casts/new
+    
+    Then the author should be redirected to: /login
   
+  Scenario: An active author visits the Casts New action
+    Given an active author
+
+    When the author visits /casts/new
+
+    Then the visitor should see the page: Casts new
+    And the author should be logged in
+    And the page should match the selector once: form[@action="/casts/"][@enctype="multipart/form-data"][@method="post"]
+    And the page should have an input named: cast[title]
+    
   Scenario: Upload a cast as an anonymous author
+    Given cast upload form data
+    And an anonymous author
+    And no current casts in the database
+    
+    When the author posts form data to: /casts/
+    
+    Then the author should be redirected to: /login
+    And there should be 0 casts in the database
   
   Scenario: Upload a cast as an active author
     Given an active author
-  
-    When the user visits /casts/new
-
-    Then the visitor should see the page: Casts new
-    And the page should match the selector once: form[@action="/casts/"][@enctype="multipart/form-data"][@method="post"]
-    And the page should have an input named: cast[title]
+    And cast upload form data
+    And no current casts in the database
+    
+    When the author posts form data to: /casts/
+    
+    Then the author should be logged in
+    And there should be 1 casts in the database
+    And the author should be redirected to the new cast
+    And the new cast should be pending
 
   Scenario: Upload a cast as an active publisher
   

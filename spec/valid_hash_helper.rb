@@ -14,4 +14,15 @@ module ValidHashHelpers
     }
   end
   
+  def valid_multipart_cast_mash
+     hash = valid_cast_hash
+    { 
+      "cast[name]" => hash[:name],
+      "cast[description]" => hash[:description],
+      "cast[body]" => hash[:body],
+      "cast[uploaded_file]" => hash[:uploaded_file]['tempfile']
+    }.to_mash
+  end
+    
+  
 end

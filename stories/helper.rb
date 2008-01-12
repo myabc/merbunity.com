@@ -1,11 +1,15 @@
 require 'rubygems'
 require 'spec/rake/spectask'
-require 'spec/story'
 require File.join(File.dirname(__FILE__), "..", "spec", "spec_helper")
+require 'spec/mocks'
+require 'spec/story'
 
 class MerbStory
   include Merb::Test::Helper
   include Merb::Test::RspecMatchers
+  include AuthorSpecHelper 
+  include ValidHashHelpers
+  include MultipartHelper
 end
 
 # class Spec::Story::GivenScenario

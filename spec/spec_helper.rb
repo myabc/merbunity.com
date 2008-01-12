@@ -3,14 +3,19 @@ require File.join(File.dirname(__FILE__), "..", 'config', 'boot')
 Merb.environment="test"
 require File.join(Merb.root, 'config', 'merb_init')
 
-require 'merb/test/helper'
-require 'merb/test/rspec'
-require (File.dirname(__FILE__) / 'valid_hash_helper')
+requires 'merb/test/helper'
+requires 'merb/test/rspec'
+requires (File.dirname(__FILE__) / 'valid_hash_helper')
+requires (File.dirname(__FILE__) / 'author_spec_helper')
+require (File.dirname(__FILE__) / 'authenticated_system_spec_helper')
+require (File.dirname(__FILE__) / 'multipart_helper')
 
 Spec::Runner.configure do |config|
     config.include(Merb::Test::Helper)
     config.include(Merb::Test::RspecMatchers)
     config.include(ValidHashHelpers)
+    config.include(AuthorSpecHelper)
+    config.include(MultipartHelper)
     config.before(:each) do
       
     end

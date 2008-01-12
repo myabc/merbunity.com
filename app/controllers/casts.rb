@@ -1,5 +1,6 @@
 class Casts < Application
   # provides :xml, :js, :yaml
+  before :login_required, :only => [:new, :create]
   
   def index
     @casts = Cast.all
@@ -19,7 +20,7 @@ class Casts < Application
   end
   
   def create(cast)
-    puts "IT IS #{cast[:uploaded_file]["tempfile"]}"
+    puts "IT IS #{cast[:uploaded_file].inspect}"
     @cast = Cast.new(cast)
     if @cast.save
       redirect url(:cast, @cast)

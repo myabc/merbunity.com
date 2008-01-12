@@ -1,0 +1,8 @@
+Your account has been created.
+
+  Username: <%= @author.login %>
+  Password: <%= @author.password %>
+
+Visit this url to activate your account:
+
+  <%= url(:author_activation, :activation_code => @author.activation_code) %>
