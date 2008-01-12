@@ -4,23 +4,6 @@ Story: All things relating to setting up and using casts
   I want to do things with casts
   So that merbcasts can have casts
   
-  Scenario: Anonymous author visits the Casts New action
-    Given an anonymous author
-    
-    When the author visits /casts/new
-    
-    Then the author should be redirected to: /login
-  
-  Scenario: An active author visits the Casts New action
-    Given an active author
-
-    When the author visits /casts/new
-
-    Then the author should see the page: Casts new
-    And the author should be logged in
-    And the page should match the selector once: form[@action="/casts/"][@enctype="multipart/form-data"][@method="post"]
-    And the page should have an input named: cast[title]
-    
   Scenario: Upload a cast as an anonymous author
     Given cast upload form data
     And an anonymous author
