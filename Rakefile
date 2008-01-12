@@ -110,8 +110,10 @@ namespace :story do
   desc "Run all stories"
   task :all do
     story_path = "stories/stories"
-    all_stories = Dir.glob(story_path + "/**/*.rb").inject([]){|as,s| as << s.split("/").last[0..-4]}
-    all_stories.each{ |story| sh %{ruby stories/stories/#{story}.rb} }
+    # all_stories = Dir.glob(story_path + "/**/*.rb").inject([]){|as,s| as << s.split("/").last[0..-4]}
+    all_stories = Dir.glob(story_path + "/**/*.rb")
+    # all_stories.each{ |story| sh %{ruby stories/stories/#{story}.rb} }
+    all_stories.each{ |story| sh %{ruby #{story}}}
   end
 end
 

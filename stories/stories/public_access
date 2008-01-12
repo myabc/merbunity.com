@@ -7,11 +7,11 @@ Story: public access to merbcasts site
   Scenario: visit home page
     Given an anonymous author
     When the author visits /
-    Then the visitor should see the page: Casts index
+    Then the author should see the page: Casts index
     And the page should have the heading: Merbcasts
   
   Scenario: visit the merbcasts index
     Given an anonymous author
     When the author visits /casts
-    Then the visitor should see the page: Casts index
+    Then the author should see the page: Casts index
 
