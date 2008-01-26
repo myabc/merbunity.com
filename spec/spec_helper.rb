@@ -15,8 +15,9 @@ Spec::Runner.configure do |config|
     # config.include(Merb::Test::Multipart::TestHelper)
     config.include(ValidHashHelpers)
     config.include(AuthorSpecHelper)
-    config.before(:each) do
-
+    config.before(:all) do
+      Cast.auto_migrate!
+      Author.auto_migrate!
     end
 end
 

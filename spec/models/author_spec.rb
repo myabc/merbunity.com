@@ -13,6 +13,9 @@ describe Author, "in merbcasts" do
     @publisher.save
     @publisher.activate
     @publisher.make_publisher!
+    
+    @author = Author.new(valid_author_hash)
+    @author.save
   end
   
   it "should have many casts" do
@@ -42,6 +45,26 @@ describe Author, "in merbcasts" do
     author.save
     author.activate
     author.should_not be_publisher
+  end
+  
+  it "should return true for can_edit? if there is no editable_by? method on the target" do
+    obj = Object.new
+    obj.should_not respond_to(:editable_by?)
+    @author.can_edit?(obj).should be_true
+  end
+  
+  class EditableTest
+    def initialize(value)
+      @response = value
+    end
+    def editable_by?(user)
+      @response
+    end
+  end
+  
+  it "should return the value of :editable_by? if it responds to it" do
+    @author.can_edit?(EditableTest.new(true)).should be_true
+    @author.can_edit?(EditableTest.new(false)).should be_false    
   end
   
 end

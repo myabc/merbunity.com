@@ -47,7 +47,9 @@ class Author < DataMapper::Base
     self.first(opts.merge(:publisher_since.not => nil))
   end
   
-  
+  def can_edit?(obj)
+    obj.respond_to?(:editable_by?) ? obj.editable_by?(self) : true
+  end
   
   
   #---------------------- GENERATED CODE -----------------------

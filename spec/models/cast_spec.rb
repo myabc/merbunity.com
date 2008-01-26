@@ -142,4 +142,20 @@ describe Cast, "states" do
     @cast.should be_published    
   end
     
+  it "should be editable by the owner" do
+    @cast.author = @author
+    @cast.should be_editable_by(@author)
+  end
+  
+  it "should be editable by a publisher" do
+    @cast.author = @author
+    @cast.should be_editable_by(@publisher)
+  end
+  
+  it "should not be editable by an owner that is not the author or a publisher" do
+    @cast.author = @author
+    author = Author.new(valid_author_hash.with(:login => "not normal"))
+    @cast.should_not be_editable_by(author)
+  end
+    
 end

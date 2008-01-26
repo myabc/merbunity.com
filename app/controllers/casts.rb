@@ -1,6 +1,6 @@
 class Casts < Application
   # provides :xml, :js, :yaml
-  before :login_required, :only => [:new, :create, :edit]
+  before :login_required, :only => [:new, :create, :edit, :update]
   
   def index
     @casts = Cast.all
@@ -39,7 +39,7 @@ class Casts < Application
   
   def update(id, cast)
     @cast = Cast.first(:id => id)
-    raise NotFound unless @cast
+    raise NotFound if @cast.nil? || !current_author.can_edit?(@cast)
     if @cast.update_attributes(cast)
       redirect url(:cast, @cast)
     else

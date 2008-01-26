@@ -48,6 +48,10 @@ class Cast < DataMapper::Base
     @published_since = DateTime.now
   end
   
+  def editable_by?(author)
+    (author.publisher? || self.author == author) ? true : false
+  end
+  
   private 
   def save_file_to_os
     FileUtils.mkdir_p(file_path)

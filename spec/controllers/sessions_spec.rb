@@ -83,8 +83,8 @@ describe "Sessions Controller", "index action" do
   
   it 'logs in with cookie' do
     @quentin.remember_me
-    get "/login" do |controller|
-      controller.cookies[:auth_token] = @quentin.remember_token
+    get "/login" do |request|
+      request['HTTP_COOKIE'] = "auth_token=#{@quentin.remember_token}"
     end
     controller.should be_logged_in
   end

@@ -1,0 +1,40 @@
+Story: Uploading Merb Casts
+
+  As a author of merbasts 
+  I want to upload casts
+  So that they will be available on the site
+  
+  Scenario: Upload a cast as an anonymous author
+    Given cast upload form data
+    And an anonymous author
+    And no current casts in the database
+    
+    When the author posts form data to: /casts/
+    
+    Then the author should be redirected to: /login
+    And there should be 0 casts in the database
+  
+  Scenario: Upload a cast as an active author
+    Given an active author
+    And cast upload form data
+    And no current casts in the database
+    
+    When the author posts form data to: /casts/
+    
+    Then the author should be logged in
+    And there should be 1 casts in the database
+    And the author should be redirected to the new cast
+    And the cast should be: pending
+
+  Scenario: Upload a cast as an active publisher
+    Given an active publisher
+    And cast upload form data
+    And no current casts in the database
+    
+    When the author posts form data to: /casts/
+    
+    Then the author should be logged in
+    And there should be 1 casts in the database
+    And the author should be redirected to the new cast
+    And the cast should not be: pending
+    And the cast should be: published

@@ -1,0 +1,92 @@
+Story: Editing Merb Casts
+
+  As an author or publisher
+  I want to edit casts
+  So that they will have correct information
+
+  Scenario: Edit a cast as an anonymous author
+    Given an active author
+    And 1 current pending casts in the database
+    And using the first cast found
+    And an anonymous author
+
+    When the author gets edit for the current cast
+
+    Then the author should be redirected to: /login
+
+  Scenario: Edit a cast as an active author who does not own the cast
+    Given an active author named: joe
+    And 1 current pending casts in the database
+    And using the first cast found belonging to: joe
+    And an active author named: midge
+
+    When the author gets edit for the current cast
+
+    Then the author should see the error page: NotFound
+
+  Scenario: Edit a cast as an active author who does own the cast
+    Given an active author named: joe
+    And 1 current pending casts in the database
+    And using the first cast found belonging to: joe
+
+    When the author gets edit for the current cast
+
+    Then the author should see the page: Casts edit
+
+  Scenario: Edit a cast as an active publisher who does not own the cast
+    Given an active author named: joe
+    And 1 current published casts in the database
+    And using the first cast found belonging to: joe
+    And an active publisher named: ted
+
+    When the author gets edit for the current cast
+
+    Then the author should see the page: Casts edit
+    
+  Scenario: Update a cast as an anonymous author
+    GivenScenario Edit a cast as an anonymous author
+    And no pending form data
+    And update data for cast: title My New Title
+
+    When the author puts data to the current cast
+
+    Then the author should be redirected to: /login
+    
+  Scenario: Update a cast as an author who owns the cast
+    Given an active author named: joe
+    And 1 current pending casts in the database
+    And using the first cast found belonging to: joe
+    And no pending form data
+    And update data for cast: title The Newest Title Around
+
+    When the author puts data to the current cast
+
+    Then the author should be redirected to the current cast show page
+    And the current cast should have the attribute title set to The Newest Title Around in the database
+        
+  Scenario: Update a cast as an author who does not owns the cast
+    Given an active author named: joe
+    And 1 current pending casts in the database
+    And using the first cast found belonging to: joe
+    And an active author named: meridith
+    And no pending form data
+    And update data for cast: title The Newest Title Around
+
+    When the author puts data to the current cast
+
+    Then the author should see the error page: NotFound
+    And the current cast should not be modified
+    
+  Scenario: Update a cast as a publisher
+    Given an active author named: joe
+    And 1 current pending casts in the database
+    And an active publisher named: hussan
+    And using the first cast found belonging to: joe
+    And no pending form data
+    And update data for cast: body My New Body
+    
+    When the author puts data to the current cast
+    
+    Then the author should be redirected to the current cast show page
+    And the current cast should have the attribute body set to My New Body in the database
+  
