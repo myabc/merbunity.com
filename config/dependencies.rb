@@ -29,6 +29,7 @@ dependency "merb_helpers"
 
 dependencies "authenticated_system_controller", "authenticated_system_model", "authenticated_system_orm_map"
 
+dependencies "merb_casts_dm_extensions"
 # These are some examples of how you might specify dependencies.
 # 
 # dependencies "RedCloth", "merb_helpers"

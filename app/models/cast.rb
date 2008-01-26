@@ -8,15 +8,17 @@ class Cast < DataMapper::Base
   property :size,                     :integer
   property :original_filename,        :string
   property :created_at,               :datetime
-  property :published_since,                  :datetime
+  property :published_since,          :datetime
+  property :cast_number,              :integer
 
   validates_presence_of   :uploaded_file, :original_filename, :tmp_file, :groups => [:create]
   validates_presence_of   :author, :groups => [:create]
 
   before_create   :set_initial_published_status
   after_create    :save_file_to_os
+  after_destroy   :delete_associated_file!
   
-  belongs_to :author
+  belongs_to :author  
 
   def initialize(hash = {})
     super(hash)
@@ -36,6 +38,10 @@ class Cast < DataMapper::Base
     Merb.root / "casts" / "#{created_at.year}" / "#{created_at.month}"
   end
   
+  def full_path
+    file_path / filename
+  end
+  
   def pending?
     @published_since.nil?
   end
@@ -46,6 +52,11 @@ class Cast < DataMapper::Base
   
   def publish!
     @published_since = DateTime.now
+    
+    # setup the cast number
+    max = Cast.max(:cast_number) || 0
+    @cast_number = max.succ
+    
     save
   end
   
@@ -59,9 +70,13 @@ class Cast < DataMapper::Base
   
   
   private 
+  def delete_associated_file!
+    FileUtils.rm(full_path) if File.file?(full_path)
+  end
+  
   def save_file_to_os
     FileUtils.mkdir_p(file_path)
-    File.copy tmp_file.path, (file_path / filename)
+    File.copy tmp_file.path, (full_path)
   end
   
   def set_initial_published_status

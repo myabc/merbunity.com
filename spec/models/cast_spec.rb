@@ -156,6 +156,40 @@ describe Cast, "states" do
     @cast.author = @author
     author = Author.new(valid_author_hash.with(:login => "not normal"))
     @cast.should_not be_editable_by(author)
-  end
-    
+  end  
 end
+
+describe Cast, "cast_number" do
+  
+  before(:each) do
+    Cast.auto_migrate!
+    @hash1 = valid_cast_hash
+    @hash2 = valid_cast_hash
+    @cast1 = Cast.new(@hash1)
+    @cast2 = Cast.new(@hash2)
+    @author = Author.new(valid_author_hash)
+  end
+  
+  it "should not have a cast number when pending" do
+    @cast1.save
+    @cast1.should be_pending
+    @cast1.cast_number.should be_nil
+  end
+  
+  it "should have a cast number when published" do
+    @cast1.publish!
+    @cast1.should be_published    
+    @cast1.cast_number.should == 1
+  end
+  
+  it "should increment the cast number when published" do
+    1.upto(12) do |i|
+      cast = Cast.new(valid_cast_hash)
+      cast.cast_number.should be_nil
+      cast.publish!
+      cast.cast_number.should == i
+    end
+  end
+  
+end
+

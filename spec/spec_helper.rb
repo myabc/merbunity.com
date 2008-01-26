@@ -19,6 +19,9 @@ Spec::Runner.configure do |config|
       Cast.auto_migrate!
       Author.auto_migrate!
     end
+    config.after(:all) do
+      Cast.all.each{|c| c.destroy!}
+    end
 end
 
 DataMapper::Base.auto_migrate!

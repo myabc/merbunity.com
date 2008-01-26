@@ -7,8 +7,8 @@ class Casts < Application
   end
   
   def show(id)
-    @cast = Cast.first(:id => id)
-    return redirect( url(:casts) ) if @cast.nil? || @cast.pending?
+    @cast = Cast.first(:id => id, :published_since.not => nil)
+    return redirect( url(:casts) ) if @cast.nil?
     raise NotFound unless @cast
     render @cast
   end
