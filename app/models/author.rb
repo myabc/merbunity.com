@@ -51,6 +51,10 @@ class Author < DataMapper::Base
     obj.respond_to?(:editable_by?) ? obj.editable_by?(self) : true
   end
   
+  def can_destroy?(obj)
+    obj.respond_to?(:destroyable_by?) ? obj.destroyable_by?(self) : true
+  end
+  
   
   #---------------------- GENERATED CODE -----------------------
   def login=(value)

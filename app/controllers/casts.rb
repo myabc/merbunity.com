@@ -1,5 +1,4 @@
 class Casts < Application
-  # provides :xml, :js, :yaml
   before :login_required, :only => [:new, :create, :edit, :update]
   
   def index
@@ -50,7 +49,7 @@ class Casts < Application
   
   def destroy(id)
     @cast = Cast.fisrt(:id => id)
-    raise NotFound unless @cast
+    raise NotFound if @cast.nil? || !current_author.can_destroy?(@cast)
     if @cast.destroy!
       redirect url(:casts)
     else
