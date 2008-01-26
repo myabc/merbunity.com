@@ -1,3 +1,6 @@
+- unless @cast.errors.empty?
+  .error_messages= error_messages_for(@cast)
+
 %p Upload your merbcast video here.
 - form_for @cast, :action => url(:casts, @cast), :multipart => true do
   = text_control :title, :label => "Title:"

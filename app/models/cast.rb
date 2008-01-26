@@ -11,14 +11,19 @@ class Cast < DataMapper::Base
   property :published_since,          :datetime
   property :cast_number,              :integer
 
-  validates_presence_of   :uploaded_file, :original_filename, :tmp_file, :groups => [:create]
+  belongs_to :author 
+
+  validates_each :uploaded_file,:groups => [:create], :logic => lambda{
+      errors.add(:video_file, "There is no video file uploaded") if uploaded_file.blank?
+     }
+  
   validates_presence_of   :author, :groups => [:create]
 
   before_create   :set_initial_published_status
   after_create    :save_file_to_os
   after_destroy   :delete_associated_file!
   
-  belongs_to :author  
+   
   
   def self.max(attr)
     database.query("SELECT max(#{attr}) FROM #{database.table(self)};").first
