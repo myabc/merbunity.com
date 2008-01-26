@@ -3,12 +3,13 @@ class Casts < Application
   before :login_required, :only => [:new, :create, :edit, :update]
   
   def index
-    @casts = Cast.all
+    @casts = Cast.all(:published_since.not => nil)
     render @casts
   end
   
   def show(id)
     @cast = Cast.first(:id => id)
+    return redirect( url(:casts) ) if @cast.nil? || @cast.pending?
     raise NotFound unless @cast
     render @cast
   end

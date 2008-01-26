@@ -4,6 +4,22 @@ steps_for(:navigation) do
       controller.stub!(:current_author).and_return(@author) unless @author.nil?
     end
   end  
+  When("the author gets $action for the current cast") do |action|
+    u_r_l = case action
+    when "index"
+      url(:casts)
+    when "show"
+      url(:cast, @cast)
+    when "new"
+      url(:new_cast)
+    when "edit"
+      url(:edit_cast, @cast)
+    end
+    get(u_r_l, :yields => :controller) do 
+      controller.stub!(:current_author).and_return(@author) unless @author.nil?
+    end
+  end
+  
   Then("the author should be redirected to: $path") do |path|
     controller.should redirect_to(path)
   end

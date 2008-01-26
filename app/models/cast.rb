@@ -46,6 +46,7 @@ class Cast < DataMapper::Base
   
   def publish!
     @published_since = DateTime.now
+    save
   end
   
   def editable_by?(author)

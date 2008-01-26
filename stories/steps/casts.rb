@@ -14,7 +14,6 @@ steps_for(:casts) do
     Cast.auto_migrate!
   end
   Given("$number current pending casts in the database") do |number|
-    Cast.auto_migrate!
     number = number.to_i
     1.upto(number) do
       c = Cast.new(valid_cast_hash)
@@ -23,7 +22,6 @@ steps_for(:casts) do
     end
   end   
   Given("$number current published casts in the database") do |number|
-    Cast.auto_migrate!
     number = number.to_i
     1.upto(number) do
       c = Cast.new(valid_cast_hash)
@@ -73,5 +71,18 @@ steps_for(:casts) do
     c = Cast.first(@cast.id)
     c.should == @cast
   end
+  Then("the controller should show $number $state casts") do |num, state|
+    casts = controller.assigns(:casts)
+    num = num.to_i
+    case state
+    when "pending"
+      casts.select{|c| c.pending? }.should have(num).items      
+    when "published"
+      casts.select{|c| c.published? }.should have(num).items
+    else
+      raise "Options can only be published or pending"
+    end
+  end
+    
   
 end

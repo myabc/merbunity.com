@@ -4,5 +4,70 @@ Story: All things relating to setting up and using casts
   I want to do things with casts
   So that merbcasts can have casts
     
-
+  Scenario: An anonymous user visits the casts index should not see pending casts
+    Given no current casts in the database
+    And an active author named: joe
+    And 5 current pending casts in the database
+    And 2 current published casts in the database
+    And an anonymous author
+    
+    When the author visits /casts
+    
+    Then the controller should show 2 published casts
+    And the controller should show 0 pending casts
+    
   
+  Scenario: An active author visits the casts index should not see pending casts
+    Given no current casts in the database
+    And an active author named: joe
+    And 5 current pending casts in the database
+    And 2 current published casts in the database
+
+    When the author visits /casts
+
+    Then the controller should show 2 published casts
+    And the controller should show 0 pending casts
+    
+  Scenario: An active author visits the casts index should not see pending casts
+    Given no current casts in the database
+    And an active author named: joe
+    And 5 current pending casts in the database
+    And 2 current published casts in the database
+    And an active publisher named: hottie
+
+    When the author visits /casts
+
+    Then the controller should show 2 published casts
+    And the controller should show 0 pending casts
+  
+  Scenario: An anonymous author visits the show page should not see pending casts
+    Given no current casts in the database
+    And an active author named: joe
+    And 5 current pending casts in the database
+    And using the first cast found
+    And an anonymous author
+    
+    When the author gets show for the current cast
+    
+    Then the author should be redirected to: /casts
+
+  Scenario: An active author visits the show page should not see pending casts
+    Given no current casts in the database
+    And an active author named: joe
+    And 5 current pending casts in the database
+    And using the first cast found
+
+    When the author gets show for the current cast
+
+    Then the author should be redirected to: /casts
+
+  Scenario: An active publisher visits the show page should not see pending casts
+    Given no current casts in the database
+    And an active author named: joe
+    And 5 current pending casts in the database
+    And using the first cast found
+    And an active publisher named: hootie_van_tootie
+
+    When the author gets show for the current cast
+
+    Then the author should be redirected to: /casts
