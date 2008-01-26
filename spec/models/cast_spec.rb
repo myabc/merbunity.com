@@ -3,6 +3,7 @@ require File.join( File.dirname(__FILE__), "..", "spec_helper" )
 describe Cast do
   
   before do
+    Cast.auto_migrate!
     @cast = Cast.new(valid_cast_hash)
   end
   

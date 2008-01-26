@@ -19,6 +19,11 @@ class Cast < DataMapper::Base
   after_destroy   :delete_associated_file!
   
   belongs_to :author  
+  
+  def self.max(attr)
+    database.query("SELECT max(#{attr}) FROM #{database.table(self)};").first
+  end
+    
 
   def initialize(hash = {})
     super(hash)

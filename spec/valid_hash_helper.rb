@@ -2,7 +2,7 @@ module ValidHashHelpers
   
   def valid_cast_hash
     {
-      :name           => String.random,
+      :title           => String.random,
       :author         => Author.new(valid_author_hash),
       :description    => String.random,
       :body           => String.random(300),
