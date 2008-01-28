@@ -1,4 +1,4 @@
-= partial "casts/detail", :with => @cast, :as => "cast"
+= partial "casts/detail", :show_detail => true, :with => @cast, :as => "cast"
 .links
-  = link_to( "Publish", url(:publish, cast))
+  = link_to( "Publish", url(:publish, @cast))
 

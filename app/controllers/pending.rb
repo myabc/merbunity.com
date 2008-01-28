@@ -1,4 +1,5 @@
 class Pending < Application
+  before :login_required
 
   def index 
     @casts = current_author.publisher? ? Cast.all(:published_since => nil) : current_author.pending_casts

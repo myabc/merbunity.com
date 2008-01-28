@@ -19,7 +19,17 @@ steps_for(:navigation) do
       controller.stub!(:current_author).and_return(@author) unless @author.nil?
     end
   end
-  
+  When("the author gets $action for the pending cast") do |action|
+    u_r_l = case action
+    when "index"
+      url(:pending_casts)
+    when "show"
+      url(:pending_cast, @cast)
+    end
+    get(u_r_l, :yields => :controller ) do
+      controller.stub!(:current_author).and_return(@author) unless @author.nil?
+    end
+  end  
   Then("the author should be redirected to: $path") do |path|
     controller.should redirect_to(path)
   end
@@ -30,6 +40,7 @@ steps_for(:navigation) do
     controller.status.should == the_exception::STATUS
   end
   Then("the author should see the page: $controller $action") do |c, a|
+    # puts controller.to_yaml
     controller.params[:controller].downcase.should == c.downcase
     controller.params[:action].downcase.should == a.downcase
     controller.template.should match( /#{a}\.html\./i)

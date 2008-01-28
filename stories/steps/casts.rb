@@ -38,6 +38,11 @@ steps_for(:casts) do
     @cast = nil and return if a.nil?
     @cast = a.casts.first
   end  
+  Given("using the first pending cast found belonging to: $name") do |login|
+    a = Author.first(:login => login)
+    @cast = nil and return if a.nil?
+    @cast = a.pending_casts.first
+  end
   When("the author posts form data to: $path") do |path|
     multipart_post(path, @_form_data) do
       controller.stub!(:current_author).and_return(@author) unless @author.nil?
