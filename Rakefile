@@ -101,21 +101,21 @@ task :aok do
   sh %{rake spec}
 end
 
-namespace :story do
-  desc "Run the given story"
-  task :run, :story_name do |t,args|
-    sh %{ruby stories/stories/#{args.story_name}.rb}
-  end
-  
-  desc "Run all stories"
-  task :all do
-    story_path = "stories/stories"
-    # all_stories = Dir.glob(story_path + "/**/*.rb").inject([]){|as,s| as << s.split("/").last[0..-4]}
-    all_stories = Dir.glob(story_path + "/**/*.rb")
-    # all_stories.each{ |story| sh %{ruby stories/stories/#{story}.rb} }
-    all_stories.each{ |story| sh %{ruby #{story}}}
-  end
-end
+# namespace :story do
+#   desc "Run the given story"
+#   task :run, :story_name do |t,args|
+#     sh %{ruby stories/stories/#{args.story_name}.rb}
+#   end
+#   
+#   desc "Run all stories"
+#   task :all do
+#     story_path = "stories/stories"
+#     # all_stories = Dir.glob(story_path + "/**/*.rb").inject([]){|as,s| as << s.split("/").last[0..-4]}
+#     all_stories = Dir.glob(story_path + "/**/*.rb")
+#     # all_stories.each{ |story| sh %{ruby stories/stories/#{story}.rb} }
+#     all_stories.each{ |story| sh %{ruby #{story}}}
+#   end
+# end
 
 
 unless Gem.cache.search("haml").empty?

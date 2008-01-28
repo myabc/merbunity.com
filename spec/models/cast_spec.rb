@@ -32,7 +32,7 @@ describe Cast do
   it "should requre that uploaded_file be present" do
     cast = Cast.new(valid_cast_hash.except(:uploaded_file))
     cast.save
-    cast.errors.on(:uploaded_file).should_not be_nil
+    cast.errors.on(:video_file).should_not be_nil
   end
   
   it "should set the tmp_file on initialization" do

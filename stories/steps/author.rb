@@ -1,4 +1,7 @@
 steps_for(:author) do
+  Given("no authors in the database") do
+    Author.auto_migrate!
+  end
   Given("an anonymous author") do
     @author = nil
   end
@@ -32,6 +35,7 @@ steps_for(:author) do
     else
       @author = Author.create(valid_author_hash.with(:login => login))
       @author.activate
+      @author.save
     end
   end
   Then("the author should be logged in") do

@@ -55,6 +55,10 @@ steps_for(:casts) do
     cast = controller.assigns(:cast)
     controller.should redirect_to(url(:cast, cast))
   end
+  Then("the author should be redirected to the pending cast") do
+    cast = controller.assigns(:cast)
+    controller.should redirect_to(url( :pending_cast, cast))
+  end
   Then("the cast should be: $state") do |state|
     cast = controller.assigns(:cast)
     cast.should self.send("be_#{state}".to_sym)

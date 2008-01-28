@@ -33,7 +33,10 @@ class Author < DataMapper::Base
   after_create :send_signup_notification
   
   has_many :casts
-  has_many :pending_casts, :conditions => {:published_since.not => nil}
+  
+  def pending_casts
+    casts.select{|c| c.published_since.nil? }
+  end
   
   def make_publisher!
     @publisher_since ||= DateTime.now

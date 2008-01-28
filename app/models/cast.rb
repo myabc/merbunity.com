@@ -11,7 +11,7 @@ class Cast < DataMapper::Base
   property :published_since,          :datetime
   property :cast_number,              :integer
 
-  belongs_to :author 
+  belongs_to :author, :class => "Author" 
 
   validates_each :uploaded_file,:groups => [:create], :logic => lambda{
       errors.add(:video_file, "There is no video file uploaded") if uploaded_file.blank?
@@ -61,12 +61,7 @@ class Cast < DataMapper::Base
   end
   
   def publish!
-    @published_since = DateTime.now
-    
-    # setup the cast number
-    max = Cast.max(:cast_number) || 0
-    @cast_number = max.succ
-    
+    self.send(:set_publish_data)
     save
   end
   
@@ -80,6 +75,14 @@ class Cast < DataMapper::Base
   
   
   private 
+  def set_publish_data
+    @published_since = DateTime.now
+    
+    # setup the cast number
+    max = Cast.max(:cast_number) || 0
+    @cast_number = max.succ
+  end
+  
   def delete_associated_file!
     FileUtils.rm(full_path) if File.file?(full_path)
   end
@@ -90,7 +93,7 @@ class Cast < DataMapper::Base
   end
   
   def set_initial_published_status
-    @published_since = DateTime.now if self.author.publisher?
+    self.send(:set_publish_data) if self.author.publisher?
   end
 end
 

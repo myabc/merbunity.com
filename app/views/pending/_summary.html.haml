@@ -1,0 +1,5 @@
+.cast{:id => "cast_#{cast.id}"}
+  %h3= link_to(cast.title, url(:pending_cast, cast))
+  .description= cast.description
+  .links
+    = link_to( "Publish", url(:publish, cast))

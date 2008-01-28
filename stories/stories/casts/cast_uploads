@@ -23,7 +23,7 @@ Story: Uploading Merb Casts
     
     Then the author should be logged in
     And there should be 1 casts in the database
-    And the author should be redirected to the new cast
+    And the author should be redirected to the pending cast
     And the cast should be: pending
 
   Scenario: Upload a cast as an active publisher

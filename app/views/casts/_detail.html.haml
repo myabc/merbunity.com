@@ -1,0 +1,7 @@
+.cast{:id => "cast_#{cast.id}"}
+  %h3= link_to(cast_title(cast), url(:cast, cast))
+  .description= cast.description
+  - unless show_detail == :false
+    .detail= cast.body || ""
+  .download
+    = link_to "Download #{cast.filename}", url(:download, cast)

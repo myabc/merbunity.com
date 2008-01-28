@@ -9,11 +9,16 @@ module Merb
     end
     
     def page_title
-      @__page_title || @__page_heading || "Merbcasts"
+      @__page_title || ("Merbcasts #{@__page_heading}")
     end
     
     def page_heading
       @__page_heading || "Merbcasts"
-    end     
+    end 
+    
+    def cast_title(cast)
+      "##{cast.cast_number || "??"} - #{cast.title}"
+    end
+        
   end
 end    

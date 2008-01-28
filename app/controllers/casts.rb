@@ -2,7 +2,9 @@ class Casts < Application
   before :login_required, :only => [:new, :create, :edit, :update]
   
   def index
-    @casts = Cast.all(:published_since.not => nil)
+    puts "IN INDEX"
+    @casts = Cast.all(:published_since.not => nil, :limit => 10, :order => "published_since DESC")
+    puts "FOUND CASTS"
     render @casts
   end
   
@@ -23,7 +25,11 @@ class Casts < Application
     @cast = Cast.new(cast)
     @cast.author = current_author
     if @cast.save
-      redirect url(:cast, @cast)
+      if @cast.published?
+        redirect url(:cast, @cast)
+      else
+        redirect url(:pending_cast, @cast)
+      end
     else
       render :action => :new
     end
@@ -56,4 +62,14 @@ class Casts < Application
       raise BadRequest
     end
   end
+  
+  def download(id)
+    @cast = Cast.first(:id => id)
+    raise NotFound if @cast.nil?
+    nginx_send_file(@cast.full_path)
+    "Done"
+  end
+    
+    
+    
 end

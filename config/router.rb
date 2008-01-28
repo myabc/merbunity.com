@@ -34,8 +34,12 @@ Merb::Router.prepare do |r|
   r.resources :casts
   
   r.to(:controller => "pending") do |p|
-    p.match("/pending").to(:action => "index")
+    p.match("/pending").to(:action => "index").name(:pending_casts)
+    p.match("/pending/:id").to(:action => "show").name(:pending_cast)
+    p.match("/pending/publish/:id").to(:action => "update").name(:publish)
   end
+  
+  r.match("/downloads/:id").to(:controller => "casts", :action => "download").name(:download)
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent

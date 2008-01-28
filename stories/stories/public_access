@@ -8,7 +8,6 @@ Story: public access to merbcasts site
     Given an anonymous author
     When the author visits /
     Then the author should see the page: Casts index
-    And the page should have the heading: Merbcasts
   
   Scenario: visit the merbcasts index
     Given an anonymous author

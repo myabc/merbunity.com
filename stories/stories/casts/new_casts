@@ -12,7 +12,8 @@ Story: Visiting the Casts New page
     Then the author should be redirected to: /login
   
   Scenario: An active author visits the Casts New action
-    Given an active author
+    Given no authors in the database
+    And an active author
 
     When the author visits /casts/new
 
