@@ -194,3 +194,29 @@ describe Cast, "cast_number" do
   
 end
 
+describe Cast, "Class Methods" do
+  
+  before(:each) do
+    Cast.auto_migrate!
+    1.upto(3) do
+      c = Cast.new(valid_cast_hash)
+      c.publish!
+      c.save
+    end
+    
+    1.upto(5) do
+      c = Cast.new(valid_cast_hash)
+      c.save
+    end
+  end
+  
+  it "should get all pending casts" do
+    Cast.pending.should have(5).items
+  end
+  
+  it "should get all published casts" do
+    Cast.published.should have(3).items
+  end
+  
+end
+

@@ -28,6 +28,14 @@ class Cast < DataMapper::Base
   def self.max(attr)
     database.query("SELECT max(#{attr}) FROM #{database.table(self)};").first
   end
+  
+  def self.pending(opts={})
+    self.all(opts.merge!(:published_since => nil))
+  end
+  
+  def self.published(opts={})
+    self.all(opts.merge!(:published_since.not => nil))
+  end
     
 
   def initialize(hash = {})

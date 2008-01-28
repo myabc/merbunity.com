@@ -34,7 +34,7 @@ steps_for(:navigation) do
     controller.should redirect_to(path)
   end
   Then("the author should see the error page: $exception") do |exception|
-    puts controller.params[:exception].message if controller.params[:exception]
+    # puts controller.params[:exception].message if controller.params[:exception]
     the_exception = "Merb::Controller::#{exception}".constantize
     controller.params[:exception].class.should == the_exception
     controller.status.should == the_exception::STATUS

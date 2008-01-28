@@ -2,9 +2,7 @@ class Casts < Application
   before :login_required, :only => [:new, :create, :edit, :update]
   
   def index
-    puts "IN INDEX"
     @casts = Cast.all(:published_since.not => nil, :limit => 10, :order => "published_since DESC")
-    puts "FOUND CASTS"
     render @casts
   end
   

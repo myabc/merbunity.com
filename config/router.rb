@@ -34,9 +34,9 @@ Merb::Router.prepare do |r|
   r.resources :casts
   
   r.to(:controller => "pending") do |p|
-    p.match("/pending").to(:action => "index").name(:pending_casts)
-    p.match("/pending/:id").to(:action => "show").name(:pending_cast)
-    p.match("/pending/publish/:id").to(:action => "update").name(:publish)
+    p.match("/pending", :method => "get").to(:action => "index").name(:pending_casts)
+    p.match("/pending/:id", :method => "get").to(:action => "show").name(:pending_cast)
+    p.match("/pending/publish/:id", :method => "put").to(:action => "update").name(:publish)
   end
   
   r.match("/downloads/:id").to(:controller => "casts", :action => "download").name(:download)

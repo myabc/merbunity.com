@@ -92,6 +92,15 @@ steps_for(:casts) do
       raise "Options can only be published or pending"
     end
   end
+  Then("there should be $num $state casts") do |num, state|
+    num = num.to_i
+    case state
+    when /published/i
+      Cast.published.should have(num).items
+    when /pending/i
+      Cast.pending.should have(num).items
+    end
+  end
     
   
 end
