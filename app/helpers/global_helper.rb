@@ -19,6 +19,14 @@ module Merb
     def cast_title(cast)
       "##{cast.cast_number || "??"} - #{cast.title}"
     end
+    
+    def full_url(*args)
+      "" << request.protocol << request.domain << url(*args)
+    end
+    
+    def publishers_only
+      yield if current_author.publisher? && block_given?
+    end
         
   end
 end    

@@ -66,9 +66,9 @@ class Author < DataMapper::Base
   end
     
   
-  EMAIL_FROM = "info@mysite.com"
-  SIGNUP_MAIL_SUBJECT = "Welcome to MYSITE.  Please activate your account."
-  ACTIVATE_MAIL_SUBJECT = "Welcome to MYSITE"
+  EMAIL_FROM = "no-reply@merbcasts.com"
+  SIGNUP_MAIL_SUBJECT = "Welcome to Merbcasts.com  Please activate your account."
+  ACTIVATE_MAIL_SUBJECT = "Welcome to MerbCasts"
   
   # Activates the author in the database
   def activate
