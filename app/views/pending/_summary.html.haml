@@ -4,3 +4,6 @@
   .links
     .download
       = link_to "Download #{cast.filename}", url(:download, cast)
+    .author
+      Author:
+      = link_to cast.author.login, url(:author, cast.author)

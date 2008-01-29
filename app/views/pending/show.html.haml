@@ -1,5 +1,5 @@
 = partial "casts/detail", :show_detail => true, :with => @cast, :as => "cast"
 - publishers_only do
   .links
-    = publish_button!( url(:publish, @cast) )
+    = publish_button!( @cast )
 
