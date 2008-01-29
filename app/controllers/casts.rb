@@ -2,7 +2,7 @@ class Casts < Application
   before :login_required, :only => [:new, :create, :edit, :update]
   
   def index
-    @casts = Cast.all(:published_since.not => nil, :limit => 10, :order => "published_since DESC")
+    @casts = Cast.published(:limit => 10, :order => "published_since DESC")
     render @casts
   end
   
@@ -20,8 +20,7 @@ class Casts < Application
   end
   
   def create(cast)
-    @cast = Cast.new(cast)
-    @cast.author = current_author
+    @cast = Cast.new(cast.merge(:author => current_author))
     if @cast.save
       if @cast.published?
         redirect url(:cast, @cast)
@@ -67,7 +66,4 @@ class Casts < Application
     nginx_send_file(@cast.full_path)
     "Done"
   end
-    
-    
-    
 end

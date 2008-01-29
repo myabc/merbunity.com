@@ -23,12 +23,6 @@ class Cast < DataMapper::Base
   after_create    :save_file_to_os
   after_destroy   :delete_associated_file!
   
-   
-  
-  def self.max(attr)
-    database.query("SELECT max(#{attr}) FROM #{database.table(self)};").first
-  end
-  
   def self.pending(opts={})
     self.all(opts.merge!(:published_since => nil))
   end

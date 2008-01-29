@@ -1,9 +1,7 @@
 require 'lib/authenticated_system_controller'
 class Sessions < Application
 
-  # Be sure to include AuthenticationSystem in Application Controller instead
-  
-  skip_before :login_required
+  # skip_before :login_required
   
   def new
     render

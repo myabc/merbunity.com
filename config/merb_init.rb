@@ -15,3 +15,19 @@ Merb::BootLoader.load_application
 # Load environment-specific configuration
 environment_config = File.join(Merb.root, 'config', 'environments', Merb.environment)
 require environment_config if File.exist?(environment_config)
+
+# class DataMapper::Base
+#   def self.max(attr)
+#     database.adapter.connection do |db|
+#       sql = "SELECT MAX(#{attr}) AS max FROM #{database.table(self).to_sql}"
+#       command = db.create_command(sql)
+#       command.execute_reader do |reader|
+#         if reader.has_rows?
+#           reader.current_row.first.to_i
+#         else
+#           nil
+#         end
+#       end
+#     end
+#   end
+# end

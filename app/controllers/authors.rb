@@ -1,7 +1,7 @@
 class Authors < Application
   provides :xml
   
-  skip_before :login_required
+  # skip_before :login_required
   
   def new(author = {})
     only_provides :html

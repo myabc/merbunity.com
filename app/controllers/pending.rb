@@ -17,9 +17,13 @@ class Pending < Application
     render @cast
   end
   
+  # Used only to publish a cast.  There are no 
+  # other updates available from this update action
+  # TODO: Add a mailer into publising to alert the owner that it has been published
+  #       Do that in here so that email is not sent when a publisher creates a cast.
   def update(id)
-    id = id.to_i
     raise Unauthorized unless current_author.publisher?
+    id = id.to_i
     @cast = Cast.first(:id => id, :published_since => nil)
     raise NotFound if @cast.nil?
     @cast.publish!

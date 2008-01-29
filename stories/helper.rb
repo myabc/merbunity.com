@@ -11,6 +11,8 @@ class MerbStory
   include ValidHashHelpers
 end
 
+DataMapper::Base.auto_migrate!
+
 Dir['stories/steps/**/*.rb'].each do |steps_file|
   require steps_file
 end
