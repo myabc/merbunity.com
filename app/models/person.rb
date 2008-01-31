@@ -1,6 +1,6 @@
 require 'digest/sha1'
 require 'authenticated_system_model'
-class Author < DataMapper::Base
+class Person < DataMapper::Base
   include AuthenticatedSystem::Model
   
   attr_accessor :password, :password_confirmation
@@ -70,7 +70,7 @@ class Author < DataMapper::Base
   SIGNUP_MAIL_SUBJECT = "Welcome to Merbcasts.com  Please activate your account."
   ACTIVATE_MAIL_SUBJECT = "Welcome to MerbCasts"
   
-  # Activates the author in the database
+  # Activates the person in the database
   def activate
     @activated = true
     self.activated_at = Time.now.utc
@@ -78,22 +78,22 @@ class Author < DataMapper::Base
     save
 
     # send mail for activation
-    AuthorMailer.dispatch_and_deliver(  :activation_notification,
-                                  {   :from => Author::EMAIL_FROM,
+    PersonMailer.dispatch_and_deliver(  :activation_notification,
+                                  {   :from => Person::EMAIL_FROM,
                                       :to   => self.email,
-                                      :subject => Author::ACTIVATE_MAIL_SUBJECT },
+                                      :subject => Person::ACTIVATE_MAIL_SUBJECT },
 
-                                      :author => self )
+                                      :person => self )
 
   end
   
   def send_signup_notification
-    AuthorMailer.dispatch_and_deliver(
+    PersonMailer.dispatch_and_deliver(
         :signup_notification,
-      { :from => Author::EMAIL_FROM,
+      { :from => Person::EMAIL_FROM,
         :to  => self.email,
-        :subject => Author::SIGNUP_MAIL_SUBJECT },
-        :author => self        
+        :subject => Person::SIGNUP_MAIL_SUBJECT },
+        :person => self        
     )
   end
   

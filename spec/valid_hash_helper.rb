@@ -3,7 +3,7 @@ module ValidHashHelpers
   def valid_cast_hash
     {
       :title           => String.random,
-      :author         => Author.new(valid_author_hash),
+      :person         => Person.new(valid_person_hash),
       :description    => String.random,
       :body           => String.random(300),
       :uploaded_file  => {
@@ -17,7 +17,7 @@ module ValidHashHelpers
   
   def valid_multipart_cast_mash
     hash = valid_cast_hash
-    hash.delete(:author)
+    hash.delete(:person)
     hash[:uploaded_file] = hash[:uploaded_file]["tempfile"]
     {:cast => hash}.to_mash
   end

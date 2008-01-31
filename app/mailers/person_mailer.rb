@@ -1,12 +1,12 @@
-class AuthorMailer < Merb::MailController
+class PersonMailer < Merb::MailController
   
   def signup_notification
-    @author = params[:author]
+    @person = params[:person]
     render_mail
   end
   
   def activation_notification
-    @author = params[:author]
+    @person = params[:person]
     render_mail
   end
   

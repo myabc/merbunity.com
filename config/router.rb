@@ -27,10 +27,10 @@ Merb::Router.prepare do |r|
   r.match("/").to(:controller => "casts").name(:welcome)
   r.resources :casts
   
-  r.resources :authors
+  r.resources :people
   r.match("/login").to(:controller => "Sessions", :action => "create").name(:login)
   r.match("/logout").to(:controller => "Sessions", :action => "destroy").name(:logout)
-  r.match("/authors/activate/:activation_code").to(:controller => "Authors", :action => "activate").name(:author_activation)
+  r.match("/people/activate/:activation_code").to(:controller => "People", :action => "activate").name(:person_activation)
 
   
   

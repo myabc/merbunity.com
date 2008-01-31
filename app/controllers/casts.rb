@@ -20,7 +20,7 @@ class Casts < Application
   end
   
   def create(cast)
-    @cast = Cast.new(cast.merge(:author => current_author))
+    @cast = Cast.new(cast.merge(:person => current_person))
     if @cast.save
       if @cast.published?
         redirect url(:cast, @cast)
@@ -36,13 +36,13 @@ class Casts < Application
     only_provides :html
     @cast = Cast.first(:id => id)
       raise NotFound unless @cast
-      raise NotFound if !current_author.publisher? && @cast.author != current_author
+      raise NotFound if !current_person.publisher? && @cast.person != current_person
     render
   end
   
   def update(id, cast)
     @cast = Cast.first(:id => id)
-    raise NotFound if @cast.nil? || !current_author.can_edit?(@cast)
+    raise NotFound if @cast.nil? || !current_person.can_edit?(@cast)
     if @cast.update_attributes(cast)
       redirect url(:cast, @cast)
     else
@@ -52,7 +52,7 @@ class Casts < Application
   
   def destroy(id)
     @cast = Cast.fisrt(:id => id)
-    raise NotFound if @cast.nil? || !current_author.can_destroy?(@cast)
+    raise NotFound if @cast.nil? || !current_person.can_destroy?(@cast)
     if @cast.destroy!
       redirect url(:casts)
     else

@@ -1,28 +1,28 @@
 Story: All things relating to setting up and using casts
 
-  As a author of merbasts 
+  As a person of merbasts 
   I want to do things with pending casts
   So that merbcasts can have active casts
   
   Scenario: A clean casts table with some test data
     Given no current casts in the database
-    And no authors in the database
-    And an active author named: joe
+    And no people in the database
+    And an active person named: joe
     And 13 current pending casts in the database
     And 14 current published casts in the database
   
-  Scenario: An anonymous author visits the pending index
+  Scenario: An anonymous person visits the pending index
     GivenScenario A clean casts table with some test data
-    And an anonymous author
+    And an anonymous person
     
-    When the author visits /pending
+    When the person visits /pending
     
-    The author should be redirected to: /login
+    The person should be redirected to: /login
   
-  Scenario: An active author visits the pending index
+  Scenario: An active person visits the pending index
     GivenScenario A clean casts table with some test data
     
-    When the author visits /pending
+    When the person visits /pending
     
     Then the controller should show 13 pending casts
     And the controller should show 0 published casts
@@ -31,28 +31,28 @@ Story: All things relating to setting up and using casts
     GivenScenario A clean casts table with some test data
     And an active publisher named: harold
   
-    When the author visits /pending
+    When the person visits /pending
   
     Then the controller should show 13 pending casts
     And the controller should show 0 published casts
   
-  Scenario: An active author visits the pending index should only see casts they own
+  Scenario: An active person visits the pending index should only see casts they own
     GivenScenario A clean casts table with some test data
-    And an active author named: fred
+    And an active person named: fred
     And 5 current pending casts in the database
-    And an active author named: joe
+    And an active person named: joe
     
-    When the author visits /pending
+    When the person visits /pending
     
     Then the controller should show 13 pending casts
   
   Scenario: An active publisher visits the pending index and should see all pending casts
     GivenScenario A clean casts table with some test data
-    And an active author named: kevin
+    And an active person named: kevin
     And 5 current pending casts in the database
     And an active publisher named: dudes
     
-    When the author visits /pending
+    When the person visits /pending
     
     Then the controller should show 18 pending casts
 

@@ -11,13 +11,13 @@ class Cast < DataMapper::Base
   property :published_since,          :datetime
   property :cast_number,              :integer
 
-  belongs_to :author, :class => "Author" 
+  belongs_to :person, :class => "Person" 
 
   validates_each :uploaded_file,:groups => [:create], :logic => lambda{
       errors.add(:video_file, "There is no video file uploaded") if uploaded_file.blank?
      }
   
-  validates_presence_of   :author, :groups => [:create]
+  validates_presence_of   :person, :groups => [:create]
 
   before_create   :set_initial_published_status
   after_create    :save_file_to_os
@@ -67,12 +67,12 @@ class Cast < DataMapper::Base
     save
   end
   
-  def editable_by?(author)
-    (author.publisher? || self.author == author) ? true : false
+  def editable_by?(person)
+    (person.publisher? || self.person == person) ? true : false
   end
   
-  def destroyable_by?(author)
-    (author.publisher? || self.author == author) ? true : false
+  def destroyable_by?(person)
+    (person.publisher? || self.person == person) ? true : false
   end
   
   
@@ -95,7 +95,7 @@ class Cast < DataMapper::Base
   end
   
   def set_initial_published_status
-    self.send(:set_publish_data) if self.author.publisher?
+    self.send(:set_publish_data) if self.person.publisher?
   end
 end
 

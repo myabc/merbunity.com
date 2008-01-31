@@ -30,7 +30,7 @@ module Merb
     end
     
     def publishers_only
-      yield if current_author.publisher? && block_given?
+      yield if current_person.publisher? && block_given?
     end
         
   end

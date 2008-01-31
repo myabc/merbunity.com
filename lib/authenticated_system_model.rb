@@ -20,7 +20,7 @@ module AuthenticatedSystem
         self.crypted_password = encrypt(password)
       end
       
-      # Encrypts the password with the author salt
+      # Encrypts the password with the person salt
       def encrypt(password)
         self.class.encrypt(password, salt)
       end
@@ -39,7 +39,7 @@ module AuthenticatedSystem
         remember_me_until (Time.now + time)
       end
 
-      # These create and unset the fields required for remembering authors between browser closes
+      # These create and unset the fields required for remembering people between browser closes
       # Default of 2 weeks 
       def remember_me
         remember_me_for (Merb::Const::WEEK * 2)
@@ -50,7 +50,7 @@ module AuthenticatedSystem
         self.remember_token            = nil
         self.save
       end
-            # Returns true if the author has just been activated.
+            # Returns true if the person has just been activated.
       def recently_activated?
         @activated
       end
@@ -82,7 +82,7 @@ module AuthenticatedSystem
         Digest::SHA1.hexdigest("--#{salt}--#{password}--")
       end
       
-      # Authenticates a author by their login name and unencrypted password.  Returns the author or nil.
+      # Authenticates a person by their login name and unencrypted password.  Returns the person or nil.
       def authenticate(login, password)
         u = find_activated_authenticated_model_with_login(login.downcase) # need to get the salt
         u && u.authenticated?(password) ? u : nil

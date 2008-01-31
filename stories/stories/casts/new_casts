@@ -1,30 +1,30 @@
 Story: Visiting the Casts New page
 
-  As a author of merbasts 
+  As a person of merbasts 
   I want to get to the new form
   So that I can upload new casts
   
-  Scenario: Anonymous author visits the Casts New action
-    Given an anonymous author
+  Scenario: Anonymous person visits the Casts New action
+    Given an anonymous person
     
-    When the author visits /casts/new
+    When the person visits /casts/new
     
-    Then the author should be redirected to: /login
+    Then the person should be redirected to: /login
   
-  Scenario: An active author visits the Casts New action
-    Given no authors in the database
-    And an active author
+  Scenario: An active person visits the Casts New action
+    Given no people in the database
+    And an active person
 
-    When the author visits /casts/new
+    When the person visits /casts/new
 
-    Then the author should see the page: Casts new
-    And the author should be logged in
+    Then the person should see the page: Casts new
+    And the person should be logged in
     And the page should match the selector once: form[@action="/casts/"][@enctype="multipart/form-data"][@method="post"]
     And the page should have an input named: cast[title]
   
   Scenario: An active publisher visits the Casts New action
     Given an active publisher named: joe
     
-    When the author visits /casts/new
+    When the person visits /casts/new
     
-    Then the author should see the page: Casts new
+    Then the person should see the page: Casts new

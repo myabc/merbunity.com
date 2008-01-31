@@ -1,10 +1,10 @@
 steps_for(:navigation) do
-  When("the author gets edit for the current cast") do 
+  When("the person gets edit for the current cast") do 
     get(url(:edit_cast, @cast), :yields => :controller) do 
-      controller.stub!(:current_author).and_return(@author) unless @author.nil?
+      controller.stub!(:current_person).and_return(@person) unless @person.nil?
     end
   end  
-  When("the author gets $action for the current cast") do |action|
+  When("the person gets $action for the current cast") do |action|
     u_r_l = case action
     when "index"
       url(:casts)
@@ -16,10 +16,10 @@ steps_for(:navigation) do
       url(:edit_cast, @cast)
     end
     get(u_r_l, :yields => :controller) do 
-      controller.stub!(:current_author).and_return(@author) unless @author.nil?
+      controller.stub!(:current_person).and_return(@person) unless @person.nil?
     end
   end
-  When("the author gets $action for the pending cast") do |action|
+  When("the person gets $action for the pending cast") do |action|
     u_r_l = case action
     when "index"
       url(:pending_casts)
@@ -27,25 +27,25 @@ steps_for(:navigation) do
       url(:pending_cast, @cast)
     end
     get(u_r_l, :yields => :controller ) do
-      controller.stub!(:current_author).and_return(@author) unless @author.nil?
+      controller.stub!(:current_person).and_return(@person) unless @person.nil?
     end
   end  
-  Then("the author should be redirected to: $path") do |path|
+  Then("the person should be redirected to: $path") do |path|
     controller.should redirect_to(path)
   end
-  Then("the author should see the error page: $exception") do |exception|
+  Then("the person should see the error page: $exception") do |exception|
     # puts controller.params[:exception].message if controller.params[:exception]
     the_exception = "Merb::Controller::#{exception}".constantize
     controller.params[:exception].class.should == the_exception
     controller.status.should == the_exception::STATUS
   end
-  Then("the author should see the page: $controller $action") do |c, a|
+  Then("the person should see the page: $controller $action") do |c, a|
     # puts controller.to_yaml
     controller.params[:controller].downcase.should == c.downcase
     controller.params[:action].downcase.should == a.downcase
     controller.template.should match( /#{a}\.html\./i)
   end
-  Then("the author should be redirected to the current cast $action page") do |action|
+  Then("the person should be redirected to the current cast $action page") do |action|
     puts controller.params[:exception].message if controller.params[:exception]
     case action
     when "index"

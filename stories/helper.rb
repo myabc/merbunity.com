@@ -7,7 +7,7 @@ require 'spec/story'
 require 'merb_stories'
 
 class MerbStory
-  include AuthorSpecHelper 
+  include PersonSpecHelper 
   include ValidHashHelpers
 end
 

@@ -1,14 +1,14 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
-require File.join( File.dirname(__FILE__), "..", "author_spec_helper")
+require File.join( File.dirname(__FILE__), "..", "person_spec_helper")
 require File.join( File.dirname(__FILE__), "..", "authenticated_system_spec_helper")
 require 'cgi'
 
 describe "Sessions Controller", "index action" do
-  include AuthorSpecHelper
+  include PersonSpecHelper
   
   before(:each) do
-    Author.clear_database_table
-    @quentin = Author.create(valid_author_hash.with(:login => "quentin", :password => "test", :password_confirmation => "test"))
+    Person.clear_database_table
+    @quentin = Person.create(valid_person_hash.with(:login => "quentin", :password => "test", :password_confirmation => "test"))
     @controller = Sessions.build(fake_request)
     @quentin.activate
   end
@@ -47,21 +47,21 @@ describe "Sessions Controller", "index action" do
 
   it 'logins and redirects' do
     post "/login", :login => 'quentin', :password => 'test'
-    session[:author].should_not be_nil
-    session[:author].should == @quentin.id
+    session[:person].should_not be_nil
+    session[:person].should == @quentin.id
     controller.should redirect_to("/")
   end
    
   it 'fails login and does not redirect' do
     post "/login", :login => 'quentin', :password => 'bad password'
-    session[:author].should be_nil
+    session[:person].should be_nil
     controller.template.should match(/^new\./)
     controller.should be_success
   end
 
   it 'logs out' do
-    get("/logout"){|response| response.stub!(:current_author).and_return(@quentin) }
-    session[:author].should be_nil
+    get("/logout"){|response| response.stub!(:current_person).and_return(@quentin) }
+    session[:person].should be_nil
     controller.should redirect
   end
 
@@ -76,7 +76,7 @@ describe "Sessions Controller", "index action" do
   end
   
   it 'deletes token on logout' do
-    get("/logout") {|request| request.stub!(:current_author).and_return(@quentin) }
+    get("/logout") {|request| request.stub!(:current_person).and_return(@quentin) }
     cookies["auth_token"].should == nil
   end
   
@@ -93,7 +93,7 @@ describe "Sessions Controller", "index action" do
     CGI::Cookie.new('name' => 'auth_token', 'value' => token)
   end
     
-  def cookie_for(author)
-    auth_token author.remember_token
+  def cookie_for(person)
+    auth_token person.remember_token
   end
 end

@@ -117,22 +117,22 @@ end
 #   end
 # end
 
-desc "Add a publisher and author password: password"
-task :add_devel_authors => :merb_init do
-  require 'spec/author_spec_helper'
+desc "Add a publisher and person password: password"
+task :add_devel_people => :merb_init do
+  require 'spec/person_spec_helper'
   require 'spec/core_ext_spec_helper'
-  include AuthorSpecHelper
+  include PersonSpecHelper
   
   class Merb::Mailer
     self.delivery_method = :test_send
   end
   
-  a = Author.new(valid_author_hash.merge!(  :login => "author",
+  a = Person.new(valid_person_hash.merge!(  :login => "person",
                                             :password => "password",
                                             :password_confirmation => "password"
                                           ))
   a.activate
-  a = Author.new(valid_author_hash.merge!(  :login => "publisher",
+  a = Person.new(valid_person_hash.merge!(  :login => "publisher",
                                             :password => "password",
                                             :password_confirmation => "password"
                                           ))

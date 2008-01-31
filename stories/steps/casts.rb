@@ -17,7 +17,7 @@ steps_for(:casts) do
     number = number.to_i
     1.upto(number) do
       c = Cast.new(valid_cast_hash)
-      c.author = @author
+      c.person = @person
       c.save
     end
   end   
@@ -25,7 +25,7 @@ steps_for(:casts) do
     number = number.to_i
     1.upto(number) do
       c = Cast.new(valid_cast_hash)
-      c.author = @author
+      c.person = @person
       c.save
       c.publish!
     end
@@ -34,33 +34,33 @@ steps_for(:casts) do
     @cast = Cast.first
   end  
   Given("using the first cast found belonging to: $name") do |login|
-    a = Author.first(:login => login)
+    a = Person.first(:login => login)
     @cast = nil and return if a.nil?
     @cast = a.casts.first
   end  
   Given("using the first pending cast found belonging to: $name") do |login|
-    a = Author.first(:login => login)
+    a = Person.first(:login => login)
     @cast = nil and return if a.nil?
     @cast = a.pending_casts.first
   end
-  When("the author posts form data to: $path") do |path|
+  When("the person posts form data to: $path") do |path|
     multipart_post(path, @_form_data) do
-      controller.stub!(:current_author).and_return(@author) unless @author.nil?
+      controller.stub!(:current_person).and_return(@person) unless @person.nil?
     end
   end
-  When("the author puts data to the current cast") do
+  When("the person puts data to the current cast") do
     multipart_put(url(:cast, @cast), @_form_data) do
-      controller.stub!(:current_author).and_return(@author) unless @author.nil?
+      controller.stub!(:current_person).and_return(@person) unless @person.nil?
     end
   end  
   Then("there should be $count casts in the database") do |count|
     Cast.count.should == count.to_i
   end
-  Then("the author should be redirected to the new cast") do 
+  Then("the person should be redirected to the new cast") do 
     cast = controller.assigns(:cast)
     controller.should redirect_to(url(:cast, cast))
   end
-  Then("the author should be redirected to the pending cast") do
+  Then("the person should be redirected to the pending cast") do
     cast = controller.assigns(:cast)
     controller.should redirect_to(url( :pending_cast, cast))
   end

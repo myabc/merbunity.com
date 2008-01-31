@@ -88,11 +88,11 @@ describe Cast, "states" do
     Cast.auto_migrate!
     @cast = Cast.new(valid_cast_hash)
     
-    @author = Author.new(valid_author_hash)
-    @author.save
-    @author.activate
+    @person = Person.new(valid_person_hash)
+    @person.save
+    @person.activate
     
-    @publisher = Author.new(valid_author_hash)
+    @publisher = Person.new(valid_person_hash)
     @publisher.save
     @publisher.activate
     @publisher.make_publisher!
@@ -103,40 +103,40 @@ describe Cast, "states" do
     @cast.errors.should have(0).items   
   end
   
-  it "should belong to an author" do
-    @cast.should respond_to(:author)    
+  it "should belong to an person" do
+    @cast.should respond_to(:person)    
   end
   
-  it "should be invalid without an author" do
-    cast = Cast.new(valid_cast_hash.without(:author))
+  it "should be invalid without an person" do
+    cast = Cast.new(valid_cast_hash.without(:person))
     cast.save
     cast.errors.should have(1).item
-    cast.errors.on(:author).should_not be_empty
+    cast.errors.on(:person).should_not be_empty
   end
   
-  it "should be pending when the author is not a publisher" do
-    @cast.author = @author
+  it "should be pending when the person is not a publisher" do
+    @cast.person = @person
     @cast.save
     @cast.should be_pending    
     @cast.should_not be_published
   end
   
-  it "should not be pending when the author is a publisher" do
-    @cast.author = @publisher
+  it "should not be pending when the person is a publisher" do
+    @cast.person = @publisher
     @cast.save
     @cast.should_not be_pending
     @cast.should be_published  
   end
   
   it "should allow itself to be published" do
-    @cast.author = @author
+    @cast.person = @person
     @cast.save
     @cast.publish!
     @cast.should be_published
   end
   
   it "should persist the fact that it's published" do
-    @cast.author = @author
+    @cast.person = @person
     @cast.publish!
     @cast.save
     @cast.reload!
@@ -144,19 +144,19 @@ describe Cast, "states" do
   end
     
   it "should be editable by the owner" do
-    @cast.author = @author
-    @cast.should be_editable_by(@author)
+    @cast.person = @person
+    @cast.should be_editable_by(@person)
   end
   
   it "should be editable by a publisher" do
-    @cast.author = @author
+    @cast.person = @person
     @cast.should be_editable_by(@publisher)
   end
   
-  it "should not be editable by an owner that is not the author or a publisher" do
-    @cast.author = @author
-    author = Author.new(valid_author_hash.with(:login => "not normal"))
-    @cast.should_not be_editable_by(author)
+  it "should not be editable by an owner that is not the person or a publisher" do
+    @cast.person = @person
+    person = Person.new(valid_person_hash.with(:login => "not normal"))
+    @cast.should_not be_editable_by(person)
   end  
 end
 
@@ -168,7 +168,7 @@ describe Cast, "cast_number" do
     @hash2 = valid_cast_hash
     @cast1 = Cast.new(@hash1)
     @cast2 = Cast.new(@hash2)
-    @author = Author.new(valid_author_hash)
+    @person = Person.new(valid_person_hash)
   end
   
   it "should not have a cast number when pending" do

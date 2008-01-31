@@ -5,49 +5,49 @@ Story: Viewing the show action for pending stories
   So that I can review them to see if they should be published
   
   Scenario: A clean database
-    Given no authors in the database
+    Given no people in the database
     And no current casts in the database
   
-  Scenario: An anonymous author tries to access pending cast
+  Scenario: An anonymous person tries to access pending cast
     GivenScenario: A clean database
-    And an active author named: larry
+    And an active person named: larry
     And 13 current pending casts in the database
     And 12 current published casts in the database
     And using the first pending cast found belonging to: larry
-    And an anonymous author
+    And an anonymous person
     
-    When the author gets show for the pending cast
+    When the person gets show for the pending cast
     
-    Then the author should be redirected to: /login
+    Then the person should be redirected to: /login
   
-  Scenario: An active author tries to access a pending cast they own
+  Scenario: An active person tries to access a pending cast they own
     GivenScenario: A clean database
-    And an active author named: joe
+    And an active person named: joe
     And 5 current pending casts in the database
     And using the first pending cast found belonging to: joe
     
-    When the author gets show for the pending cast
+    When the person gets show for the pending cast
     
-    Then the author should see the page: pending show
+    Then the person should see the page: pending show
   
-  Scenario: An active author tries to access a pending cast they do not own
+  Scenario: An active person tries to access a pending cast they do not own
     GivenScenario: A clean database
-    And an active author named: bluey
+    And an active person named: bluey
     And 2 current pending casts in the database
-    And an active author named: carol
+    And an active person named: carol
     And using the first pending cast found belonging to: bluey
     
-    When the author gets show for the pending cast
+    When the person gets show for the pending cast
     
-    Then the author should see the error page: NotFound
+    Then the person should see the error page: NotFound
     
   Scenario: An active publisher tries to access a pending cast they own
     GivenScenario: A clean database
-    And an active author named: red
+    And an active person named: red
     And 2 current pending casts in the database
     And an active publisher named: johnson
     And using the first pending cast found belonging to: red
     
-    When the author gets show for the pending cast
+    When the person gets show for the pending cast
     
-    Then the author should see the page: pending show
+    Then the person should see the page: pending show
