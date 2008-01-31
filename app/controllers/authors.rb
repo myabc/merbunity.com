@@ -3,6 +3,8 @@ class Authors < Application
   
   # skip_before :login_required
   
+  # TODO: Create a show action for authors
+  
   def new(author = {})
     only_provides :html
     @author = Author.new(author)

@@ -25,13 +25,14 @@ Merb::Router.prepare do |r|
   # r.resources :posts
   # r.match("/").to(:controller => "Home", :action => "show").name(:welcome)
   r.match("/").to(:controller => "casts").name(:welcome)
+  r.resources :casts
   
   r.resources :authors
   r.match("/login").to(:controller => "Sessions", :action => "create").name(:login)
   r.match("/logout").to(:controller => "Sessions", :action => "destroy").name(:logout)
   r.match("/authors/activate/:activation_code").to(:controller => "Authors", :action => "activate").name(:author_activation)
 
-  r.resources :casts
+  
   
   r.to(:controller => "pending") do |p|
     p.match("/pending", :method => "get").to(:action => "index").name(:pending_casts)

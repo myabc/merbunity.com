@@ -1,1 +1,5 @@
-Edit for Casts
+- unless @cast.errors.empty?
+  .error_messages= error_messages_for(@cast)
+
+%p Edit
+= partial :form, :with => @cast, :as => "cast"
