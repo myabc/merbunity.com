@@ -29,3 +29,6 @@ DataMapper::Base.auto_migrate!
 
 ### METHODS BELOW THIS LINE SHOULD BE EXTRACTED TO MERB ITSELF
 
+class Merb::Mailer
+  self.delivery_method = :test_send
+end

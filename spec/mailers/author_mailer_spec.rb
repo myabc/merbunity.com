@@ -8,9 +8,14 @@ describe AuthorMailer do
     AuthorMailer.dispatch_and_deliver action, mail_opts, opts
     @delivery = Merb::Mailer.deliveries.last
   end
+
   
   before(:each) do
-    @u = Author.new(:email => "homer@simpsons.com", :login => "homer", :activation_code => "12345")
+    Merb::Mailer.deliveries.clear
+    @u = Author.new(valid_author_hash.with( :email => "homer@simpsons.com",
+                                            :login => "homer",
+                                            :activation_code => "12345"
+                                            ))
     @mailer_params = { :from      => "info@mysite.com",
                        :to        => @u.email,
                        :subject   => "Welcome to MySite.com" }

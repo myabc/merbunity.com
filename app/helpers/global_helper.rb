@@ -21,7 +21,12 @@ module Merb
     end
     
     def full_url(*args)
-      "" << request.protocol << request.domain << url(*args)
+      begin
+        "" << request.protocol << request.domain << url(*args)
+      rescue
+        # In a mailer spec
+        "http://localhost" << url(*args)
+      end
     end
     
     def publishers_only

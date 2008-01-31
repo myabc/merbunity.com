@@ -5,10 +5,6 @@ class Merb::Controller
   self.session_secret_key = "foo to the bar to the baz"
 end
 
-class Merb::Mailer
-  self.delivery_method = :test_send
-end
-
 class Hash
   
   def with( opts )
