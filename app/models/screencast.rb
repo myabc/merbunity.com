@@ -1,6 +1,7 @@
 class Screencast < DataMapper::Base
   
   include Merbunity::Permissions::ProtectedModel
+  include Merbunity::Publishable
   
   attr_accessor :uploaded_file
   attr_reader   :tmp_file
@@ -44,43 +45,8 @@ class Screencast < DataMapper::Base
   def full_path
     file_path / filename
   end
-  
-  
-  ################  Published Stuff
-  property :published_on,          :datetime
-  
-  before_create   :set_initial_published_status
-  
-  def self.pending(opts={})
-    self.all(opts.merge!(:published_on => nil))
-  end
-  
-  def self.published(opts={})
-    self.all(opts.merge!(:published_on.not => nil))
-  end
-  
-  def pending?
-    @published_on.nil?
-  end
-  
-  def published?
-    !@published_on.nil?
-  end
-  
-  def publish!
-    self.send(:set_publish_data)
-    save
-  end
-  
+ 
   private 
-  def set_publish_data
-    @published_on = DateTime.now
-  end
-  
-  def set_initial_published_status
-    self.send(:set_publish_data) if self.owner.publisher?
-  end
-  
   def delete_associated_file!
     FileUtils.rm(full_path) if File.file?(full_path)
   end
