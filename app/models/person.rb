@@ -6,6 +6,7 @@ rescue
 end
 class Person < DataMapper::Base
   include AuthenticatedSystem::Model
+  include Merbunity::Permissions::User
   
   attr_accessor :password, :password_confirmation
   

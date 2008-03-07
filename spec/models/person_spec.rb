@@ -3,7 +3,10 @@ require File.join( File.dirname(__FILE__), "..", "spec_helper" )
 describe Person do
   include PersonSpecHelper
   
+  it_should_behave_like "A model that implements Merbunity::Permissions::User"
+  
   before(:each) do
+    @klass = Person
     Person.clear_database_table
     PersonMailer.stub!(:activation_notification).and_return(true)
   end

@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper.rb')
 
-describe "User Model Permissions System" do
+describe Merbunity::Permissions::User do
   
   class TheUserModel 
     include Merbunity::Permissions::User
@@ -16,7 +16,6 @@ describe "User Model Permissions System" do
     def viewable_by?(user);     @viewable;    end
     def editable_by?(user);     @editable;    end
     def destroyable_by?(user);  @destroyable; end
-      
   end
   
   before(:all) do 
@@ -81,6 +80,15 @@ describe "User Model Permissions System" do
     o.should_not respond_to(:destroyable_by?)
     
     @user.can_destroy?(o).should be_true
+  end
+  
+end
+
+describe "A model that implements Merbunity::Permissions::User", :shared => true do
+  
+  it "should include Merbunity::Permissions::User" do
+    @klass.should_not be_nil
+    @klass.should include(Merbunity::Permissions::User)
   end
   
 end
