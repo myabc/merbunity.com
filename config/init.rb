@@ -30,6 +30,7 @@ use_orm :datamapper
 # use_orm :sequel
 
 dependencies "merb-assets", "merb-haml"
+dependency "permissions/permissions"
 
 
 ### This defines which test framework the generators will use

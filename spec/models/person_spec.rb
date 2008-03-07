@@ -1,6 +1,4 @@
 require File.join( File.dirname(__FILE__), "..", "spec_helper" )
-require File.join( File.dirname(__FILE__), "..", "person_spec_helper")
-require File.join( File.dirname(__FILE__), "..", "authenticated_system_spec_helper")
 
 describe Person do
   include PersonSpecHelper
