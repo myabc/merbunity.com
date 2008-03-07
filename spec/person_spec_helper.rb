@@ -1,7 +1,7 @@
 module PersonSpecHelper
   def valid_person_hash
-    { :login                  => "daniel",
-      :email                  => "daniel@example.com",
+    { :login                  => String.random(10),
+      :email                  => "#{String.random}@example.com",
       :password               => "sekret",
       :password_confirmation  => "sekret"}
   end

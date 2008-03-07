@@ -20,6 +20,13 @@ describe Merbunity::Permissions::ProtectedModel do
   
   class TheUserModel
     
+    def initialize(opts = {})
+      @publisher = opts[:publisher]
+    end
+    
+    def publisher?
+      @publisher
+    end
   end
   
   before(:all) do
@@ -50,9 +57,9 @@ describe Merbunity::Permissions::ProtectedModel do
     mpm.editable_by?(@user).should be_true
   end
   
-  it "should not be editable if the user is not the owner" do
+  it "should not be editable if the user is not the owner or publisher" do
     mpm = MyProtectedModel.new(@user)
-    u = TheUserModel.new
+    u = TheUserModel.new(:publisher => false)
     mpm.editable_by?(u).should be_false    
   end
   
@@ -73,14 +80,3 @@ describe Merbunity::Permissions::ProtectedModel do
   
 end
 
-describe "a model that implements Merbunity::Permissons::ProtectedModel", :shared => true do
-  
-  it "should implement all the methods of Merbunity::Permissions::ProtectedModel" do 
-    @klass.should_not be_nil
-    obj = @klass.new
-    Merbunity::Permissions::ProtectedModel.public_instance_methods.each do |m|
-      obj.should respond_to(m.to_sym)
-    end
-  end
-  
-end

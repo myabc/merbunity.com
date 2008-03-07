@@ -83,12 +83,3 @@ describe Merbunity::Permissions::User do
   end
   
 end
-
-describe "A model that implements Merbunity::Permissions::User", :shared => true do
-  
-  it "should include Merbunity::Permissions::User" do
-    @klass.should_not be_nil
-    @klass.should include(Merbunity::Permissions::User)
-  end
-  
-end

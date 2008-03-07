@@ -10,6 +10,7 @@ module AuthenticatedSystem
     end
     
     def find_activated_authenticated_model_with_login(login)
+      login = (login || "").downcase
       if Person.instance_methods.include?("activated_at")
         Person.first(:login => login, :activated_at.not => nil)
       else

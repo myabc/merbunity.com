@@ -20,6 +20,8 @@ class Person < DataMapper::Base
   property :remember_token,             :string
   property :created_at,                 :datetime
   property :updated_at,                 :datetime
+  property :publisher_since,            :datetime
+
   
   validates_length_of         :login,                   :within => 3..40
   validates_uniqueness_of     :login
@@ -35,6 +37,23 @@ class Person < DataMapper::Base
   before_save :encrypt_password
   before_create :make_activation_code
   after_create :send_signup_notification
+  
+  has_many :screencasts
+  
+  def self.first_publisher(opts)
+    self.first(opts.merge(:publisher_since.not => nil))
+  end
+  
+  def publisher?
+    !@publisher_since.nil?
+  end
+  
+  def make_publisher!
+    @publisher_since ||= DateTime.now
+    save
+  end
+  
+  ##############  Generated Code ######################
   
   def login=(value)
     @login = value.downcase unless value.nil?
