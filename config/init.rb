@@ -31,7 +31,7 @@ use_orm :datamapper
 
 dependencies "merb-assets", "merb-haml"
 dependency "permissions/permissions"
-
+dependency "datamapper_extensions"
 
 ### This defines which test framework the generators will use
 ### rspec is turned on by default

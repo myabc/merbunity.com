@@ -12,7 +12,9 @@ module Merbunity
       
       def editable_by?(user)
         if self.respond_to?(:owner)
-          return self.owner == user ? true : false
+          return true if self.owner == user
+          return true if user.publisher?
+          return false
         else
           true
         end

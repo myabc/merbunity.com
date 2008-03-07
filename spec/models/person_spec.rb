@@ -1,12 +1,77 @@
 require File.join( File.dirname(__FILE__), "..", "spec_helper" )
 
+describe Person, "in merbcasts" do
+  include PersonSpecHelper
+  
+  before(:each) do
+    Person.auto_migrate!
+    PersonMailer.stub!(:activation_notification).and_return(true)
+    
+    @publisher = Person.new(valid_person_hash)
+    @publisher.save
+    @publisher.activate
+    @publisher.make_publisher!
+    
+    @person = Person.new(valid_person_hash)
+    @person.save
+  end
+  
+  it "should have many screencasts" do
+    person = Person.new(valid_person_hash)
+    person.should respond_to(:screencasts)
+  end
+  
+  it "should be made a publisher" do
+    hash = valid_person_hash
+    person = Person.new(hash)
+    person.save
+    person.activate
+    person.should be_active
+    person.make_publisher!
+    person.should be_publisher    
+  end
+  
+  it "should persist the publisher status" do
+    @publisher.should be_publisher
+    publisher = Person.first_publisher(:login => @publisher.login)
+    publisher.should_not be_nil
+    publisher.should be_publisher
+  end
+  
+  it "should not say that an person is a publisher if they have not yet been made a publisher" do
+    person = Person.new(hash)
+    person.save
+    person.activate
+    person.should_not be_publisher
+  end
+  
+  it "should return true for can_edit? if there is no editable_by? method on the target" do
+    obj = Object.new
+    obj.should_not respond_to(:editable_by?)
+    @person.can_edit?(obj).should be_true
+  end
+  
+  class EditableTest
+    def initialize(value)
+      @response = value
+    end
+    def editable_by?(user)
+      @response
+    end
+  end
+  
+  it "should return the value of :editable_by? if it responds to it" do
+    @person.can_edit?(EditableTest.new(true)).should be_true
+    @person.can_edit?(EditableTest.new(false)).should be_false    
+  end
+  
+end
+
+
 describe Person do
   include PersonSpecHelper
   
-  it_should_behave_like "A model that implements Merbunity::Permissions::User"
-  
   before(:each) do
-    @klass = Person
     Person.clear_database_table
     PersonMailer.stub!(:activation_notification).and_return(true)
   end
@@ -73,10 +138,12 @@ describe Person do
   end  
   
   it "should authenticate a person using a class method" do
-    person = Person.new(valid_person_hash)
+    hash = valid_person_hash
+    person = Person.new(hash)
     person.save
     person.activate
-    Person.authenticate(valid_person_hash[:login], valid_person_hash[:password]).should_not be_nil
+    person.should_not be_new_record
+    Person.authenticate(hash[:login], hash[:password]).should_not be_nil
   end
   
   it "should not authenticate a person using the wrong password" do
@@ -196,8 +263,9 @@ describe Person, "the password fields for Person" do
   end
   
   it "should not require a password when saving an existing person" do
-    person = Person.create(valid_person_hash)
-    person = Person.find_with_conditions(:login => valid_person_hash[:login])
+    hash = valid_person_hash
+    person = Person.create(hash)
+    person = Person.find_with_conditions(:login => hash[:login].downcase)
     person.password.should be_nil
     person.password_confirmation.should be_nil
     person.login = "some_different_login_to_allow_saving"
@@ -240,7 +308,7 @@ describe Person, "activation" do
     @person.save
     @person.activate
     @person.should be_activated
-    Person.find_with_conditions(:login => valid_person_hash[:login]).should be_activated
+    Person.find_with_conditions(:login => @person.login).should be_activated
   end
   
   it "should should show recently activated when the instance is activated" do
@@ -251,8 +319,9 @@ describe Person, "activation" do
   
   it "should not show recently activated when the instance is fresh" do
     @person.activate
+    login = @person.login
     @person = nil
-    Person.find_with_conditions(:login => valid_person_hash[:login]).should_not be_recently_activated
+    Person.find_with_conditions(:login => login).should_not be_recently_activated
   end
   
   it "should send out a welcome email to confirm that the account is activated" do
@@ -304,7 +373,7 @@ describe Person, "remember_me" do
     @person.remember_me_until(time)
     @person.remember_token.should_not be_nil
     @person.save
-    Person.find_with_conditions(:login => valid_person_hash[:login]).remember_token.should_not be_nil
+    Person.find_with_conditions(:login => @person.login).remember_token.should_not be_nil
   end
   
   it "should remember me for" do
@@ -335,12 +404,12 @@ describe Person, "remember_me" do
     @person.remember_me
     @person.save
     
-    @person = Person.find_with_conditions(:login => valid_person_hash[:login])
+    @person = Person.find_with_conditions(:login => @person.login)
     @person.remember_token.should_not be_nil
     
     @person.forget_me
 
-    @person = Person.find_with_conditions(:login => valid_person_hash[:login])
+    @person = Person.find_with_conditions(:login => @person.login)
     @person.remember_token.should be_nil
     @person.remember_token_expires_at.should be_nil
   end
