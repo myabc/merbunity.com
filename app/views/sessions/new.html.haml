@@ -1,0 +1,5 @@
+- form_tag :action => url(:login) do
+  %p= text_field      :name => "login",       :label => "Login"
+  %p= password_field  :name => "password",    :label => "Password"  
+  %p= checkbox_field :name => "remember_me", :label => "Remember Me"
+  %p= submit_button "Login"

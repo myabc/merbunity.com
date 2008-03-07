@@ -1,0 +1,7 @@
+= error_messages_for @person
+- form_for @person, :action => url(:people) do
+  %p= text_control      :login,                 :label => "Login"
+  %p= text_control      :email,                 :label => "Email"
+  %p= password_control  :password,              :lable => "Password"
+  %p= password_control  :password_confirmation, :label => "Password Confirmation"
+  %p= submit_button     "Sign Up"

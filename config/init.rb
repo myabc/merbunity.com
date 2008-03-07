@@ -21,13 +21,15 @@ end
 ### if you need a database.
 
 ### Uncomment for DataMapper ORM
-# use_orm :datamapper
+use_orm :datamapper
 
 ### Uncomment for ActiveRecord ORM
 # use_orm :activerecord
 
 ### Uncomment for Sequel ORM
 # use_orm :sequel
+
+dependencies "merb-assets", "merb-haml"
 
 
 ### This defines which test framework the generators will use
@@ -55,4 +57,9 @@ Merb::BootLoader.after_app_loads do
   ### Add dependencies here that must load after the application loads:
 
   # dependency "magic_admin" # this gem uses the app's model classes
+end
+
+begin 
+  require File.join(File.dirname(__FILE__), '..', 'lib', 'authenticated_system/authenticated_dependencies') 
+rescue LoadError
 end
