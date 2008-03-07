@@ -19,33 +19,16 @@
 # You can also use regular expressions, deferred routes, and many other options.
 # See merb/specs/merb/router.rb for a fairly complete usage sample.
 
-puts "Compiling routes.."
+Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do |r|
   # RESTful routes
   # r.resources :posts
-  # r.match("/").to(:controller => "Home", :action => "show").name(:welcome)
-  r.match("/").to(:controller => "casts").name(:welcome)
-  r.resources :casts
-  
-  r.resources :people
-  r.match("/login").to(:controller => "Sessions", :action => "create").name(:login)
-  r.match("/logout").to(:controller => "Sessions", :action => "destroy").name(:logout)
-  r.match("/people/activate/:activation_code").to(:controller => "People", :action => "activate").name(:person_activation)
 
-  
-  
-  r.to(:controller => "pending") do |p|
-    p.match("/pending", :method => "get").to(:action => "index").name(:pending_casts)
-    p.match("/pending/:id", :method => "get").to(:action => "show").name(:pending_cast)
-    p.match("/pending/publish/:id", :method => "put").to(:action => "update").name(:publish)
-  end
-  
-  r.match("/downloads/:id").to(:controller => "casts", :action => "download").name(:download)
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent
   # clients from calling your create or destroy actions with a GET
-  # r.default_routes
+  r.default_routes
   
   # Change this for your home page to be available at /
   # r.match('/').to(:controller => 'whatever', :action =>'index')
