@@ -13,8 +13,6 @@ class Screencast < DataMapper::Base
   property :original_filename,        :string
   property :created_at,               :datetime
   
-  belongs_to :owner, :class_name => "Person"
-  
   validates_each :uploaded_file,:groups => [:create], :logic => lambda{
       errors.add(:video_file, "There is no video file uploaded") if uploaded_file.blank?
      }

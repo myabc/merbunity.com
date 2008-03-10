@@ -5,6 +5,8 @@ module Merbunity
       base.class_eval do
         property        :published_on,          :datetime
         before_create   :set_initial_published_status
+        
+        belongs_to :owner, :class_name => "Person"
  
         def self.pending(opts={})
           self.all(opts.merge!(:published_on => nil))
@@ -13,6 +15,10 @@ module Merbunity
         def self.published(opts={})
           self.all(opts.merge!(:published_on.not => nil))
         end
+        
+        def self.find_published(id)
+          self.first(:id => id, :published_on.not => nil)
+        end          
         
       end
       
