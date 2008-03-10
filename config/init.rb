@@ -29,10 +29,11 @@ use_orm :datamapper
 ### Uncomment for Sequel ORM
 # use_orm :sequel
 
-dependencies "merb-assets", "merb-haml"
+dependencies "merb-assets", "merb-haml", "merb-action-args", "merb_param_protection"
 dependency "permissions/permissions"
 dependency "datamapper_extensions"
 dependency "publishable_mixin"
+dependency "publishable_controller_mixin"
 
 ### This defines which test framework the generators will use
 ### rspec is turned on by default

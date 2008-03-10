@@ -7,4 +7,7 @@
     %meta{ "http-equiv" => "content-type", :content => "text/html; charset=utf-8"}
     = css_include_tag :master
   %body
+    .header
+      %h1 
+        = catch_content :for_header
     = catch_content :for_layout
