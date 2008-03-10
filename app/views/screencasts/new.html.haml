@@ -1,4 +1,4 @@
-- throw_content :for_header, "Add Your Screencast"
+- throw_content :for_header do
+  = "Add Your Screencast"
 
-%p 
-  Edit this file in <tt>app/views/screencasts/new.html.erb</tt>
+= partial :form, :with => @screencast, :as => "screencast"
