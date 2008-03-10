@@ -3,7 +3,7 @@ class Screencasts < Application
   publishable_resource Screencast
   
   # provides :xml, :yaml, :js
-  before :login_required, :only => [:new, :create, :edit, :update]
+  # before :login_required, :only => [:new, :create, :edit, :update]
   params_protected :screencast => [:owner]
   
   def index
