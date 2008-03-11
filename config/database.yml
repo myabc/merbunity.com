@@ -6,7 +6,7 @@
 
 :test:
   <<: *defaults
-  :database: db/sample_test.db
+  :database: ":memory:"
 
 :production:
   <<: *defaults

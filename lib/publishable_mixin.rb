@@ -6,7 +6,9 @@ module Merbunity
         property        :published_on,          :datetime
         before_create   :set_initial_published_status
         
-        belongs_to :owner, :class_name => "Person"
+        belongs_to :owner, :class => "Person"
+        
+        validates_presence_of   :owner, :groups => [:create]
  
         def self.pending(opts={})
           self.all(opts.merge!(:published_on => nil))
@@ -23,6 +25,22 @@ module Merbunity
       end
       
       base.send(:include, InstanceMethods)
+      person_methods =<<-EOF
+        def pending_#{bn = base.name.snake_case.pluralize}
+          @_pending#{bn} ||= #{base.name}.all(:published_on => nil)
+        end
+        
+        def #{bn}
+          @_#{bn} ||= #{base.name}.all
+        end
+        
+        def published_#{bn}
+          @_published_#{bn} = #{base.name}.all(:published_on.not => nil)
+        end
+      EOF
+      
+      Person.class_eval(person_methods)
+      
     end
     
     module InstanceMethods
