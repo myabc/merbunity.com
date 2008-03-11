@@ -27,15 +27,15 @@ module Merbunity
       base.send(:include, InstanceMethods)
       person_methods =<<-EOF
         def pending_#{bn = base.name.snake_case.pluralize}
-          @_pending#{bn} ||= #{base.name}.all(:published_on => nil)
+          @_pending#{bn} ||= #{base.name}.all(:published_on => nil, :owner_id => self.id)
         end
         
         def #{bn}
-          @_#{bn} ||= #{base.name}.all
+          @_#{bn} ||= #{base.name}.all(:owner_id => self.id)
         end
         
         def published_#{bn}
-          @_published_#{bn} = #{base.name}.all(:published_on.not => nil)
+          @_published_#{bn} = #{base.name}.all(:published_on.not => nil, :owner_id => self.id)
         end
       EOF
       
