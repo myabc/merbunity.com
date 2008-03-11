@@ -16,8 +16,6 @@ class Screencast < DataMapper::Base
   validates_each :uploaded_file,:groups => [:create], :logic => lambda{
       errors.add(:video_file, "There is no video file uploaded") if uploaded_file.blank?
      }
-  
-  validates_presence_of   :owner, :groups => [:create]
 
   after_create    :save_file_to_os
   after_destroy   :delete_associated_file!
