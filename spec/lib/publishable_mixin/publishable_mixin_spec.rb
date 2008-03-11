@@ -19,13 +19,16 @@ describe "Merbunity::Publishable" do
     @publisher.save
     @publisher.make_publisher!
     
+    @other_person = Person.create(valid_person_hash)
+    
     1.upto(4){ |i| p = MyPublishableModel.new(:owner => @person); p.save; p.publish! if (i % 2) == 0 }
+    1.upto(2){ |i| p = MyPublishableModel.create(:owner => @other_person)}
   end
   
   it "should setup the test correctly" do
     published, pending = MyPublishableModel.all.partition{|m| m.published?}
     published.should have(2).items
-    pending.should have(2).items
+    pending.should have(4).items
   end
   
   it "should add a pending_publishable_model to the person model - for the PublishableModel class" do
@@ -98,7 +101,7 @@ describe "Merbunity::Publishable" do
   
   it "should make a pending method on the class" do
     p = MyPublishableModel.pending
-    p.should have(2).items
+    p.should have(4).items
     p.each{|m| m.should be_pending}
   end
   
@@ -122,25 +125,26 @@ end
 
 describe Merbunity::PublishableController do
   
-  before(:each) do
-    @person = Person.create(valid_person_hash)
-  end
-  
-  
-  it "should add publishable_resource to Merb::Controller" do
-    Merb::Controller.should respond_to(:publishable_resource)    
-  end
-  
   class PublishableModel < DataMapper::Base
     include Merbunity::Publishable
   end
   
-  class PublishableController < Merb::Controller
+  class PublishableController < Application
     publishable_resource PublishableModel
   end
   
-  PublishableModel.auto_migrate!
+  before(:each) do
+    @person = Person.create(valid_person_hash)
+    PublishableModel.auto_migrate!
+  end
   
+  it "should setup the specs properly" do
+    PublishableController.should include(AuthenticatedSystem::Controller)
+  end
+
+  it "should add publishable_resource to Merb::Controller" do
+    Merb::Controller.should respond_to(:publishable_resource)    
+  end
   
   it "should add these class attributes" do
     [:publishable_klass, :publishable_collection_ivar_name].each do |cvar|
@@ -170,17 +174,65 @@ describe Merbunity::PublishableController do
     Person.new.should respond_to(:pending_publishable_models)    
   end
   
-  it "should get the index of pending objects for a user if they are not a publisher" do
-    @person.should_not be_a_publisher
-    c = dispatch_to(PublishableController, :pending) do |controller|
-      controller.stub!(:current_user).and_return(@person)
-    end
+  it "should set the publishable_klass for the controller" do
+    PublishableController.publishable_klass.should == PublishableModel    
   end
   
+  it "should get the index of pending objects for a user if they are not a publisher" do
+    p = Person.create(valid_person_hash)
+    p.should_not be_a_publisher
+    1.upto(3){ PublishableModel.create(:owner => p)}
+    
+    @person.should_not be_a_publisher
+    1.upto(2){ PublishableModel.create(:owner => @person)}
+    
+    c = dispatch_to(PublishableController, :pending) do |controller|
+      controller.stub!(:display).and_return("DISPLAYED")
+      controller.stub!(:current_person).and_return(@person)
+    end
+    result = c.assigns(:publishable_models)
+    result.should_not be_nil
+    result.should have(2).items
+    result.each{|r| r.owner.should == @person}
+  end
   
+  it "should get the index of all pending objects for a user if they are a publisher" do
+    p = Person.create(valid_person_hash)
+    [@person, p].each do |dude|
+      dude.should_not be_a_publisher
+      1.upto(3){ i = PublishableModel.create(:owner => dude); i.should be_pending; i.should_not be_a_new_record}
+    end
+    
+    publisher = Person.create(valid_person_hash)
+    publisher.make_publisher!
+    
+    c = dispatch_to(PublishableController, :pending) do |controller|
+      controller.stub!(:display).and_return("DISPLAYED")
+      controller.stub!(:current_person).and_return(publisher)
+    end
+    result = c.assigns(:publishable_models)
+    result.should_not be_nil
+    result.should have(6).items
+    result.any?{|m| m.owner != publisher}.should be_true
+  end
   
-  it "should get the index of all pending objects for a user if they are a publisher"
-  
-  it "should require login"
+  it "should limit the number of pending results to 10" do
+    pub = Person.create(valid_person_hash)
+    pub.make_publisher!
+    p = Person.create(valid_person_hash)
+    
+    1.upto(11){PublishableModel.create(:owner => p)}
+    c = dispatch_to(PublishableController, :pending) do |controller|
+      controller.stub!(:display).and_return("DISPLAYED")
+      controller.stub!(:current_person).and_return(pub)
+    end
+    result = c.assigns(:publishable_models)
+    result.should_not be_nil
+    result.should have(10).items
+  end
 
+  it "should require login" do
+    c = dispatch_to(PublishableController, :pending)
+    c.should redirect_to(url(:login))    
+  end
 end
