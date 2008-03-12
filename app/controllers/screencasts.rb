@@ -1,8 +1,7 @@
 class Screencasts < Application
 
   publishable_resource Screencast
-  
-  provides :js
+
   before :login_required, :only => [:new, :create, :edit, :update, :destroy]
   
   params_protected :screencast => [:owner]
@@ -12,8 +11,6 @@ class Screencasts < Application
     display @screencasts
   end
 
-  # TODO make this so that it checks for pending status.  Adjust the normal permissions
-  # to account for if it's pending and if your a publisher  or owner etc.
   def show(id)
     @screencast = Screencast.find_published(id)
     raise NotFound unless @screencast
@@ -47,7 +44,7 @@ class Screencasts < Application
   def update(id, screencast = {})
     @screencast = Screencast.first(id)
     raise NotFound unless @screencast
-    raise Unauthorized unless @screencast.editable_by?(current_person)
+    raise Unauthorized unless current_person.can_edit?(@screencast)
     if @screencast.update_attributes(screencast)
       redirect url(:screencast, @screencast)
     else
