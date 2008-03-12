@@ -11,11 +11,11 @@ module Merbunity
         validates_presence_of   :owner, :groups => [:create]
  
         def self.pending(opts={})
-          self.all(opts.merge!(:published_on => nil))
+          self.all({:order => "created_at DESC"}.merge!(opts).merge!(:published_on => nil))
         end
         
         def self.published(opts={})
-          self.all(opts.merge!(:published_on.not => nil))
+          self.all({:order => "published_on DESC"}.merge!(opts).merge!(:published_on.not => nil))
         end
         
         def self.find_published(id)

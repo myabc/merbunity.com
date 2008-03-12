@@ -21,12 +21,13 @@ class Screencast < DataMapper::Base
   after_destroy   :delete_associated_file!
   
   def initialize(hash = {})
-    super(hash)
+    
     if hash[:uploaded_file]
       @original_filename = hash[:uploaded_file]["filename"]
       @tmp_file = hash[:uploaded_file]["tempfile"]
       @size = hash[:uploaded_file]["size"]
     end
+    super(hash)
   end
   
   def filename

@@ -2,19 +2,22 @@ class Screencasts < Application
 
   publishable_resource Screencast
   
-  # provides :xml, :yaml, :js
-  # before :login_required, :only => [:new, :create, :edit, :update]
+  provides :js
+  before :login_required, :only => [:new, :create, :edit, :update]
+  
   params_protected :screencast => [:owner]
   
   def index
-    @screencasts = Screencast.published(:limit => 10, :order => "published_on DESC")
+    @screencasts = Screencast.published(:limit => 10)
     display @screencasts
   end
 
-  # Once something is published it's available for all ppl to see.
+  # TODO make this so that it checks for pending status.  Adjust the normal permissions
+  # to account for if it's pending and if your a publisher  or owner etc.
   def show(id)
     @screencast = Screencast.find_published(id)
     raise NotFound unless @screencast
+    raise NotFound unless @screencast.viewable_by?(current_person)
     display @screencast
   end
 
@@ -23,7 +26,7 @@ class Screencasts < Application
     @screencast = Screencast.new(screencast)
     render
   end
-
+  
   def edit(id)
     only_provides :html
     @screencast = Screencast.first(id)
@@ -35,11 +38,7 @@ class Screencasts < Application
   def create(screencast)
     @screencast = Screencast.new(screencast.merge(:owner => current_person))
     if @screencast.save
-      if @screencast.published?
-        redirect url(:screencast, @screencast)
-      else
-        redirect url(:pending_screencast, @screencast)
-      end
+      redirect url(:screencast, @screencast)
     else
       render :new
     end
