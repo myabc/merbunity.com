@@ -111,7 +111,7 @@ describe Screencasts, "show action" do
     Screencast.should_receive(:find_published).and_return ms
     lambda do
       dispatch_to(Screencasts, :show, :id => ms.id)
-    end.should raise_error(Merb::Controller::NotFound)
+    end.should raise_error(Merb::Controller::Unauthorized)
   end
   
   
@@ -120,9 +120,11 @@ end
 describe Screencasts, "edit action" do
   before(:all) do
     Person.auto_migrate!
-    Screencast.auto_migrate!
     @p = Person.create(valid_person_hash)
-    
+  end
+  
+  before(:each) do
+    Screencast.auto_migrate!
     @s = Screencast.new(valid_screencast_hash.with(:owner => @p))
     @s.save
   end
@@ -132,32 +134,190 @@ describe Screencasts, "edit action" do
     c.should redirect_to(url(:login))     
   end
   
-  it "should show the edit form if the person is logged in and the owner of the cast" do
-    c = dispatch_to(Screencasts, :edit, :id => @s.id) do |c|
+  it "should ask the object if the current user can edit it" do
+    s = Screencast.new(valid_screencast_hash.with(:owner => @p))    
+    s.save
+    Screencast.should_receive(:first).with(s.id.to_s).and_return(s)
+    dispatch_to(Screencasts, :edit, :id => s.id) do |c|
+      c.stub!(:current_person).and_return @p
+      s.should_receive(:editable_by?).with(@p).and_return true
+    end    
+  end
+  
+  it "should show the edit form if the screencast can be edited by the current person" do
+    s = Screencast.new(valid_screencast_hash.with(:owner => @p))
+    s.save
+    s.should_receive(:editable_by?).with(@p).and_return true
+    Screencast.should_receive(:first).with(s.id.to_s).and_return(s)
+    c = dispatch_to(Screencasts, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
     end
+    c.should be_successful    
+  end
+  
+  it "should raise an error when the screncast is not editable by this person" do
+    s = Screencast.new(valid_screencast_hash.with(:owner => @p))    
+    s.save
+    s.should_receive(:editable_by?).with(@p).and_return false
+    Screencast.should_receive(:first).with(s.id.to_s).and_return(s)
+    lambda do
+      dispatch_to(Screencasts, :edit, :id => s.id) do |c|
+        c.stub!(:current_person).and_return @p
+      end
+    end.should raise_error(Merb::Controller::Unauthorized)
+  end
+end
+
+describe Screencasts, "update action" do
+  before(:all) do
+    Person.auto_migrate!
+    @p = Person.create(valid_person_hash)
+    @pub = Person.create(valid_person_hash)
+    @pub.make_publisher!
+  end
+  
+  before(:each) do
+    Screencast.auto_migrate!
+    @s = Screencast.new(valid_screencast_hash.with(:owner => @p))
+    @s.save
+  end
+  
+  it "should require a user to be logged in" do
+    c = dispatch_to(Screencasts, :update, :id => @s.id, :screencast => {:title => "My Title"})
+    c.should redirect_to(url(:login))
+  end
+  
+  it "should raise a not found error if the screencast does not exist" do
+    lambda do
+      dispatch_to(Screencasts, :update, :id => 999, :screencast => {:title => "my title"}) do |c|
+        c.stub!(:current_person).and_return(@p)
+      end 
+    end.should raise_error(Merb::Controller::NotFound)    
+  end
+  
+  it "should ask the screencast if it is editable by the current person" do
+    s = Screencast.new(valid_screencast_hash.with(:owner => @p))    
+    s.save
+    s.should_receive(:editable_by?).with(@p).and_return true
+    Screencast.should_receive(:first).and_return(s)
+    dispatch_to(Screencasts, :update, :id => 123, :screencast => {:title => "blah"}) do |c|
+      c.stub!(:current_person).and_return @p
+    end
+  end
+  
+  it "should raise an error if the screencast is not editable by the current person" do
+    s = Screencast.new(valid_screencast_hash.with(:owner => @p))
+    s.save
+    s.should_receive(:editable_by?).with(@p).and_return false
+    Screencast.should_receive(:first).and_return s
+    lambda do
+      dispatch_to(Screencasts, :update, :id => 123, :screencast => {:title => "blah"}) do |c|
+        c.stub!(:current_person).and_return @p
+      end
+    end.should raise_error(Merb::Controller::Unauthorized)
+  end
+  
+  it "should update the screencast with the attributes given" do
+    s = Screencast.new(valid_screencast_hash.with(:owner => @p))    
+    s.save
+    s.should_receive(:editable_by?).with(@p).and_return true
+    Screencast.should_receive(:first).and_return s
+    attrs = {:title => "My New Title"}
+    s.should_receive(:update_attributes) do |args|
+      args['title'].should == "My New Title"
+      true
+    end
     
-    
+    c = dispatch_to(Screencasts, :update, :id => s.id, :screencast => attrs) do |c|
+      c.stub!(:current_person).and_return(@p)
+    end
+    c.should redirect_to(url(:screencast, s))
+  end
+  
+  it "should render the edit action if the update_attributes does not work" do
+    s = Screencast.new(valid_screencast_hash.with(:owner => @p))
+    s.save    
+    s.should_receive(:editable_by?).and_return(true)
+    s.should_receive(:update_attributes).and_return false
+    Screencast.should_receive(:first).and_return s
+    attrs = {:title => "My New Title"}
+    c = dispatch_to(Screencasts, :update, :id => s.id, :screencast => attrs) do |c|
+      c.stub!(:current_person).and_return @p
+      c.should_receive(:render).with(:edit)
+    end
+  end
+  
+  it "should strip the :owner attribute from the params hash" do
+    s = Screencast.new(valid_person_hash.with(:owner => @p))    
+    s.save
+    s.should_receive(:editable_by?).and_return(true)
+    s.should_receive(:update_attributes) do |args|
+      args['owner'].should be_nil
+      args[:owner].should be_nil
+      true
+    end
+    Screencast.should_receive(:first).and_return s
+    attrs = {:title => "My Titel", :owner => 1}
+    c = dispatch_to(Screencasts, :update, :id => s.id, :screencast => attrs ) do |c|
+      c.stub!(:current_person).and_return @p
+    end
+    c.params[:screencast][:title].should_not be_nil
+    c.params[:screencast][:owner].should be_nil
+  end
+end
+
+describe Screencasts, "delete action" do
+  before(:all) do
+    Person.auto_migrate!
+    @p= Person.create valid_person_hash
+  end
+  
+  before(:each) do
+    Screencast.auto_migrate!
+    @s = Screencast.new(valid_screencast_hash.with(:owner => @p))
+    @s.save
+  end
+  
+  it "should not execute the action without being logged in" do
+    c = dispatch_to(Screencasts, :destroy, :id => @s.id)
+    c.should redirect_to(url(:login))
+  end
+
+  it "should raise a not found error if the screencast cannot be found" do
+    lambda do
+      dispatch_to(Screencasts, :destroy, :id => 99854) do |c|
+        c.stub!(:current_person).and_return(@p)
+      end
+    end.should raise_error(Merb::Controller::NotFound)
+  end
+  
+  it "should ask the screencast if it can be destroyed by the current person" do
+    @s.should_receive(:destroyable_by?).and_return(true)
+    Screencast.should_receive(:first).and_return(@s)
+    dispatch_to(Screencasts, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}
+  end
+  
+  it "should raise an unauthorized error if it can't be destroyed by the current person" do
+    @s.should_receive(:destroyable_by?).and_return(false)
+    Screencast.should_receive(:first).and_return(@s)
+    lambda do
+      dispatch_to(Screencasts, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}    
+    end.should raise_error(Merb::Controller::Unauthorized)
+  end
+  
+  it "should redirect to url(:screencasts) if the delete is successful" do
+    @s.should_receive(:destroyable_by?).and_return(true)    
+    Screencast.should_receive(:first).and_return(@s)
+    c = dispatch_to(Screencasts, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}
+    c.should redirect_to(url(:screencasts))
   end
   
   
-  
 end
-# 
-# describe Screencasts, "update action" do
-#   before(:each) do
-#     @controller dispatch_to(Screencasts, :index)
-#   end
-# end
-# 
-# describe Screencasts, "delete action" do
-#   before(:each) do
-#     @controller dispatch_to(Screencasts, :index)
-#   end
-# end
-# 
-# describe Screencasts, "Pending Actions" do
-#   before(:each) do
-#     @controller dispatch_to(Screencasts, :index)
-#   end
-# end
+
+describe Screencasts, "Pending Actions" do
+  it "should implement the  publishable controller mixin" do
+    Screencasts.should include(Merbunity::PublishableController::Setup)    
+    Screencasts.publishable_klass.should == Screencast
+  end
+end

@@ -3,7 +3,7 @@ class Screencasts < Application
   publishable_resource Screencast
   
   provides :js
-  before :login_required, :only => [:new, :create, :edit, :update]
+  before :login_required, :only => [:new, :create, :edit, :update, :destroy]
   
   params_protected :screencast => [:owner]
   
@@ -17,7 +17,7 @@ class Screencasts < Application
   def show(id)
     @screencast = Screencast.find_published(id)
     raise NotFound unless @screencast
-    raise NotFound unless @screencast.viewable_by?(current_person)
+    raise Unauthorized unless @screencast.viewable_by?(current_person)
     display @screencast
   end
 
@@ -31,7 +31,7 @@ class Screencasts < Application
     only_provides :html
     @screencast = Screencast.first(id)
     raise NotFound unless @screencast
-    raise NotFound unless current_person.can_edit?(@screencast)
+    raise Unauthorized unless current_person.can_edit?(@screencast)
     render
   end
 
@@ -47,16 +47,18 @@ class Screencasts < Application
   def update(id, screencast = {})
     @screencast = Screencast.first(id)
     raise NotFound unless @screencast
+    raise Unauthorized unless @screencast.editable_by?(current_person)
     if @screencast.update_attributes(screencast)
       redirect url(:screencast, @screencast)
     else
-      raise BadRequest
+      render :edit
     end
   end
 
   def destroy(id)
     @screencast = Screencast.first(id)
     raise NotFound unless @screencast
+    raise Unauthorized unless current_person.can_destroy?(@screencast)
     if @screencast.destroy!
       redirect url(:screencasts)
     else
