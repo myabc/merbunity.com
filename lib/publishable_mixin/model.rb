@@ -4,6 +4,9 @@ module Merbunity
     def self.included(base)
       base.class_eval do
         property        :published_on,          :datetime
+        
+        property :created_at, :datetime unless self.properties.any?{|p| p.name == :created_at }
+        
         before_create   :set_initial_published_status
         
         belongs_to :owner, :class => "Person"

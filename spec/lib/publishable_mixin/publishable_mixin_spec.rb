@@ -133,6 +133,11 @@ describe Merbunity::PublishableController do
     publishable_resource PublishableModel
   end
   
+  before(:all) do
+    PublishableModel.auto_migrate!
+    Person.auto_migrate!
+  end
+  
   before(:each) do
     @person = Person.create(valid_person_hash)
     PublishableModel.auto_migrate!
