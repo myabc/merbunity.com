@@ -5,13 +5,14 @@ module Merbunity
     
       def self.included(base)
         base.class_eval do
+          
+          # TODO need to include a publish method in here.
                 
           before Proc.new{ |c| c.login_required }, :only => [:pending, :my_pending]
           
           @@publishable_collection_ivar_name = self.publishable_klass.name.snake_case.pluralize
           
           def pending
-            # redirect url(:login) and return unless logged_in?
             return my_pending unless current_person.publisher?
             klass = self.class.publishable_klass
             collection = klass.pending(:limit => 10)

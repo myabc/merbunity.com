@@ -5,7 +5,6 @@ rescue
   nil
 end
 class Person < DataMapper::Base
-  puts "Loading PERSON"
   
   include AuthenticatedSystem::Model
   include Merbunity::Permissions::User

@@ -78,5 +78,22 @@ describe Merbunity::Permissions::ProtectedModel do
     mpm.destroyable_by?(u).should be_false    
   end
   
+  it "should return true for an object that is viewable_by?(nil) that is published" do
+    mpm = MyProtectedModel.new(@user)   
+    mpm.stub!(:published?).and_return true 
+    mpm.viewable_by?(nil).should be_true
+  end
+  
+  it "should return false for an object that is viewable_by?(nil) that is not published" do
+    mpm = MyProtectedModel.new(@user)
+    mpm.stub!(:published?).and_return false
+    mpm.viewable_by?(nil).should be_false
+  end
+  
+  it "should return true for veiwable_by? if the user is a publisher" do
+    mpm = MyProtectedModel.new(@user)
+    mpm.viewable_by?(TheUserModel.new(:publisher => true)).should be_true    
+  end
+  
 end
 

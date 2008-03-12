@@ -32,8 +32,8 @@ use_orm :datamapper
 dependencies "merb-assets", "merb-haml", "merb-action-args", "merb_param_protection"
 dependency "permissions/permissions"
 dependency "datamapper_extensions"
-dependency "publishable_mixin"
-dependency "publishable_controller_mixin"
+dependency "publishable_mixin/model"
+dependency "publishable_mixin/controller"
 
 ### This defines which test framework the generators will use
 ### rspec is turned on by default
