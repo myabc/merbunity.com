@@ -1,5 +1,18 @@
 module Merb
   module GlobalHelpers
+    
+    def site_navigation_links
+      nav ||= []
+      nav << link_to("News", "#")
+      nav << link_to("Screencasts", url(:screencasts))
+      nav << link_to("Tutorials", "#")
+      nav << link_to("People", "#")
+      nav << link_to("Blogs", "#")
+      nav << link_to("Sites", "#")
+      nav << link_to("Projects", "#")
+      nav
+    end
+    
     # helpers defined here available to all views.  
     def page_title=(title)
       @_page_title = title
