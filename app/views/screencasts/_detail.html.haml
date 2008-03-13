@@ -5,18 +5,18 @@
   .detail
     %h3 Detail
     = screencast.body
-  .author
-    Author
-    = screencast.owner.login
   .download
     Download:
     = link_to screencast.original_filename, url(:download_screencast, screencast)
+  .author
+    Author
+    = screencast.owner.login
   .published
     -if screencast.published?
-      %p
+      %div
         Published On:
         = time_format(screencast.published_on)
-      %p
+      %div
         Published By:
         = screencast.publisher.login      
     - else
