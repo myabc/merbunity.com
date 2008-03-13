@@ -4,6 +4,8 @@ class People < Application
   
   skip_before :login_required
   
+  params_protected :person => [:publisher_since, :admin_since]
+  
   def new
     only_provides :html
     @person = Person.new(params[:person] || {})

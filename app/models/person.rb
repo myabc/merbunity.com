@@ -22,6 +22,7 @@ class Person < DataMapper::Base
   property :created_at,                 :datetime
   property :updated_at,                 :datetime
   property :publisher_since,            :datetime
+  property :admin_since,                :datetime
 
   
   validates_length_of         :login,                   :within => 3..40
@@ -51,6 +52,15 @@ class Person < DataMapper::Base
   
   def make_publisher!
     @publisher_since ||= DateTime.now
+    save
+  end
+  
+  def admin?
+    !@admin_since.nil?
+  end
+  
+  def make_admin!
+    @admin_since ||= DateTime.now
     save
   end
   
