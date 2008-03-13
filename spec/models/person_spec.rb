@@ -16,6 +16,10 @@ describe Person, "in merbcasts" do
     @person.save
   end
   
+  it "should set published_item_count to 0 by default" do
+    @person.published_item_count.should == 0    
+  end
+  
   it "should have many screencasts" do
     person = Person.new(valid_person_hash)
     person.should respond_to(:screencasts)

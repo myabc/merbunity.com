@@ -1,5 +1,12 @@
 - throw_content :for_header, "Screencasts"
 
+.content_description
+  %p
+    Get your latest community driven screencasts for Merb right here.  This is where you get the best screencasts for the Merb community, authored by the
+    Merb community. Why not 
+    = link_to "make one", url(:new_screencast)
+    now?
+
 -if @screencasts.empty?
   There are no published screencasts.  Why not 
   = link_to "make one", url(:new_screencast)
