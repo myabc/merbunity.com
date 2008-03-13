@@ -148,9 +148,9 @@ describe Screencast, "states" do
     @screencast.should be_editable_by(@person)
   end
   
-  it "should be editable by a publisher" do
+  it "should not be editable by a publisher" do
     @screencast.owner = @person
-    @screencast.should be_editable_by(@publisher)
+    @screencast.should_not be_editable_by(@publisher)
   end
   
   it "should not be editable by an owner that is not the person or a publisher" do
