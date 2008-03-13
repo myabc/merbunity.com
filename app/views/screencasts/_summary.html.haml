@@ -1,0 +1,16 @@
+%div{:class => "screencast summary"}
+  %h3= screencast.title
+  %p.description
+    = screencast.description
+  %p.owner
+    Author:
+    = screencast.owner.login
+  - if screencast.published?
+    %p.published_on
+      Published On:
+      =screencast.published_on
+  - else
+    - for_publishers do
+      %p.pending
+        Status: Pending
+        
