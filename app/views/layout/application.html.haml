@@ -10,4 +10,9 @@
     .header
       %h1 
         = catch_content :for_header
+      %ul.site_navigation
+        = list_of(site_navigation_links) do |link| 
+          = link
+
+        
     = catch_content :for_layout
