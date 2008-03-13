@@ -131,8 +131,8 @@ describe Merbunity::Permissions::ProtectedModel do
     @mpm.should be_publishable_by(@publisher)
   end
   
-  it "should not be publishable by the owner who is not a publisher or admin" do
-    @mpm.should_not be_publishable_by(@owner)
+  it "should be publishable by the owner who is not a publisher or admin to pending" do
+    @mpm.should be_publishable_by(@owner)
   end
   
   it "should not be publishable by a user who is not a publisher or admin or owner" do

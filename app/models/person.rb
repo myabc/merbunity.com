@@ -23,7 +23,7 @@ class Person < DataMapper::Base
   property :updated_at,                 :datetime
   property :publisher_since,            :datetime
   property :admin_since,                :datetime
-
+  property :published_item_count,       :integer,   :default => 0
   
   validates_length_of         :login,                   :within => 3..40
   validates_uniqueness_of     :login
@@ -37,6 +37,7 @@ class Person < DataMapper::Base
   validates_confirmation_of   :password,                :groups => :create
     
   before_save :encrypt_password
+  before_create :ensure_defaults # Should not be required :(
   before_create :make_activation_code
   after_create :send_signup_notification
   
@@ -68,6 +69,14 @@ class Person < DataMapper::Base
     @admin_since ||= DateTime.now
     save
   end
+  
+  
+  # This method should not be needed.  DM was not behaving correctly
+  def ensure_defaults
+    self.published_item_count ||= 0
+  end
+  
+  private :ensure_defaults
   
   ##############  Generated Code ######################
   

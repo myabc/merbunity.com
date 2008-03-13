@@ -3,13 +3,13 @@ module Merb
     
     def site_navigation_links
       nav ||= []
-      nav << link_to("News", "#")
+      nav << link_to("News",        url(:news))
       nav << link_to("Screencasts", url(:screencasts))
-      nav << link_to("Tutorials", "#")
-      nav << link_to("People", "#")
-      nav << link_to("Blogs", "#")
-      nav << link_to("Sites", "#")
-      nav << link_to("Projects", "#")
+      nav << link_to("Tutorials",   url(:tutorials))
+      nav << link_to("People",      url(:people))
+      nav << link_to("Blogs",       url(:blogs))
+      nav << link_to("Sites",       url(:sites))
+      nav << link_to("Projects",    url(:projects))
       nav
     end
     

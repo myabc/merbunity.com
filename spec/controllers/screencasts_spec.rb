@@ -14,7 +14,11 @@ describe Screencasts, "index action" do
       1.upto(10) do |i|
         s = Screencast.new(valid_screencast_hash.with(:owner => p) )
         s.save
-        s.publish!(@publisher) if (i % 2) == 0
+        if (i % 2) == 0
+          s.publish!(@publisher) 
+        else
+          s.publish!(p)
+        end
       end
     end
         
@@ -60,7 +64,15 @@ describe Screencasts, "show action" do
     @pub.make_publisher!
     
     [@p1, @p2].each do |p|
-      1.upto(5){|i| s = Screencast.new(valid_screencast_hash.with(:owner => p) );s.save; s.publish!(@pub) if (i % 2) == 0;}
+      1.upto(5) do |i| 
+        s = Screencast.new(valid_screencast_hash.with(:owner => p) )
+        s.save
+        if (i % 2) == 0
+          s.publish!(@pub) 
+        else
+          s.publish!(p)
+        end
+      end
     end
     
 

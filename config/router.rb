@@ -23,7 +23,17 @@ Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do |r|
   # RESTful routes
   # r.resources :posts
-  r.resources :screencasts, :collection => {:pending => :get, :my_pending => :get}, :member => {:publish => :put, :download => :get}
+  r.resources :screencasts, :collection => {:pending => :get, :my_pending => :get, :drafts => :get}, 
+                            :member     => {:publish => :put, :download => :get}
+  
+  r.to(:controller => "PendingFeatures") do |f|
+    f.match("/news").to(:action => "news").name(:news)
+    f.match("/tutorials").to(:action => "tutorials").name(:tutorials)
+    f.match("/blogs").to(:action => "blogs" ).name(:blogs)
+    f.match("/sites").to(:action => "sites").name(:sites)
+    f.match("/projects").to(:action => "projects").name(:projects)
+  end
+
   # r.resources :screencasts, :collection => {:pending => :get}
   
   # This is the default route for /:controller/:action/:id

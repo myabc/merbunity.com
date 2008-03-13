@@ -30,6 +30,7 @@ module Merbunity
       
       def publishable_by?(user)
         return false if user.nil? || user == :false
+        return true if self.owner == user
         return true if user.admin?
         return true if user.publisher?
       end      

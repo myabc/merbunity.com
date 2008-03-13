@@ -113,52 +113,6 @@ describe Screencast, "states" do
     screencast.errors.should have(1).item
     screencast.errors.on(:owner).should_not be_empty
   end
-  
-  it "should be pending when the person is not a publisher" do
-    @screencast.owner = @person
-    @screencast.save
-    @screencast.should be_pending    
-    @screencast.should_not be_published
-  end
-  
-  it "should not be pending when the person is a publisher" do
-    @screencast.owner = @publisher
-    @screencast.save
-    @publisher.publish @screencast
-    @screencast.should_not be_pending
-    @screencast.should be_published  
-  end
-  
-  it "should allow itself to be published" do
-    @screencast.owner = @person
-    @screencast.save
-    @screencast.publish!(@publisher)
-    @screencast.should be_published
-  end
-  
-  it "should persist the fact that it's published" do
-    @screencast.owner = @person
-    @screencast.publish!(@publisher)
-    @screencast.save
-    @screencast.reload!
-    @screencast.should be_published    
-  end
-    
-  it "should be editable by the owner" do
-    @screencast.owner = @person
-    @screencast.should be_editable_by(@person)
-  end
-  
-  it "should not be editable by a publisher" do
-    @screencast.owner = @person
-    @screencast.should_not be_editable_by(@publisher)
-  end
-  
-  it "should not be editable by an owner that is not the person or a publisher" do
-    @screencast.owner = @person
-    person = Person.new(valid_person_hash.with(:login => "not normal"))
-    @screencast.should_not be_editable_by(person)
-  end  
 end
 
 describe Screencast, "Class Methods" do
@@ -177,15 +131,31 @@ describe Screencast, "Class Methods" do
     1.upto(5) do
       c = Screencast.new(valid_screencast_hash)
       c.save
+      c.owner.publish(c)
     end
+    
+    1.upto(6) do
+      c = Screencast.new(valid_screencast_hash)
+      c.save
+    end    
   end
   
   it "should get all pending screencasts" do
-    Screencast.pending.should have(5).items
+    d = Screencast.pending
+    d.should have(5).items
+    d.all?{|s| s.pending?}
   end
   
   it "should get all published screencasts" do
-    Screencast.published.should have(3).items
+    d = Screencast.published
+    d.should have(3).items
+    d.all?{|s| s.published?}
+  end
+  
+  it "should get all draft screencasts" do
+    d = Screencast.drafts
+    d.should have(6).items   
+    d.all?{|s| s.draft?}.should be_true
   end
   
 end

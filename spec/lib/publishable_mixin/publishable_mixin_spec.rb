@@ -4,11 +4,13 @@ describe "Merbunity::Publishable" do
   
   class MyPublishableModel < DataMapper::Base
     include Merbunity::Publishable
+    include Merbunity::Permissions::ProtectedModel
   end
 
   before(:each) do
     MyPublishableModel.auto_migrate!
     Person.auto_migrate!
+    
     @person = Person.new(valid_person_hash)
     @person.save
     @p = MyPublishableModel.new(:owner => @person)
@@ -19,14 +21,39 @@ describe "Merbunity::Publishable" do
     
     @other_person = Person.create(valid_person_hash)
     
-    1.upto(4){ |i| p = MyPublishableModel.new(:owner => @person); p.save; p.publish!(@publisher) if (i % 2) == 0 }
-    1.upto(2){ |i| p = MyPublishableModel.create(:owner => @other_person)}
+    1.upto(4) do |i| 
+      p = MyPublishableModel.create(:owner => @person) 
+      if (i % 2) == 0
+        p.publish!(@publisher)  # Make this one published
+      else
+        p.publish!(@person) # Make this one pending
+      end
+    end
+    
+    1.upto(2) do |i| 
+      p = MyPublishableModel.create(:owner => @other_person)
+      p.publish!(@other_person)
+    end
+    
+    # drafts
+    [@publisher, @person, @other_person].each do |p|
+      1.upto(3) do |i|
+        MyPublishableModel.create(:owner => p)
+      end
+    end
   end
   
   it "should setup the test correctly" do
-    published, pending = MyPublishableModel.all.partition{|m| m.published?}
+    published, pending, drafts = [[],[],[]]
+    MyPublishableModel.all.each do |m| 
+      published << m if m.published?
+      pending << m  if m.pending?
+      drafts << m if m.draft?
+    end
+      
     published.should have(2).items
     pending.should have(4).items
+    drafts.should have(9).items
   end
   
   it "should add a pending_publishable_model to the person model - for the PublishableModel class" do
@@ -59,6 +86,16 @@ describe "Merbunity::Publishable" do
     pm.published_on.should be_nil
   end
   
+  it "should change from draft to pending when an owner non-publisher publishes an item" do
+    @person.should_not be_a_publisher
+    pm = MyPublishableModel.new(:owner => @person)
+    pm.save
+    pm.should be_draft
+    @person.publish(pm)
+    pm.should_not be_draft
+    pm.should be_pending    
+  end
+  
   # it "should set published_on to the date if the person is a publisher" do
   # 
   #   pm = MyPublishableModel.new(:owner => @publisher)
@@ -67,9 +104,8 @@ describe "Merbunity::Publishable" do
   #   pm.published_on.should be_kind_of(DateTime)
   # end
   
-  it "should add a pending? method to the model that returns true when published_on is nil" do
-    @p.published_on.should be_nil
-    @p.should be_pending
+  it "should add a pending? method to the model" do
+    @p.should respond_to(:pending?)
   end
   
   it "should return false for pending when the model has a published date" do
@@ -80,6 +116,7 @@ describe "Merbunity::Publishable" do
   
   it "should return false for published? when pending" do
     p = MyPublishableModel.create(:owner => @person)
+    p.publish!(@person)
     p.should be_pending
     p.should_not be_published
   end
@@ -126,6 +163,44 @@ describe "Merbunity::Publishable" do
     @publisher.publish(p)
     p.publisher.should == @publisher
   end
+  
+  it "should increase the owners published_item_count when a work of theirs gets published" do
+    p = MyPublishableModel.create(:owner => @person)
+    lambda do
+      @publisher.publish(p)
+    end.should change(@person, :published_item_count).by(1)
+  end
+  
+  it "should find all drafts" do    
+    MyPublishableModel.drafts.any?{|d| !d.draft?}.should be_false
+  end
+  
+  it "should set a draft? method" do
+   MyPublishableModel.new.should respond_to(:draft?)
+  end
+  
+  it "should set a model to draft by default" do
+    m = MyPublishableModel.new    
+    m.should be_draft
+  end
+  
+  it "should not report that it is pending when its a draft" do
+    m = MyPublishableModel.new
+    m.should_not be_pending
+  end
+  
+  it "should not be published when it's a draft" do
+    m = MyPublishableModel.new
+    m.should_not be_published
+  end
+  
+  it "should add a drafts method to the user model" do
+    d = @person.draft_my_publishable_models
+    d.should have(3).items
+    d.all?{|s| s.owner == @person}.should be_true    
+  end
+  
+  
 end
 
 
@@ -133,6 +208,7 @@ describe Merbunity::PublishableController do
   
   class PublishableModel < DataMapper::Base
     include Merbunity::Publishable
+    include Merbunity::Permissions::ProtectedModel
   end
   
   class PublishableController < Application
@@ -192,10 +268,10 @@ describe Merbunity::PublishableController do
   it "should get the index of pending objects for a user if they are not a publisher" do
     p = Person.create(valid_person_hash)
     p.should_not be_a_publisher
-    1.upto(3){ PublishableModel.create(:owner => p)}
+    1.upto(3){ pm = PublishableModel.create(:owner => p); p.publish(pm) }
     
     @person.should_not be_a_publisher
-    1.upto(2){ PublishableModel.create(:owner => @person)}
+    1.upto(2){ z = PublishableModel.create(:owner => @person); z.publish!(@person)}
     
     c = dispatch_to(PublishableController, :pending) do |controller|
       controller.stub!(:display).and_return("DISPLAYED")
@@ -211,7 +287,7 @@ describe Merbunity::PublishableController do
     p = Person.create(valid_person_hash)
     [@person, p].each do |dude|
       dude.should_not be_a_publisher
-      1.upto(3){ i = PublishableModel.create(:owner => dude); i.should be_pending; i.should_not be_a_new_record}
+      1.upto(3){ i = PublishableModel.create(:owner => dude); dude.publish(i); i.should be_pending; i.should_not be_a_new_record}
     end
     
     publisher = Person.create(valid_person_hash)
@@ -232,7 +308,7 @@ describe Merbunity::PublishableController do
     pub.make_publisher!
     p = Person.create(valid_person_hash)
     
-    1.upto(11){PublishableModel.create(:owner => p)}
+    1.upto(11){z = PublishableModel.create(:owner => p); p.publish(z)}
     c = dispatch_to(PublishableController, :pending) do |controller|
       controller.stub!(:display).and_return("DISPLAYED")
       controller.stub!(:current_person).and_return(pub)
@@ -245,5 +321,26 @@ describe Merbunity::PublishableController do
   it "should require login" do
     c = dispatch_to(PublishableController, :pending)
     c.should redirect_to(url(:login))    
+  end
+  
+  it "should require login for drafts" do
+    c = dispatch_to(PublishableController, :drafts)    
+    c.should redirect_to(url(:login))
+  end
+  
+  it "should be successful when a user logs in" do
+    p = Person.create(valid_person_hash)
+    c = dispatch_to(PublishableController, :drafts){|c| c.stub!(:current_person).and_return p; c.stub!(:display).and_return true}
+    c.should be_successful    
+  end
+  
+  it "should assign the persons drafts to the right ivar" do
+    p = Person.create(valid_person_hash)
+    1.upto(6){ PublishableModel.create(:owner => p)}
+    c = dispatch_to(PublishableController, :drafts) do |c| 
+      c.stub!(:current_person).and_return p
+      c.stub!(:display).and_return true
+    end
+    c.assigns(:publishable_models).should == p.draft_publishable_models
   end
 end

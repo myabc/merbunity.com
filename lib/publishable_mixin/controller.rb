@@ -8,7 +8,7 @@ module Merbunity
           
           # TODO need to include a publish method in here.
                 
-          before Proc.new{ |c| c.login_required }, :only => [:pending, :my_pending]
+          before Proc.new{ |c| c.login_required }, :only => [:pending, :my_pending, :publish, :drafts]
           
           @@publishable_collection_ivar_name = self.publishable_klass.name.snake_case.pluralize
           
@@ -27,13 +27,19 @@ module Merbunity
           end
           
           def publish(id)
-            id = params[:id]
             klass = self.class.publishable_klass
             ivar = @@publishable_collection_ivar_name.singularize
             obj = klass.find(id)
             raise NotFound unless obj
             obj.publish!(current_person) if current_person.can_publish?(obj)
             redirect url("#{@@publishable_collection_ivar_name.singularize}".to_sym, obj)
+          end
+          
+          def drafts
+            klass = self.class.publishable_klass
+            ivar = @@publishable_collection_ivar_name
+            collection = instance_variable_set("@#{ivar}", current_person.send("draft_#{ivar}".to_sym))
+            display collection, :pending     
           end
             
             
