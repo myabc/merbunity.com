@@ -13,6 +13,16 @@ module Merb
       yield if current_person.publisher? || current_person.admin?
     end
     
+    def publish_button(url)
+      out =<<-EOF
+        <form method="post" action="#{url}"><input type='hidden' name='_method' value='PUT' /><button>Publish</button></form>
+      EOF
+    end
+    
+    def time_format(date, format = "%B %d, %Y")
+      date.strftime(format)
+    end
+    
   end
 end
 

@@ -14,6 +14,10 @@ module Merbunity
         obj.respond_to?(:destroyable_by?) ? obj.destroyable_by?(self) : true
       end
       
+      def can_publish?(obj)
+        obj.respond_to?(:publishable_by?) ? obj.publishable_by?(self) : true
+      end
+      
     end
   end
 end

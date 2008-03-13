@@ -28,10 +28,11 @@ module Merbunity
           
           def publish(id)
             id = params[:id]
+            klass = self.class.publishable_klass
             ivar = @@publishable_collection_ivar_name.singularize
             obj = klass.find(id)
             raise NotFound unless obj
-            obj.publish! if current_user.can_publish?(obj)
+            obj.publish! if current_person.can_publish?(obj)
             redirect url("#{@@publishable_collection_ivar_name.singularize}".to_sym, obj)
           end
             
