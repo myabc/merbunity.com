@@ -25,6 +25,16 @@ module Merbunity
             instance_variable_set("@#{ivar}",current_person.send("pending_#{ivar}".to_sym))
             display instance_variable_get("@#{ivar}"), :pending
           end
+          
+          def publish(id)
+            ivar = @@publishable_collection_ivar_name.singularize
+            obj = klass.find(id)
+            raise NotFound unless obj
+            obj.publish! if current_user.can_publish?(obj)
+            redirect url("#{@@publishable_collection_ivar_name.singularize}".to_sym, obj)
+          end
+            
+            
         end
                 
       end           

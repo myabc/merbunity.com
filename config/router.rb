@@ -23,7 +23,7 @@ Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do |r|
   # RESTful routes
   # r.resources :posts
-  r.resources :screencasts, :collection => {:pending => :get}
+  r.resources :screencasts, :collection => {:pending => :get, :my_pending => :get}, :member => {:publish => :put}
   # r.resources :screencasts, :collection => {:pending => :get}
   
   # This is the default route for /:controller/:action/:id

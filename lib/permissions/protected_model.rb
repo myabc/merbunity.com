@@ -12,15 +12,6 @@ module Merbunity
         return true if user.publisher?
         
         return self.owner == user ? true : false
-        # 
-        # if user.publisher?
-        #   return true
-        # end
-        #         
-        # if self.respond_to?(:owner)
-        #   return self.owner == user ? true : false
-        # end
-        # false
       end
       
       def editable_by?(user)
