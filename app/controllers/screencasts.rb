@@ -68,8 +68,19 @@ class Screencasts < Application
     screencast = Screencast.first(:id => id)
     raise NotFound if screencast.nil?
     raise Unauthorized unless current_person.can_destroy?(screencast)
-    nginx_send_file(screencast.full_path)
-    redirect url(:screencast, screencast)
+    send_screencast(screencast)
+  end
+  
+  private
+  # Put this in so that we can still get links when not behind nginx_send_file
+  if Merb.env != "production"
+    def send_screencast(screencast)
+      send_file(screencast.full_path)
+    end
+  else
+    def send_screencast(screencast)
+      nginx_send_file(screencast.full_path)
+    end
   end
   
 end
