@@ -29,7 +29,8 @@ use_orm :datamapper
 ### Uncomment for Sequel ORM
 # use_orm :sequel
 
-dependencies "merb-assets", "merb-haml", "merb-action-args", "merb_param_protection"
+dependencies "merb-assets", "merb-haml", "merb_param_protection"
+dependency "merb-action-args"
 dependency "permissions/permissions"
 dependency "datamapper_extensions"
 dependency "publishable_mixin/model"

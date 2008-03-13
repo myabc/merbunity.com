@@ -2,9 +2,14 @@
   = error_messages_for screencast
   
 .form
-  -form_for screencast, :action => url(:screencast, screencast) do
-    .field = text_control       :title,         :label => "Title"
-    .field = text_area_control  :description,   :label => "Description"
-    .field = text_body          :body,          :label => "Detail"
-    .field = file_control       :uploaded_file, :label => "ScreenCast File"
-    .field = submit_button "Save"
+  -form_for screencast, :action => url(:screencast, screencast), :multipart => true do
+    .field 
+      = text_control       :title,         :label => "Title"
+    .field 
+      = text_area_control  :description,   :label => "Description"
+    .field 
+      = text_area_control  :body,          :label => "Detail"
+    .field 
+      = file_control       :uploaded_file, :label => "ScreenCast File"
+    .field 
+      = submit_button "Save"
