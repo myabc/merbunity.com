@@ -83,7 +83,7 @@ describe Screencasts, "show action" do
   end
   
   it "should render a not found error if there is no screencast found" do
-    Screencast.should_receive(:find_published).and_return nil
+    Screencast.should_receive(:find).and_return nil
     lambda do
       c = dispatch_to(Screencasts, :show, :id => 12345)
     end.should raise_error( Merb::Controller::NotFound)
@@ -100,7 +100,7 @@ describe Screencasts, "show action" do
     ms = mock("screencast", :null_object => true)
     ms.stub!(:id).and_return(234)
     ms.should_receive(:viewable_by?).and_return true
-    Screencast.should_receive(:find_published).and_return ms
+    Screencast.should_receive(:find).and_return ms
     dispatch_to(Screencasts, :show, :id => ms.id)
   end
   
@@ -108,7 +108,7 @@ describe Screencasts, "show action" do
     ms = mock("screencast", :null_object => true)
     ms.stub!(:id).and_return 345
     ms.should_receive(:viewable_by?).and_return false
-    Screencast.should_receive(:find_published).and_return ms
+    Screencast.should_receive(:find).and_return ms
     lambda do
       dispatch_to(Screencasts, :show, :id => ms.id)
     end.should raise_error(Merb::Controller::Unauthorized)

@@ -12,7 +12,7 @@ class Screencasts < Application
   end
 
   def show(id)
-    @screencast = Screencast.find_published(id)
+    @screencast = Screencast.find(id)
     raise NotFound unless @screencast
     raise Unauthorized unless @screencast.viewable_by?(current_person)
     display @screencast

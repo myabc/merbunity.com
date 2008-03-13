@@ -22,11 +22,12 @@ module Merbunity
           
           def my_pending
             ivar = @@publishable_collection_ivar_name
-            instance_variable_set("@#{ivar}",current_person.send("pending_#{ivar}".to_sym))
-            display instance_variable_get("@#{ivar}"), :pending
+            obj = instance_variable_set("@#{ivar}",current_person.send("pending_#{ivar}".to_sym))
+            display obj, :pending
           end
           
           def publish(id)
+            id = params[:id]
             ivar = @@publishable_collection_ivar_name.singularize
             obj = klass.find(id)
             raise NotFound unless obj
