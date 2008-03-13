@@ -45,6 +45,17 @@ describe Person, "in merbcasts" do
     person.should_not be_publisher
   end
   
+  it "should have a publish method that tells the obj to publish" do
+    person = Person.new(hash)    
+    person.save
+    person.activate
+    person.make_publisher!
+    obj = mock("Publishable object")
+    obj.should_receive(:publishable_by?).with(person).and_return true
+    obj.should_receive(:publish!).with(person).and_return true
+    person.publish(obj)
+  end
+  
   it "should return true for can_edit? if there is no editable_by? method on the target" do
     obj = Object.new
     obj.should_not respond_to(:editable_by?)

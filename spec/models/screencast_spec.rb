@@ -124,6 +124,7 @@ describe Screencast, "states" do
   it "should not be pending when the person is a publisher" do
     @screencast.owner = @publisher
     @screencast.save
+    @publisher.publish @screencast
     @screencast.should_not be_pending
     @screencast.should be_published  
   end
@@ -131,13 +132,13 @@ describe Screencast, "states" do
   it "should allow itself to be published" do
     @screencast.owner = @person
     @screencast.save
-    @screencast.publish!
+    @screencast.publish!(@publisher)
     @screencast.should be_published
   end
   
   it "should persist the fact that it's published" do
     @screencast.owner = @person
-    @screencast.publish!
+    @screencast.publish!(@publisher)
     @screencast.save
     @screencast.reload!
     @screencast.should be_published    
@@ -164,9 +165,12 @@ describe Screencast, "Class Methods" do
   
   before(:each) do
     Screencast.auto_migrate!
+    Person.auto_migrate!
+    @pub = Person.create(valid_person_hash)
+    @pub.make_publisher!
     1.upto(3) do
       c = Screencast.new(valid_screencast_hash)
-      c.publish!
+      c.publish!(@pub)
       c.save
     end
     

@@ -10,6 +10,7 @@ module Merbunity
         before_create   :set_initial_published_status
         
         belongs_to :owner, :class => "Person"
+        belongs_to :publisher, :class => "Person"
         
         validates_presence_of   :owner, :groups => [:create]
  
@@ -55,18 +56,19 @@ module Merbunity
        !@published_on.nil?
      end
 
-     def publish!
-       self.send(:set_publish_data)
+     def publish!(publisher)
+       self.send(:set_publish_data, publisher)
        save
      end
 
      private 
-     def set_publish_data
+     def set_publish_data(publisher)
        @published_on = DateTime.now
+       self.publisher = publisher
      end
 
      def set_initial_published_status
-       self.send(:set_publish_data) if self.owner.publisher?
+       # self.send(:set_publish_data, self.owner) if self.owner.publisher?
      end
    end
  end

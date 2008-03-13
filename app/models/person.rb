@@ -55,6 +55,11 @@ class Person < DataMapper::Base
     save
   end
   
+  def publish(obj)
+    return false unless self.can_publish?(obj)
+    obj.publish!(self)
+  end
+  
   def admin?
     !@admin_since.nil?
   end

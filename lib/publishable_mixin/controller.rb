@@ -32,7 +32,7 @@ module Merbunity
             ivar = @@publishable_collection_ivar_name.singularize
             obj = klass.find(id)
             raise NotFound unless obj
-            obj.publish! if current_person.can_publish?(obj)
+            obj.publish!(current_person) if current_person.can_publish?(obj)
             redirect url("#{@@publishable_collection_ivar_name.singularize}".to_sym, obj)
           end
             

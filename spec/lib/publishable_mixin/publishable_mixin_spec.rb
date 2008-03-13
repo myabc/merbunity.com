@@ -19,7 +19,7 @@ describe "Merbunity::Publishable" do
     
     @other_person = Person.create(valid_person_hash)
     
-    1.upto(4){ |i| p = MyPublishableModel.new(:owner => @person); p.save; p.publish! if (i % 2) == 0 }
+    1.upto(4){ |i| p = MyPublishableModel.new(:owner => @person); p.save; p.publish!(@publisher) if (i % 2) == 0 }
     1.upto(2){ |i| p = MyPublishableModel.create(:owner => @other_person)}
   end
   
@@ -59,13 +59,13 @@ describe "Merbunity::Publishable" do
     pm.published_on.should be_nil
   end
   
-  it "should set published_on to the date if the person is a publisher" do
-
-    pm = MyPublishableModel.new(:owner => @publisher)
-    pm.save
-    pm.published_on.should_not be_nil
-    pm.published_on.should be_kind_of(DateTime)
-  end
+  # it "should set published_on to the date if the person is a publisher" do
+  # 
+  #   pm = MyPublishableModel.new(:owner => @publisher)
+  #   pm.save
+  #   pm.published_on.should_not be_nil
+  #   pm.published_on.should be_kind_of(DateTime)
+  # end
   
   it "should add a pending? method to the model that returns true when published_on is nil" do
     @p.published_on.should be_nil
@@ -74,6 +74,7 @@ describe "Merbunity::Publishable" do
   
   it "should return false for pending when the model has a published date" do
     p = MyPublishableModel.create(:owner => @publisher)
+    p.publish!(@publisher)
     p.should_not be_pending    
   end
   
@@ -85,6 +86,7 @@ describe "Merbunity::Publishable" do
   
   it "should return true for published? when not pending" do
     p = MyPublishableModel.create(:owner => @publisher)
+    p.publish!(@publisher)
     p.should_not be_pending
     p.should be_published    
   end
@@ -92,7 +94,7 @@ describe "Merbunity::Publishable" do
   it "should publish! and article when told to do so" do
     p = MyPublishableModel.create(:owner => @person)
     p.should_not be_published
-    p.publish!
+    p.publish!(@publisher)
     p.should be_published    
     p.dirty_attributes.should be_empty # It should save it in the publish! action
   end
@@ -117,6 +119,12 @@ describe "Merbunity::Publishable" do
   it "should not find a pending model via MyPublishableModel.find_published" do
     p = MyPublishableModel.find_published(MyPublishableModel.pending.first.id)
     p.should be_nil    
+  end
+  
+  it "should set the publisher when it gets published" do
+    p = MyPublishableModel.create(:owner => @person)
+    @publisher.publish(p)
+    p.publisher.should == @publisher
   end
 end
 
