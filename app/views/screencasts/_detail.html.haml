@@ -1,5 +1,22 @@
 .screencast
-  %h3= screencast.title
   .description
+    %h3 Description
     = screencast.description
+  .detail
+    %h3 Detail
+    = screencast.body
+  .author
+    Author
+    = screencast.owner.login
+  .published
+    -if screencast.published?
+      Published On:
+      = time_format(screencast.published_on)
+    - else
+      Screencast is PENDING
+      - for_publishers do
+        = publish_button(url(:publish_screencast, screencast))
+        
+        
+    
   
