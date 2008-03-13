@@ -315,7 +315,12 @@ describe Screencasts, "delete action" do
   
 end
 
-describe Screencasts, "Pending Actions" do
+describe Screencasts, "Publishable Actions" do
+  
+  before(:all){ @klass = Screencasts }
+  
+  it_should_behave_like "a controller that implements the publishable mixin"
+    
   it "should implement the  publishable controller mixin" do
     Screencasts.should include(Merbunity::PublishableController::Setup)    
     Screencasts.publishable_klass.should == Screencast
