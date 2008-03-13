@@ -67,7 +67,7 @@ class Screencasts < Application
   def download(id)
     screencast = Screencast.first(:id => id)
     raise NotFound if screencast.nil?
-    raise Unauthorized unless current_person.can_destroy?(screencast)
+    raise Unauthorized unless current_person.can_view?(screencast)
     send_screencast(screencast)
   end
   
