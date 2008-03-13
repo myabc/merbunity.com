@@ -6,15 +6,13 @@ describe Merbunity::Permissions::ProtectedModel do
     include Merbunity::Permissions::ProtectedModel
     attr_reader :owner
     
-    def initialize(owner = nil)
-      @owner = owner
+    def initialize(opts = {})
+      @owner = opts[:owner]
+      @published = opts[:published]
     end
-  end
-  
-  class ProtectedModelWithoutOwner < DataMapper::Base
-    include Merbunity::Permissions::ProtectedModel
     
-    def initialize
+    def published?
+      !!@published
     end
   end
   
@@ -22,78 +20,131 @@ describe Merbunity::Permissions::ProtectedModel do
     
     def initialize(opts = {})
       @publisher = opts[:publisher]
+      @admin = opts[:admin]
     end
     
     def publisher?
       @publisher
     end
+    
+    def admin?
+      !!@admin
+    end
   end
   
   before(:all) do
+    @owner = TheUserModel.new
     @user = TheUserModel.new
+    @admin = TheUserModel.new(:admin => true)
+    @publisher = TheUserModel.new(:publisher => true)
+    @mpm = MyProtectedModel.new(:owner => @owner, :published => false)
   end
   
-  it "should implement a viewable_by? method" do
-    MyProtectedModel.new.should respond_to(:viewable_by?)
+  it "should setup the spec properly" do
+    @owner.should_not be_publisher
+    @owner.should_not be_admin
+    @owner.should_not == @user
+    @owner.should == @mpm.owner
+    
+    @user.should_not be_publisher
+    @user.should_not be_admin
+    @mpm.owner.should_not == @user
+    
+    @publisher.should_not be_admin
+    @mpm.owner.should_not == @publisher
+    
+    @mpm.owner.should_not == @admin
+    
+    @mpm.should_not be_published
   end
   
-  it "should be viewable if the user is the owner" do
-    mpm = MyProtectedModel.new(@user)    
-    mpm.viewable_by?(@user).should be_true
+  it "should be veiwable by an admin" do
+    @mpm.should be_viewable_by(@admin)
   end
   
-  it "should not be viewable if the user is not the owner" do
-    mpm = MyProtectedModel.new(@user)
-    u = TheUserModel.new
-    mpm.viewable_by?(u).should be_false    
+  it "should be viewable by the owner who is not an admin or publisher" do 
+    @mpm.should be_viewable_by(@owner)
   end
   
-  it "should implement an editable_by? method" do
-    MyProtectedModel.new.should respond_to(:editable_by?)
+  it "should be viewable by a publisher who is not the owner or an admin" do
+    @mpm.should be_viewable_by(@publisher)
   end
   
-  it "should be editable if the user is the owner" do
-    mpm = MyProtectedModel.new(@user)    
-    mpm.editable_by?(@user).should be_true
+  it "should not be viewable by nil or :false if the item is not published" do
+    @mpm.should_not be_viewable_by(nil)
+    @mpm.should_not be_viewable_by(:false)
   end
   
-  it "should not be editable if the user is not the owner or publisher" do
-    mpm = MyProtectedModel.new(@user)
-    u = TheUserModel.new(:publisher => false)
-    mpm.editable_by?(u).should be_false    
+  it "should be viewable by nil or false if the item is published" do
+    m = MyProtectedModel.new(:owner => @owner, :published => true)
+    m.should be_viewable_by(nil)
+    m.should be_viewable_by(:false)
   end
   
-  it "should implement a destroyable_by? method" do
-    MyProtectedModel.new.should respond_to(:destroyable_by?)
-  end  
-  
-  it "should be destroyable if the user is the owner" do
-    mpm = MyProtectedModel.new(@user)    
-    mpm.destroyable_by?(@user).should be_true
+  it "should be editable by an admin" do
+    @mpm.should be_editable_by(@admin)
   end
   
-  it "should not be destroyable if the user is not the owner" do
-    mpm = MyProtectedModel.new(@user)
-    u = TheUserModel.new
-    mpm.destroyable_by?(u).should be_false    
+  it "should be editable by the owner who is not an admin" do
+    @mpm.should be_editable_by(@owner)
   end
   
-  it "should return true for an object that is viewable_by?(nil) that is published" do
-    mpm = MyProtectedModel.new(@user)   
-    mpm.stub!(:published?).and_return true 
-    mpm.viewable_by?(nil).should be_true
+  it "should not be editable by a publisher who does not own the model and is not an admin" do
+    @mpm.should_not be_editable_by(@publisher)
   end
   
-  it "should return false for an object that is viewable_by?(nil) that is not published" do
-    mpm = MyProtectedModel.new(@user)
-    mpm.stub!(:published?).and_return false
-    mpm.viewable_by?(nil).should be_false
+  it "should not be editable by a person who is not admin, owner, publisher" do
+    @mpm.should_not be_editable_by(@user)
   end
   
-  it "should return true for veiwable_by? if the user is a publisher" do
-    mpm = MyProtectedModel.new(@user)
-    mpm.viewable_by?(TheUserModel.new(:publisher => true)).should be_true    
+  it "should not be editable by a person who is nil or :false" do
+    @mpm.should_not be_editable_by(nil)
+    @mpm.should_not be_editable_by(:false)
   end
+  
+  it "should be destroyable by an admin" do
+    @mpm.should be_destroyable_by(@admin)
+  end
+  
+  it "should be destroyable by the owner who is not an admin" do
+    @mpm.should be_destroyable_by(@owner)
+  end
+  
+  it "should not be destroyable by a publisher who does not own the model and is not an admin" do
+    @mpm.should_not be_destroyable_by(@publisher)
+  end
+  
+  it "should not be destroyable by a user who is not owner, admin or publisher" do
+    @mpm.should_not be_destroyable_by(@user)
+  end
+  
+  it "should not be destroyable_by a user how is nil or :false" do
+    @mpm.should_not be_destroyable_by(nil)
+    @mpm.should_not be_destroyable_by(:false)
+  end
+  
+  it "should be publishable by an admin" do
+    @mpm.should be_publishable_by(@admin)
+  end
+  
+  it "should be publishable by a publisher who is not an admin" do
+    @mpm.should be_publishable_by(@publisher)
+  end
+  
+  it "should not be publishable by the owner who is not a publisher or admin" do
+    @mpm.should_not be_publishable_by(@owner)
+  end
+  
+  it "should not be publishable by a user who is not a publisher or admin or owner" do
+    @mpm.should_not be_publishable_by(@user)
+  end
+  
+  it "should not be publishable by a nil or :false" do
+    @mpm.should_not be_publishable_by(nil)
+    @mpm.should_not be_publishable_by(:false)
+  end
+  
+  
   
 end
 

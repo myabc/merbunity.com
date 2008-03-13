@@ -25,11 +25,6 @@ module Merbunity
             instance_variable_set("@#{ivar}",current_person.send("pending_#{ivar}".to_sym))
             display instance_variable_get("@#{ivar}"), :pending
           end
-          
-          protected
-          def stuff
-            raise "RUNNING IT"
-          end
         end
                 
       end           

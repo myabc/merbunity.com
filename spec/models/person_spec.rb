@@ -337,6 +337,21 @@ describe Person, "activation" do
     @person.activate
   end
   
+  it {@person.should respond_to(:admin?)}
+
+  it "should report true to the admin? question if the admin_since property is set" do
+    p = Person.create(valid_person_hash)
+    p.make_admin!
+    p.should be_admin
+  end
+  
+  it "should return false if the admin_since property is not set" do
+    p = Person.create(valid_person_hash)
+    p.admin_since = nil
+    p.save
+    p.admin_since.should be_nil
+    p.should_not be_admin
+  end
 end
 
 describe Person, "remember_me" do

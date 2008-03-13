@@ -5,9 +5,7 @@ describe "Merbunity::Publishable" do
   class MyPublishableModel < DataMapper::Base
     include Merbunity::Publishable
   end
-  
 
-  
   before(:each) do
     MyPublishableModel.auto_migrate!
     Person.auto_migrate!
