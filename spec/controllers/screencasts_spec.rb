@@ -7,16 +7,18 @@ describe Screencasts, "index action" do
     @person1 = Person.create(valid_person_hash)
     @person2 = Person.create(valid_person_hash)
     
+    @publisher = Person.create(valid_person_hash)
+    @publisher.make_publisher!
+    
     [@person1, @person2].each do |p|
       1.upto(10) do |i|
         s = Screencast.new(valid_screencast_hash.with(:owner => p) )
         s.save
-        s.publish! if (i % 2) == 0
+        s.publish!(@publisher) if (i % 2) == 0
       end
     end
         
-    @publisher = Person.create(valid_person_hash)
-    @publisher.make_publisher!    
+       
   end
   
   before(:each) do
@@ -54,12 +56,14 @@ describe Screencasts, "show action" do
     @p1 = Person.create(valid_person_hash)
     @p2 = Person.create(valid_person_hash)
     
-    [@p1, @p2].each do |p|
-      1.upto(5){|i| s = Screencast.new(valid_screencast_hash.with(:owner => p) );s.save; s.publish! if (i % 2) == 0;}
-    end
-    
     @pub = Person.create(valid_person_hash)
     @pub.make_publisher!
+    
+    [@p1, @p2].each do |p|
+      1.upto(5){|i| s = Screencast.new(valid_screencast_hash.with(:owner => p) );s.save; s.publish!(@pub) if (i % 2) == 0;}
+    end
+    
+
   end
   
   before(:each) do

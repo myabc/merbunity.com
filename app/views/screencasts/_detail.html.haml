@@ -8,14 +8,22 @@
   .author
     Author
     = screencast.owner.login
+  .download
+    Download:
+    = link_to screencast.original_filename, url(:download_screencast, screencast)
   .published
     -if screencast.published?
-      Published On:
-      = time_format(screencast.published_on)
+      %p
+        Published On:
+        = time_format(screencast.published_on)
+      %p
+        Published By:
+        = screencast.publisher.login      
     - else
       Screencast is PENDING
       - for_publishers do
         = publish_button(url(:publish_screencast, screencast))
+
         
         
     

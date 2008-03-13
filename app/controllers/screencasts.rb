@@ -63,4 +63,13 @@ class Screencasts < Application
     end
   end
   
+  # only let a person who can view this download it
+  def download(id)
+    screencast = Screencast.first(:id => id)
+    raise NotFound if screencast.nil?
+    raise Unauthorized unless current_person.can_destroy?(screencast)
+    nginx_send_file(screencast.full_path)
+    redirect url(:screencast, screencast)
+  end
+  
 end
