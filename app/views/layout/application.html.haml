@@ -7,19 +7,23 @@
     %meta{ "http-equiv" => "content-type", :content => "text/html; charset=utf-8"}
     = css_include_tag :master
   %body
-    .header
-      %h1 
-        = catch_content :for_header
-      %ul.site_navigation
-        = list_of(site_navigation_links) do |link| 
-          = link
+    #page
+      #header
+        %h1 Merbunity
           
-    .main_content 
-      = catch_content :for_layout
-    
-    
-    .side_content
-      -if self.respond_to?(:section_menu_items)
-        %ul.section_menu
-          = list_of(section_menu_items) do |link|
+        %ul.site_navigation
+          = list_of(site_navigation_links) do |link| 
             = link
+          
+      #main_content 
+        %h2= catch_content :for_header
+        = catch_content :for_layout
+    
+    
+      #side_content
+        -if self.respond_to?(:section_menu_items)
+          .box
+            %h3= section_menu_header
+          %ul.section_menu
+            = list_of(section_menu_items) do |link|
+              = link
