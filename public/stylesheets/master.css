@@ -1,119 +1,137 @@
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline; }
+
 body {
-  font-family: Arial, Verdana, sans-serif;
-  font-size: 12px;
-  background-color: #fff;
-}
-* {
-  margin: 0px;
-  padding: 0px;
-  text-decoration: none;
-}
-html {
-  height: 100%;
-  margin-bottom: 1px;
-}
-#container {
-  width: 80%;
+  line-height: 1; }
+
+ul {
+  list-style-type: none; }
+
+table {
+  border-collapse: separate;
+  border-spacing: 0; }
+
+caption, th, td {
   text-align: left;
-  background-color: #fff;
-  margin-right: auto;
-  margin-left: auto;
-}
-#header-container {
-  width: 100%;
-  padding-top: 15px;
-}
-#header-container h1, #header-container h2 {
-  margin-left: 6px;
-  margin-bottom: 6px;
-}
-.spacer {
-  width: 100%;
-  height: 15px;
-}
-hr {
-  border: 0px;
-  color: #ccc;
-  background-color: #cdcdcd;
-  height: 1px;
-  width: 100%;
-  text-align: left;
-}
+  font-weight: normal; }
+
 h1 {
-  font-size: 28px;
-  color: #c55;
-  background-color: #fff;
-  font-family: Arial, Verdana, sans-serif;
-  font-weight: 300;
-}
+  font-size: 138.5%; }
+
 h2 {
-  font-size: 15px;
-  color: #999;
-  font-family: Arial, Verdana, sans-serif;
-  font-weight: 300;
-  background-color: #fff;
-}
+  font-size: 123.1%; }
+
 h3 {
-  color: #4d9b12;
-  font-size: 15px;
-  text-align: left;
-  font-weight: 300;
-  padding: 5px;
-  margin-top: 5px;
-}
+  font-size: 108%; }
 
-#left-container {
-  float: left;
-  width: 250px;
-  background-color: #FFFFFF;
-  color: black;
-}
+h1,h2,h3 {
+  margin: 1em 0; }
 
-#left-container h3 {
-  color: #c55;
-}
+h1,h2,h3,h4,h5,h6,strong {
+  font-weight: bold; }
 
-#main-container {
-  margin: 5px 5px 5px 260px;
-  padding: 15px;
-  border-left: 1px solid silver;
-  min-height: 400px;
-}
-p {
-  color: #000;
-  background-color: #fff;
-  line-height: 20px;
-  padding: 5px;
-}
-a {
-  color: #4d9b12;
-  background-color: #fff;
-  text-decoration: none;
-}
-a:hover {
-  color: #4d9b12;
-  background-color: #fff;
-  text-decoration: underline;
-}
-#footer-container {
-  clear: both;
-  font-size: 12px;
-  font-family: Verdana, Arial, sans-serif;
-}
-.right {
+abbr,acronym {
+  border-bottom: 1px dotted #000;
+  cursor: help; }
+
+em {
+  font-style: italic; }
+
+blockquote,ul,ol,dl {
+  margin: 1em; }
+
+ol,ul,dl {
+  margin-left: 2em; }
+
+ol li {
+  list-style: decimal outside; }
+
+ul li {
+  list-style: disc outside; }
+
+dl dd {
+  margin-left: 1em; }
+
+th,td {
+  border: 1px solid #000;
+  padding: .5em; }
+
+th {
+  font-weight: bold;
+  text-align: center; }
+
+caption {
+  margin-bottom: .5em;
+  text-align: center; }
+
+p,fieldset,table,pre {
+  margin-bottom: 1em; }
+
+
+input[type=text],input[type=password],textarea {
+  width: 12.25em;
+  *width: 11.9em; }
+
+#page {
+  width: 860px;
+  margin: auto;
+  margin-top: 0px;
+  background-color: #ffffff;
+  overflow: hidden; }
+
+ul.site_navigation {
+  margin-left: 0px;
+  display: block; }
+  ul.site_navigation li {
+    display: inline;
+    float: left;
+    border: 1px solid green; }
+    ul.site_navigation li a {
+      display: block;
+      width: 6em;
+      text-align: center; }
+
+#main_content {
+  padding: 1em;
+  width: 600px;
+  border: 3px dotted orange;
+  float: left; }
+  #main_content h2 {
+    margin-top: 0px; }
+
+#side_content {
+  border: 2px groove purple;
+  width: 218px;
   float: right;
-  font-size: 100%;
-  margin-top: 5px;
-  color: #999;
-  background-color: #fff;
-}
-.left {
-  float: left;
-  font-size: 100%;
-  margin-top: 5px;
-  color: #999;
-  background-color: #fff;
-}
-#main-container ul {
-  margin-left: 3.0em;
-}
+  padding-top: 1em; }
+  #side_content .box {
+    width: 100%; }
+    #side_content .box h3 {
+      margin: 0px;
+      text-align: center;
+      background-color: #898c91; }
+    #side_content .box ul {
+      margin: 0px; }
+
+#header {
+  width: 100%;
+  border: 1px solid blue;
+  overflow: hidden; }
+  #header h1 {
+    margin-top: 0.5em;
+    margin-bottom: 0px;
+    margin-left: 1em;
+    flow: left; }
+
+body {
+  background-color: #c53631; }
+
+label {
+  display: block; }

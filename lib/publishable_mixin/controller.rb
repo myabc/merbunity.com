@@ -17,12 +17,14 @@ module Merbunity
             klass = self.class.publishable_klass
             collection = klass.pending(:limit => 10)
             instance_variable_set("@#{@@publishable_collection_ivar_name}", collection)
+            @page_header = "Pending Screencasts"
             display collection            
           end
           
           def my_pending
             ivar = @@publishable_collection_ivar_name
             obj = instance_variable_set("@#{ivar}",current_person.send("pending_#{ivar}".to_sym))
+            @page_header =  "My Pending Screencasts"
             display obj, :pending
           end
           
@@ -39,6 +41,7 @@ module Merbunity
             klass = self.class.publishable_klass
             ivar = @@publishable_collection_ivar_name
             collection = instance_variable_set("@#{ivar}", current_person.send("draft_#{ivar}".to_sym))
+            @page_header =  "Draft Screencasts"
             display collection, :pending     
           end
             
