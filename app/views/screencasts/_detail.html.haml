@@ -22,7 +22,7 @@
     - else
       Screencast is
       = screencast.published_status
-      - for_publishers do
+      - for_publishers(screencast) do
         = publish_button(url(:publish_screencast, screencast))
 
         
