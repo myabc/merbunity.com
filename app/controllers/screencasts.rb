@@ -4,7 +4,7 @@ class Screencasts < Application
 
   before :login_required, :only => [:new, :create, :edit, :update, :destroy]
   
-  params_protected :screencast => [:owner]
+  params_protected :screencast => [:owner, :published_on, :draft_status]
   
   def index
     @screencasts = Screencast.published(:limit => 10)

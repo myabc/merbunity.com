@@ -4,6 +4,7 @@ describe Screencasts, "index action" do
   
   before(:all) do
     Person.auto_migrate!
+    Screencast.auto_migrate!
     @person1 = Person.create(valid_person_hash)
     @person2 = Person.create(valid_person_hash)
     
@@ -21,7 +22,7 @@ describe Screencasts, "index action" do
         end
       end
     end
-        
+    
        
   end
   

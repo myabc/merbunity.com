@@ -20,7 +20,8 @@
         Published By:
         = screencast.publisher.login      
     - else
-      Screencast is PENDING
+      Screencast is
+      = screencast.published_status
       - for_publishers do
         = publish_button(url(:publish_screencast, screencast))
 
