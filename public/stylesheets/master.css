@@ -88,7 +88,8 @@ input[type=text],input[type=password],textarea {
 
 ul.site_navigation {
   margin-left: 0px;
-  display: block; }
+  display: block;
+  clear: both; }
   ul.site_navigation li {
     display: inline;
     float: left;
@@ -128,7 +129,15 @@ ul.site_navigation {
     margin-top: 0.5em;
     margin-bottom: 0px;
     margin-left: 1em;
-    flow: left; }
+    border: 1px solid red;
+    float: left; }
+  #header #login_box {
+    background-color: #A3D3FF;
+    display: block;
+    margin: 1em;
+    width: 300px;
+    height: 40px;
+    float: right; }
 
 body {
   background-color: #c53631; }

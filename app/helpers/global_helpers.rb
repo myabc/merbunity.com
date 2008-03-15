@@ -22,8 +22,12 @@ module Merb
       @_page_title
     end
     
-    def for_publishers
-      yield if current_person.publisher? || current_person.admin?
+    def for_publishers(obj = nil)
+      if obj.nil? || obj.pending?
+        yield if current_person.publisher? || current_person.admin?
+      else
+        yield if current_person.can_publish?(obj)
+      end
     end
     
     def publish_button(url)
