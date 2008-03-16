@@ -5,7 +5,9 @@
     These screencasts are waiting to be published by a person in the community that is a publisher.
   - unless current_person.publisher?
     %p
-      You can become a publisher.  All you have to do is publish 5 items.  These could be either a Screencast or a Tutorial.
+      You can become a publisher.  All you have to do is publish
+      = Merbunity::Publishable::PUBLISHABLES_TO_BE_PUBLISHER
+      items.  These could be either a Screencast or a Tutorial.
       Once your a publisher, you can publish your own, and anyone else's work that is pending approval.
 
 - if @screencasts.empty?

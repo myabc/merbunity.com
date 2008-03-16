@@ -32,10 +32,6 @@ describe Screencasts, "index action" do
   end
   
   it "should set the specs correctly" do
-    @person1.should_not be_publisher
-    @person2.should_not be_publisher
-    @publisher.should be_publisher    
-    
     published = Screencast.published    
     pending = Screencast.pending
     

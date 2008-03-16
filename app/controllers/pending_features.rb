@@ -1,4 +1,4 @@
-class PendingFeatures < Merb::Controller
+class PendingFeatures < Application
   
   before :set_page_header
   

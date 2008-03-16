@@ -1,6 +1,8 @@
 module Merbunity
   module Publishable
     
+    PUBLISHABLES_TO_BE_PUBLISHER = 5
+    
     def self.included(base)
       base.class_eval do
         
@@ -13,6 +15,28 @@ module Merbunity
         belongs_to :owner, :class => "Person"
         belongs_to :publisher, :class => "Person"
         
+        has_and_belongs_to_many :pending_comments,  
+                                :class => "Comment", 
+                                :join_table => "pending_comments_#{base.name.snake_case.pluralize}",
+                                :foreign_name => "pending_#{base.name.snake_case.pluralize}".to_sym
+       
+        Comment.send( :has_and_belongs_to_many, 
+                                "pending_#{base.name.snake_case.pluralize}".to_sym, 
+                                :join_table => "pending_comments_#{base.name.snake_case.pluralize}", 
+                                :class => "#{base.name}",
+                                :foreign_name => :pending_comments)
+                                
+        has_and_belongs_to_many :comments , 
+                                :join_table => "comments_#{base.name.snake_case.pluralize}",  
+                                :class => "Comment",
+                                :foreign_name => "#{base.name.snake_case.pluralize}".to_sym
+        
+        Comment.send(:has_and_belongs_to_many, 
+                                "#{base.name.snake_case.pluralize}".to_sym, 
+                                :join_table => "comments_#{base.name.snake_case.pluralize}", 
+                                :class => "#{base.name}",
+                                :foreign_name => :comments)
+        
         before_create :set_publishable_defaults
         
         validates_presence_of   :owner, :groups => [:create]
@@ -22,17 +46,14 @@ module Merbunity
         end
  
         def self.pending(opts={})
-          # self.all({:order => "created_at DESC"}.merge!(opts).merge!(:published_on => nil, :draft_status => false))
           self.all({:order => "created_at DESC"}.merge!(opts).merge!(:published_status => status_values[:pending]))
         end
         
         def self.published(opts={})
-          # self.all({:order => "published_on DESC"}.merge!(opts).merge!(:published_on.not => nil))
           self.all({:order => "published_on DESC"}.merge!(opts).merge!(:published_status => status_values[:published]))
         end
         
         def self.find_published(id)
-          # self.first(:id => id, :published_on.not => nil)
           self.first(:id => id, :published_status => status_values[:published])
         end         
         
@@ -98,6 +119,9 @@ module Merbunity
            @published_on = DateTime.now
            self.publisher = the_publisher
            self.owner.published_item_count = (self.owner.published_item_count || 0) + 1
+           
+           # make the owner a publisher if they have published enough articles
+           self.owner.make_publisher! if !self.owner.publisher? && self.owner.published_item_count >= Merbunity::Publishable::PUBLISHABLES_TO_BE_PUBLISHER
            # @draft_status = false
            @published_status = self.class.status_values[:published]
          end

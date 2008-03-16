@@ -1,6 +1,13 @@
 module Merbunity
   module Spec
     module Helpers
+      
+        def valid_comment_hash
+          {
+            :body   => String.random(200),
+            :owner  => Person.create(valid_person_hash)
+          }
+        end
           
         def valid_screencast_hash
           owner = Person.new(valid_person_hash)
