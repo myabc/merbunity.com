@@ -89,17 +89,14 @@ module Merbunity
     
     module InstanceMethods      
      def pending?
-       # @published_on.nil? && !self.draft?
        @published_status == self.class.status_values[:pending]
      end
 
      def published?
-       # !@published_on.nil?
        @published_status == self.class.status_values[:published]
      end
      
      def draft?
-       # !!(@draft_status.nil? ? true : @draft_status)
        @published_status ||= self.class.status_values[:draft]
        @published_status == self.class.status_values[:draft]
      end
@@ -122,7 +119,6 @@ module Merbunity
            
            # make the owner a publisher if they have published enough articles
            self.owner.make_publisher! if !self.owner.publisher? && self.owner.published_item_count >= Merbunity::Publishable::PUBLISHABLES_TO_BE_PUBLISHER
-           # @draft_status = false
            @published_status = self.class.status_values[:published]
          end
        elsif the_publisher == self.owner
@@ -131,7 +127,6 @@ module Merbunity
        else
          #This is only a draft
          @published_status = self.class.status_values[:draft]
-         # @draft_status = false
        end
      end
 
