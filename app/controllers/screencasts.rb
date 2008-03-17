@@ -91,6 +91,7 @@ class Screencasts < Application
   else
     def send_screencast(screencast)
       nginx_send_file(screencast.full_path)
+      redirect url(:screencast, screencast)
     end
   end
   
