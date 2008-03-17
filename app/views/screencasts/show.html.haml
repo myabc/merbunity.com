@@ -2,4 +2,25 @@
   = @screencast.title
 
 = partial :detail, :with => @screencast, :as => "screencast"
-  
+ 
+- unless @screencast.draft?
+
+  - if @screencast.pending?
+    - comments = @screencast.pending_comments
+    - comments_url = url(:add_pending_comment, :id => @screencast, :klass => "Screencast")
+    %h3 Comments about this pending screencast
+  - else
+    - comments = @screencast.comments
+    - comments_url = url(:add_comment, :id => @screencast, :klass => "Screencast")
+    %h3 Comments
+        
+  = partial "shared/comments/comments", :with => comments, :as => "comments"
+
+  - if logged_in?
+    %p
+      Add Your Comment
+      = partial "shared/comments/form", :with => Comment.new, :as => "comment", :comment_url => comments_url
+  - else
+    %p
+      = link_to "Sign in", url(:login)
+      to make your voice heard
