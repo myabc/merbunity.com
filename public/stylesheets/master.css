@@ -113,15 +113,24 @@ ul.site_navigation {
 #side_content {
   width: 218px;
   float: right;
+  padding: 0.35em;
   padding-top: 1em; }
   #side_content .box {
     width: 100%; }
     #side_content .box h3 {
+      padding: 0.2em;
       margin: 0px;
       text-align: center;
       background-color: #007700; }
     #side_content .box ul {
-      margin: 0px; }
+      margin: 0px;
+      padding: 0.2em; }
+      #side_content .box ul li {
+        list-style-type: none; }
+    #side_content .box p {
+      padding: 0.2em;
+      font-size: 0.85em;
+      text-align: justify; }
 
 #header {
   width: 100%;

@@ -33,3 +33,8 @@
             %ul.section_menu
               = list_of(section_menu_items) do |link|
                 = link
+        
+        -unless catch_content(:non_publisher_help).blank?
+          .box
+            %h3 Did You Know?
+            = catch_content(:non_publisher_help)
