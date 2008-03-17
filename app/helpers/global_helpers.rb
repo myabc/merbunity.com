@@ -40,6 +40,20 @@ module Merb
       date.strftime(format)
     end
     
+    # include a :class option to add more classes to the box
+    def side_bar_box(header, opts = {}, &blk)
+      concat("<div class='box #{opts[:class]}'><h3>#{header}</h3>", blk.binding)
+      concat(yield, blk.binding)
+      concat("</div>", blk.binding)
+      # out =<<-EOF
+      # <div class="box">
+      #   <h3>#{header}</h3>
+      #   #{yield}
+      # </div>
+      # EOF
+      # out
+    end
+    
   end
 end
 

@@ -3,14 +3,7 @@
 .content_description
   %p
     These screencasts are waiting to be published by a person in the community that is a publisher.
-  - unless current_person.publisher?
-    - throw_content :non_publisher_help do
-      %p
-        You can become a publisher.  All you have to do is publish
-        = Merbunity::Publishable::PUBLISHABLES_TO_BE_PUBLISHER
-        items.  These could be either a Screencast or a Tutorial.
-        Once your a publisher, you can publish your own, and anyone else's work that is pending.
-
+    
 - if @screencasts.empty?
   There are no Pending Screencasts.  Why not
   = link_to "make one", url(:new_screencast)
