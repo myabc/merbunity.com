@@ -24,7 +24,12 @@ Merb::Router.prepare do |r|
   # RESTful routes
   # r.resources :posts
   r.resources :screencasts, :collection => {:pending => :get, :my_pending => :get, :drafts => :get}, 
-                            :member     => {:publish => :put, :download => :get}
+                            :member     => {:publish => :put, :download => :get} 
+  
+  # Match the comments stuff
+  r.match("/:klass/:id/pending_comments", :method => :post).to(:controller => "Comments", :action => "create", :status => "pending").name(:add_pending_comment)
+  r.match("/:klass/:id/comments", :method => :post).to(:controller => "Comments", :action => "create", :status => "published").name(:add_comment)
+  
   
   r.to(:controller => "PendingFeatures") do |f|
     f.match("/news").to(:action => "news").name(:news)
