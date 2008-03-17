@@ -118,6 +118,7 @@ describe Screencast do
     @screencast.save
     @screencast.filename.should == "#{@screencast.id}_#{@screencast.original_filename}"
   end
+  
 end
 
 describe Screencast, "states" do

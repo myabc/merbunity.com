@@ -13,6 +13,7 @@ class Screencast < DataMapper::Base
   property :original_filename,        :string
   property :content_type,             :string
   property :created_at,               :datetime
+  property :download_count,           :integer
   
   validates_each :uploaded_file,:groups => [:create], :logic => lambda{
       errors.add(:video_file, "There is no video file uploaded") if uploaded_file.blank?
@@ -30,6 +31,7 @@ class Screencast < DataMapper::Base
       @size = hash[:uploaded_file]["size"]
       @content_type = hash[:uploaded_file]["content_type"]
     end
+    @download_count ||= 0
     super(hash)
   end
   

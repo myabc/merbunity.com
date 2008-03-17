@@ -6,6 +6,8 @@ class Screencasts < Application
 
   before :login_required, :only => [:new, :create, :edit, :update, :destroy]
   
+  before :ensure_logged_in_for_pending, :only => :download
+  
   params_protected :screencast => [:owner, :published_on, :draft_status]
   
   only_provides :html, :only => [:new, :edit]
@@ -67,10 +69,17 @@ class Screencasts < Application
   
   # only let a person who can view this download it
   def download(id)
-    screencast = Screencast.first(:id => id)
-    raise NotFound if screencast.nil?
-    raise Unauthorized unless current_person.can_view?(screencast)
-    send_screencast(screencast)
+    
+    raise NotFound if @screencast.nil?
+    raise Unauthorized unless @screencast.viewable_by?(current_person)
+    
+    # increment the downlaad count if it's published
+    if @screencast.published?
+      @screencast.download_count = @screencast.download_count + 1
+      @screencast.save
+    end
+    
+    send_screencast(@screencast)
   end
   
   private
@@ -88,6 +97,11 @@ class Screencasts < Application
   def non_publisher_help
     return if !logged_in? || current_person.publisher?
     throw_content :non_publisher_help, partial("shared/publishable/non_publisher_tip")
+  end
+  
+  def ensure_logged_in_for_pending
+    @screencast = Screencast.first(:id => params[:id])
+    throw(:halt, :access_denied) if(@screencast.nil? || !@screencast.viewable_by?(current_person))
   end
   
 end
