@@ -18,7 +18,7 @@ module Merbunity
             :description    => String.random,
             :body           => String.random(300),
             :uploaded_file  => {
-                  "content_type" => nil,
+                  "content_type" => "video/quicktime",
                   "size"         => 1024,
                   "filename"      => "spec_file.mov",
                   "tempfile"     => Tempfile.new("spec_file.mov")

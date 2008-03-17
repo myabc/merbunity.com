@@ -11,10 +11,12 @@ class Screencast < DataMapper::Base
   property :body,                     :text
   property :size,                     :integer
   property :original_filename,        :string
+  property :content_type,             :string
   property :created_at,               :datetime
   
   validates_each :uploaded_file,:groups => [:create], :logic => lambda{
       errors.add(:video_file, "There is no video file uploaded") if uploaded_file.blank?
+      errors.add(:video_file, "Only Video files are allowed") if !uploaded_file.blank? && self.content_type !~ /video/
      }
 
   after_create    :save_file_to_os
@@ -26,6 +28,7 @@ class Screencast < DataMapper::Base
       @original_filename = hash[:uploaded_file]["filename"]
       @tmp_file = hash[:uploaded_file]["tempfile"]
       @size = hash[:uploaded_file]["size"]
+      @content_type = hash[:uploaded_file]["content_type"]
     end
     super(hash)
   end

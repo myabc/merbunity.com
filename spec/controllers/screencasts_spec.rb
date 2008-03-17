@@ -27,7 +27,7 @@ describe Screencasts, "index action" do
   end
   
   before(:each) do
-    @c = dispatch_to(Screencasts, :index)
+    @c = dispatch_to(Screencasts, :index) 
     @expected = Screencast.published(:limit => 10)
   end
   

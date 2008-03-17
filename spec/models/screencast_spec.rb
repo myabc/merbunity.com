@@ -12,6 +12,26 @@ describe Screencast do
       FileUtils.rm_rf(Merb.root / "screencasts")
     end
   end
+  
+  def do_uploaded_file(path)
+    out = { :uploaded_file => {}}
+    File.open(path) do |f|
+      basename = File.basename(f.path)
+      mime = MIME::Types.type_for(basename)[0]
+      t = Tempfile.new(basename)
+      t << f.read
+      res = out[:uploaded_file]
+      res["content_type"] = mime.content_type
+      res["size"]         = t.size
+      res["filename"]     = basename
+      res["tempfile"]     = t
+    end
+    out
+  end
+  
+  after do
+    @file.close unless @file.nil?
+  end
 
   it "should be valid" do
     @screencast.save
@@ -33,6 +53,24 @@ describe Screencast do
     screencast = Screencast.new(valid_screencast_hash.except(:uploaded_file))
     screencast.save
     screencast.errors.on(:video_file).should_not be_nil
+  end
+  
+  it "should not have an error if the uploaded file has a video mime type" do
+    video_file_root = Merb.root / "spec" / "fixtures" / "video_files"
+    ["valid_mov_file.mov", "penguin.mpg"].each do |file|
+      screencast = Screencast.new(valid_screencast_hash.with(do_uploaded_file(video_file_root / file)))
+      screencast.save
+      screencast.errors.on(:video_file).should be_nil
+    end
+  end
+  
+  it "should have an error if the uploaded file does not have a video mime type" do
+    video_file_root = Merb.root / "spec" / "fixtures" / "video_files"
+    ["pic.jpg", "text.txt"].each do |file|
+      screencast = Screencast.new(valid_screencast_hash.with(do_uploaded_file(video_file_root / file)))
+      screencast.save
+      screencast.errors.on(:video_file).should_not be_nil
+    end
   end
   
   it "should set the tmp_file on initialization" do

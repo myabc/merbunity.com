@@ -1,10 +1,14 @@
 class Screencasts < Application
 
+  before :non_publisher_help
+
   publishable_resource Screencast
 
   before :login_required, :only => [:new, :create, :edit, :update, :destroy]
   
   params_protected :screencast => [:owner, :published_on, :draft_status]
+  
+  only_provides :html, :only => [:new, :edit]
   
   def index
     @screencasts = Screencast.published(:limit => 10)
@@ -19,13 +23,11 @@ class Screencasts < Application
   end
 
   def new(screencast = {})
-    only_provides :html
     @screencast = Screencast.new(screencast)
     render
   end
   
   def edit(id)
-    only_provides :html
     @screencast = Screencast.first(id)
     raise NotFound unless @screencast
     raise Unauthorized unless current_person.can_edit?(@screencast)
@@ -81,6 +83,11 @@ class Screencasts < Application
     def send_screencast(screencast)
       nginx_send_file(screencast.full_path)
     end
+  end
+  
+  def non_publisher_help
+    return if !logged_in? || current_person.publisher?
+    throw_content :non_publisher_help, partial("shared/publishable/non_publisher_tip")
   end
   
 end
