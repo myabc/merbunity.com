@@ -339,3 +339,55 @@ describe Screencasts, "Publishable Actions" do
     Screencasts.publishable_klass.should == Screencast
   end
 end
+
+
+describe Screencasts, "Download Action" do
+  
+  before(:all) do
+    DataMapper::Base.auto_migrate!
+  end
+  
+  before(:each) do
+    @person = Person.create(valid_person_hash)
+    @publisher = Person.create(valid_person_hash)
+    @publisher.make_publisher!
+    
+    @sc = Screencast.new(valid_screencast_hash.with(:owner => @person))
+    @sc.save
+    @person.publish(@sc)    
+    
+    Screencast.stub!(:first).and_return(@sc)
+  end
+  
+  it "should setup the test correctly" do
+    @sc.should be_pending
+  end
+  
+  it "should require a user to be logged in to be able to download the file if the screencast if pending" do
+    c = dispatch_to(Screencasts, :download, :id => @sc.id)
+    c.should redirect_to( url(:login) )
+  end
+  
+  it "should not increase the download count when the screencast is not publihsed" do
+    @sc.should be_pending
+    lambda do
+      c = dispatch_to(Screencasts, :download, :id => @sc.id) do |k|
+        k.stub!(:current_person).and_return(@person)
+        k.should_receive(:send_file).and_return( true )
+      end
+      c.should be_successful
+    end.should_not change(@sc, :download_count)
+  end
+  
+  it "should increase the screencasts download count when downloaded if the screencast is published" do
+    @publisher.publish(@sc)
+    @sc.should be_published
+    lambda do
+      c = dispatch_to(Screencasts, :download, :id => @sc.id) do |k|
+        k.stub!(:current_person).and_return(@person)
+        k.should_receive(:send_file).and_return(true)
+      end
+    end.should change(@sc, :download_count).by(1)
+  end
+  
+end

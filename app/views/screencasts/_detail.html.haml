@@ -19,6 +19,11 @@
       %div
         Published By:
         = screencast.publisher.login      
+      .download_count
+        Downloaded
+        = screencast.download_count
+        = screencast.download_count == 1 ? "time." : "times."
+        
     - else
       Screencast is
       = screencast.published_status
