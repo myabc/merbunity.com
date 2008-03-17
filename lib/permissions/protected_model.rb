@@ -8,6 +8,8 @@ module Merbunity
           return self.published?
         end
         
+        return true if self.published?
+        
         return true if user.admin?
         return true if user.publisher?
         

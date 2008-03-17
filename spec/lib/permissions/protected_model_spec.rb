@@ -144,6 +144,12 @@ describe Merbunity::Permissions::ProtectedModel do
     @mpm.should_not be_publishable_by(:false)
   end
   
+  it "should be viewable when a user who is not a publisher, owner or admin and the model is publshed" do
+    p = Person.create(valid_person_hash)    
+    m = MyProtectedModel.new(:owner => @owner, :published => true)
+    m.should be_viewable_by(p)
+  end
+  
   
   
 end
