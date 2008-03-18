@@ -1,5 +1,9 @@
+require(File.dirname(__FILE__) / "publishable_helper")
+require(File.dirname(__FILE__) / "permission_helper")
 module Merb
   module GlobalHelpers
+    include Merbunity::PublishableHelpers
+    include Merbunity::PermissionHelpers
     
     def site_navigation_links
       nav ||= []
@@ -45,13 +49,18 @@ module Merb
       concat("<div class='box #{opts[:class]}'><h3>#{header}</h3>", blk.binding)
       concat(yield, blk.binding)
       concat("</div>", blk.binding)
-      # out =<<-EOF
-      # <div class="box">
-      #   <h3>#{header}</h3>
-      #   #{yield}
-      # </div>
-      # EOF
-      # out
+    end
+    
+    def gravitar(person = current_person, opts = {})
+      return "" unless logged_in?
+      opts[:size] ||= 40
+      opts[:rating] ||= "R"
+      opts[:gravatar_id] = Digest::MD5.hexdigest(person.email.strip)      
+      attrs = {}
+      attrs[:src] = "http://www.gravatar.com/avatar.php?#{opts.to_params}"
+      attrs[:class] = "gravitar"
+      
+      out = self_closing_tag(:img, attrs) unless person.nil?
     end
     
   end

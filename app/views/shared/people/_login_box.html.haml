@@ -1,0 +1,11 @@
+#login_box
+  - when_logged_in do
+    = gravitar
+    .details
+      = current_person.login
+    .account_links
+      %ul
+        %li= link_to "Logout", url(:logout)
+    
+  - when_not_logged_in do
+    =link_to "Login", url(:login)

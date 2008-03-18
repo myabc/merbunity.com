@@ -151,7 +151,10 @@ ul.site_navigation {
     margin: 1em;
     width: 300px;
     height: 40px;
-    float: right; }
+    float: right;
+    padding: 10px; }
+    #header #login_box .gravitar {
+      float: left; }
 
 body {
   background-color: #eeeed2; }
