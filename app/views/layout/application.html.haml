@@ -10,12 +10,7 @@
     #header
       %h1 Merbunity
       
-      #login_box
-        -if logged_in?
-          =link_to "Logout", url(:logout)
-        -else
-          =link_to "Login", url(:login)
-        
+      = partial "shared/people/login_box"  
         
       %ul.site_navigation
         = list_of(site_navigation_links) do |link| 
