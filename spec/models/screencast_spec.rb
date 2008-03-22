@@ -199,3 +199,34 @@ describe Screencast, "Class Methods" do
   
 end
 
+describe Screencast, "whistler" do
+  before(:all) do
+    DataMapper::Base.auto_migrate!
+  end
+  
+  [:description, :title, :body].each do |prop|
+    it "should white list on create" do
+      Whistler.stub!(:white_list).and_return(true)
+      Whistler.should_receive(:white_list).once.with("#{prop}").and_return("#{prop}")    
+      c = Screencast.new(valid_screencast_hash.with(prop => "#{prop}"))
+      c.save
+    end
+  
+    it "should white list on save if the #{prop} has changed" do
+      c = Screencast.new(valid_screencast_hash.with(prop => "not #{prop} here"))
+      c.save
+      Whistler.should_receive(:white_list).with("#{prop}").and_return("#{prop}")
+      c.send("#{prop}=", "#{prop}")
+      c.save    
+    end
+  
+    it "should not white list the #{prop} attribute when it has not changed" do
+      c = Screencast.new(valid_screencast_hash.with(prop => "#{prop}"))
+      c.save
+      Whistler.should_not_receive(:white_list)
+      c.save    
+    end
+  end
+  
+end
+

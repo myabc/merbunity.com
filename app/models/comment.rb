@@ -7,4 +7,5 @@ class Comment < DataMapper::Base
   
   validates_presence_of :owner, :groups => :create
   
+  whistler_properties :body
 end

@@ -35,6 +35,7 @@ dependency "permissions/permissions"
 dependency "datamapper_extensions"
 dependency "publishable_mixin/model"
 dependency "publishable_mixin/controller"
+dependencies "whistler", "whistler_helpers"
 
 ### This defines which test framework the generators will use
 ### rspec is turned on by default
