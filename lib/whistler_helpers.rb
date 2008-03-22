@@ -1,25 +1,42 @@
-class DataMapper::Base
-  
-  class << self
-    def whistler_properties(*props)
-      @_whistler_properties = props.flatten.uniq
-      
-      before_save :whistle      
-    end
+module Merbunity
+  module WhistlerHelpers
+    module DataMapper
     
-    def get_whistler_properties
-      @_whistler_properties
+      def self.included(base)
+        base.send(:include, InstanceMethods)
+        base.send(:extend, ClassMethods)
+      end
+    
+      module ClassMethods
+      
+        def whistler_properties(*props)
+          @_whistler_properties = props.flatten.uniq
+
+          before_save :whistle      
+        end
+
+        def get_whistler_properties
+          @_whistler_properties
+        end
+      
+      end
+    
+      module InstanceMethods
+        private
+
+        def whistle
+          return unless self.dirty?
+          self.class.get_whistler_properties.each do |prop|
+            ivar = instance_variable_get("@#{prop}")
+            ivar = Whistler.white_list(ivar) unless ivar.nil? || !dirty_attributes.include?(prop)
+          end
+        end
+      end
+      
     end
   end
-  
-  private
-  
-  def whistle
-    return unless self.dirty?
-    self.class.get_whistler_properties.each do |prop|
-      ivar = instance_variable_get("@#{prop}")
-      ivar = Whistler.white_list(ivar) unless ivar.nil? || !dirty_attributes.include?(prop)
-    end
-  end
-  
+end
+
+Merb::BootLoader.before_app_loads do
+  DataMapper::Base.send(:include, Merbunity::WhistlerHelpers::DataMapper)
 end
