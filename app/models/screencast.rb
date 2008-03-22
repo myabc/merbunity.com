@@ -15,6 +15,8 @@ class Screencast < DataMapper::Base
   property :created_at,               :datetime
   property :download_count,           :integer
   
+  whistler_properties :description, :title, :body
+  
   validates_each :uploaded_file,:groups => [:create], :logic => lambda{
       errors.add(:video_file, "There is no video file uploaded") if uploaded_file.blank?
       errors.add(:video_file, "Only Video files are allowed") if !uploaded_file.blank? && self.content_type !~ /video/

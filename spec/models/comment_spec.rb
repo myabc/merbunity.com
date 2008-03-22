@@ -27,5 +27,31 @@ describe Comment do
     c.created_at.should_not be_nil
     c.created_at.should be_a_kind_of(Time)
   end
+end
 
+describe Comment, "white listing" do
+  
+  before(:all) do
+    DataMapper::Base.auto_migrate!
+  end
+  
+  it "should white list on create" do
+    Whistler.should_receive(:white_list).with("body").and_return("body")    
+    c = Comment.create(valid_comment_hash.with(:body => "body"))
+  end
+  
+  it "should white list on save if the body has changed" do
+    c = Comment.create(valid_comment_hash.with(:body => "not body here"))
+    Whistler.should_receive(:white_list).with("body").and_return("body")
+    c.body = "body"
+    c.save    
+  end
+  
+  it "should not white list the body attribute when it has not changed" do
+    c = Comment.create(valid_comment_hash.with(:body => "body"))
+    Whistler.should_not_receive(:white_list)
+    c.save    
+  end
+    
+  
 end
