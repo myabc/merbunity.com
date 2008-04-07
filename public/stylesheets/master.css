@@ -1,163 +1,56 @@
-html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td {
+* {
   margin: 0;
   padding: 0;
-  border: 0;
-  font-weight: inherit;
-  font-style: inherit;
-  font-size: 100%;
-  font-family: inherit;
-  vertical-align: baseline; }
-
-body {
-  line-height: 1; }
-
-ul {
-  list-style-type: none; }
-
-table {
-  border-collapse: separate;
-  border-spacing: 0; }
-
-caption, th, td {
-  text-align: left;
+  font-size: 1em;
   font-weight: normal; }
 
-h1 {
-  font-size: 138.5%; }
+strong {
+  font-weight: normal; }
 
-h2 {
-  font-size: 123.1%; }
-
-h3 {
-  font-size: 108%; }
-
-h1,h2,h3 {
-  margin: 1em 0; }
-
-h1,h2,h3,h4,h5,h6,strong {
-  font-weight: bold; }
-
-abbr,acronym {
-  border-bottom: 1px dotted #000;
-  cursor: help; }
-
-em {
-  font-style: italic; }
-
-blockquote,ul,ol,dl {
-  margin: 1em; }
-
-ol,ul,dl {
-  margin-left: 2em; }
-
-ol li {
-  list-style: decimal outside; }
-
-ul li {
-  list-style: disc outside; }
-
-dl dd {
-  margin-left: 1em; }
-
-th,td {
-  border: 1px solid #000;
-  padding: .5em; }
-
-th {
-  font-weight: bold;
-  text-align: center; }
-
-caption {
-  margin-bottom: .5em;
-  text-align: center; }
-
-p,fieldset,table,pre {
-  margin-bottom: 1em; }
-
-
-input[type=text],input[type=password],textarea {
-  width: 12.25em;
-  *width: 11.9em; }
-
-ul.site_navigation {
-  width: 100%;
-  overflow: hidden;
-  margin-left: 0px;
-  margin-bottom: 0px;
-  background-color: #007700;
-  padding: 0.2em;
-  display: block;
-  clear: both; }
-  ul.site_navigation li {
-    display: inline;
-    float: left;
-    border: 1px solid green; }
-    ul.site_navigation li a {
-      display: block;
-      width: 6em;
-      text-align: center; }
-
-#content {
-  background-color: white;
-  width: 860px;
-  margin: auto;
-  overflow: hidden; }
-
-#main_content {
-  padding: 1em;
-  width: 600px;
-  float: left; }
-  #main_content h2 {
-    margin-top: 0px; }
-
-#side_content {
-  width: 218px;
-  float: right;
-  padding: 0.35em;
-  padding-top: 1em; }
-  #side_content .box {
-    width: 100%; }
-    #side_content .box h3 {
-      padding: 0.2em;
-      margin: 0px;
-      text-align: center;
-      background-color: #007700; }
-    #side_content .box ul {
-      margin: 0px;
-      padding: 0.2em; }
-      #side_content .box ul li {
-        list-style-type: none; }
-    #side_content .box p {
-      padding: 0.2em;
-      font-size: 0.85em;
-      text-align: justify; }
-
-#header {
-  width: 100%;
-  background-color: #7b0200;
-  border-bottom: 4px solid black;
-  border-bottom-color: #c4c404;
-  overflow: hidden; }
-  #header h1 {
-    color: #c4c404;
-    margin-top: 0.2em;
-    margin-bottom: 0px;
-    margin-left: 1em;
-    font-size: 3em;
-    float: left; }
-  #header #login_box {
-    background-color: #B02E00;
-    display: block;
-    margin: 1em;
-    width: 300px;
-    height: 40px;
-    float: right;
-    padding: 10px; }
-    #header #login_box .gravitar {
-      float: left; }
+li {
+  list-style-type: none; }
 
 body {
-  background-color: #eeeed2; }
+  background: #E5E1D3 top center no-repeat url(/images/page_bkg.gif);
+  color: #111111;
+  font-family: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+  font-size: 80%; }
 
-label {
-  display: block; }
+#header {
+  color: #2e2d2a;
+  margin: 20px auto 0 auto;
+  width: 824px;
+  height: 160px; }
+  #header h1 {
+    background: left top no-repeat url(/images/logo.gif);
+    border-right: 1px solid #A4A096;
+    text-indent: -1000em;
+    letter-spacing: -1000em;
+    width: 260px;
+    height: 53px;
+    margin: 0 15px 0 0;
+    float: left; }
+  #header h2 {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 0 0 0; }
+  #header h2, #header p {
+    font-size: 0.9em; }
+
+#mainNav {
+  background: #111111;
+  width: 145px;
+  padding: 1em 15px;
+  position: absolute;
+  right: 20px;
+  top: 0; }
+  #mainNav a {
+    color: white !important;
+    text-decoration: none !important; }
+
+#content {
+  background: bottom left no-repeat url(/images/content_bkg.gif);
+  width: 635px;
+  margin: 0 auto 2em auto;
+  padding: 0 235px 50em 45px;
+  position: relative; }

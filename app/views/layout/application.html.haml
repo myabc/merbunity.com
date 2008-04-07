@@ -9,17 +9,17 @@
   %body
     #header
       %h1 Merbunity
-      
+      %h2 A Merb Community
+      %p News, projects and tutorials devoted to the Merb web framework
       = partial "shared/people/login_box"  
-        
-      %ul.site_navigation
+      
+    #content
+      %ul#mainNav
         = list_of(site_navigation_links) do |link| 
           = link
-      
-    #content   
-      #main_content 
-        %h2= catch_content :for_header
-        = catch_content :for_layout
+          
+      %h2= catch_content :for_header
+      = catch_content :for_layout
   
       #side_content
         -if self.respond_to?(:section_menu_items) && !section_menu_items.empty?

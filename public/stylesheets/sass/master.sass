@@ -1,21 +1,66 @@
-!body_background = #EEEED2
-!main_bg = #FFFFFF
-!main_headings = #C4C404
-!box_header = #007700
-!orange_burn = #B02E00
-!general_text = #000000
-!soviet_red = #7B0200
-!main_header_color = #C4C404
+!almost_black = #111111
+!medium_grey = #A3A29F
+!dark_brown = #2E2D2A
 
+*
+  :margin 0
+  :padding 0
+  :font
+    :size 1em
+    :weight normal
 
-@import reset.sass
-@import yui_base.sass
-@import structure.sass
-@import header.sass
-
-
-body
-  :background-color = !body_background
+strong
+  :font-weight normal
   
-label
-  :display block
+li
+  :list-style-type none
+  
+body
+  :background #E5E1D3 top center no-repeat url(/images/page_bkg.gif)
+  :color = !almost_black
+  :font
+    :family  "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif
+    :size 80%
+
+#header
+  :color = !dark_brown
+  :margin 20px auto 0 auto
+  :width 824px
+  :height 160px
+
+  h1
+    :background left top no-repeat url(/images/logo.gif)
+    :border-right 1px solid #A4A096
+    :text-indent -1000em
+    :letter-spacing -1000em
+    :width 260px
+    :height 53px
+    :margin 0 15px 0 0
+    :float left
+
+  h2
+    :font-weight bold
+    :text-transform uppercase
+    :margin 0 0 0 0
+  
+  h2, p
+    :font-size 0.9em
+
+#mainNav
+  :background = !almost_black
+  :width 145px
+  :padding 1em 15px
+  :position absolute
+  :right 20px
+  :top 0
+  
+  a
+    :color white !important
+    :text-decoration none !important
+    
+#content
+  :background bottom left no-repeat url(/images/content_bkg.gif)
+  :width 635px
+  :margin 0 auto 2em auto
+  :padding 0 235px 50em 45px
+  :position relative
