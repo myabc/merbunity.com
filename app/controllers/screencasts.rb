@@ -50,7 +50,6 @@ class Screencasts < Application
     raise NotFound unless @screencast
     raise Unauthorized unless current_person.can_edit?(@screencast)
     @screencast.published_status = Screencast.status_values[:draft_status] if params[:save_as_draft] == "1"
-    Merb.logger.info("SAVING AS DRAFT") if @screencast.draft?
     if @screencast.update_attributes(screencast)
       redirect url(:screencast, @screencast)
     else

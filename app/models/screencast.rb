@@ -13,6 +13,7 @@ class Screencast < DataMapper::Base
   property :original_filename,        :string
   property :content_type,             :string
   property :created_at,               :datetime
+  property :updated_at,               :datetime
   property :download_count,           :integer
   
   whistler_properties :description, :title, :body
