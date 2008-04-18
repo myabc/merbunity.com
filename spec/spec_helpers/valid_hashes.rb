@@ -32,6 +32,18 @@ module Merbunity
           hash[:uploaded_file] = hash[:uploaded_file]["tempfile"]
           {:cast => hash}.to_mash
         end
+        
+        def valid_news_story_hash
+          owner = Person.new(valid_person_hash)
+          owner.save
+          owner.activate
+          owner.make_publisher!
+          {
+            :title => String.random,
+            :owner => owner,
+            :body  => String.random(300)
+          }
+        end
 
     end
   end

@@ -1,0 +1,8 @@
+-side_bar_box "Work It" do
+  %ul.object_menu
+    - if screencast.editable_by?(current_person)
+      %li
+        = link_to "Edit", url(:edit_screencast, screencast)
+    - if screencast.destroyable_by?(current_person)
+      %li
+        = delete_button(:screencast, screencast, "Delete", :class => "delete")
