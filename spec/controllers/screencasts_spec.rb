@@ -179,6 +179,25 @@ describe Screencasts, "edit action" do
       end
     end.should raise_error(Merb::Controller::Unauthorized)
   end
+  
+  it "should show an edit form" do
+    s = Screencast.new(valid_screencast_hash.with(:owner => @p))
+    s.save
+    Screencast.should_receive(:first).with(s.id.to_s).and_return(s)
+    s.should_receive(:editable_by?).with(@p).and_return true
+    controller = dispatch_to(Screencasts, :edit, :id => s.id) do |c|
+      c.stub!(:current_person).and_return @p
+    end
+    controller.body.should have_tag(:form, 
+                                    :action => url(:edit_screencast, :id => s.id), 
+                                    :method => "post") do |d|
+        d.should have_tag(:input, :type => "hidden",  :name => "_method", :value => "put")
+        d.should match_selector('input[@name*="title"]')
+        d.should match_selector('textarea[@name*="description"]')
+        d.should match_selector('textarea[@name*="body"]')
+        d.should match_selector('input[@type="file"][@name*="uploaded_file"]')
+      end
+  end
 end
 
 describe Screencasts, "update action" do

@@ -1,3 +1,14 @@
-<h1>Screencasts controller, edit action</h1>
+- throw_content :for_header do
+  = "Edit #{@screencast.title}"
 
-<p>Edit this file in <tt>app/views/screencasts/edit.html.erb</tt></p>
+.errors
+  = error_messages_for @screencast
+
+- form_for @screencast, :action => url(:edit_screencast, @screencast) do 
+  =partial :form, :with => @screencast, :as => "screencast"
+  
+- unless @screencast.original_filename.nil?
+  .screencast
+    %p
+      There's already a file for this screencast. 
+      = link_to @screencast.original_filename, url(:download_screencast, @screencast)
