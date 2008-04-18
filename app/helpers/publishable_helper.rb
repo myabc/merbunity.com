@@ -24,5 +24,10 @@ module Merbunity
       end
     end
     
+    def publish_button(url)
+      out =<<-EOF
+        <form method="post" action="#{url}"><input type='hidden' name='_method' value='PUT' /><button>Publish</button></form>
+      EOF
+    end
   end
 end
