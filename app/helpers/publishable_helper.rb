@@ -16,5 +16,13 @@ module Merbunity
       yield if obj.draft?
     end
     
+    def for_publishers(obj = nil)
+      if obj.nil? || obj.pending?
+        yield if current_person.publisher? || current_person.admin?
+      else
+        yield if current_person.can_publish?(obj)
+      end
+    end
+    
   end
 end
