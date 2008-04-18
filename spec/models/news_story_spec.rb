@@ -74,4 +74,57 @@ describe NewsStory do
     ns.should_not be_new_record
   end
   
+  it "should be publishable by an admin or a publisher" do
+    ns = NewsStory.new(valid_news_story_hash)
+    ns.save
+    [@publisher, @admin].each do |u|
+      ns.publishable_by?(u).should be_true
+    end
+  end
+  
+  it "should not be publishable by a non admin publisher" do
+    ns = NewsStory.new(valid_news_story_hash)
+    ns.save
+    [@person, :false, nil].each do |u|
+      ns.publishable_by?(u).should be_false
+    end
+  end
+  
+  it "should only be destroyable_by? admin" do
+    ns = NewsStory.new(valid_news_story_hash)
+    ns.save
+    ns.destroyable_by?(@admin).should be_true
+    ns.destroyable_by?(@publisher).should be_false
+    ns.destroyable_by?(@person).should be_false
+    ns.destroyable_by?(nil).should be_false
+    ns.destroyable_by?(:false).should be_false
+  end
+  
+  it "should be viewable by anyone" do
+    ns = NewsStory.new(valid_news_story_hash)
+    ns.save
+    [@admin, @publisher, @person, nil, :false].each do |u|
+      ns.viewable_by?(u)
+    end
+  end
+  
+  it "should only be editable by and admin" do
+    ns = NewsStory.new(valid_news_story_hash)
+    ns.save
+    ns.editable_by?(@admin).should be_true
+    [@publisher, @person, nil, :false].each do |u|
+      ns.editable_by?(u).should be_false
+    end
+  end
+  
+  it "should be editable by the owner" do
+    ns = NewsStory.new(valid_news_story_hash.with(:owner => @publisher))
+    ns.save
+    ns.should_not be_new_record
+    ns.editable_by?(@publisher).should be_true
+    [@person, nil,:false].each do |u|
+      ns.editable_by?(u).should be_false
+    end
+  end
+
 end
