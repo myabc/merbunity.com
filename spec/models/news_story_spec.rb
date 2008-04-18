@@ -62,4 +62,16 @@ describe NewsStory do
     ns.errors.on(:owner).should have(1).item
   end
   
+  it "should be valid if the person is a publisher" do
+    ns = NewsStory.new(valid_news_story_hash.with(:owner => @publisher))
+    ns.save
+    ns.should_not be_new_record
+  end
+  
+  it "should be valid if the person is an admin" do
+    ns = NewsStory.new(valid_news_story_hash.with(:owner => @admin))
+    ns.save
+    ns.should_not be_new_record
+  end
+  
 end
