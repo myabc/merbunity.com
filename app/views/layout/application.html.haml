@@ -29,6 +29,9 @@
               = list_of(section_menu_items) do |link|
                 = link
         
-        -unless catch_content(:non_publisher_help).blank?
+        -if thrown_content? :non_publisher_help 
           = catch_content(:non_publisher_help)
+        
+        -if thrown_content? :for_object_menu
+          = catch_content(:for_object_menu)
             

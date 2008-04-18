@@ -26,7 +26,13 @@ module Merbunity
       def destroyable_by?(user)
         return false if user.nil? || user == :false
         return true if user.admin?
-        return true if self.owner == user
+        if self.owner == user
+          if self.respond_to?(:published_on)
+            return true if self.published_on.nil?
+          else
+            return true
+          end
+        end
         false
       end
       

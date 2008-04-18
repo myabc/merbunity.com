@@ -14,6 +14,11 @@ describe Merbunity::Permissions::ProtectedModel do
     def published?
       !!@published
     end
+    
+    def published_on
+      return nil unless self.published?
+      @published_on ||= Time.now
+    end
   end
   
   class TheUserModel
@@ -30,6 +35,7 @@ describe Merbunity::Permissions::ProtectedModel do
     def admin?
       !!@admin
     end
+      
   end
   
   before(:all) do
@@ -108,6 +114,13 @@ describe Merbunity::Permissions::ProtectedModel do
   
   it "should be destroyable by the owner who is not an admin" do
     @mpm.should be_destroyable_by(@owner)
+  end
+  
+  it "should not be destroyable by the owner who is not an admin if it is / has been published" do
+    mpm = MyProtectedModel.new(:owner => @owner, :published => true)
+    mpm.should be_destroyable_by(@admin)
+    mpm.should_not be_destroyable_by(@publisher)
+    mpm.should_not be_destroyable_by(@owner)
   end
   
   it "should not be destroyable by a publisher who does not own the model and is not an admin" do
