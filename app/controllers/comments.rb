@@ -13,7 +13,7 @@ class Comments < Application
     
     obj.send(meth) << @comment
     obj.save
-    
+    flash[:notice] = "Comment added" unless obj.new_record?
     case content_type
     when :html
       redirect request.referer

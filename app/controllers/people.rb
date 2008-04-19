@@ -22,8 +22,10 @@ class People < Application
     
     @person = Person.new(params[:person])
     if @person.save
+      flash[:notice] = "Keep an eye on your inbox.  We'll send you an activation email"
       redirect_back_or_default('/')
     else
+      flash[:error] = "There was an error with your signup"
       render :new
     end
   end
