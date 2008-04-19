@@ -37,6 +37,7 @@ dependency "publishable_mixin/controller"
 dependencies "whistler", "whistler_helpers"
 dependency "RedCloth"
 dependency "merb_has_flash"
+dependency "paginator"
 
 ### This defines which test framework the generators will use
 ### rspec is turned on by default
