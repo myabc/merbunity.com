@@ -13,7 +13,6 @@ Merb::Config.use do |c|
   # c[:session_id_key] = '_session_id'
   
   c[:session_secret_key]  = 'a140963260bba75cbd912cfbd85fcf4d5187a5db'
-  c[:session_store] = 'cookie'
 end  
 
 ### Merb doesn't come with database support by default.  You need
@@ -36,6 +35,8 @@ dependency "datamapper_extensions"
 dependency "publishable_mixin/model"
 dependency "publishable_mixin/controller"
 dependencies "whistler", "whistler_helpers"
+dependency "RedCloth"
+dependency "merb_has_flash"
 
 ### This defines which test framework the generators will use
 ### rspec is turned on by default
@@ -57,6 +58,8 @@ use_test :rspec
 # dependency "RedCloth", "> 3.0"
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
+
+Language::English::Inflect.word "news", "news"
 
 Merb::BootLoader.after_app_loads do
   ### Add dependencies here that must load after the application loads:

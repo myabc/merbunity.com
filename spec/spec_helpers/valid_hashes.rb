@@ -33,7 +33,7 @@ module Merbunity
           {:cast => hash}.to_mash
         end
         
-        def valid_news_story_hash
+        def valid_news_item_hash
           owner = Person.new(valid_person_hash)
           owner.save
           owner.activate
@@ -41,7 +41,8 @@ module Merbunity
           {
             :title => String.random,
             :owner => owner,
-            :body  => String.random(300)
+            :description  => String.random(100),
+            :body => String.random(300)
           }
         end
 

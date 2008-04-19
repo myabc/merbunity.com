@@ -5,8 +5,8 @@ class Screencasts < Application
   publishable_resource Screencast
 
   before :login_required, :only => [:new, :create, :edit, :update, :destroy]
-  
   before :ensure_logged_in_for_pending, :only => :download
+  before :find_screencast, :only => [:destroy, :show, :edit, :update]
   
   params_protected :screencast => [:owner, :published_on, :draft_status]
   
@@ -18,8 +18,6 @@ class Screencasts < Application
   end
 
   def show(id)
-    @screencast = Screencast.find(id)
-    raise NotFound unless @screencast
     raise Unauthorized unless @screencast.viewable_by?(current_person)
     display @screencast
   end
@@ -30,8 +28,6 @@ class Screencasts < Application
   end
   
   def edit(id)
-    @screencast = Screencast.first(id)
-    raise NotFound unless @screencast
     raise Unauthorized unless current_person.can_edit?(@screencast)
     render
   end
@@ -46,8 +42,6 @@ class Screencasts < Application
   end
 
   def update(id, screencast = {})
-    @screencast = Screencast.first(id)
-    raise NotFound unless @screencast
     raise Unauthorized unless current_person.can_edit?(@screencast)
     @screencast.published_status = Screencast.status_values[:draft_status] if params[:save_as_draft] == "1"
     if @screencast.update_attributes(screencast)
@@ -58,8 +52,6 @@ class Screencasts < Application
   end
 
   def destroy(id)
-    @screencast = Screencast.first(id)
-    raise NotFound unless @screencast
     raise Unauthorized unless current_person.can_destroy?(@screencast)
     if @screencast.destroy!
       redirect url(:screencasts)
@@ -84,6 +76,13 @@ class Screencasts < Application
   end
   
   private
+  
+  def find_screencast
+    @screencast = Screencast.first(params[:id])
+    raise NotFound if @screencast.nil?
+    @screencast
+  end
+  
   # Put this in so that we can still get links when not behind nginx_send_file
   if Merb.env != "production"
     def send_screencast(screencast)

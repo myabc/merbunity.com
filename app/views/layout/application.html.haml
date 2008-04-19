@@ -19,6 +19,10 @@
           = link
           
       %h2= catch_content :for_header
+      - unless flash.empty?
+        - flash_type = flash.keys.sort.first
+        %div{:class => "flash #{flash_type}"}
+          = flash[flash_type]
       = catch_content :for_layout
   
       #side_content

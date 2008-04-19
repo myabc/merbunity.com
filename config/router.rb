@@ -30,9 +30,9 @@ Merb::Router.prepare do |r|
   r.match("/:klass/:id/pending_comments", :method => :post).to(:controller => "Comments", :action => "create", :status => "pending").name(:add_pending_comment)
   r.match("/:klass/:id/comments", :method => :post).to(:controller => "Comments", :action => "create", :status => "published").name(:add_comment)
   
+  r.resources :news
   
   r.to(:controller => "PendingFeatures") do |f|
-    f.match("/news").to(:action => "news").name(:news)
     f.match("/tutorials").to(:action => "tutorials").name(:tutorials)
     f.match("/blogs").to(:action => "blogs" ).name(:blogs)
     f.match("/sites").to(:action => "sites").name(:sites)
