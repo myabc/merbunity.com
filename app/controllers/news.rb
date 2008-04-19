@@ -6,6 +6,8 @@ class News < Application
   
   before :non_publisher_help
   
+  params_protected :news_item => [:create_at, :updated_at, :owner, :owner_id]
+  
   def index(page = 0)
     @pager = Paginator.new(NewsItem.count, 10) do |offset, per_page|
                   NewsItem.all(:limit => per_page, :offset => offset, :order => "created_at DESC")
