@@ -6,8 +6,13 @@ class News < Application
   
   before :non_publisher_help
   
-  def index
-    @news_items = NewsItem.all(:limit => 10)
+  def index(page = 0)
+    @pager = Paginator.new(NewsItem.count, 10) do |offset, per_page|
+                  NewsItem.all(:limit => per_page, :offset => offset, :order => "created_at DESC")
+             end
+    @page = @pager.page(page)
+    @news_items = @page.items
+    
     display @news_items
   end
   # 

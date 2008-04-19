@@ -79,7 +79,7 @@ end
 describe News, "New action" do
   it_should_behave_like "News Controller Setup"
   
-  it "should render the new action if you are not a publisher or admin" do
+  it "should render the new action if you are a publisher or admin" do
     [@admin, @publisher].each do |u|
       c = dispatch_to(News, :new){|k| k.stub!(:current_person).and_return(u)}
       c.should be_successful
