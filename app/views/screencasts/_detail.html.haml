@@ -4,7 +4,7 @@
     = screencast.description
   .detail
     %h3 Detail
-    = screencast.body
+    = screencast.display_body
   .download
     Download:
     = link_to screencast.original_filename, url(:download_screencast, screencast)
