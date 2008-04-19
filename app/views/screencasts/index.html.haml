@@ -12,3 +12,5 @@
   = link_to "make one", url(:new_screencast)
 - else
   = partial :summary, :with => @screencasts, :as => "screencast"
+
+= paginate_links(:screencasts, @page)
