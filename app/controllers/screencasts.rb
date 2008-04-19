@@ -35,8 +35,10 @@ class Screencasts < Application
   def create(screencast)
     @screencast = Screencast.new(screencast.merge(:owner => current_person))
     if @screencast.save
+      flash[:notice] = "Saved your screencast"
       redirect url(:screencast, @screencast)
     else
+      flash[:error] = "Something went wrong"
       render :new
     end
   end
@@ -45,8 +47,10 @@ class Screencasts < Application
     raise Unauthorized unless current_person.can_edit?(@screencast)
     @screencast.published_status = Screencast.status_values[:draft_status] if params[:save_as_draft] == "1"
     if @screencast.update_attributes(screencast)
+      flash[:notice] = "Updated your screencast"
       redirect url(:screencast, @screencast)
     else
+      flash[:error] = "There was an error editing your Screencast"
       render :edit
     end
   end
@@ -54,8 +58,10 @@ class Screencasts < Application
   def destroy(id)
     raise Unauthorized unless current_person.can_destroy?(@screencast)
     if @screencast.destroy!
+      flash[:notice] = "Screencast Deleted"
       redirect url(:screencasts)
     else
+      flash[:error] = "Could not delete your Screencast"
       raise BadRequest
     end
   end
