@@ -119,6 +119,12 @@ describe Screencast do
     @screencast.filename.should == "#{@screencast.id}_#{@screencast.original_filename}"
   end
   
+  it "should render textile of the body in display body" do
+    sc = Screencast.new(valid_screencast_hash.with(:body => "h1. Heading"))
+    sc.save
+    sc.display_body.should have_tag(:h1){|t| t.should contain("Heading")}
+  end
+  
 end
 
 describe Screencast, "states" do

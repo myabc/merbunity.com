@@ -50,6 +50,11 @@ class Screencast < DataMapper::Base
   def full_path
     file_path / filename
   end
+  
+  def display_body
+    return "" if self.body.nil?
+    @_display_body ||= RedCloth.new(self.body).to_html
+  end
  
   private 
   def delete_associated_file!
@@ -60,7 +65,6 @@ class Screencast < DataMapper::Base
     FileUtils.mkdir_p(file_path)
     FileUtils.copy tmp_file.path, (full_path)
   end
-  
 
   
 end
