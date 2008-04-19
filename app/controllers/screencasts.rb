@@ -12,8 +12,12 @@ class Screencasts < Application
   
   only_provides :html, :only => [:new, :edit]
   
-  def index
-    @screencasts = Screencast.published(:limit => 10)
+  def index(page = 0)
+    @pager = Paginator.new(Screencast.published_count, 10) do |offset, per_page|
+                  Screencast.published(:limit => per_page, :offset => offset)
+             end
+    @page = @pager.page(page)
+    @screencasts = @page.items    
     display @screencasts
   end
 

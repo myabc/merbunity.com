@@ -62,6 +62,10 @@ module Merbunity
           self.all({:order => "created_at DESC"}.merge!(opts).merge!(:published_status => status_values[:draft]))
         end
         
+        def self.published_count(opts = {})
+          self.count(opts.merge!(:published_status => status_values[:published]))
+        end
+        
       end
       
       base.send(:include, InstanceMethods)
