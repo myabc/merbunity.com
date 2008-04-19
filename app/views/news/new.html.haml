@@ -1,0 +1,13 @@
+-throw_content :for_header, "Got News?"
+
+.error
+  = error_messages_for @news_item
+
+-form_for @news_item, :action => url(:news) do
+  
+  =text_control :title, :label => "Title"
+  =text_area_control :description, :label => "Description"
+  %p.note
+    You can use textile markup for the body of your news article
+  =text_area_control :body, :label => "Body"
+  = submit_button "Publish News Article"

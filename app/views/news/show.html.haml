@@ -1,0 +1,10 @@
+- throw_content :for_header do
+  = @news_item.title
+
+%div[@news_item]
+  %p.date
+    = time_format(@news_item.created_at)
+  %p.description
+    = @news_item.description
+  .body
+    =@news_item.display_body
