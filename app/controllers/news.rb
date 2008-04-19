@@ -4,6 +4,8 @@ class News < Application
   
   before :login_required, :only => [:new, :create]
   
+  before :non_publisher_help
+  
   def index
     @news_items = NewsItem.all(:limit => 10)
     display @news_items
@@ -79,6 +81,11 @@ class News < Application
     @news_item = NewsItem.first(params[:id])
     raise NotFound unless @news_item
     @news_item
+  end
+  
+  def non_publisher_help
+    return if !logged_in? || current_person.publisher?
+    throw_content :non_publisher_help, partial(:non_publisher_help)
   end
   
 end
