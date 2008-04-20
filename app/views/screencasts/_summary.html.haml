@@ -2,7 +2,7 @@
   %h3
     = link_to screencast.title, url(:screencast, screencast)
   %p.description
-    = screencast.description.truncate(200)
+    = (screencast.description || "").truncate(200)
   %p.owner
     Author:
     = screencast.owner.login
