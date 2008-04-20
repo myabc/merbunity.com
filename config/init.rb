@@ -63,6 +63,7 @@ use_test :rspec
 Language::English::Inflect.word "news", "news"
 
 Merb::BootLoader.after_app_loads do
+  Merb.add_mime_type(:atom,  :to_atom,  %w[application/atom+xml], :Encoding => "UTF-8")
   ### Add dependencies here that must load after the application loads:
 
   # dependency "magic_admin" # this gem uses the app's model classes

@@ -1,0 +1,6 @@
+%feed{:xmlns => "http://www.w3.org/2005/Atom"}
+  %title=       "Merbunity - Screencasts"
+  %subtitle=    "Screencasts from the Merb Community"
+  %link{:rel => "self", :href => "#{absolute_url(:screencasts)}.atom" }
+  %generator    "http://merbunity.com"
+  = partial :atom_entry, :with => @screencasts.to_a, :as => "screencast"

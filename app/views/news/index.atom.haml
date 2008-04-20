@@ -1,0 +1,6 @@
+%feed{:xmlns => "http://www.w3.org/2005/Atom"}
+  %title=       "Merbunity News"
+  %subtitle=    "News from the Merb Community"
+  %link{:rel => "self", :href => "#{absolute_url(:news)}.atom" }
+  %generator    "http://merbunity.com"
+  = partial :atom_entry, :with => @news_items.to_a, :as => "news_item"

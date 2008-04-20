@@ -1,0 +1,13 @@
+%entry
+  %title{:type => "Text"}= news_item.title
+  %link{ :rel => "self", :href => absolute_url(:news, news_item), :type => "application/atom+xml", :title => news_item.title }/
+  %published= time_format(news_item.created_at.to_time.utc, "%Y-%m-%dT%TZ")
+  %updated= time_format(news_item.updated_at.to_time.utc, "%Y-%m-%dT%TZ")
+  %link{:rel => "alternate", :type => "text/html", :href => absolute_url(:news, news_item), :title => news_item.title}/
+  %content{:type => "html"}
+    - @_content = capture_haml do
+      %div
+        =news_item.description
+        %br/
+        = link_to "Read More...", absolute_url(:news, news_item)
+    = escape_xml @_content

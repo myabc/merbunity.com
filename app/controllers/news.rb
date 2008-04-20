@@ -1,14 +1,13 @@
 class News < Application
   # provides :xml, :yaml, :js
   before :find_news_item, :only => [:show]
-  
   before :login_required, :only => [:new, :create]
-  
   before :non_publisher_help
   
   params_protected :news_item => [:create_at, :updated_at, :owner, :owner_id]
   
   def index(page = 0)
+    provides :atom
     @pager = Paginator.new(NewsItem.count, 10) do |offset, per_page|
                   NewsItem.all(:limit => per_page, :offset => offset, :order => "created_at DESC")
              end
