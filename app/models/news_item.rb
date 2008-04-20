@@ -4,6 +4,7 @@ class NewsItem < DataMapper::Base
   property :description, :text
   property :title, :string
   property :created_at, :datetime
+  property :updated_at, :datetime
   
   belongs_to :owner, :class => "Person"
   

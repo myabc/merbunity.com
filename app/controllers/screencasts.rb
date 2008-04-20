@@ -13,6 +13,7 @@ class Screencasts < Application
   only_provides :html, :only => [:new, :edit]
   
   def index(page = 0)
+    provides :atom
     @pager = Paginator.new(Screencast.published_count, 10) do |offset, per_page|
                   Screencast.published(:limit => per_page, :offset => offset)
              end
