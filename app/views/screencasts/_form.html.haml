@@ -1,9 +1,9 @@
 .field 
   = text_control       :title,         :label => "Title"
 .field 
-  = text_area_control  :description,   :label => "Description"
+  = preserve(text_area_control  :description,   :label => "Description")
 .field 
-  = text_area_control  :body,          :label => "Detail"
+  = preserve(text_area_control  :body,          :label => "Detail")
 .field 
   = file_control       :uploaded_file, :label => "ScreenCast File"
 .field 
