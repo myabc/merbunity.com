@@ -55,10 +55,11 @@ body {
   padding: 0 235px 100px 0;
   position: relative; }
   #content #content_box {
-    width: 720px;
+    left: -45px;
+    padding: 45px;
+    width: 674px;
     margin-left: 0px;
     background-color: rgb(163, 162, 159);
-    padding-left: 45px;
     padding-bottom: 100px;
     min-height: 450px; }
 
@@ -80,3 +81,35 @@ code {
   font-family: "Arial";
   font-size: 1.1em;
   padding-left: 1em; }
+
+div.error, div.notice, div.success {
+  padding: 0.8em;
+  margin-bottom: 1em;
+  width: 80%; }
+
+.error, .notice, .success {
+  border: 2px solid #ddd; }
+
+.error {
+  background: #FBE3E4;
+  color: #8a1f11;
+  border-color: #FBC2C4; }
+
+.notice {
+  background: #FFF6BF;
+  color: #514721;
+  border-color: #FFD324; }
+
+.success {
+  background: #E6EFC2;
+  color: #264409;
+  border-color: #C6D880; }
+
+.error a {
+  color: #8a1f11; }
+
+.notice a {
+  color: #514721; }
+
+.success a {
+  color: #264409; }

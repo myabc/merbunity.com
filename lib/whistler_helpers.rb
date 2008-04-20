@@ -26,10 +26,13 @@ module Merbunity
 
         def whistle
           return unless self.dirty?
+          puts "CLEANING"
           self.class.get_whistler_properties.each do |prop|
-            ivar = instance_variable_get("@#{prop}")
-            ivar = Whistler.white_list(ivar) unless ivar.nil? || !dirty_attributes.include?(prop)
+            ivar = self.send(prop)
+            self.send("#{prop}=".to_sym, (Whistler.white_list(self.send(prop)) unless ivar.nil? || !dirty_attributes.include?(prop)))
+            puts "RESULT #{self.send(prop).inspect}"
           end
+          
         end
       end
       

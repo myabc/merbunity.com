@@ -22,22 +22,21 @@
       %ul#mainNav
         = list_of(site_navigation_links) do |link| 
           = link
-          
-      %h2= catch_content :for_header
-      - unless flash.empty?
-        - flash_type = flash.keys.sort.first
-        %div{:class => "flash #{flash_type}"}
-          = flash[flash_type]
-      #content_box
+      #content_box          
+        %h2= catch_content :for_header
+        - unless flash.empty?
+          - flash_type = flash.keys.sort.first
+          %div{:class => "flash #{flash_type}"}
+            = flash[flash_type]
         = catch_content :for_layout
   
-      #side_content
-        -if self.respond_to?(:section_menu_items) && !section_menu_items.empty?
-          .box
-            %h3= section_menu_header
-            %ul.section_menu
-              = list_of(section_menu_items) do |link|
-                = link
+        #side_content
+          -if self.respond_to?(:section_menu_items) && !section_menu_items.empty?
+            .box
+              %h3= section_menu_header
+              %ul.section_menu
+                = list_of(section_menu_items) do |link|
+                  = link
         
         -if thrown_content? :non_publisher_help 
           = catch_content(:non_publisher_help)

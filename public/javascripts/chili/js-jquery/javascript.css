@@ -13,7 +13,7 @@ WEBSITE: http://noteslog.com/chili/
 .javascript .com      { color: green; }
 .javascript .regexp   { color: maroon; }
 .javascript .string   { color: teal; }
-.javascript .keywords { color: navy; font-weight: bold; }
+.javascript .keywords { color: #FF8400; font-weight: bold; }
 .javascript .global   { color: blue; }
 .javascript .numbers  { color: red; }
 
