@@ -52,5 +52,31 @@ body {
   background: bottom left no-repeat url(/images/content_bkg.gif);
   width: 635px;
   margin: 0 auto 2em auto;
-  padding: 0 235px 50em 45px;
+  padding: 0 235px 100px 0;
   position: relative; }
+  #content #content_box {
+    width: 720px;
+    margin-left: 0px;
+    background-color: rgb(163, 162, 159);
+    padding-left: 45px;
+    padding-bottom: 100px;
+    min-height: 450px; }
+
+label {
+  display: block; }
+
+textarea {
+  width: 40em;
+  height: 20em;
+  margin-left: 0px;
+  font-family: inherit;
+  font-size: inherit; }
+
+code {
+  display: block;
+  width: 80%;
+  background: black;
+  color: white;
+  font-family: "Arial";
+  font-size: 1.1em;
+  padding-left: 1em; }
