@@ -7,4 +7,4 @@
   %p.description
     = @news_item.description
   .body
-    =@news_item.display_body
+    =preserve(@news_item.display_body)
