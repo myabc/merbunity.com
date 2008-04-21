@@ -11,6 +11,8 @@
     %script
       ChiliBook.recipeFolder     = "/javascripts/chili/js/";  
       ChiliBook.stylesheetFolder = "/javascripts/chili/css/";
+      
+    = catch_content :auto_discover_atom unless catch_content(:auto_discover_atom).blank?
   %body
     #header
       %h1 Merbunity

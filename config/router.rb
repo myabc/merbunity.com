@@ -23,6 +23,9 @@ Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do |r|
   # RESTful routes
   # r.resources :posts
+  # 
+  r.match("/").to(:controller => "news", :action => "index")
+  
   r.resources :screencasts, :collection => {:pending => :get, :my_pending => :get, :drafts => :get}, 
                             :member     => {:publish => :put, :download => :get} 
   
