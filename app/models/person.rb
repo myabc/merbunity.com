@@ -85,9 +85,9 @@ class Person < DataMapper::Base
   end
     
   
-  EMAIL_FROM = "info@mysite.com"
-  SIGNUP_MAIL_SUBJECT = "Welcome to MYSITE.  Please activate your account."
-  ACTIVATE_MAIL_SUBJECT = "Welcome to MYSITE"
+  EMAIL_FROM = "info@merbunity.com"
+  SIGNUP_MAIL_SUBJECT = "Welcome to Merbunity.  Please activate your account."
+  ACTIVATE_MAIL_SUBJECT = "Welcome to Merbunity"
   
   # Activates the person in the database
   def activate
