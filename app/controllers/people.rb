@@ -34,6 +34,7 @@ class People < Application
     self.current_person = Person.find_activated_authenticated_model(params[:activation_code])
     if logged_in? && !current_person.active?
       current_person.activate
+      flash[:notice] = "Your account is activated :)"
     end
     redirect_back_or_default('/')
   end

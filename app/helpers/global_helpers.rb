@@ -49,6 +49,16 @@ module Merb
       out = self_closing_tag(:img, attrs) unless person.nil?
     end
     
+    def auto_discover_atom(feed_url)
+      throw_content :auto_discover_atom,
+          "<link href=\"#{feed_url}\" rel=\"alternate\" title=\"ATOM\" type=\"application/atom+xml\" />"
+    end
+    
+    def atom_link(feed_url, opts = {})
+      opts[:text] ||= "Subscribe"
+      link_to( opts[:text], feed_url, :rel => "alternate",  :type => "application/atom+xml")
+    end
+    
     def paginate_links(url_name, page, opts = {})
       return "" if page.pager.number_of_pages < 2
       opts[:previous] ||= "Previous"
@@ -82,6 +92,8 @@ module Merb
       out << "</ul>"
       out
     end
+    
+    
     
     private
     def paginate_url(name, page_number, opts)

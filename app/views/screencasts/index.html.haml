@@ -1,4 +1,6 @@
 - throw_content :for_header, "Screencasts"
+- throw_content :for_atom_link, atom_link(url(:screencasts, :format => "atom"))
+- auto_discover_atom(url(:screencasts, :format => "atom"))
 
 .content_description
   %p
