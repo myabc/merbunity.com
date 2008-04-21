@@ -28,16 +28,19 @@ use_orm :datamapper
 ### Uncomment for Sequel ORM
 # use_orm :sequel
 
-dependencies "merb-assets", "merb-haml", "merb_param_protection"
-dependency "merb-action-args"
+require "merb-assets"
+require "merb-haml"
+require "merb_param_protection"
+require  "merb-action-args"
 dependency "permissions/permissions"
 dependency "datamapper_extensions"
 dependency "publishable_mixin/model"
 dependency "publishable_mixin/controller"
-dependencies "whistler", "whistler_helpers"
-dependency "RedCloth"
-dependency "merb_has_flash"
-dependency "paginator"
+require "whistler"
+dependency "whistler_helpers"
+require "redcloth"
+require "merb_has_flash"
+require "paginator"
 
 ### This defines which test framework the generators will use
 ### rspec is turned on by default
