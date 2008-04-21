@@ -109,7 +109,7 @@ class Screencasts < Application
   
   def non_publisher_help
     return true if !logged_in? || current_person.publisher?
-    throw_content :non_publisher_help, partial("shared/publishable/non_publisher_tip", :format => :html)
+    throw_content :for_help, partial("shared/publishable/non_publisher_tip", :format => :html)
   end
   
   def ensure_logged_in_for_pending
