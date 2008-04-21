@@ -10,7 +10,13 @@ class PersonMailer < Merb::MailController
     render_mail :text => :activation_notification
   end
   
-  def request
-    @base_controller.request if @base_controller
+  private
+  def method_missing(*args)
+    if @base_controller
+      @base_controller.send(:method_missing, *args) 
+    else
+      super(*args)
+    end
   end
+    
 end
