@@ -5,6 +5,7 @@ class Screencasts < Application
   publishable_resource Screencast
 
   before :login_required, :only => [:new, :create, :edit, :update, :destroy]
+  
   before :ensure_logged_in_for_pending, :only => :download
   before :find_screencast, :only => [:destroy, :show, :edit, :update]
   
@@ -107,8 +108,8 @@ class Screencasts < Application
   end
   
   def non_publisher_help
-    return if !logged_in? || current_person.publisher?
-    throw_content :non_publisher_help, partial("shared/publishable/non_publisher_tip")
+    return true if !logged_in? || current_person.publisher?
+    throw_content :non_publisher_help, partial("shared/publishable/non_publisher_tip", :format => :html)
   end
   
   def ensure_logged_in_for_pending

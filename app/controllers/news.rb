@@ -90,8 +90,8 @@ class News < Application
   end
   
   def non_publisher_help
-    return if !logged_in? || current_person.publisher?
-    throw_content :non_publisher_help, partial(:non_publisher_help)
+    return true if !logged_in? || current_person.publisher?
+    throw_content :non_publisher_help, partial(:non_publisher_help, :format => :html)
   end
   
 end
