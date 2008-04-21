@@ -4,3 +4,9 @@ Merb::Config.use { |c|
   c[:reload_classes] = false
   c[:session_store] = 'cookie'
 }
+
+Merb::Mailer.config = {
+  :host => "smtp.ey02.engineyard.com",
+  :port => "25",
+  :domain => "merbunity.com"
+}
