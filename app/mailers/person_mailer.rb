@@ -10,4 +10,7 @@ class PersonMailer < Merb::MailController
     render_mail :text => :activation_notification
   end
   
+  def request
+    @base_controller.request if @base_controller
+  end
 end
