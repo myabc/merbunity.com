@@ -70,6 +70,21 @@ Merb::BootLoader.after_app_loads do
   ### Add dependencies here that must load after the application loads:
 
   # dependency "magic_admin" # this gem uses the app's model classes
+  # Keep alive for the databse
+  if Merb.env?(:production)
+   $tickler = Thread.new do
+     loop do
+       DataMapper.database.query("SELECT * FROM people LIMIT 1")
+       Merb.logger.info "Tickled Database at #{Time.new}"
+       Merb.logger.info.flush
+       sleep(5*60)
+     end
+   end
+   $tickler.priority = -10
+  end
+    
+  
+  
 end
 
 begin 
