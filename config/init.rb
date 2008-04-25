@@ -32,15 +32,17 @@ require "merb-assets"
 require "merb-haml"
 require "merb_param_protection"
 require  "merb-action-args"
+require "whistler"
+require "redcloth"
+require "merb_has_flash"
+require "paginator"
+
 dependency "permissions/permissions"
 dependency "datamapper_extensions"
 dependency "publishable_mixin/model"
 dependency "publishable_mixin/controller"
-require "whistler"
 dependency "whistler_helpers"
-require "redcloth"
-require "merb_has_flash"
-require "paginator"
+dependency "menu_builder"
 
 ### This defines which test framework the generators will use
 ### rspec is turned on by default

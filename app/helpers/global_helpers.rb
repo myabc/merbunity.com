@@ -4,18 +4,19 @@ module Merb
   module GlobalHelpers
     include Merbunity::PublishableHelpers
     include Merbunity::PermissionHelpers
+    include Merbunity::MenuHelper
     
-    def site_navigation_links
-      nav ||= []
-      nav << link_to("News",        url(:news))
-      nav << link_to("Screencasts", url(:screencasts))
-      nav << link_to("Tutorials",   url(:tutorials))
-      nav << link_to("People",      url(:people))
-      nav << link_to("Blogs",       url(:blogs))
-      nav << link_to("Sites",       url(:sites))
-      nav << link_to("Projects",    url(:projects))
-      nav
-    end
+    # def site_navigation_links
+    #   nav ||= []
+    #   nav << link_to("News",        url(:news))
+    #   nav << link_to("Screencasts", url(:screencasts))
+    #   nav << link_to("Tutorials",   url(:tutorials))
+    #   nav << link_to("People",      url(:people))
+    #   nav << link_to("Blogs",       url(:blogs))
+    #   nav << link_to("Sites",       url(:sites))
+    #   nav << link_to("Projects",    url(:projects))
+    #   nav
+    # end
     
     # helpers defined here available to all views.  
     def page_title=(title)
