@@ -10,3 +10,4 @@ log/*
 casts/*
 db/*
 screencasts/*
+.DS_Store

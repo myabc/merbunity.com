@@ -45,8 +45,14 @@ body {
   right: 20px;
   top: 0; }
   #mainNav a {
-    color: white !important;
-    text-decoration: none !important; }
+    color: white;
+    text-decoration: none; }
+  #mainNav li.current a.current {
+    color: rgb(128,255,51);
+    font-size: 1.1em; }
+  #mainNav li.current ul {
+    font-size: 0.9em;
+    margin-left: 1em; }
 
 #content {
   background: bottom left no-repeat url(/images/content_bkg.gif);
