@@ -5,6 +5,6 @@
     = comment.owner.login
     says:
   %p.body
-    = RedCloth.new(comment.body).to_html
+    = RedCloth.new("#{comment.body}").to_html
   %p.timestamp
     
