@@ -27,7 +27,7 @@ module Merbunity
           return unless self.dirty?
           self.class.get_whistler_properties.each do |prop|
             ivar = self.send(prop)
-            self.send("#{prop}=".to_sym, (Whistler.white_list(self.send(prop)) unless ivar.nil? || !dirty_attributes.include?(prop)))
+            self.send("#{prop}=".to_sym, (Whistler.white_list(self.send(prop)))) unless ivar.nil? || !dirty_attributes.include?(prop)
           end
           
         end

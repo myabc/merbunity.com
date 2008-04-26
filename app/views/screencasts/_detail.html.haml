@@ -1,34 +1,34 @@
-.screencast
+.screencast{:class => "item"}
+  %p.meta
+    - if screencast.published?
+      = time_format(screencast.published_on)
+    - else 
+      Status:
+      = screencast.published_status
+    | 
+    Author:
+    = screencast.owner.login
+    - if screencast.published?
+      |
+      Publisher: 
+      = screencast.publisher.login
   .description
-    %h3 Description
     = screencast.description
-  .detail
-    %h3 Detail
+  .body
     = preserve(screencast.display_body)
   .download
     Download:
     = link_to screencast.original_filename, url(:download_screencast, screencast)
-  .author
-    Author
-    = screencast.owner.login
-  .published
-    -if screencast.published?
-      %div
-        Published On:
-        = time_format(screencast.published_on)
-      %div
-        Published By:
-        = screencast.publisher.login      
-      .download_count
-        Downloaded
-        = screencast.download_count
-        = screencast.download_count == 1 ? "time." : "times."
+    .count
+      Downloaded
+      = screencast.download_count
+      = screencast.download_count == 1 ? "time." : "times."
+
+  - for_publishers(screencast) do
+    - with_unpublished(screencast) do
+      = publish_button(url(:publish_screencast, screencast))
         
-    - else
-      Screencast is
-      = screencast.published_status
-      - for_publishers(screencast) do
-        = publish_button(url(:publish_screencast, screencast))
+
 
         
         

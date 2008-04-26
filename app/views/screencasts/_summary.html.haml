@@ -1,17 +1,16 @@
-%div{:class => "screencast summary"}
-  %h3
+%div{:class => "screencast summary item"}
+  %h3.title
     = link_to screencast.title, url(:screencast, screencast)
-  %p.description
-    = (screencast.description || "").truncate(200)
-  %p.owner
+  %p.meta
+    - if screencast.published?
+      = time_format(screencast.published_on)
+    - else 
+      - for_publishers do
+        Status: Pending
+    | 
     Author:
     = screencast.owner.login
-  - if screencast.published?
-    %p.published_on
-      Published On:
-      = time_format(screencast.published_on)
-  - else
-    - for_publishers do
-      %p.pending
-        Status: Pending
+          
+  %p.description
+    = (screencast.description || "").truncate(200)
         

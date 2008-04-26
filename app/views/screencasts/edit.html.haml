@@ -1,18 +1,14 @@
 - throw_content :for_header do
-  = "Edit #{@screencast.title}"
+  = "Edit - #{@screencast.title}"
 
 .errors
   = error_messages_for @screencast
 
 - form_for @screencast, :action => url(:screencast, @screencast) do 
   =partial :form, :with => @screencast, :as => "screencast"
-  - unless @screencast.draft?
-    = checkbox_field :name => "save_as_draft", :boolean => "true", :label => "Save as Draft?"
   
-- unless @screencast.original_filename.nil?
-  .screencast
-    %p
-      There's already a file for this screencast. 
-      = link_to @screencast.original_filename, url(:download_screencast, @screencast)
+
+  
+
 
 - throw_content :for_object_menu, partial(:object_menu, :with => @screencast, :as => "screencast")
