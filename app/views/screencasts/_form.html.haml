@@ -1,10 +1,21 @@
 .field 
-  = text_control       :title,         :label => "Title"
+  = text_control       :title,         :label => "Title", :class => "title"
 .field 
-  = preserve(text_area_control(:description,   :label => "Description"))
+  = preserve(text_area_control(:description,   :label => "Description", :class => "description"))
 .field 
-  = preserve(text_area_control(:body,          :label => "Detail"))
-.field 
-  = file_control       :uploaded_file, :label => "ScreenCast File"
+  = preserve(text_area_control(:body,          :label => "Detail", :class => "body"))
+
+%label{:for => "screencast_uploaded_file"} ScreenCast File
+.field.file
+  = file_control       :uploaded_file
+  
+  - unless screencast.original_filename.nil?
+    %p
+      There's already a file for this screencast. 
+      = link_to screencast.original_filename, url(:download_screencast, screencast)
+
+- unless @screencast.new_record? || @screencast.draft?
+  = checkbox_field :name => "save_as_draft", :boolean => "true", :label => {:title => "Save as Draft?", :class => "inline"}
+        
 .field 
   = submit_button "Save"

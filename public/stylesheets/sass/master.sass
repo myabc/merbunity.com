@@ -1,6 +1,17 @@
 !almost_black = #111111
 !medium_grey = #A3A29F
 !dark_brown = #2E2D2A
+!merbunity_blue = rgb(0,153,255)
+!secondary = #555555
+!link_color = rgb(227,84,48)
+
+@import forms.sass
+@import login.sass
+@import pagination.sass
+@import item.sass
+@import news.sass
+@import screencasts.sass
+
 
 *
   :margin 0
@@ -8,6 +19,9 @@
   :font
     :size 1em
     :weight normal
+    
+a, a:hover, a:visited
+  :color = !link_color
 
 strong
   :font-weight normal
@@ -53,12 +67,13 @@ body
   :position absolute
   :right 20px
   :top 0
+  :font-size 1.2em
   a
     :color white
     :text-decoration none
   li.current 
     a.current
-      :color rgb(128,255,51)
+      :color = !merbunity_blue
       :font-size 1.1em
     ul
       :font-size 0.9em
@@ -70,28 +85,38 @@ body
   :margin 0 auto 2em auto
   :padding 0 235px 100px 0
   :position relative
+
   #content_box
 
     :left -45px
     :padding 45px
-    :width 674px
+    :width 582px
     :margin-left 0px
     :background
       :color rgb(163, 162, 159)
     :padding
       :bottom 100px
     :min-height 450px
-
-
-label
-  :display block
-
-textarea
-  :width 40em
-  :height 20em
-  :margin-left 0px
-  :font-family inherit
-  :font-size inherit
+    .content_header
+      :background-color black
+      :font-size 2em
+      :float left
+      :padding
+        :left 0.5em
+        :right 0.5em
+        :top 0.1em
+        :bottom 0.1em
+      :color rgb(229,225,211)
+      :margin
+        :bottom 0.6em
+    br.clear
+      :clear both
+      
+.meta
+  :font-size 0.9em
+  :color grey
+  :border
+    :bottom 1px dotted grey
 
 code
   :display block
@@ -107,30 +132,27 @@ div.error, div.notice, div.success
   :padding 0.8em
   :margin-bottom 1em
   :width 80%
+  
+.description
+  :margin
+    :top 0.4em
+    :bottom 0.4em
+  :font-size 0.9em
+  :color = !secondary
+  :line-height 1.6em
+  :text-align justify
 
-.error, .notice, .success
-  :border 2px solid #ddd
+textarea.description    
+  :height 5em
 
-.error 
-  :background #FBE3E4
-  :color #8a1f11
-  :border-color #FBC2C4
+.body
+  :font-size 1.2em
+  :line-height 1.3em
+  :text-align justify
 
-.notice 
-  :background #FFF6BF
-  :color #514721
-  :border-color #FFD324
+.summary
+  .description
+    :font-size 1.3em
+    :line-height 1.3em
+    :color black
 
-.success
-  :background #E6EFC2
-  :color #264409
-  :border-color #C6D880
-
-.error a 
-  :color #8a1f11
-
-.notice a 
-  :color #514721
-
-.success a
-  :color #264409

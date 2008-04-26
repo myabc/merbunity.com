@@ -52,6 +52,13 @@ class Screencasts < Application
   def update(id, screencast = {})
     raise Unauthorized unless current_person.can_edit?(@screencast)
     @screencast.published_status = Screencast.status_values[:draft_status] if params[:save_as_draft] == "1"
+    
+    # There's a bug which won't allow DM to update attributes properly.  If they haven't changed, the attributes
+    # # are set to nil :\
+    # screencast.each do |k,v|
+    #   @screencast.send("#{k}=",v) unless @screencast.send(k.to_sym) == v
+    # end
+    
     if @screencast.update_attributes(screencast)
       flash[:notice] = "Updated your screencast"
       redirect url(:screencast, @screencast)

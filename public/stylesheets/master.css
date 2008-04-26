@@ -1,8 +1,139 @@
+label {
+  font-weight: bold;
+  display: block; }
+
+label.inline {
+  display: inline; }
+
+fieldset {
+  padding: 1.4em;
+  margin: 0 0 1.5em 0;
+  border: 1px solid #ccc; }
+
+legend {
+  font-weight: bold; }
+
+label {
+  font-size: 1.5em; }
+
+input.text, input.title, textarea, select, .field.file {
+  margin: 0.5em 0;
+  border: 1px solid #bbb;
+  font-family: inherit; }
+  input.textfocus, input.titlefocus, textareafocus, selectfocus, .field.filefocus {
+    border: 1px solid #666; }
+
+input.text, input.title, input.password, .field.file {
+  width: 390px;
+  padding: 5px; }
+
+input.title {
+  font-size: 1.5em; }
+
+textarea {
+  width: 390px;
+  height: 250px;
+  padding: 5px;
+  line-height: 1.5em; }
+
+.error, .notice, .success {
+  border: 2px solid #ddd; }
+
+.error {
+  background: #FBE3E4;
+  color: #8a1f11;
+  border-color: #FBC2C4; }
+
+.notice {
+  background: #FFF6BF;
+  color: #514721;
+  border-color: #FFD324; }
+
+.success {
+  background: #E6EFC2;
+  color: #264409;
+  border-color: #C6D880; }
+
+.error a {
+  color: #8a1f11; }
+
+.notice a {
+  color: #514721; }
+
+.success a {
+  color: #264409; }
+
+button {
+  display: block;
+  height: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 0.3em;
+  padding-bottom: 0.5em; }
+
+#login label {
+  font-size: 1.5em; }
+#login input.text, #login input.password {
+  font-size: 2em;
+  width: 15em; }
+#login input.checkbox {
+  width: 2em;
+  height: 2em; }
+#login button {
+  height: 2em;
+  width: 5em;
+  font-size: 1.5em;
+  margin-top: 0.5em; }
+
+ul.page_links {
+  overflow: hidden;
+  float: right; }
+  ul.page_links li {
+    display: inline;
+    float: left;
+    margin-right: 1em; }
+
+.item {
+  background-color: white;
+  padding: 1em;
+  margin-bottom: 1.4em; }
+  .item h3.title {
+    color: rgb(0,153,255);
+    font-size: 1.5em;
+    font-weight: bold; }
+    .item h3.title a {
+      color: inherit;
+      font-size: inherit;
+      text-decoration: inherit; }
+  .item a.more, .item a.more:hover, .item a.more:visited {
+    color: black;
+    font-size: 0.8em; }
+
+form.news textarea.description {
+  text-align: justify; }
+
+.download {
+  padding: 0.5em;
+  line-height: 2em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  background-color: rgb(213,208,196); }
+  .download a {
+    font-size: 1.5em; }
+
+.field.file {
+  background-color: white; }
+  .field.file p {
+    margin-top: 1em; }
+
 * {
   margin: 0;
   padding: 0;
   font-size: 1em;
   font-weight: normal; }
+
+a, a:hover, a:visited {
+  color: rgb(227,84,48); }
 
 strong {
   font-weight: normal; }
@@ -43,12 +174,13 @@ body {
   padding: 1em 15px;
   position: absolute;
   right: 20px;
-  top: 0; }
+  top: 0;
+  font-size: 1.2em; }
   #mainNav a {
     color: white;
     text-decoration: none; }
   #mainNav li.current a.current {
-    color: rgb(128,255,51);
+    color: rgb(0,153,255);
     font-size: 1.1em; }
   #mainNav li.current ul {
     font-size: 0.9em;
@@ -63,21 +195,28 @@ body {
   #content #content_box {
     left: -45px;
     padding: 45px;
-    width: 674px;
+    width: 582px;
     margin-left: 0px;
     background-color: rgb(163, 162, 159);
     padding-bottom: 100px;
     min-height: 450px; }
+    #content #content_box .content_header {
+      background-color: black;
+      font-size: 2em;
+      float: left;
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+      padding-top: 0.1em;
+      padding-bottom: 0.1em;
+      color: rgb(229,225,211);
+      margin-bottom: 0.6em; }
+    #content #content_box br.clear {
+      clear: both; }
 
-label {
-  display: block; }
-
-textarea {
-  width: 40em;
-  height: 20em;
-  margin-left: 0px;
-  font-family: inherit;
-  font-size: inherit; }
+.meta {
+  font-size: 0.9em;
+  color: grey;
+  border-bottom: 1px dotted grey; }
 
 code {
   display: block;
@@ -94,29 +233,23 @@ div.error, div.notice, div.success {
   margin-bottom: 1em;
   width: 80%; }
 
-.error, .notice, .success {
-  border: 2px solid #ddd; }
+.description {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+  font-size: 0.9em;
+  color: #555555;
+  line-height: 1.6em;
+  text-align: justify; }
 
-.error {
-  background: #FBE3E4;
-  color: #8a1f11;
-  border-color: #FBC2C4; }
+textarea.description {
+  height: 5em; }
 
-.notice {
-  background: #FFF6BF;
-  color: #514721;
-  border-color: #FFD324; }
+.body {
+  font-size: 1.2em;
+  line-height: 1.3em;
+  text-align: justify; }
 
-.success {
-  background: #E6EFC2;
-  color: #264409;
-  border-color: #C6D880; }
-
-.error a {
-  color: #8a1f11; }
-
-.notice a {
-  color: #514721; }
-
-.success a {
-  color: #264409; }
+.summary .description {
+  font-size: 1.3em;
+  line-height: 1.3em;
+  color: black; }

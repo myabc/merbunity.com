@@ -1,9 +1,11 @@
-%div[news_item]
-  %h3= news_item.title
-  %p.date
+.summary{:class => "item"}[news_item]
+  %h3.title= link_to(news_item.title, url(:news, news_item))
+  %p.meta
     = time_format news_item.created_at
+    | Reporter: 
+    = news_item.owner.login
   %p.description
     = news_item.description
   %p.link
-    = link_to "Read More...", url(:news, news_item)
+    = link_to "Read More...", url(:news, news_item), :class => "more"
   

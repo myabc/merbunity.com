@@ -3,11 +3,14 @@
 
 = error_messages_for @news_item
 
--form_for @news_item, :action => url(:news) do
+-form_for @news_item, :action => url(:news), :class => "news" do
   
-  =text_control :title, :label => "Title"
-  =preserve(text_area_control(:description, :label => "Description"))
+  =text_control :title, :label => "Title", :class => "title"
+  =preserve(text_area_control(:description, :label => "Description", :class => "description"))
+  %label{:for => "news_item_body"} Body
   %p.note
-    You can use textile markup for the body of your news article
-  =preserve(text_area_control(:body, :label => "Body"))
+    You can use 
+    = link_to "textile markup", "http://hobix.com/textile/quick.html", :target => "_blank" 
+    for the body of your news article
+  =preserve(text_area_control(:body))
   = submit_button "Publish News Article"

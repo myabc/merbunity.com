@@ -11,17 +11,18 @@ module Merbunity
       yield if obj.published?
     end
     
+    def with_unpublished(obj)
+      yield unless obj.published?
+    end
+    
     # yields to teh block if the object is a draft
     def with_draft(obj)
       yield if obj.draft?
     end
     
     def for_publishers(obj = nil)
-      if obj.nil? || obj.pending?
-        yield if current_person.publisher? || current_person.admin?
-      else
-        yield if current_person.can_publish?(obj)
-      end
+      return unless logged_in?
+      yield if current_person.can_publish?(obj)
     end
     
     def publish_button(url)

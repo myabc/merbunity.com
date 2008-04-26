@@ -22,8 +22,10 @@
       
     #content
       = site_menu
-      #content_box          
-        %h2= catch_content :for_header
+      #content_box  
+        - if thrown_content? :for_header        
+          %h2.content_header= catch_content :for_header
+          %br.clear/
         - unless flash.empty?
           - flash_type = flash.keys.sort.first
           %div{:class => "flash #{flash_type}"}

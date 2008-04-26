@@ -1,9 +1,11 @@
 - throw_content :for_header do
   = @news_item.title
 
-%div[@news_item]
-  %p.date
+.item[@news_item]
+  %p.meta
     = time_format(@news_item.created_at)
+    | Reporter:
+    = @news_item.owner.login
   %p.description
     = @news_item.description
   .body

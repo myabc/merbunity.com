@@ -3,7 +3,7 @@
 
 = partial :detail, :with => @screencast, :as => "screencast"
 
-- with_pending @screencast do
+- with_unpublished @screencast do
   - @comments_url = url(:add_pending_comment, :id => @screencast, :klass => "Screencast")
   = partial "shared/comments/comments", :with => @screencast.pending_comments, :as => "comments", :comment_page_heading => "Comments about this pending screencast"
   

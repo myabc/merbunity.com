@@ -1,0 +1,76 @@
+!form_item_width = 390px
+!text_area_height = 250px
+
+label
+  :font-weight bold
+  :display block
+
+label.inline
+  :display inline
+
+fieldset
+  :padding 1.4em
+  :margin 0 0 1.5em 0
+  :border 1px solid #ccc
+
+legend
+  :font-weight bold
+
+label
+  :font-size 1.5em
+  
+input.text, input.title, textarea, select, .field.file
+  :margin 0.5em 0
+  :border 1px solid #bbb
+  :font-family inherit
+  &focus
+    :border 1px solid #666
+
+input.text, input.title, input.password, .field.file
+  :width  = !form_item_width
+  :padding 5px
+
+input.title
+  :font-size 1.5em
+textarea
+  :width = !form_item_width
+  :height = !text_area_height
+  :padding 5px
+  :line-height 1.5em
+
+
+.error, .notice, .success
+  :border 2px solid #ddd
+
+.error 
+  :background #FBE3E4
+  :color #8a1f11
+  :border-color #FBC2C4
+
+.notice 
+  :background #FFF6BF
+  :color #514721
+  :border-color #FFD324
+
+.success
+  :background #E6EFC2
+  :color #264409
+  :border-color #C6D880
+
+.error a 
+  :color #8a1f11
+
+.notice a 
+  :color #514721
+
+.success a
+  :color #264409
+
+button
+  :display block
+  :height 2em
+  :padding
+    :left 1em
+    :right 1em
+    :top 0.3em
+    :bottom 0.5em
