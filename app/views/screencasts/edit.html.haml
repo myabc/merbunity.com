@@ -6,5 +6,6 @@
 
 - form_for @screencast, :action => url(:screencast, @screencast) do 
   =partial :form, :with => @screencast, :as => "screencast"
-  
+
+= link_to "Cancel and Return", url(:screencast, @screencast)
 - throw_content :for_object_menu, partial(:object_menu, :with => @screencast, :as => "screencast")

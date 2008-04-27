@@ -11,7 +11,8 @@
 @import item.sass
 @import news.sass
 @import screencasts.sass
-
+@import layout.sass
+@import box.sass
 
 *
   :margin 0
@@ -62,11 +63,11 @@ body
 
 #mainNav
   :background = !almost_black
-  :width 145px
+  //:width 145px
   :padding 1em 15px
-  :position absolute
-  :right 20px
-  :top 0
+  //:position absolute
+  //:right 20px
+  //:top 0
   :font-size 1.2em
   a
     :color white
@@ -85,20 +86,9 @@ body
   :margin 0 auto 2em auto
   :padding 0 235px 100px 0
   :position relative
-
   #content_box
-
-    :left -45px
-    :padding 45px
-    :width 582px
-    :margin-left 0px
-    :background
-      :color rgb(163, 162, 159)
-    :padding
-      :bottom 100px
-    :min-height 450px
     .content_header
-      :background-color black
+      :background-color = !almost_black
       :font-size 2em
       :float left
       :padding
@@ -111,6 +101,10 @@ body
         :bottom 0.6em
     br.clear
       :clear both
+  #side_content
+    :padding 
+      :left 3px
+      :right 3px
       
 .meta
   :font-size 0.9em

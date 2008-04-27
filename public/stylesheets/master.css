@@ -126,6 +126,44 @@ form.news textarea.description {
   .field.file p {
     margin-top: 1em; }
 
+#action_content {
+  padding: 0px;
+  width: 175px;
+  position: absolute;
+  right: 20px;
+  top: 0px;
+  min-height: 800px;
+  float: right; }
+
+#content_box {
+  position: relative;
+  left: 60px;
+  padding-left: 15px;
+  padding-right: 20px;
+  padding-bottom: 45px;
+  width: 582px;
+  margin-left: 0px;
+  background-color: rgb(163, 162, 159);
+  padding-bottom: 30px;
+  min-height: 450px; }
+
+#side_content {
+  position: absolute;
+  border-right: 1px solid black;
+  width: 170px;
+  background-color: rgb(163, 162, 159);
+  left: -118px; }
+
+.box {
+  border-bottom: 1px dotted black;
+  padding-bottom: 1em;
+  text-align: justify; }
+  .box h3 {
+    background-color: #111111;
+    color: rgb(229,225,211);
+    padding: 0.2em;
+    font-size: 1em; }
+
 * {
   margin: 0;
   padding: 0;
@@ -170,11 +208,7 @@ body {
 
 #mainNav {
   background: #111111;
-  width: 145px;
   padding: 1em 15px;
-  position: absolute;
-  right: 20px;
-  top: 0;
   font-size: 1.2em; }
   #mainNav a {
     color: white;
@@ -192,26 +226,21 @@ body {
   margin: 0 auto 2em auto;
   padding: 0 235px 100px 0;
   position: relative; }
-  #content #content_box {
-    left: -45px;
-    padding: 45px;
-    width: 582px;
-    margin-left: 0px;
-    background-color: rgb(163, 162, 159);
-    padding-bottom: 100px;
-    min-height: 450px; }
-    #content #content_box .content_header {
-      background-color: black;
-      font-size: 2em;
-      float: left;
-      padding-left: 0.5em;
-      padding-right: 0.5em;
-      padding-top: 0.1em;
-      padding-bottom: 0.1em;
-      color: rgb(229,225,211);
-      margin-bottom: 0.6em; }
-    #content #content_box br.clear {
-      clear: both; }
+  #content #content_box .content_header {
+    background-color: #111111;
+    font-size: 2em;
+    float: left;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    color: rgb(229,225,211);
+    margin-bottom: 0.6em; }
+  #content #content_box br.clear {
+    clear: both; }
+  #content #side_content {
+    padding-left: 3px;
+    padding-right: 3px; }
 
 .meta {
   font-size: 0.9em;

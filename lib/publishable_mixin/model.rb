@@ -1,7 +1,7 @@
 module Merbunity
   module Publishable
     
-    PUBLISHABLES_TO_BE_PUBLISHER = 5
+    PUBLISHABLES_TO_BE_PUBLISHER = 3
     
     def self.included(base)
       base.class_eval do

@@ -19,23 +19,23 @@
       %h2 A Merb Community
       %p News, projects and tutorials devoted to the Merb web framework
       = partial "shared/people/login_box"  
-      
+
     #content
-      = site_menu
+      #action_content
+        = site_menu
+      -if thrown_content? :for_side
+        #side_content
+          = catch_content(:for_side)
       #content_box  
         - if thrown_content? :for_header        
           %h2.content_header= catch_content :for_header
           %br.clear/
+        -if thrown_content? :for_object_menu
+          =catch_content :for_object_menu
         - unless flash.empty?
           - flash_type = flash.keys.sort.first
           %div{:class => "flash #{flash_type}"}
             = flash[flash_type]
+            
         = catch_content :for_layout
-  
-        #side_content
-          -if thrown_content? :for_help 
-            = catch_content(:for_help)
-        
-          -if thrown_content? :for_object_menu
-            = catch_content(:for_object_menu)
             
