@@ -38,6 +38,11 @@ module Merb
       concat("</div></div>", blk.binding)
     end
     
+    def help_box(header, opts = {}, &blk)
+      opts.add_html_class!(:help)
+      throw_content(:for_side, side_bar_box(header, opts, &blk))
+    end
+    
     def gravitar(person = current_person, opts = {})
       return "" unless logged_in?
       opts[:size] ||= 40
