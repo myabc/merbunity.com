@@ -33,9 +33,9 @@ module Merb
     
     # include a :class option to add more classes to the box
     def side_bar_box(header, opts = {}, &blk)
-      concat("<div class='box #{opts[:class]}'><h3>#{header}</h3>", blk.binding)
+      concat("<div class='box #{opts[:class]}'><h3>#{header}</h3><div class='box_content'", blk.binding)
       concat(yield, blk.binding)
-      concat("</div>", blk.binding)
+      concat("</div></div>", blk.binding)
     end
     
     def gravitar(person = current_person, opts = {})
