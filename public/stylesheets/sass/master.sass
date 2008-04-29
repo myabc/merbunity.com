@@ -5,6 +5,7 @@
 !secondary = #555555
 !link_color = rgb(227,84,48)
 
+@import header.sass
 @import forms.sass
 @import login.sass
 @import pagination.sass
@@ -36,31 +37,7 @@ body
   :font
     :family "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif
     :size 80%
-
-#header
-  :color = !dark_brown
-  :margin 20px auto 0 auto
-  :width 824px
-  :height 160px
-
-  h1
-    :background left top no-repeat url(/images/logo.gif)
-    :border-right 1px solid #A4A096
-    :text-indent -1000em
-    :letter-spacing -1000em
-    :width 260px
-    :height 53px
-    :margin 0 15px 0 0
-    :float left
-
-  h2
-    :font-weight bold
-    :text-transform uppercase
-    :margin 0 0 0 0
-  
-  h2, p
-    :font-size 0.9em
-
+    
 #mainNav
   :background = !almost_black
   :padding 1em 15px

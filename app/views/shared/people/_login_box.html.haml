@@ -2,10 +2,17 @@
   - when_logged_in do
     = gravitar
     .details
-      = current_person.login
+      Logged In As
+      %span
+        = current_person.login
     .account_links
       %ul
         %li= link_to "Logout", url(:logout)
     
   - when_not_logged_in do
-    =link_to "Login", url(:login)
+    .details 
+      Not Logged In
+    .account_links
+      %ul
+        %li=link_to "Login", url(:login)
+  
