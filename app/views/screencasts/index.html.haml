@@ -3,8 +3,9 @@
 - auto_discover_atom(url(:screencasts, :format => "atom"))
 
 -if @screencasts.empty?
-  There are no published screencasts.  Why not 
-  = link_to "make one", url(:new_screencast)
+  .note
+    There are no published screencasts.  Why not 
+    = link_to "make one", url(:new_screencast)
 - else
   = partial :summary, :with => @screencasts, :as => "screencast"
 

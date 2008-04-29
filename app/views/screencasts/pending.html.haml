@@ -1,11 +1,12 @@
 - throw_content :for_header, @page_header.to_s 
 
 .content_description
-  %p
+  %p{:class => "note"}
     These screencasts are waiting to be published by a person in the community that is a publisher.
     
 - if @screencasts.empty?
-  There are no Pending Screencasts.  Why not
-  = link_to "make one", url(:new_screencast)
+  .note
+    There are no Pending Screencasts.  Why not
+    = link_to "make one", url(:new_screencast)
 - else
   = partial :summary, :with => @screencasts, :as => "screencast"

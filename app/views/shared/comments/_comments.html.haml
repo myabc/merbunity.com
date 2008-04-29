@@ -6,7 +6,7 @@
     %p
       Add Your Comment
       = partial "shared/comments/form", :with => Comment.new, :as => "comment", :comment_url => @comments_url
-      
+    
   - when_not_logged_in do
     %p
       = link_to "Sign in", url(:login)
