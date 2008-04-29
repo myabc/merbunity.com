@@ -1,3 +1,63 @@
+#header {
+  color: #2e2d2a;
+  margin: 20px auto 0 auto;
+  width: 824px;
+  height: 160px;
+  position: relative; }
+  #header h1 {
+    background: left top no-repeat url(/images/logo.gif);
+    border-right: 1px solid black;
+    border-color-right: #a4a096;
+    text-indent: -1000em;
+    letter-spacing: -1000em;
+    width: 260px;
+    height: 53px;
+    margin: 0 15px 0 0;
+    float: left; }
+  #header h2 {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 0 0 0;
+    font-size: 0.9em; }
+  #header div.tagline {
+    position: absolute;
+    left: 280px;
+    font-size: 0.9em;
+    width: 18em;
+    padding-top: 8px; }
+  #header #login_box {
+    padding-left: 20px;
+    height: 53px;
+    float: right;
+    position: relative;
+    width: 300px;
+    border-left: 1px solid black;
+    border-color-left: #a4a096; }
+    #header #login_box img {
+      position: absolute;
+      top: 8px; }
+    #header #login_box .details {
+      position: relative;
+      width: 110px;
+      left: 50px;
+      height: 45px;
+      padding-left: 5px;
+      padding-top: 8px; }
+      #header #login_box .details span {
+        display: block;
+        font-size: 1.3em;
+        font-weight: bold; }
+    #header #login_box .account_links {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      height: 53px;
+      padding-top: 3px;
+      padding-left: 8px;
+      width: 100px;
+      border-left: 1px solid black;
+      border-color-left: #a4a096; }
+
 label {
   font-weight: bold;
   display: block; }
@@ -137,26 +197,14 @@ form.news textarea.description {
 
 #content_box {
   position: relative;
-  left: 60px;
   padding-left: 15px;
   padding-right: 20px;
   padding-bottom: 45px;
-  width: 582px;
+  width: 642px;
   margin-left: 0px;
   background-color: rgb(163, 162, 159);
   padding-bottom: 30px;
   min-height: 450px; }
-
-
-
-
-
-
-
-
-
-
-
 
 .box {
   border-bottom: 1px dotted black;
@@ -192,27 +240,6 @@ body {
   color: #111111;
   font-family: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
   font-size: 80%; }
-
-#header {
-  color: #2e2d2a;
-  margin: 20px auto 0 auto;
-  width: 824px;
-  height: 160px; }
-  #header h1 {
-    background: left top no-repeat url(/images/logo.gif);
-    border-right: 1px solid #A4A096;
-    text-indent: -1000em;
-    letter-spacing: -1000em;
-    width: 260px;
-    height: 53px;
-    margin: 0 15px 0 0;
-    float: left; }
-  #header h2 {
-    font-weight: bold;
-    text-transform: uppercase;
-    margin: 0 0 0 0; }
-  #header h2, #header p {
-    font-size: 0.9em; }
 
 #mainNav {
   background: #111111;
