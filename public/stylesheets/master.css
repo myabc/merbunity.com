@@ -147,12 +147,16 @@ form.news textarea.description {
   padding-bottom: 30px;
   min-height: 450px; }
 
-#side_content {
-  position: absolute;
-  border-right: 1px solid black;
-  width: 170px;
-  background-color: rgb(163, 162, 159);
-  left: -118px; }
+
+
+
+
+
+
+
+
+
+
 
 .box {
   border-bottom: 1px dotted black;
@@ -162,7 +166,11 @@ form.news textarea.description {
     background-color: #111111;
     color: rgb(229,225,211);
     padding: 0.2em;
+    padding-left: 0.8em;
     font-size: 1em; }
+  .box .box_content {
+    padding: 0.3em;
+    background-color: #a3a29f; }
 
 * {
   margin: 0;
@@ -209,6 +217,7 @@ body {
 #mainNav {
   background: #111111;
   padding: 1em 15px;
+  margin-bottom: 1em;
   font-size: 1.2em; }
   #mainNav a {
     color: white;
@@ -238,9 +247,6 @@ body {
     margin-bottom: 0.6em; }
   #content #content_box br.clear {
     clear: both; }
-  #content #side_content {
-    padding-left: 3px;
-    padding-right: 3px; }
 
 .meta {
   font-size: 0.9em;
