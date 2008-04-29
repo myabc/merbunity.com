@@ -84,14 +84,14 @@ input.text, input.title, textarea, select, .field.file {
     border: 1px solid #666; }
 
 input.text, input.title, input.password, .field.file {
-  width: 390px;
+  width: 98%;
   padding: 5px; }
 
 input.title {
   font-size: 1.5em; }
 
 textarea {
-  width: 390px;
+  width: 98%;
   height: 250px;
   padding: 5px;
   line-height: 1.5em; }
@@ -154,7 +154,7 @@ ul.page_links {
     margin-right: 1em; }
 
 .item {
-  background-color: white;
+  background-color: #ffffff;
   padding: 1em;
   margin-bottom: 1.4em; }
   .item h3.title {
@@ -219,6 +219,24 @@ form.news textarea.description {
   .box .box_content {
     padding: 0.3em;
     background-color: #a3a29f; }
+
+#comments {
+  background-color: white;
+  padding: 1em;
+  padding-top: 1em; }
+  #comments h3 {
+    padding: 0.3em;
+    height: 1.5em;
+    background-color: #898989;
+    color: rgb(229,225,211);
+    margin-bottom: 2em; }
+  #comments .comment {
+    border: 1px dotted black;
+    border-color: rgb(227,84,48);
+    margin-bottom: 2em;
+    padding: 1em; }
+  #comments textarea {
+    height: 150px; }
 
 * {
   margin: 0;
@@ -316,3 +334,8 @@ textarea.description {
   font-size: 1.3em;
   line-height: 1.3em;
   color: black; }
+
+.note {
+  background-color: #cbcac7;
+  margin-bottom: 0.3em;
+  padding: 0.5em; }
