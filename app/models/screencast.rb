@@ -45,7 +45,11 @@ class Screencast < DataMapper::Base
   end
   
   def file_path
-    Merb.root / "screencasts" / "#{self.created_at.year}" / "#{self.created_at.month}"
+    Merb.root / relative_path
+  end
+  
+  def relative_path
+    "screencasts" / "#{self.created_at.year}" / "#{self.created_at.month}"
   end
   
   def full_path
@@ -65,6 +69,7 @@ class Screencast < DataMapper::Base
   def save_file_to_os
     FileUtils.mkdir_p(file_path)
     FileUtils.copy tmp_file.path, (full_path)
+    FileUtils.chmod(0744, full_path)
   end
 
   

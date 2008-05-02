@@ -205,7 +205,7 @@ describe "Merbunity::Publishable" do
   end
   
   it "should make a person a publisher after a set number of published screencasts" do
-    num = Merbunity::Publishable::PUBLISHABLES_TO_BE_PUBLISHER
+    num = MyPublishableModel.publishables_to_be_publisher
     p = Person.create(valid_person_hash)
     pub = Person.create(valid_person_hash)
     pub.make_publisher!

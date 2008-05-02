@@ -5,6 +5,8 @@ describe Screencasts, "index action" do
   before(:all) do
     Person.auto_migrate!
     Screencast.auto_migrate!
+    Screencast.publishables_to_be_publisher(5)
+    
     @person1 = Person.create(valid_person_hash)
     @person2 = Person.create(valid_person_hash)
     
@@ -32,12 +34,11 @@ describe Screencasts, "index action" do
   end
   
   it "should set the specs correctly" do
-    published = Screencast.published    
+    published = Screencast.published
     pending = Screencast.pending
-    
     published.should have(10).items
     pending.should have(10).items
-  end
+   end
   
   it "should not require login" do
     @c.should_not redirect_to(url(:login))
