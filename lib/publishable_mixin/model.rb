@@ -1,7 +1,12 @@
 module Merbunity
   module Publishable
     
-    PUBLISHABLES_TO_BE_PUBLISHER = 3
+    def self.publishables_to_be_publisher(val = nil)
+      @publishables_to_be_publisher ||= 3
+      @publishables_to_be_publisher = val unless val.nil?
+      @publishables_to_be_publisher
+    end
+    # PUBLISHABLES_TO_BE_PUBLISHER = 3
     
     def self.included(base)
       base.class_eval do
@@ -66,6 +71,12 @@ module Merbunity
           self.count(opts.merge!(:published_status => status_values[:published]))
         end
         
+        def self.publishables_to_be_publisher(val = nil)
+          @publishables_to_be_publisher ||= 3
+          @publishables_to_be_publisher = val unless val.nil?
+          @publishables_to_be_publisher
+        end
+        
       end
       
       base.send(:include, InstanceMethods)
@@ -122,7 +133,7 @@ module Merbunity
            self.owner.published_item_count = (self.owner.published_item_count || 0) + 1
            
            # make the owner a publisher if they have published enough articles
-           self.owner.make_publisher! if !self.owner.publisher? && self.owner.published_item_count >= Merbunity::Publishable::PUBLISHABLES_TO_BE_PUBLISHER
+           self.owner.make_publisher! if !self.owner.publisher? && self.owner.published_item_count >= self.class.publishables_to_be_publisher
            @published_status = self.class.status_values[:published]
          end
        elsif the_publisher == self.owner

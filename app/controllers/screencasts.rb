@@ -108,8 +108,17 @@ class Screencasts < Application
       send_file(screencast.full_path)
     end
   else
+    
+    # Requires a setup in nginx to work.  
+    # sendfile on;
+    # location /protected_screencast/ {
+    #   alias /path/to/app/current/;
+    #   internal;
+    # }
     def send_screencast(screencast)
-      nginx_send_file(screencast.full_path)
+      headers['Content-Disposition'] = "attachment; filename = #{screencast.filename}"
+      headers['Content-Type'] ="#{screencast.content_type}"
+      nginx_send_file("/protected_screencast" / screencast.relative_path / screencast.filename )
       redirect url(:screencast, screencast)
     end
   end
