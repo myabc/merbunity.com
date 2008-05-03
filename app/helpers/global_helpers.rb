@@ -6,17 +6,16 @@ module Merb
     include Merbunity::PermissionHelpers
     include Merbunity::MenuHelper
     
-    # def site_navigation_links
-    #   nav ||= []
-    #   nav << link_to("News",        url(:news))
-    #   nav << link_to("Screencasts", url(:screencasts))
-    #   nav << link_to("Tutorials",   url(:tutorials))
-    #   nav << link_to("People",      url(:people))
-    #   nav << link_to("Blogs",       url(:blogs))
-    #   nav << link_to("Sites",       url(:sites))
-    #   nav << link_to("Projects",    url(:projects))
-    #   nav
-    # end
+    
+    # Returns a named route for an object.  This is because some objects may be ambiguous as to where they are displayed
+    def named_route_for(obj)
+      case obj
+      when NewsItem
+        :news
+      when Screencast
+        :screencast
+      end
+    end
     
     # helpers defined here available to all views.  
     def page_title=(title)

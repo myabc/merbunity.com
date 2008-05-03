@@ -19,29 +19,7 @@ module Merbunity
         
         belongs_to :owner, :class => "Person"
         belongs_to :publisher, :class => "Person"
-        
-        has_and_belongs_to_many :pending_comments,  
-                                :class => "Comment", 
-                                :join_table => "pending_comments_#{base.name.snake_case.pluralize}",
-                                :foreign_name => "pending_#{base.name.snake_case.pluralize}".to_sym
-       
-        Comment.send( :has_and_belongs_to_many, 
-                                "pending_#{base.name.snake_case.pluralize}".to_sym, 
-                                :join_table => "pending_comments_#{base.name.snake_case.pluralize}", 
-                                :class => "#{base.name}",
-                                :foreign_name => :pending_comments)
-                                
-        has_and_belongs_to_many :comments , 
-                                :join_table => "comments_#{base.name.snake_case.pluralize}",  
-                                :class => "Comment",
-                                :foreign_name => "#{base.name.snake_case.pluralize}".to_sym
-        
-        Comment.send(:has_and_belongs_to_many, 
-                                "#{base.name.snake_case.pluralize}".to_sym, 
-                                :join_table => "comments_#{base.name.snake_case.pluralize}", 
-                                :class => "#{base.name}",
-                                :foreign_name => :comments)
-        
+
         before_create :set_publishable_defaults
         
         validates_presence_of   :owner, :groups => [:create]

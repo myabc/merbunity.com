@@ -31,10 +31,14 @@ namespace :merbunity do
     desc "Setup some basic users to get things going for development"
     task :dev_users => :merb_env do
       # require 'spec/spec_helper'
+      class Merb::Mailer
+        self.delivery_method = :test_send
+      end
       require 'spec/spec_helpers/valid_hashes'
       # require 'spec/authenticated_system_spec_helper'
       require 'spec/person_spec_helper'  
       include PersonSpecHelper  
+      DataMapper::Base.auto_migrate!
       
       p = Person.new(valid_person_hash)
       p.login = "person"
@@ -43,7 +47,7 @@ namespace :merbunity do
       p.save
       p.activate
       puts "Created person"
-    
+          
       p = Person.new(valid_person_hash)
       p.login = "publisher"
       p.password = "password"
@@ -52,7 +56,7 @@ namespace :merbunity do
       p.activate
       p.make_publisher!
       puts "Created publisher"
-    
+          
       p = Person.new(valid_person_hash)
       p.login = "admin"
       p.password = "password"

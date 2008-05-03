@@ -32,25 +32,25 @@ describe PersonMailer do
     deliver(:signup_notification, @mailer_params, :person => @u)
     @delivery.text.should include(@u.login)
   end
+  # 
+  # it "should mention the people login in the HTML signup mail" do
+  #   deliver(:signup_notification, @mailer_params, :person => @u)
+  #   @delivery.html.should include(@u.login)
+  # end
   
-  it "should mention the people login in the HTML signup mail" do
-    deliver(:signup_notification, @mailer_params, :person => @u)
-    @delivery.html.should include(@u.login)
-  end
-  
-  it "should mention the activation link in the signup emails" do
-    deliver(:signup_notification, @mailer_params, :person => @u)
-    the_url = PersonMailer.new.url(:person_activation, :activation_code => @u.activation_code)
-    the_url.should_not be_nil
-    @delivery.text.should include( the_url )   
-    @delivery.html.should include( the_url )
-  end
+  # it "should mention the activation link in the signup emails" do
+  #   deliver(:signup_notification, @mailer_params, :person => @u)
+  #   the_url = PersonMailer.new.url(:person_activation, :activation_code => @u.activation_code)
+  #   the_url.should_not be_nil
+  #   @delivery.text.should include( the_url )   
+  #   @delivery.html.should include( the_url )
+  # end
   
   it "should send mail to homer@simpson.com for the activation email" do
     deliver(:activation_notification, @mailer_params, :person => @u)
     @delivery.assigns(:headers).should include("to: homer@simpsons.com")
   end
-  
+  # 
   it "should send the mail from 'info@mysite.com' for the activation email" do
     deliver(:activation_notification, @mailer_params, :person => @u)
     @delivery.assigns(:headers).should include("from: info@mysite.com")    
@@ -61,8 +61,8 @@ describe PersonMailer do
     @delivery.text.should include(@u.login)
   end
 
-  it "should mention the suers login in the html activation mail" do
-    deliver(:activation_notification, @mailer_params, :person => @u)
-    @delivery.html.should include(@u.login)    
-  end
+  # it "should mention the suers login in the html activation mail" do
+  #   deliver(:activation_notification, @mailer_params, :person => @u)
+  #   @delivery.html.should include(@u.login)    
+  # end
 end
