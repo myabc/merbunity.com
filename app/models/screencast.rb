@@ -2,6 +2,8 @@ class Screencast < DataMapper::Base
   
   include Merbunity::Permissions::ProtectedModel
   include Merbunity::Publishable
+  is_commentable :published, :pending
+  
   
   attr_accessor :uploaded_file
   attr_reader   :tmp_file

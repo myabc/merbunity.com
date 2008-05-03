@@ -6,6 +6,8 @@ class NewsItem < DataMapper::Base
   property :created_at, :datetime
   property :updated_at, :datetime
   
+  is_commentable
+  
   belongs_to :owner, :class => "Person"
   
   whistler_properties :body, :description, :title
@@ -20,6 +22,10 @@ class NewsItem < DataMapper::Base
   def display_body
     return "" if self.body.nil?
     @_display_body ||= RedCloth.new(self.body).to_html
+  end
+  
+  def published?
+    true
   end
   
   def viewable_by?(user = nil); return true; end

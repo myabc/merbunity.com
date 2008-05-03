@@ -7,6 +7,6 @@ Merb::Config.use { |c|
   
 }
 
-#class Merb::Mailer
-#  self.delivery_method = :test_send
-#end
+class Merb::Mailer
+ self.delivery_method = :test_send
+end

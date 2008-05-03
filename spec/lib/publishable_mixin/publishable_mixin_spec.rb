@@ -5,6 +5,7 @@ describe "Merbunity::Publishable" do
   class MyPublishableModel < DataMapper::Base
     include Merbunity::Publishable
     include Merbunity::Permissions::ProtectedModel  
+    is_commentable(:pending, :published)
   end
 
   before(:all) do

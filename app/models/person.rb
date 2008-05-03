@@ -48,11 +48,11 @@ class Person < DataMapper::Base
   end
   
   def publisher?
-    !@publisher_since.nil?
+    !self.publisher_since.nil?
   end
   
   def make_publisher!
-    @publisher_since ||= DateTime.now
+    self.publisher_since ||= DateTime.now
     save
   end
   
@@ -62,11 +62,11 @@ class Person < DataMapper::Base
   end
   
   def admin?
-    !@admin_since.nil?
+    !self.admin_since.nil?
   end
   
   def make_admin!
-    @admin_since ||= DateTime.now
+    self.admin_since ||= DateTime.now
     save
   end
   
