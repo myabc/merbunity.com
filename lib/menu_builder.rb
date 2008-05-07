@@ -27,7 +27,7 @@ module Merbunity
       @@_top_level_menu_items ||= [  
         [News,        "News",         url(:news)],
         [Screencasts, "Screencasts",  url(:screencasts)],
-        [nil,         "Tutorials",    url(:tutorials)],
+        [Tutorials,         "Tutorials",    url(:tutorials)],
         [nil,         "People",       url(:people)],
         [nil,         "Blogs",        url(:blogs)],
         [nil,         "Sites",        url(:sites)],

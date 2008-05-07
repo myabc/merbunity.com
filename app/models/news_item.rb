@@ -26,7 +26,7 @@ class NewsItem < DataMapper::Base
   
   def published?
     true
-  end
+  end 
   
   def viewable_by?(user = nil); return true; end
   def editable_by?(user = nil); ((!user.nil? && user != :false) && (user.admin? || user == self.owner)); end

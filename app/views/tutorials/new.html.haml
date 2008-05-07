@@ -1,0 +1,9 @@
+- throw_content :for_header do
+  = "Upload Your Tutorial"
+
+.errors
+  = error_messages_for @tutorial
+
+.form
+  -form_for @tutorial, :action => url(:tutorial, @tutorial) do
+    = partial :form, :with => @tutorial, :as => "tutorial"

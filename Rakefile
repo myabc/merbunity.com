@@ -18,6 +18,8 @@ log_file = Merb.log_path / 'rake.log'
 
 Merb.load_dependencies(:environment => init_env)    
 
+require 'merb_activerecord'
+
 # # # Get Merb plugins and dependencies
 Merb::Plugins.rakefiles.each {|r| require r } 
 
@@ -38,7 +40,7 @@ namespace :merbunity do
       # require 'spec/authenticated_system_spec_helper'
       require 'spec/person_spec_helper'  
       include PersonSpecHelper  
-      DataMapper::Base.auto_migrate!
+      # DataMapper::Base.auto_migrate!
       
       p = Person.new(valid_person_hash)
       p.login = "person"

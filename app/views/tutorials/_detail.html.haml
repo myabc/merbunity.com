@@ -1,0 +1,22 @@
+.tutorial{:class => "item"}
+  %p.meta
+    - if tutorial.published?
+      = time_format(tutorial.published_on)
+    - else 
+      Status:
+      = tutorial.published_status
+    | 
+    Author:
+    = tutorial.owner.login
+    - if tutorial.published?
+      |
+      Publisher: 
+      = tutorial.publisher.login
+  .description
+    = tutorial.description
+  .body
+    = preserve(tutorial.display_body)
+
+  - for_publishers(tutorial) do
+    - with_unpublished(tutorial) do
+      = publish_button(url(:publish_tutorial, tutorial))

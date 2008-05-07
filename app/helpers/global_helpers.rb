@@ -14,6 +14,8 @@ module Merb
         :news
       when Screencast
         :screencast
+      when Tutorial
+        :screencast
       end
     end
     
@@ -98,6 +100,19 @@ module Merb
       out
     end
     
+    # organises the count and text for the comments link
+    def comment_count_text(obj)
+      if obj.published?
+        count = obj.comment_count
+        type = ""
+      else
+        count = obj.pending_comment_count
+        type = "Pending "
+      end
+      
+      "#{type}Comments (#{count})"
+    end
+      
     
     
     private

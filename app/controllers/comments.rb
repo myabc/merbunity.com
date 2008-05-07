@@ -2,19 +2,23 @@ class Comments < Application
   
   before :login_required
   
-  after :send_notification
+  after :send_notification, :if => lambda{|c| c.send(:logged_in?) }
   
   def create(id, klass, comment)
     klass = Object.const_get(klass)
     @obj = klass[id]
-    meth = @obj.published? ? :comments : :pending_comments
+    meth =      @obj.published? ? :comments : :pending_comments
+    inc_meth =  @obj.published? ? :comment_count : :pending_comment_count
+    
     @comment = Comment.new( comment )
     @comment.owner = current_person
     
     return redirect(request.referrer) unless @comment.save
     
     @obj.send(meth) << @comment
+    @obj.send("#{inc_meth}=".to_sym, (@obj.send(inc_meth).next))
     @obj.save
+    
     flash[:notice] = "Your comment has joined the discussion" unless @obj.new_record?
     case content_type
     when :html

@@ -1,0 +1,8 @@
+- if logged_in?
+  %ul.object_menu
+    - if tutorial.editable_by?(current_person)
+      %li
+        = link_to "Edit", url(:edit_tutorial, tutorial)
+    - if tutorial.destroyable_by?(current_person)
+      %li
+        = delete_button(:tutorial, tutorial, "Delete", :class => "delete")

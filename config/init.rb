@@ -42,6 +42,7 @@ dependency "datamapper_extensions"
 dependency "publishable_mixin/model"
 dependency "publishable_mixin/controller"
 dependency "comment_mixin"
+# dependency "publishable_mixin/general_publishable_controller"
 dependency "whistler_helpers"
 dependency "menu_builder"
 

@@ -97,7 +97,7 @@ describe Screencast do
     @screencast.file_path.should == (Merb.root / "screencasts" / "#{d.year}" / "#{d.month}" )
   end
   
-  it "should save the file in MERB_ROOT/year/month" do
+  it "should save the file in Merb.root/year/month" do
     d = Date.today
     @screencast.save
     File.exists?(@screencast.file_path).should be_true

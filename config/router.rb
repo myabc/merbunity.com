@@ -26,8 +26,12 @@ Merb::Router.prepare do |r|
   # 
   r.match("/").to(:controller => "news", :action => "index")
   
-  r.resources :screencasts, :collection => {:pending => :get, :my_pending => :get, :drafts => :get}, 
-                            :member     => {:publish => :put, :download => :get} 
+  
+  [:screencasts, :tutorials].each do |res|
+    r.resources res, :collection => {:pending => :get, :my_pending => :get, :drafts => :get}, 
+                              :member     => {:publish => :put}
+  end
+  r.match("/screencasts/:id/download", :method => :get).to(:controller => "screencasts", :action => "download").name(:download_screencast) 
         
   r.resources :news
   
@@ -41,7 +45,6 @@ Merb::Router.prepare do |r|
 
   
   r.to(:controller => "PendingFeatures") do |f|
-    f.match("/tutorials").to(:action => "tutorials").name(:tutorials)
     f.match("/blogs").to(:action => "blogs" ).name(:blogs)
     f.match("/sites").to(:action => "sites").name(:sites)
     f.match("/projects").to(:action => "projects").name(:projects)
