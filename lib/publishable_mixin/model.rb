@@ -22,7 +22,7 @@ module Merbunity
 
         before_create :set_publishable_defaults
         
-        validates_presence_of   :owner, :groups => [:create]
+        # validates_presence_of   :owner, :groups => [:create] # This is causing an error on the main server :(
         
         def self.status_values
           @status_values ||= {:published => "Published", :pending => "Pending", :draft => "Draft"}
