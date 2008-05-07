@@ -116,17 +116,6 @@ class InitialStartMigration < ActiveRecord::Migration
   end
   
   def self.down
-    drop_table :people
-    drop_table :screencasts
-    drop_table :news_items
-    drop_table :tutorials
-    drop_table :comments
-    drop_table :comments_tutorials
-    drop_table :comments_screencast
-    drop_table :pending_comments_tutorials
-    drop_table :pending_comments_screencasts
-    drop_table :comments_news_items
-    
     remove_index :people,                       "person_login_idx"
     
     remove_index :screencasts,                  "screencast_owner_idx"
@@ -145,6 +134,17 @@ class InitialStartMigration < ActiveRecord::Migration
     remove_index :comments_screencasts,         "cmnt_scrn_scrn_id_idx"
     remove_index :pending_comments_screencasts, "p_cmnt_scrn_scrn_id_idx"
     remove_index :comments_news_items,           "cmnt_news_item_idx"  
+
+    drop_table :people
+    drop_table :screencasts
+    drop_table :news_items
+    drop_table :tutorials
+    drop_table :comments
+    drop_table :comments_tutorials
+    drop_table :comments_screencasts
+    drop_table :pending_comments_tutorials
+    drop_table :pending_comments_screencasts
+    drop_table :comments_news_items
 
   end
 end
