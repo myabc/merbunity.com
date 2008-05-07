@@ -1,0 +1,12 @@
+- throw_content :for_header, "Tutorials"
+- throw_content :for_atom_link, atom_link(url(:tutorials, :format => "atom"))
+- auto_discover_atom(url(:tutorials, :format => "atom"))
+
+-if @tutorials.empty?
+  .note
+    There are no published tutorials.  Why not 
+    = link_to "make one", url(:new_tutorial)
+- else
+  = partial :summary, :with => @tutorials, :as => "tutorial"
+
+= paginate_links(:tutorials, @page)

@@ -47,6 +47,10 @@
         display: block;
         font-size: 1.3em;
         font-weight: bold; }
+    #header #login_box ._logged_out {
+      width: 163px;
+      text-align: center;
+      left: 0px; }
     #header #login_box .account_links {
       position: absolute;
       right: 0px;
@@ -237,6 +241,10 @@ form.news textarea.description {
     padding: 1em; }
   #comments textarea {
     height: 150px; }
+
+.comment_count {
+  color: #555555;
+  font-size: 0.8em; }
 
 * {
   margin: 0;

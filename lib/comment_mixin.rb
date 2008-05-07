@@ -14,6 +14,15 @@ module Merbunity
                                   :join_table => "comments_#{base.name.snake_case.pluralize}", 
                                   :class => "#{base.name}",
                                   :foreign_name => :comments)
+          property :comment_count, :integer, :default => 0
+          
+          before_create :set_default_comment_count
+          
+          private 
+          def set_default_comment_count
+            self.comment_count ||= 0
+          end
+          
         end #class_eval
         
       end  # self.included 
@@ -32,6 +41,14 @@ module Merbunity
                                   :join_table => "pending_comments_#{base.name.snake_case.pluralize}", 
                                   :class => "#{base.name}",
                                   :foreign_name => :pending_comments)
+          property :pending_comment_count, :integer, :default => 0
+          
+          before_create :set_default_pending_comment_count
+          
+          private 
+          def set_default_pending_comment_count
+            self.pending_comment_count ||= 0
+          end
         end # class_eval
       end # self.included
     end # Pending

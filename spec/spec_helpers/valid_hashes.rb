@@ -2,6 +2,17 @@ module Merbunity
   module Spec
     module Helpers
       
+        def valid_tutorial_hash
+          owner = Person.new(valid_person_hash)
+          owner.save
+          {
+            :title          => String.random,
+            :owner          => owner,
+            :description    => String.random,
+            :body           => String.random
+          }
+        end
+      
         def valid_comment_hash
           {
             :body   => String.random(200),
@@ -27,7 +38,7 @@ module Merbunity
         end
 
         def valid_multipart_screencast_mash
-          hash = valid_cast_hash
+          hash = valid_screencast_hash
           hash.delete(:owner)
           hash[:uploaded_file] = hash[:uploaded_file]["tempfile"]
           {:cast => hash}.to_mash

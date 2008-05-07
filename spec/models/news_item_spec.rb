@@ -131,5 +131,13 @@ describe NewsItem do
       ns.editable_by?(u).should be_false
     end
   end
+  
+  it "should show up in the persons news_items" do
+    ns = NewsItem.new(valid_news_item_hash.with(:owner => @publisher))
+    ns.save
+    ns.should_not be_new_record
+    @publisher.reload!
+    @publisher.news_items.should include(ns)
+  end
 
 end

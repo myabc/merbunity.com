@@ -13,4 +13,7 @@
           
   %p.description
     = (screencast.description || "").truncate(200)
+  
+  %p.comment_count
+    = comment_count_text(screencast)
         

@@ -1,0 +1,11 @@
+- throw_content :for_header do
+  = "Edit - #{@tutorial.title}"
+
+.errors
+  = error_messages_for @tutorial
+
+- form_for @tutorial, :action => url(:tutorial, @tutorial) do 
+  =partial :form, :with => @tutorial, :as => "tutorial"
+
+= link_to "Cancel and Return", url(:tutorial, @tutorial)
+- throw_content :for_object_menu, partial(:object_menu, :with => @tutorial, :as => "tutorial")

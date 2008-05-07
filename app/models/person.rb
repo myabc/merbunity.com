@@ -41,7 +41,7 @@ class Person < DataMapper::Base
   before_create :make_activation_code
   after_create :send_signup_notification
   
-  has_many :screencasts
+  has_many :news_items, :foreign_key => "owner_id"
   
   def self.first_publisher(opts)
     self.first(opts.merge(:publisher_since.not => nil))

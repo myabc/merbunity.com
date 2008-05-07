@@ -1,0 +1,14 @@
+- throw_content :for_header do
+  = @tutorial.title
+
+= partial :detail, :with => @tutorial, :as => "tutorial"
+
+- with_unpublished @tutorial do
+  - @comments_url = url(:add_comment, :id => @tutorial, :klass => "Tutorial")
+  = partial "shared/comments/comments", :with => @tutorial.pending_comments, :as => "comments", :comment_page_heading => "Comments about this pending tutorial"
+  
+- with_published @tutorial do
+  - @comments_url = url(:add_comment, :id => @tutorial, :klass => "Tutorial")
+  = partial "shared/comments/comments", :with => @tutorial.comments, :as => "comments", :comment_page_heading => "Comments"
+  
+- throw_content :for_object_menu, partial(:object_menu, :with => @tutorial, :as => "tutorial")

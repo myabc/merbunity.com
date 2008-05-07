@@ -10,7 +10,7 @@
         %li= link_to "Logout", url(:logout)
     
   - when_not_logged_in do
-    .details 
+    .details{:class => "_logged_out"}
       Not Logged In
     .account_links
       %ul

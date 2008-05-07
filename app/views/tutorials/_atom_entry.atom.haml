@@ -1,0 +1,13 @@
+%entry
+  %title{:type => "Text"}= tutorial.title
+  %link{ :rel => "self", :href => absolute_url(:tutorial, tutorial), :type => "application/atom+xml", :title => tutorial.title }/
+  %published= time_format(tutorial.created_at.to_time.utc, "%Y-%m-%dT%TZ")
+  %updated= time_format(tutorial.updated_at.to_time.utc, "%Y-%m-%dT%TZ")
+  %link{:rel => "alternate", :type => "text/html", :href => absolute_url(:tutorial, tutorial), :title => tutorial.title}/
+  %content{:type => "html"}
+    - @_content = capture_haml do
+      %div
+        =tutorial.description
+        %br/
+        = link_to "Watch it...", absolute_url(:tutorial, tutorial)
+    = escape_xml @_content

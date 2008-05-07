@@ -360,7 +360,6 @@ describe Screencasts, "Publishable Actions" do
   end
 end
 
-
 describe Screencasts, "Download Action" do
   
   before(:all) do
