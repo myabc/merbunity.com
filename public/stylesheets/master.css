@@ -408,3 +408,21 @@ dl {
     position: relative;
     left: 2em;
     margin-bottom: 0.8em; }
+
+ul.object_menu {
+  list-style-type: none;
+  overflow: hidden; }
+  ul.object_menu li {
+    margin: 0px;
+    float: left;
+    margin-right: 1em;
+    position: relative; }
+    ul.object_menu li button {
+      border: none;
+      background: none;
+      padding: 0px;
+      margin: 0px;
+      color: rgb(227,84,48);
+      text-decoration: underline;
+      position: relative;
+      top: -0.4em; }
