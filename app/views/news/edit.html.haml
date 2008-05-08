@@ -2,5 +2,5 @@
 
 = error_messages_for @news_item
 
--form_for @news_item, :action => url(:news), :class => "news" do
+-form_for @news_item, :action => url(:news, @news_item), :class => "news" do
   =partial :form, :with => @news_item, :as => "news_item"

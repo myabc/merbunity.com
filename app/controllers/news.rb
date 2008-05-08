@@ -1,7 +1,7 @@
 class News < Application
   # provides :xml, :yaml, :js
   before :find_news_item, :only => [:show]
-  before :login_required, :only => [:new, :create]
+  before :login_required, :only => [:new, :create, :edit, :update]
   before :non_publisher_help
   
   params_protected :news_item => [:create_at, :updated_at, :owner, :owner_id]
@@ -39,7 +39,28 @@ class News < Application
       render :new
     end
   end
-  # 
+  
+  def edit(id)
+    @news_item = NewsItem[id]
+    raise Unauthorized unless @news_item.owner == current_person || current_person.admin?
+    render 
+  end
+  
+  def update(id, news_item)
+    puts "IN HERE"
+    @news_item = NewsItem[id]
+    raise Unauthorized unless @news_item.owner == current_person || current_person.admin?
+    if @news_item.update_attributes(news_item)
+      flash[:notice] = "Your news has been updated"
+      redirect url(:news, @news_item)
+    else
+      flash[:error] = "Your news has not been updated"
+      edit id
+    end
+  end
+      
+  
+  
   # def new
   #   only_provides :html
   #   @news_story = NewsStory.new
