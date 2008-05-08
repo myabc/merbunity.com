@@ -181,6 +181,11 @@ ul.page_links {
     list-style-type: disc; }
   .item ol li {
     list-style-type: decimal; }
+  .item p {
+    margin-bottom: 1em; }
+
+p.body {
+  margin-bottom: 1em; }
 
 form.news textarea.description {
   text-align: justify; }

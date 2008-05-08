@@ -5,6 +5,7 @@
       Merbunity - 
       = page_title
     %meta{ "http-equiv" => "content-type", :content => "text/html; charset=utf-8"}
+    %meta{ :name => "verify-v1", :content => "U6KOSneP6ZP651Ce6SKLHUpUhGHYoU1sfH4+bzVwDLc=" }
     = css_include_tag :master
     = js_include_tag "jquery-1.2.3.pack"
     = js_include_tag "chili/jquery.chili.pack", "application"
@@ -49,3 +50,13 @@
       = link_to "Daniel Neighman", "http://hassox.blogspot.com", :target => "_blank"
       | Design: 
       =link_to "Luke Sutton", "http://mr-eel.com", :target => "_blank"
+  :plain
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      var pageTracker = _gat._getTracker("UA-1893855-4");
+      pageTracker._initData();
+      pageTracker._trackPageview();
+    </script>
