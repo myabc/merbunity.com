@@ -18,6 +18,14 @@ class PendingFeatures < Application
     render "<div class='item'>Show off your projects, coming soon</div>"
   end
   
+  def terms_of_service
+    render
+  end
+  
+  def faq
+    render
+  end
+  
   protected
   def set_page_header
     throw_content(:for_header, self.action_name.capitalize)

@@ -29,7 +29,7 @@ module Merbunity
         [Screencasts, "Screencasts",  url(:screencasts)],
         [Tutorials,         "Tutorials",    url(:tutorials)],
         [nil,         "People",       url(:people)],
-        [nil,         "Blogs",        url(:blogs)],
+        #[nil,         "Blogs",        url(:blogs)],
         [nil,         "Sites",        url(:sites)],
         [nil,         "Projects",     url(:projects)]
       ]

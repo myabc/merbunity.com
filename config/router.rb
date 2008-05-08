@@ -42,12 +42,12 @@ Merb::Router.prepare do |r|
   ###########################################################################################################
   r.match("/:klass/:id/comments", :method => :post).to(:controller => "Comments", :action => "create").name(:add_comment)
   
-
-  
   r.to(:controller => "PendingFeatures") do |f|
     f.match("/blogs").to(:action => "blogs" ).name(:blogs)
     f.match("/sites").to(:action => "sites").name(:sites)
     f.match("/projects").to(:action => "projects").name(:projects)
+    f.match("/terms_of_service").to(:action => "terms_of_service").name(:tos)
+    f.match("/faq").to(:action => "faq").name(:faq)
   end
 
   # r.resources :screencasts, :collection => {:pending => :get}

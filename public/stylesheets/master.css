@@ -209,6 +209,19 @@ form.news textarea.description {
   padding-bottom: 30px;
   min-height: 550px; }
 
+.footer {
+  width: 800px;
+  text-align: center;
+  padding: 1em;
+  margin: auto; }
+  .footer ul {
+    list-style-type: none;
+    margin: 0px; }
+    .footer ul li {
+      display: inline;
+      margin: 0px;
+      padding: 0px; }
+
 .box {
   border-bottom: 1px dotted black;
   padding-bottom: 1em;
@@ -346,3 +359,18 @@ textarea.description {
   background-color: #cbcac7;
   margin-bottom: 0.3em;
   padding: 0.5em; }
+
+.tos h3 {
+  font-size: 1.5em;
+  margin-top: 1em; }
+
+dl {
+  position: relative; }
+  dl dt {
+    font-size: 1.2em;
+    margin-bottom: 0.8em; }
+  dl dd {
+    width: 80%;
+    position: relative;
+    left: 2em;
+    margin-bottom: 0.8em; }

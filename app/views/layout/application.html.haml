@@ -38,4 +38,14 @@
             = flash[flash_type]
             
         = catch_content :for_layout
-            
+  .footer
+    %ul
+      %li
+        =link_to "Terms of Service", url(:tos)
+        =link_to "FAQ", url(:faq)
+    %br/
+    %p.note
+      Site:
+      = link_to "Daniel Neighman", "http://hassox.blogspot.com", :target => "_blank"
+      | Design: 
+      =link_to "Luke Sutton", "http://mr-eel.com", :target => "_blank"
