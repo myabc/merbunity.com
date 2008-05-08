@@ -6,7 +6,8 @@
       = time_format(tutorial.published_on)
     - else 
       - for_publishers do
-        Status: Pending
+        Status:
+        = tutorial.published_status
     | 
     Author:
     = tutorial.owner.login
