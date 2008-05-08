@@ -18,7 +18,8 @@
     font-weight: bold;
     text-transform: uppercase;
     margin: 0 0 0 0;
-    font-size: 0.9em; }
+    font-size: 0.9em;
+    padding: 0.2em; }
   #header div.tagline {
     position: absolute;
     left: 280px;
@@ -161,8 +162,27 @@ ul.page_links {
   background-color: #ffffff;
   padding: 1em;
   margin-bottom: 1.4em; }
+  .item h1, .item h2, .item h3, .item h4, .item h5 {
+    background-color: #616161;
+    color: rgb(229,225,211); }
+  .item h1 {
+    font-size: 2em;
+    padding: 0.5em; }
+  .item h2 {
+    font-size: 1.75em;
+    padding: 0.5em; }
+  .item h3 {
+    font-size: 1.5em;
+    padding: 0.4em; }
+  .item h4 {
+    font-size: 1.25em;
+    padding: 0.3em; }
+  .item h5 {
+    font-size: 1em;
+    padding: 0.2em; }
   .item h3.title {
     color: rgb(0,153,255);
+    background-color: #ffffff;
     font-size: 1.5em;
     font-weight: bold; }
     .item h3.title a {
@@ -184,7 +204,7 @@ ul.page_links {
   .item p {
     margin-bottom: 1em; }
 
-p.body {
+.body p {
   margin-bottom: 1em; }
 
 form.news textarea.description {
