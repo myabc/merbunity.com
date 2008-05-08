@@ -192,23 +192,22 @@ form.news textarea.description {
 
 #action_content {
   padding: 0px;
-  width: 175px;
+  width: 200px;
   position: absolute;
   right: 20px;
   top: 0px;
-  min-height: 800px;
   float: right; }
 
 #content_box {
   position: relative;
-  padding-left: 15px;
+  padding-left: 30px;
   padding-right: 20px;
   padding-bottom: 45px;
-  width: 642px;
+  width: 630px;
   margin-left: 0px;
   background-color: rgb(163, 162, 159);
   padding-bottom: 30px;
-  min-height: 450px; }
+  min-height: 550px; }
 
 .box {
   border-bottom: 1px dotted black;
@@ -284,7 +283,7 @@ body {
 
 #content {
   background: bottom left no-repeat url(/images/content_bkg.gif);
-  width: 635px;
+  width: 678px;
   margin: 0 auto 2em auto;
   padding: 0 235px 100px 0;
   position: relative; }
