@@ -164,7 +164,9 @@ ul.page_links {
   margin-bottom: 1.4em; }
   .item h1, .item h2, .item h3, .item h4, .item h5 {
     background-color: #616161;
-    color: rgb(229,225,211); }
+    color: rgb(229,225,211);
+    margin-top: 0.2em;
+    margin-bottom: 0.3em; }
   .item h1 {
     font-size: 2em;
     padding: 0.5em; }
@@ -356,11 +358,14 @@ code {
   display: block;
   width: 80%;
   background: black;
+  margin: auto;
   color: white;
   font-family: "Arial";
   font-size: 1.1em;
-  padding-left: 1em;
-  border: 2px solid #222222; }
+  padding: 0.5em;
+  border: 2px solid #222222;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em; }
 
 div.error, div.notice, div.success {
   padding: 0.8em;
