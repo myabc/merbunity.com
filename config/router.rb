@@ -32,7 +32,7 @@ Merb::Router.prepare do |r|
                               :member     => {:publish => :put}
   end
   r.match("/screencasts/:id/download", :method => :get).to(:controller => "screencasts", :action => "download").name(:download_screencast) 
-        
+      
   r.resources :news
   
   ###########################################################################################################

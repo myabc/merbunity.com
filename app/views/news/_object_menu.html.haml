@@ -1,0 +1,5 @@
+- if logged_in?
+  %ul.object_menu
+    - if current_person.admin? || news_item.owner == current_person 
+      %li
+        = link_to "Edit", url(:edit_news, news_item)
