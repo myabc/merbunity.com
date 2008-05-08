@@ -172,6 +172,15 @@ ul.page_links {
   .item a.more, .item a.more:hover, .item a.more:visited {
     color: black;
     font-size: 0.8em; }
+  .item ul, .item ol {
+    margin-left: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    marker-offset: 1em; }
+  .item ul li {
+    list-style-type: disc; }
+  .item ol li {
+    list-style-type: decimal; }
 
 form.news textarea.description {
   text-align: justify; }
