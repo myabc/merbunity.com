@@ -6,7 +6,8 @@
       = time_format(screencast.published_on)
     - else 
       - for_publishers do
-        Status: Pending
+        Status:
+      = screencast.published_status
     | 
     Author:
     = screencast.owner.login
