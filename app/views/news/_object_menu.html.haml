@@ -3,3 +3,5 @@
     - if current_person.admin? || news_item.owner == current_person 
       %li
         = link_to "Edit", url(:edit_news, news_item)
+      %li
+        = delete_button :news, news_item, "Delete", :class => "delete"

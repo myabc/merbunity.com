@@ -47,8 +47,8 @@ class News < Application
   end
   
   def update(id, news_item)
-    puts "IN HERE"
     @news_item = NewsItem[id]
+    raise NotFound if @news_item.nil?
     raise Unauthorized unless @news_item.owner == current_person || current_person.admin?
     if @news_item.update_attributes(news_item)
       flash[:notice] = "Your news has been updated"
@@ -59,7 +59,14 @@ class News < Application
     end
   end
       
-  
+  def destroy(id)
+    @news_item = NewsItem[id]
+    raise NotFound if @news_item.nil?
+    raise Unauthorized unless @news_item.owner == current_person || current_person.admin?
+    @news_item.destroy!
+    flash[:notice] = "News Item Deleted"
+    redirect "/"
+  end
   
   # def new
   #   only_provides :html
