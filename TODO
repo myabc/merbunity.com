@@ -1,13 +1,17 @@
-Check email format
-Add Gravitars in comments
-Better error pages
+Make comments redclothed
+
+Add a feedback form
 
 remove email passwords + forgot password functionality
 
+Add engineyard sticker & Spot for ivey
+
+Make better links for subscriptions
 
 unified feeds + 2 (Will need an event model that all publishes get logged to then feed off that)
-
 
 Add Caching
 
 upgrade to DM 0.9..
+
+

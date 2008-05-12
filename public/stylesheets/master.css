@@ -286,6 +286,15 @@ ul.page_links {
     padding: 1em; }
   #comments textarea {
     height: 150px; }
+  #comments .content {
+    overflow: auto; }
+    #comments .content div.gravatar {
+      margin: 1em;
+      margin-left: 0px;
+      margin-bottom: 0.5em;
+      float: left; }
+    #comments .content .body {
+      padding-top: 0.8em; }
 
 .comment_count {
   color: #555555;

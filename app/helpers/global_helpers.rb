@@ -44,14 +44,13 @@ module Merb
       throw_content(:for_side, side_bar_box(header, opts, &blk))
     end
     
-    def gravitar(person = current_person, opts = {})
-      return "" unless logged_in?
+    def gravatar(person = current_person, opts = {})
       opts[:size] ||= 40
       opts[:rating] ||= "R"
       opts[:gravatar_id] = Digest::MD5.hexdigest(person.email.strip)      
       attrs = {}
       attrs[:src] = "http://www.gravatar.com/avatar.php?#{opts.to_params}"
-      attrs[:class] = "gravitar"
+      attrs[:class] = "gravatar"
       
       out = self_closing_tag(:img, attrs) unless person.nil?
     end
