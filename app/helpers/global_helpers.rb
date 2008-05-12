@@ -63,7 +63,7 @@ module Merb
     
     def atom_link(feed_url, opts = {})
       opts[:text] ||= "Subscribe"
-      link_to( opts[:text], feed_url, :rel => "alternate",  :type => "application/atom+xml")
+      link_to( opts[:text], feed_url, :rel => "alternate",  :type => "application/atom+xml", :class => "feed")
     end
     
     def paginate_links(url_name, page, opts = {})
