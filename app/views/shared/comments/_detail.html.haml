@@ -4,7 +4,10 @@
     = time_format(comment.created_at, "%B %d, %Y at %H:%M")
     = comment.owner.login
     says:
-  %p.body
-    = RedCloth.new("#{comment.body}").to_html
+  .content
+    .gravatar
+      = gravatar(comment.owner, :size => 50 )
+    %p.body
+      = RedCloth.new("#{comment.body}").to_html
   %p.timestamp
     
