@@ -6,6 +6,7 @@ module Merb
       if logged_in?
         items << ["Got News?", url(:new_news)] if current_person.admin? || current_person.publisher?
       end
+      items << ["Subscribe", url(:news, :format => "atom")]
       items
     end
 
