@@ -175,8 +175,7 @@ ul.page_links {
     padding: 0.5em; }
   .item h3 {
     font-size: 1.5em;
-    padding: 0.4em;
- 	padding-left: 0; }
+    padding: 0.4em; }
   .item h4 {
     font-size: 1.25em;
     padding: 0.3em; }
@@ -187,7 +186,8 @@ ul.page_links {
     color: rgb(0,153,255);
     background-color: #ffffff;
     font-size: 1.5em;
-    font-weight: bold; }
+    font-weight: bold;
+    padding-left: 0px; }
     .item h3.title a {
       color: inherit;
       font-size: inherit;
@@ -209,9 +209,6 @@ ul.page_links {
 
 .body p {
   margin-bottom: 1em; }
-
-form.news textarea.description {
-  text-align: justify; }
 
 .download {
   padding: 0.5em;
@@ -261,8 +258,7 @@ form.news textarea.description {
 
 .box {
   border-bottom: 1px dotted black;
-  padding-bottom: 1em;
-  text-align: justify; }
+  padding-bottom: 1em; }
   .box h3 {
     background-color: #111111;
     color: rgb(229,225,211);
@@ -377,8 +373,7 @@ div.error, div.notice, div.success {
   margin-bottom: 0.4em;
   font-size: 0.9em;
   color: #555555;
-  line-height: 1.6em;
-  text-align: justify; }
+  line-height: 1.6em; }
 
 textarea.description {
   height: 5em;
@@ -387,8 +382,7 @@ textarea.description {
 
 .body {
   font-size: 1.2em;
-  line-height: 1.3em;
-  text-align: justify; }
+  line-height: 1.3em; }
 
 .summary .description {
   font-size: 1.3em;
