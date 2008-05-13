@@ -18,14 +18,14 @@ module Merbunity
             klass = self.class.publishable_klass
             collection = klass.pending(:limit => 10)
             instance_variable_set("@#{self.class.publishable_collection_ivar_name}", collection)
-            @page_header = "Pending Screencasts"
+            @page_header = "Pending #{self.class.publishable_collection_ivar_name.capitalize}"
             display collection            
           end
           
           def my_pending
             ivar = self.class.publishable_collection_ivar_name
             obj = instance_variable_set("@#{ivar}",current_person.send("pending_#{ivar}".to_sym))
-            @page_header =  "My Pending Screencasts"
+            @page_header =  "My Pending #{self.class.publishable_collection_ivar_name.capitalize}"
             display obj, :pending
           end
           
