@@ -42,7 +42,7 @@ module Merbunity
             klass = self.class.publishable_klass
             ivar = self.class.publishable_collection_ivar_name
             collection = instance_variable_set("@#{ivar}", current_person.send("draft_#{ivar}".to_sym))
-            @page_header =  "Draft Screencasts"
+            @page_header =  "Draft #{self.class.publishable_collection_ivar_name.capitalize}"
             display collection, :pending     
           end
         end
