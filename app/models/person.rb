@@ -43,6 +43,10 @@ class Person < DataMapper::Base
   
   has_many :news_items, :foreign_key => "owner_id"
   
+  def attribute_to
+    self.login
+  end
+  
   def self.first_publisher(opts)
     self.first(opts.merge(:publisher_since.not => nil))
   end

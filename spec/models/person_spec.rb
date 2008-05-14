@@ -1,6 +1,6 @@
 require File.join( File.dirname(__FILE__), "..", "spec_helper" )
 
-describe Person, "in merbcasts" do
+describe Person, "in merbunity" do
   include PersonSpecHelper
   
   before(:each) do
@@ -78,6 +78,10 @@ describe Person, "in merbcasts" do
   it "should return the value of :editable_by? if it responds to it" do
     @person.can_edit?(EditableTest.new(true)).should be_true
     @person.can_edit?(EditableTest.new(false)).should be_false    
+  end
+  
+  it "should have an attribute_to method" do
+    @person.attribute_to.should == @person.login
   end
   
 end

@@ -1,6 +1,8 @@
 %feed{:xmlns => "http://www.w3.org/2005/Atom"}
+  %id= absolute_url(:tutorials, :format => :atom)
   %title=       "Merbunity - Tutorials"
   %subtitle=    "Tutorials from the Merb Community"
   %link{:rel => "self", :href => "#{absolute_url(:tutorials)}.atom" }
   %generator    "http://merbunity.com"
+  %updated= @tutorials.empty? ? time_format(Time.now, "%Y-%m-%dT%TZ") : time_format(@tutorials.first.updated_at.to_time.utc, "%Y-%m-%dT%TZ")
   = partial :atom_entry, :with => @tutorials.to_a, :as => "tutorial"

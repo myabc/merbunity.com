@@ -1,5 +1,8 @@
 %entry
-  %title{:type => "Text"}= screencast.title
+  %title{:type => "text"}= screencast.title
+  %author
+    %name= screencast.owner.attribute_to
+  %id= absolute_url(:screencast, screencast)
   %link{ :rel => "self", :href => absolute_url(:screencast, screencast), :type => "application/atom+xml", :title => screencast.title }/
   %published= time_format(screencast.created_at.to_time.utc, "%Y-%m-%dT%TZ")
   %updated= time_format(screencast.updated_at.to_time.utc, "%Y-%m-%dT%TZ")
