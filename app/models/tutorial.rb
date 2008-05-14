@@ -15,6 +15,6 @@ class Tutorial < DataMapper::Base
   
   def display_body
     return "" if self.body.nil?
-    @_display_body ||= RedCloth.new(self.body).to_html
+    @_display_body ||= RedCloth.new(self.body.gsub("&lt;", "<")).to_html
   end
 end
