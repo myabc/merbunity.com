@@ -1,5 +1,5 @@
 $( function() { 
-    $( 'code' ).chili(); //try to comment this line to see the difference 
+    // chili(); //try to comment this line to see the difference 
 
 		// set a confirm on delete buttons
 		$('.delete button').click(function(){
