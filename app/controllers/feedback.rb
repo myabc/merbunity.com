@@ -6,14 +6,16 @@ class Feedback < Application
   end
   
   def create
+    params[:person] = current_person if logged_in?
     FeedbackMailer.dispatch_and_deliver(:feedback, 
       {
         :from     => "feedback@merbunity.com",
         :to       => "dneighman@gmail.com",
         :subject  => "[Merbunity.com] Feedback"
       },
-      (logged_in? ? {:person => current_person} : {})
+      params
     )
+    puts Merb::Mailer.deliveries.last.inspect if Merb.env?(:development)
     flash[:notice] = "Thankyou. We value your feedback :)"
     redirect "/"
   end
