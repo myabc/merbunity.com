@@ -1,0 +1,11 @@
+-form_tag :action => url(:feedback), :method => :post,:class => "feedback" do
+  - if logged_in?
+    = text_field :name => "name",     :label => "Name", :value => current_person.login
+    = text_field :name => "email",    :label => "Email", :value => current_person.email
+  -else
+    = text_field :name => "name",     :label => "Name"
+    = text_field :name => "email",    :label => "Email"
+    
+  = text_field      :name => "url",      :label => "Website"
+  = text_area_field "",  :name => "comments", :label => "Comments"
+  = submit_button "Feedback"
