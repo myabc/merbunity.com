@@ -8,10 +8,11 @@
     %meta{ :name => "verify-v1", :content => "U6KOSneP6ZP651Ce6SKLHUpUhGHYoU1sfH4+bzVwDLc=" }
     = css_include_tag :master
     = js_include_tag "jquery-1.2.3.pack"
-    = js_include_tag "chili/jquery.chili.pack", "application"
+    = js_include_tag "chili/jquery.chili-2.0"
+    = js_include_tag "application"
     %script
-      ChiliBook.recipeFolder     = "/javascripts/chili/js/";  
-      ChiliBook.stylesheetFolder = "/javascripts/chili/css/";
+      ChiliBook.recipeFolder     = "/javascripts/chili/";  
+      ChiliBook.stylesheetFolder = "/javascripts/chili_old/css/";
       
     = catch_content :auto_discover_atom unless catch_content(:auto_discover_atom).blank?
   %body

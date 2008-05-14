@@ -371,7 +371,8 @@ code {
   padding: 0.5em;
   border: 2px solid #222222;
   margin-bottom: 0.5em;
-  margin-top: 0.5em; }
+  margin-top: 0.5em;
+  overflow: auto; }
 
 div.error, div.notice, div.success {
   padding: 0.8em;
