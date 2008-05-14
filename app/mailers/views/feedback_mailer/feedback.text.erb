@@ -1,0 +1,16 @@
+<% unless @person.nil? -%>
+<%= "User: #{@person.login}" %>
+<%= "Email: #{@person.email}" %>
+
+<% end -%>
+Apparent Information:
+Name:  <%= params[:name] %>
+Email: <%= params[:email] %>
+Website: <%= params[:website] %>
+
+Comments
+<%= params[:comments] %>
+
+---------------------------------
+
+That is all!

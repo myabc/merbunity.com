@@ -24,8 +24,7 @@ Merb::Router.prepare do |r|
   # RESTful routes
   # r.resources :posts
   # 
-  r.match("/").to(:controller => "news", :action => "index")
-  
+  r.match("/").to(:controller => "news", :action => "index", :format => "html")
   
   [:screencasts, :tutorials].each do |res|
     r.resources res, :collection => {:pending => :get, :my_pending => :get, :drafts => :get}, 
@@ -34,6 +33,7 @@ Merb::Router.prepare do |r|
   r.match("/screencasts/:id/download", :method => :get).to(:controller => "screencasts", :action => "download").name(:download_screencast) 
       
   r.resources :news
+  r.resources :feedback
   
   ###########################################################################################################
   #                                                                                                         #
