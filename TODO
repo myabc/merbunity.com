@@ -1,10 +1,11 @@
+Fix Feeds
+
 Add a feedback form
 
 remove email passwords + forgot password functionality
 
 Add engineyard sticker & Spot for ivey
 
-Make better links for subscriptions
 
 unified feeds + 2 (Will need an event model that all publishes get logged to then feed off that)
 

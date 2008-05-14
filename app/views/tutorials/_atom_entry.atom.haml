@@ -1,5 +1,8 @@
 %entry
-  %title{:type => "Text"}= tutorial.title
+  %title{:type => "text"}= tutorial.title
+  %author
+    %name= tutorial.owner.attribute_to
+  %id= absolute_url(:tutorial, tutorial)
   %link{ :rel => "self", :href => absolute_url(:tutorial, tutorial), :type => "application/atom+xml", :title => tutorial.title }/
   %published= time_format(tutorial.created_at.to_time.utc, "%Y-%m-%dT%TZ")
   %updated= time_format(tutorial.updated_at.to_time.utc, "%Y-%m-%dT%TZ")

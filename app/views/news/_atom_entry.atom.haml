@@ -1,5 +1,8 @@
 %entry
-  %title{:type => "Text"}= news_item.title
+  %title{:type => "text"}= news_item.title
+  %author
+    %name= news_item.owner.attribute_to
+  %id= absolute_url(:news, news_item)
   %link{ :rel => "self", :href => absolute_url(:news, news_item), :type => "application/atom+xml", :title => news_item.title }/
   %published= time_format(news_item.created_at.to_time.utc, "%Y-%m-%dT%TZ")
   %updated= time_format(news_item.updated_at.to_time.utc, "%Y-%m-%dT%TZ")
