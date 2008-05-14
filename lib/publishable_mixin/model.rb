@@ -109,6 +109,7 @@ module Merbunity
            @published_on = DateTime.now
            self.publisher = the_publisher
            self.owner.published_item_count = (self.owner.published_item_count || 0) + 1
+           self.owner.save
            
            # make the owner a publisher if they have published enough articles
            self.owner.make_publisher! if !self.owner.publisher? && self.owner.published_item_count >= self.class.publishables_to_be_publisher
