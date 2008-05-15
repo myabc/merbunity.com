@@ -21,7 +21,7 @@ class NewsItem < DataMapper::Base
   
   def display_body
     return "" if self.body.nil?
-    @_display_body ||= RedCloth.new(self.body.gsub("&lt;", "<")).to_html
+    @_display_body ||= RedCloth.new(self.body.gsub(/<code.*?<\/code>/mi){|s| s.gsub(/&lt;/,"<")}).to_html
   end
   
   def published?

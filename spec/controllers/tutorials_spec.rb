@@ -109,6 +109,7 @@ describe Tutorials, "show action" do
   it "should check that the tutorial can be viewed" do
     ms = mock("tutorial", :null_object => true)
     ms.stub!(:id).and_return(234)
+    ms.stub!(:owner).and_return(@p1)
     ms.should_receive(:viewable_by?).and_return true
     Tutorial.should_receive(:first).and_return ms
     dispatch_to(Tutorials, :show, :id => ms.id)

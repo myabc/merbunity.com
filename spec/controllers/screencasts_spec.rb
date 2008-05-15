@@ -113,6 +113,7 @@ describe Screencasts, "show action" do
   it "should check that the screencast can be viewed" do
     ms = mock("screencast", :null_object => true)
     ms.stub!(:id).and_return(234)
+    ms.stub!(:owner).and_return(@p1)
     ms.should_receive(:viewable_by?).and_return true
     Screencast.should_receive(:first).and_return ms
     dispatch_to(Screencasts, :show, :id => ms.id)
