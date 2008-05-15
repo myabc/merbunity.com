@@ -66,8 +66,8 @@ module AuthenticatedSystem
       end
       
       protected
-            def make_activation_code
-        self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+      def make_activation_code
+        self.activation_code = self.class.make_key
       end
       
       def password_required?
@@ -85,7 +85,15 @@ module AuthenticatedSystem
       # Authenticates a person by their login name and unencrypted password.  Returns the person or nil.
       def authenticate(login, password)
         u = find_activated_authenticated_model_with_login(login) # need to get the salt
-        u && u.authenticated?(password) ? u : nil
+        u = u && u.authenticated?(password) ? u : nil
+        return if u.nil?
+        return u unless u.has_forgotten_password?
+        u.clear_forgot_password!
+        u
+      end
+      
+      def make_key
+        Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
       end
     end
 

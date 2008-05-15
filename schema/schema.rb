@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 1) do
+ActiveRecord::Schema.define(:version => 2) do
 
   create_table "comments", :force => true do |t|
     t.text     "body"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer  "published_item_count",      :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "password_reset_key"
   end
 
   add_index "people", ["login"], :name => "person_login_idx", :unique => true

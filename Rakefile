@@ -18,7 +18,7 @@ log_file = Merb.log_path / 'rake.log'
 
 Merb.load_dependencies(:environment => init_env)    
 
-#require 'merb_activerecord'
+require 'merb_activerecord'
 
 # # # Get Merb plugins and dependencies
 Merb::Plugins.rakefiles.each {|r| require r } 

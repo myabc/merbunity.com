@@ -1,6 +1,61 @@
 require File.join( File.dirname(__FILE__), "..", "spec_helper" )
 
-describe Person, "in merbunity" do
+describe Person, "forgotten password" do
+  before(:each) do
+    Person.auto_migrate!
+    @person = Person.create(valid_person_hash.with(:password => "test", :password_confirmation => "test"))  
+    @person.activate
+  end
+  
+  it "should be valid" do
+    @person.should_not be_new_record
+    Person.authenticate(@person.login, "test").should == @person
+  end
+  
+  it "should not have a forgotten password" do
+    @person.should_not have_forgotten_password
+  end
+  
+  it "should have a forgotten password" do
+    @person.forgot_password!
+    @person.should have_forgotten_password
+  end
+  
+  it "should have a forgotten password key 40 chars long when the password is forgotten" do
+    @person.password_reset_key.should be_nil
+    @person.forgot_password!
+    @person.password_reset_key.should_not be_nil
+  end
+  
+  it "should not allow duplicates of the key but should regenerate until it has a good one" do
+    key1 = @person.class.make_key
+    key2 = @person.class.make_key
+    key1.should_not == key2
+    @person.forgot_password!
+    @person.send(:password_reset_key=, key1)
+    @person.save
+    @person.reload!
+    @person.password_reset_key.should == key1
+    
+    person = Person.create(valid_person_hash)
+    
+    Person.should_receive(:make_key).exactly(3).times.and_return(key1,key1,key2)
+    person.forgot_password!
+  end
+  
+  it "should remove the forgotten password key if present when it is authenticated with the password" do
+    # If the user remembers to log in then the password is no longer forgotten and this should be reset
+    @person.forgot_password!
+    @person.reload!
+    
+    @person.password_reset_key.should_not be_nil
+    Person.authenticate(@person.login, "test")
+    @person.reload!
+    @person.password_reset_key.should be_nil
+  end
+end
+
+describe Person, "in merbcasts" do
   include PersonSpecHelper
   
   before(:each) do

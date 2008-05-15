@@ -54,14 +54,17 @@
       left: 0px; }
     #header #login_box .account_links {
       position: absolute;
-      right: 0px;
+      right: -50px;
       top: 0px;
       height: 53px;
       padding-top: 3px;
       padding-left: 8px;
-      width: 100px;
+      width: 150px;
       border-left: 1px solid black;
       border-color-left: #a4a096; }
+      #header #login_box .account_links li {
+        font-size: 0.9em;
+        margin-bottom: 0.5em; }
 
 label {
   font-weight: bold;

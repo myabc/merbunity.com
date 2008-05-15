@@ -8,7 +8,7 @@
     .account_links
       %ul
         %li= link_to "Logout", url(:logout)
-        %li= link_to "FAQ", url(:faq)
+        %li= link_to "Change Password", url(:edit_password)
     
   - when_not_logged_in do
     .details{:class => "_logged_out"}
