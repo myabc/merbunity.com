@@ -159,6 +159,27 @@ describe Screencast, "states" do
     screencast.errors.should have(1).item
     screencast.errors.on(:owner).should_not be_empty
   end
+  
+  it "should not double escape script tags inside a code tag" do
+    sc = Screencast.new(valid_screencast_hash)
+    orig = "<pre><code class=\"html\">&lt;script type=\"text/html\">&lt;/script></code></pre>"
+    expected = "<pre><code class=\"html\">&lt;script type=\"text/html\"&gt;&lt;/script&gt;</code></pre>"
+    sc.body = orig
+    sc.save
+    sc.body.should == orig
+    sc.display_body.should == expected
+  end
+  
+  it "should not unescape script tags outside a code block" do
+    sc = Screencast.new(valid_screencast_hash)
+    orig = "<p>&lt;script type=\"text/javascript\">Stuff&lt;/script></p>"
+    expected = "<p>&lt;script type=&#8221;text/javascript&#8221;&gt;Stuff&lt;/script&gt;</p>"
+    
+    sc.body = orig
+    sc.save
+    sc.body.should == orig
+    sc.display_body.should == expected
+  end
 end
 
 describe Screencast, "Class Methods" do

@@ -62,6 +62,27 @@ describe Tutorial do
     tut.save
     tut.display_body.should have_tag(:h1){|t| t.should contain("Heading")}
   end
+  
+  it "should not double escape script tags inside a code tag" do
+    tut = Tutorial.new(valid_tutorial_hash)
+    orig = "<pre><code class=\"html\">&lt;script type=\"text/html\">&lt;/script></code></pre>"
+    expected = "<pre><code class=\"html\">&lt;script type=\"text/html\"&gt;&lt;/script&gt;</code></pre>"
+    tut.body = orig
+    tut.save
+    tut.body.should == orig
+    tut.display_body.should == expected
+  end
+  
+  it "should not unescape script tags outside a code block" do
+    tut = Tutorial.new(valid_tutorial_hash)
+    orig = "<p>&lt;script type=\"text/javascript\">Stuff&lt;/script></p>"
+    expected = "<p>&lt;script type=&#8221;text/javascript&#8221;&gt;Stuff&lt;/script&gt;</p>"
+    
+    tut.body = orig
+    tut.save
+    tut.body.should == orig
+    tut.display_body.should == expected
+  end
 
 end
 

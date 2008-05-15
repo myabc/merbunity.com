@@ -2,6 +2,13 @@
 Gem.clear_paths
 Gem.path.unshift(Merb.root / "gems")
 
+gem "data_objects", "= 0.2.0"
+gem "do_mysql", "<= 0.2.4"
+gem "do_sqlite3", "<= 0.2.2"
+gem "merb_datamapper", "<= 0.9.2"
+gem "datamapper", "<= 0.3.1"
+
+
 # Make the app's "lib" directory a place where ruby files get "require"d from
 $LOAD_PATH.unshift(Merb.root / "lib")
 
@@ -27,6 +34,7 @@ use_orm :datamapper
 
 ### Uncomment for Sequel ORM
 # use_orm :sequel
+# 
 
 require "merb-assets"
 require "merb-haml"
