@@ -67,3 +67,4 @@ describe People do
      post "/people", :person => valid_person_hash.merge(options)
    end
 end
+

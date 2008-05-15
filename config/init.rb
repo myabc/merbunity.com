@@ -4,7 +4,7 @@ Gem.path.unshift(Merb.root / "gems")
 
 gem "data_objects", "= 0.2.0"
 gem "do_mysql", "<= 0.2.4"
-gem "do_sqlite3", "<= 0.2.5" if Merb.env?(:development)
+gem "do_sqlite3", "<= 0.2.5" unless Merb.env?(:production)
 gem "merb_datamapper", "<= 0.9.2"
 gem "datamapper", "<= 0.3.1"
 

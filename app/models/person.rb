@@ -34,7 +34,7 @@ class Person < DataMapper::Base
   validates_presence_of       :password,                :if => proc {password_required?}
   validates_presence_of       :password_confirmation,   :if => proc {password_required?}
   validates_length_of         :password,                :within => 4..40, :if => proc {password_required?}
-  validates_confirmation_of   :password,                :groups => :create
+  validates_confirmation_of   :password,                :if => proc{|m| !m.password.nil?}
     
   before_save :encrypt_password
   before_create :ensure_defaults # Should not be required :(
@@ -87,11 +87,6 @@ class Person < DataMapper::Base
   def login=(value)
     @login = value.downcase unless value.nil?
   end
-    
-  
-  EMAIL_FROM = "info@merbunity.com"
-  SIGNUP_MAIL_SUBJECT = "Welcome to Merbunity.  Please activate your account."
-  ACTIVATE_MAIL_SUBJECT = "Welcome to Merbunity"
   
   # Activates the person in the database
   def activate
@@ -101,26 +96,47 @@ class Person < DataMapper::Base
     self.save
     
     # send mail for activation
-    PersonMailer.dispatch_and_deliver(  :activation_notification,
-                                  {   :from => Person::EMAIL_FROM,
-                                      :to   => self.email,
-                                      :subject => Person::ACTIVATE_MAIL_SUBJECT },
-
-                                      :person => self )
-
+    send_activation_notification
   end
   
+  ################ FORGOTTEN PASSWORD STUFF ########################
+  property :password_reset_key, :string, :writer => :protected
+  validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}
+  
+  def forgot_password! # Must be a unique password key before it goes in the database
+    pwreset_key_success = false
+    until pwreset_key_success
+      self.password_reset_key = self.class.make_key
+      self.save
+      pwreset_key_success = self.errors.on(:password_reset_key).nil? ? true : false 
+    end
+    send_forgot_password
+  end
+  
+  def has_forgotten_password?
+    !self.password_reset_key.nil?
+  end
+  
+  def clear_forgot_password!
+    self.password_reset_key = nil
+    self.save
+  end
+  
+  def send_activation_notification
+    deliver_email(:activation_notification, :subject => "Welcome to Merbunity.  Please activate your account.")
+  end
+
   def send_signup_notification
-    PersonMailer.dispatch_and_deliver(
-        :signup_notification,
-      { :from => Person::EMAIL_FROM,
-        :to  => self.email,
-        :subject => Person::SIGNUP_MAIL_SUBJECT },
-        :person => self        
-    )
+    deliver_email(:signup_notification, :subject => "Welcome to Merbunity")
   end
-  
 
+  def send_forgot_password
+    deliver_email(:forgot_password, :subject => "Request to change your password")
+  end
 
-  
+  def deliver_email(action, params)
+    from = "info@merbunity.com"
+    PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), :person => self)
+  end
+    
 end

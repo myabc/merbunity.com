@@ -6,6 +6,8 @@ module AuthenticatedSystem
         r.match("/login").to(:controller => "Sessions", :action => "create").name(:login)
         r.match("/logout").to(:controller => "Sessions", :action => "destroy").name(:logout)
         r.match("/people/activate/:activation_code").to(:controller => "People", :action => "activate").name(:person_activation)
+        r.match("/passwords/edit").to(:controller => "passwords", :action => "edit").name(:edit_password_form)
+        r.resources :passwords
         r.resources :people
         r.resources :sessions
       end
