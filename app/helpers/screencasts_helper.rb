@@ -9,7 +9,7 @@ module Merb
           items << ["All Penging",  url(:pending_screencasts)] if current_person.admin? || current_person.publisher?
           items << ["Drafts",       url(:drafts_screencasts)]
         end
-        items << ["Subscribe", url(:screencasts, :format => "atom")]
+        items << ["Subscribe", "http://feeds.feedburner.com/Merbunity-Screencasts"]
         items
       end
       
