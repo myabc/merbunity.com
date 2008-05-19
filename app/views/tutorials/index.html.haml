@@ -1,6 +1,6 @@
 - throw_content :for_header, "Tutorials"
 - throw_content :for_atom_link, atom_link(url(:tutorials, :format => "atom"))
-- auto_discover_atom(url(:tutorials, :format => "atom"))
+- auto_discover_atom("http://feeds.feedburner.com/Merbunity-Tutorials")
 
 -if @tutorials.empty?
   .note
