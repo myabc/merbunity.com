@@ -6,6 +6,11 @@ module Merb
     include Merbunity::PermissionHelpers
     include Merbunity::MenuHelper
     
+    def nice_class_name(klass, opts = {})
+      name = klass.name.snake_case.gsub("_", " ").split(" ").map{|i| i.capitalize}
+      name[-1] = name.last.pluralize if opts[:plural]
+      name.join " "
+    end
     
     # Returns a named route for an object.  This is because some objects may be ambiguous as to where they are displayed
     def named_route_for(obj)
@@ -15,7 +20,18 @@ module Merb
       when Screencast
         :screencast
       when Tutorial
-        :screencast
+        :tutorial
+      end
+    end
+    
+    def collection_named_route_for(obj)
+      case obj
+      when NewsItem
+        :news
+      when Screencast
+        :screencasts
+      when Tutorial
+        :tutorials
       end
     end
     
