@@ -42,25 +42,30 @@
             = flash[flash_type]
             
         = catch_content :for_layout
-  .footer
-    %ul
-      %li
+        
+    #footer
+      %h1 Copyright & Credits
+      %p
+        All contents copyright it’s original authors.
+        %br/
+        Site by 
+        = link_to "Daniel Neighman", "http://hassox.blogspot.com", :target => "_blank"
+        | Web design by 
+        =link_to "Luke Sutton", "http://mr-eel.com", :target => "_blank"
+        
+      %h1 Help & Legal
+      %p
         =link_to "Terms of Service", url(:tos)
         =link_to "FAQ", url(:faq)
         =link_to "Feedback", url(:new_feedback)
-    %br/
-    %p.note
-      Site:
-      = link_to "Daniel Neighman", "http://hassox.blogspot.com", :target => "_blank"
-      | Design: 
-      =link_to "Luke Sutton", "http://mr-eel.com", :target => "_blank"
-  :plain
-    <script type="text/javascript">
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-      var pageTracker = _gat._getTracker("UA-1893855-4");
-      pageTracker._initData();
-      pageTracker._trackPageview();
-    </script>
+        
+    :plain
+      <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+        var pageTracker = _gat._getTracker("UA-1893855-4");
+        pageTracker._initData();
+        pageTracker._trackPageview();
+      </script>
