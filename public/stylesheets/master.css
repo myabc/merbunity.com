@@ -325,19 +325,35 @@ body {
   font-size: 80%; }
 
 #mainNav {
-  background: #111111;
-  padding: 1em 15px;
-  margin-bottom: 1em;
-  font-size: 1.2em; }
+  background: left bottom no-repeat url(/images/nav_bkg.gif);
+  padding: 1em 15px 5em 15px;
+  margin-bottom: 1em; }
   #mainNav a {
+    background: left center no-repeat;
     color: white;
-    text-decoration: none; }
+    text-decoration: none;
+    padding: 0.5em 0 0.5em 22px;
+    display: block; }
   #mainNav li.current a.current {
-    color: rgb(0,153,255);
-    font-size: 1.1em; }
+    color: rgb(0,153,255); }
   #mainNav li.current ul {
-    font-size: 0.9em;
-    margin-left: 1em; }
+    padding-left: 1em;
+    margin-bottom: 0.4em;
+    border-bottom: 1px solid #1B1B1B; }
+    #mainNav li.current ul a {
+      padding-top: 0; }
+  #mainNav #NewsNav {
+    background-image: url(/images/icon_blogs.gif); }
+  #mainNav #ScreencastsNav {
+    background-image: url(/images/icon_screencasts.gif); }
+  #mainNav #TutorialsNav {
+    background-image: url(/images/icon_tutorials.gif); }
+  #mainNav #PeopleNav {
+    background-image: url(/images/icon_people.gif); }
+  #mainNav #SitesNav {
+    background-image: url(/images/icon_sites.gif); }
+  #mainNav #ProjectsNav {
+    background-image: url(/images/icon_projects.gif); }
 
 #content {
   background: bottom left no-repeat url(/images/content_bkg.gif);
