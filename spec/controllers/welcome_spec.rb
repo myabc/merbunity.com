@@ -30,9 +30,9 @@ describe Welcome do
       n.save
     end 
     
-    @result = [Screencast.published(:limit => 10), Tutorial.published(:limit => 10), NewsItem.all(:limit => 10)].flatten
-    @result = @result.sort_by{|item| item.respond_to?(:published_on) ? item.published_on : item.created_at }
-    @result = @result[0,10]
+    @feed_result = [Screencast.published(:limit => 10), Tutorial.published(:limit => 10), NewsItem.all(:limit => 10)].flatten
+    @feed_result = @feed_result.sort_by{|item| item.respond_to?(:published_on) ? item.published_on : item.created_at }.reverse
+    @feed_result = @feed_result[0,10]
     
     @sc_result =  Screencast.published( :limit => 4)
     @ni_result =  NewsItem.all(   :limit => 4)
@@ -63,6 +63,11 @@ describe Welcome do
     
     it "should have the latest 4 tutorials""" do
       @controller.assigns(:tutorials).should == @tut_result
+    end
+    
+    it "should set @feed_items if a feed is requested" do
+      do_index :format => :atom
+      @controller.assigns(:feed_items).should == @feed_result
     end
     
   end

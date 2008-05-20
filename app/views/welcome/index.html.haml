@@ -1,7 +1,11 @@
+- throw_content :for_header, "Welcome"
+- throw_content :for_atom_link, atom_link(absolute_url(:controller => "welcome", :action => "index", :format => :atom))
+- auto_discover_atom("http://feeds.feedburner.com/Merbunity-Recent")
+
 .recent
   %div{:class => "news_item item summary recent"}
     %h3.title 
-      = link_to "News", url(:news)
+      = link_to "Latest News", url(:news)
     .links
       - if @news_items.empty?
         = "There are no recent News."
@@ -17,7 +21,7 @@
             
   %div{:class => "tutorial item summary recent"}
     %h3.title 
-      = link_to "Tutorials", url(:tutorials)
+      = link_to "Latest Tutorials", url(:tutorials)
     .links
       - if @tutorials.empty?
         = "There are no recent Tutorials."
@@ -33,7 +37,7 @@
     
   %div{:class => "screencast item summary recent"}
     %h3.title 
-      = link_to "Screencasts", url(:screencasts)
+      = link_to "Latest Screencasts", url(:screencasts)
     .links
       - if @screencasts.empty?
         = "There are no recent Screencasts."
