@@ -8,10 +8,16 @@ module Merbunity
     def site_menu
       haml_tag(:ul, :id => "mainNav") do
         top_level_menu_items.each do |controller, text, location|
-          opts = (request.uri == location || self.class == controller) ? {:class => "current"} : {}
-          haml_tag(:li, opts) do
-            puts link_to(text, location, opts)
-            if self.respond_to?(:section_menu_items) && opts[:class] == "current"
+          anchor_opts = {:id => "#{text}Nav"}
+          if (request.uri == location || self.class == controller)
+            li_opts = {:class => "current"}
+            anchor_opts[:class] = "current"
+          else
+            li_opts = {}
+          end
+          haml_tag(:li, li_opts) do
+            puts link_to(text, location, anchor_opts)
+            if self.respond_to?(:section_menu_items) && li_opts[:class] == "current"
               unless section_menu_items.empty?
                 build_menu_from_array(section_menu_items) 
               end

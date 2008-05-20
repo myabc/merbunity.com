@@ -41,22 +41,41 @@ body
     :size 80%
     
 #mainNav
-  :background = !almost_black
-  :padding 1em 15px
-  :margin
-    :bottom 1em
-  :font-size 1.2em
+  :background left bottom no-repeat url(/images/nav_bkg.gif)
+  :padding 1em 15px 5em 15px
+  :margin-bottom 1em
+  
   a
+    :background left center no-repeat
     :color white
     :text-decoration none
+    :padding 0.5em 0 0.5em 22px
+    :display block
+    
   li.current 
     a.current
       :color = !merbunity_blue
-      :font-size 1.1em
+      
     ul
-      :font-size 0.9em
-      :margin-left 1em
-    
+      :padding-left 1em
+      :margin-bottom 0.4em
+      :border-bottom 1px solid #1B1B1B
+      
+      a
+        :padding-top 0
+      
+  #NewsNav
+    :background-image url(/images/icon_blogs.gif)
+  #ScreencastsNav
+    :background-image url(/images/icon_screencasts.gif)
+  #TutorialsNav
+    :background-image url(/images/icon_tutorials.gif)
+  #PeopleNav
+    :background-image url(/images/icon_people.gif)
+  #SitesNav
+    :background-image url(/images/icon_sites.gif)
+  #ProjectsNav
+    :background-image url(/images/icon_projects.gif)
 #content
   :background bottom left no-repeat url(/images/content_bkg.gif)
   :width 678px
