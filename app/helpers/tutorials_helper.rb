@@ -9,7 +9,7 @@ module Merb
         items << ["All Penging",  url(:pending_tutorials)] if current_person.admin? || current_person.publisher?
         items << ["Drafts",       url(:drafts_tutorials)]
       end
-      items << ["Subscribe", url(:tutorials, :format => "atom")]
+      items << ["Subscribe", "http://feeds.feedburner.com/Merbunity-Tutorials"]
       items
     end
   end # TutorialsHelper
