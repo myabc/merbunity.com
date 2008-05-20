@@ -451,3 +451,8 @@ ul.object_menu {
       text-decoration: underline;
       position: relative;
       top: -0.4em; }
+
+.help {
+  cursor: pointer; }
+  .help .box_content {
+    display: none; }
