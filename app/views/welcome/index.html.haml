@@ -1,0 +1,51 @@
+.recent
+  %div{:class => "news_item item summary recent"}
+    %h3.title 
+      = link_to "News", url(:news)
+    .links
+      - if @news_items.empty?
+        = "There are no recent News."
+        Why not 
+        = link_to "Make Some", url(:new_news)
+      -else
+        %ul.links
+          - @news_items.each do |item|
+            %li
+              = link_to item.title, url(:news, item)
+              by
+              = item.owner.attribute_to
+            
+  %div{:class => "tutorial item summary recent"}
+    %h3.title 
+      = link_to "Tutorials", url(:tutorials)
+    .links
+      - if @tutorials.empty?
+        = "There are no recent Tutorials."
+        Why not 
+        = link_to "Make One", url(:new_tutorial)
+      -else
+        %ul.links
+          - @tutorials.each do |item|
+            %li
+              = link_to item.title, url(:tutorial, item)
+              by
+              = item.owner.attribute_to
+    
+  %div{:class => "screencast item summary recent"}
+    %h3.title 
+      = link_to "Screencasts", url(:screencasts)
+    .links
+      - if @screencasts.empty?
+        = "There are no recent Screencasts."
+        Why not 
+        = link_to "Make One", url(:new_screencast)
+      -else
+        %ul.links
+          - @screencasts.each do |item|
+            %li
+              = link_to item.title, url(:screencast, item)
+              by
+              = item.owner.attribute_to
+
+  
+  

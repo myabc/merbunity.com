@@ -58,11 +58,11 @@ describe Welcome do
     end
     
     it "should have the latest 4 News Items" do
-      @controller.assigns(:news_items).should == @news_items      
+      @controller.assigns(:news_items).should == @ni_result      
     end
     
     it "should have the latest 4 tutorials""" do
-      @controller.assigns(:tutorials).should == @tutorials
+      @controller.assigns(:tutorials).should == @tut_result
     end
     
   end
