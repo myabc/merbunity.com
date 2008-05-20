@@ -24,6 +24,17 @@ module Merb
       end
     end
     
+    def collection_named_route_for(obj)
+      case obj
+      when NewsItem
+        :news
+      when Screencast
+        :screencasts
+      when Tutorial
+        :tutorials
+      end
+    end
+    
     # helpers defined here available to all views.  
     def page_title=(title)
       @_page_title = title

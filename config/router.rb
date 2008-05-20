@@ -25,6 +25,7 @@ Merb::Router.prepare do |r|
   # r.resources :posts
   # 
   r.match("/").to(:controller => "welcome", :action => "index", :format => "html")
+  r.match("/index.:format").to(:controller => "welcome", :action => "index")
   
   [:screencasts, :tutorials].each do |res|
     r.resources res, :collection => {:pending => :get, :my_pending => :get, :drafts => :get}, 
