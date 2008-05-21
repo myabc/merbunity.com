@@ -1,6 +1,6 @@
 - throw_content :for_header, "Welcome"
 - throw_content :for_atom_link, atom_link(absolute_url(:controller => "welcome", :action => "index", :format => :atom))
-- auto_discover_atom("http://feeds.feedburner.com/Merbunity-Recent")
+- throw_content :feed_url, "http://feeds.feedburner.com/Merbunity-Recent"
 
 .welcome
   Welcome to Merbunity.  This is a community site for the

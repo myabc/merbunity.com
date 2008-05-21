@@ -1,6 +1,6 @@
 - throw_content :for_header, "Screencasts"
 - throw_content :for_atom_link, atom_link(url(:screencasts, :format => "atom"))
-- auto_discover_atom("http://feeds.feedburner.com/Merbunity-Screencasts")
+- throw_content :feed_url, "http://feeds.feedburner.com/Merbunity-Screencasts"
 
 -if @screencasts.empty?
   .note

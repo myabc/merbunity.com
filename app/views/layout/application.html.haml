@@ -14,7 +14,9 @@
       ChiliBook.recipeFolder     = "/javascripts/chili/";  
       ChiliBook.stylesheetFolder = "/javascripts/chili_old/css/";
       
-    = catch_content :auto_discover_atom unless catch_content(:auto_discover_atom).blank?
+    - if thrown_content? :feed_url
+      %link{ :href => catch_content(:feed_url), :rel => "alternate", :title => "ATOM", :type => "application/atom+xml"}
+      
   %body
     #header
       %a{:href => "/", :title => "Return to home"}
