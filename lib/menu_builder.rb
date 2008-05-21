@@ -25,6 +25,9 @@ module Merbunity
             
           end
         end
+        
+        # Add in the subscribe link for feeds
+        haml_tag(:li, :class => "feed"){ puts link_to("Subscribe", catch_content(:feed_url))} if thrown_content?(:feed_url)
       end
     end
     
