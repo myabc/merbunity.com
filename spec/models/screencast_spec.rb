@@ -125,6 +125,23 @@ describe Screencast do
     sc.display_body.should have_tag(:h1){|t| t.should contain("Heading")}
   end
   
+  it "should change the screencast if a new one is added" do
+    video_root = Merb.root / "spec" / "fixtures" / "video_files"
+    sc = Screencast.new(valid_screencast_hash.with(do_uploaded_file(video_root / "valid_mov_file.mov")))
+    sc.save
+    sc.should_not be_new_record
+    sc.full_path.should_not be_nil
+    File.exists?(sc.full_path).should be_true
+    fn = sc.filename
+    fp = sc.full_path
+    sc.update_attributes(do_uploaded_file(video_root / "penguin.mpg"))
+    sc.save
+    sc.filename.should_not == fn
+    sc.filename.should match /penguin.mpg$/
+    File.exists?(sc.full_path).should be_true
+    File.exists?(fp).should_not be_true
+  end
+  
 end
 
 describe Screencast, "states" do
