@@ -1,20 +1,17 @@
 #login_box
   - when_logged_in do
     = gravatar
-    .details
-      Logged In As
-      %span
-        = current_person.login
-    .account_links
-      %ul
-        %li= link_to "Logout", url(:logout)
-        %li= link_to "Change Password", url(:edit_password)
+    %p#loginDetails
+      Logged in as
+      %strong= current_person.login
+    %ul
+      %li= link_to "Logout", url(:logout)
+      %li= link_to "Change Password", url(:edit_password)
     
   - when_not_logged_in do
-    .details{:class => "_logged_out"}
-      Not Logged In
-    .account_links
-      %ul
-        %li=link_to "Login", url(:login)
-        %li=link_to "Signup", url(:new_person)
+    %p  
+      Not logged in
+    %ul
+      %li=link_to "Login", url(:login)
+      %li=link_to "Signup", url(:new_person)
   

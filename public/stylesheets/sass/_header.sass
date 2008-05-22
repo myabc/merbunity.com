@@ -1,4 +1,4 @@
-!header_border_color = #A4A096 
+!header_border_color = #A4A096
 #header
   :color = !dark_brown
   :margin 20px auto 0 auto
@@ -7,44 +7,64 @@
   :position relative
 
   h1
+    :border-right 1px solid #A4A096
     :background left top no-repeat url(/images/logo.gif)
-    :border-right 1px solid black
-    :border-color
-      :right = !header_border_color
-    :text-indent -1000em
-    :letter-spacing -1000em
     :width 260px
     :height 53px
     :margin 0 15px 0 0
-    :float left
+    :position absolute
+    :left 0
+    :top 0 !important
+    
+    a
+      :text-decoration none !important
+      :text-indent -1000em
+      :letter-spacing -1000em
+      :height 100%
+      :width 100%
+      :display block
+  
+  h2.tagline,
+  p.tagline
+    :margin 0 0 0 280px
+    :width 18em
+  
   h2
     :font-weight bold
     :text-transform uppercase
-    :margin 0 0 0 0
     :font-size 0.9em
-    :padding 0.2em
-    
-  div.tagline
-    :position absolute
-    :left 280px
-    :font-size 0.9em
-    :width 18em
-    :padding-top 8px
+    :padding-top 8px !important
     
   #login_box
-    :padding
-      :left 20px
-    :height 53px
-    :float right
-    :position relative
-    :width 300px
-    :border-left 1px solid black
-    :border-color
-      :left = !header_border_color
+    :border-left 1px solid #A4A096
+    :padding 8px 0 0 20px
+    :height 45px
+    :position absolute
+    :right 0
+    :top 0
+    :width 270px
+    
+    p
+      :float left
+    
+      strong
+        :display block
+    
+    p#loginDetails
+      :margin 0 0 0 50px
+    
+    ul
+      :float right
+      
+      li
+        :float left
+        :padding 0 0 0 0.5em
 
     img
       :position absolute
       :top 8px
+      :left 0
+      
     .details
       :position relative
       :width 110px
@@ -62,6 +82,7 @@
       :width 163px
       :text-align center
       :left 0px
+      
     .account_links
       :position absolute
       :right -50px
@@ -71,9 +92,6 @@
         :top 3px
         :left 8px
       :width 150px
-      :border-left 1px solid black
-      :border-color
-        :left = !header_border_color
       li
         :font-size 0.9em
         :margin
