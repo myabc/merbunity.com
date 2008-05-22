@@ -17,12 +17,12 @@
     = catch_content :auto_discover_atom unless catch_content(:auto_discover_atom).blank?
   %body
     #header
-      %a{:href => "/", :title => "Return to home"}
-        %h1 
+      %h1 
+        %a{:href => "/", :title => "Return to home"}
           Merbunity
-      .tagline
-        %h2 A Merb Community
-        %p News, projects and tutorials devoted to the Merb web framework
+
+      %h2.tagline A Merb Community
+      %p.tagline News, projects and tutorials devoted to the Merb web framework
       = partial "shared/people/login_box"  
 
     #content

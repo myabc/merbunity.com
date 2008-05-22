@@ -5,38 +5,53 @@
   height: 160px;
   position: relative; }
   #header h1 {
+    border-right: 1px solid #A4A096;
     background: left top no-repeat url(/images/logo.gif);
-    border-right: 1px solid black;
-    border-color-right: #a4a096;
-    text-indent: -1000em;
-    letter-spacing: -1000em;
     width: 260px;
     height: 53px;
     margin: 0 15px 0 0;
-    float: left; }
+    position: absolute;
+    left: 0;
+    top: 0 !important; }
+    #header h1 a {
+      text-decoration: none !important;
+      text-indent: -1000em;
+      letter-spacing: -1000em;
+      height: 100%;
+      width: 100%;
+      display: block; }
+  #header h2.tagline,
+  #header p.tagline {
+    margin: 0 0 0 280px;
+    width: 18em; }
   #header h2 {
     font-weight: bold;
     text-transform: uppercase;
-    margin: 0 0 0 0;
     font-size: 0.9em;
-    padding: 0.2em; }
-  #header div.tagline {
-    position: absolute;
-    left: 280px;
-    font-size: 0.9em;
-    width: 18em;
-    padding-top: 8px; }
+    padding-top: 8px !important; }
   #header #login_box {
-    padding-left: 20px;
-    height: 53px;
-    float: right;
-    position: relative;
-    width: 300px;
-    border-left: 1px solid black;
-    border-color-left: #a4a096; }
+    border-left: 1px solid #A4A096;
+    padding: 8px 0 0 20px;
+    height: 45px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 270px; }
+    #header #login_box p {
+      float: left; }
+      #header #login_box p strong {
+        display: block; }
+    #header #login_box p#loginDetails {
+      margin: 0 0 0 50px; }
+    #header #login_box ul {
+      float: right; }
+      #header #login_box ul li {
+        float: left;
+        padding: 0 0 0 0.5em; }
     #header #login_box img {
       position: absolute;
-      top: 8px; }
+      top: 8px;
+      left: 0; }
     #header #login_box .details {
       position: relative;
       width: 110px;
@@ -59,9 +74,7 @@
       height: 53px;
       padding-top: 3px;
       padding-left: 8px;
-      width: 150px;
-      border-left: 1px solid black;
-      border-color-left: #a4a096; }
+      width: 150px; }
       #header #login_box .account_links li {
         font-size: 0.9em;
         margin-bottom: 0.5em; }
