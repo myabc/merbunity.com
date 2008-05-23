@@ -85,7 +85,7 @@ module Merb
       
       out = "<ul class='page_links'>"
       
-      out << "<li>#{link_to(opts[:previous], paginate_url(url_name, page, opts))}</li>" if page.prev?
+      out << "<li>#{link_to(opts[:previous], paginate_url(url_name, page.prev.number, opts))}</li>" if page.prev?
       
       first_index = (page.number - opts[:pages] / 2)
       first_index = 1 if first_index < 1
