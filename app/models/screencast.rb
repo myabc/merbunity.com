@@ -74,7 +74,7 @@ class Screencast < DataMapper::Base
   
   def check_for_updated_file
     if !self.new_record? && !self.uploaded_file.nil?
-      delete_associated_file!
+      FileUtils.mv(full_path, "#{full_path}_old")
       setup_screencast_file_from_upload
       save_file_to_os
     end
