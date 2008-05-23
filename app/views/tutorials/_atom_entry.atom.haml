@@ -1,5 +1,5 @@
 %entry
-  %title{:type => "text"}= tutorial.title
+  %title{:type => "text"}= escape_xml tutorial.title
   %author
     %name= tutorial.owner.attribute_to
   %id= absolute_url(:tutorial, tutorial)
