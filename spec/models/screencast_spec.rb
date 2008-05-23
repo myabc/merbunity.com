@@ -137,9 +137,11 @@ describe Screencast do
     sc.update_attributes(do_uploaded_file(video_root / "penguin.mpg"))
     sc.save
     sc.filename.should_not == fn
-    sc.filename.should match /penguin.mpg$/
+    sc.filename.should match(/penguin.mpg$/)
     File.exists?(sc.full_path).should be_true
     File.exists?(fp).should_not be_true
+    #rename the file
+    File.exists?(fp + "_old").should be_true
   end
   
 end
