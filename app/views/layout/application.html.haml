@@ -28,12 +28,14 @@
     #content
       #action_content
         = site_menu
+        %ul#sponsors
+          %li#engineYard= link_to("Engine Yard", "/")
+          %li#ivey= link_to("Ivey & Brown", "/")
         -if thrown_content? :for_side
           = catch_content(:for_side)
       #content_box  
         - if thrown_content? :for_header        
-          %h2.content_header= catch_content :for_header
-          %br.clear/
+          %h1= catch_content :for_header
         -if thrown_content? :for_object_menu
           =catch_content :for_object_menu
         - unless flash.empty?
@@ -42,7 +44,8 @@
             = flash[flash_type]
             
         = catch_content :for_layout
-        
+      %br.clear
+      
     #footer
       %h1 Copyright & Credits
       %p
