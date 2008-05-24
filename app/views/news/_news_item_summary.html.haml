@@ -1,11 +1,7 @@
-.summary{:class => "item"}[news_item]
-  %h3.title= link_to(news_item.title, url(:news, news_item))
-  %p.meta
-    = time_format news_item.created_at
-    | Reporter: 
-    = news_item.owner.login
-  %p.description
-    = news_item.description
-  %p.link
-    = link_to "Read More...", url(:news, news_item), :class => "more"
-  
+%h3= link_to(news_item.title, url(:news, news_item))
+%p.credit
+  = time_format news_item.created_at
+  | Reporter: 
+  = news_item.owner.login
+%p= news_item.description
+%p.readMore= link_to "Read More…", url(:news, news_item), :class => "more"
