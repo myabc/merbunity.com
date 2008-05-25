@@ -250,7 +250,6 @@ ul.object_menu
     
 #what,
 #latestAdditions
-  :padding 0 0 0 14px
   :width 340px
   :float right
 
@@ -259,18 +258,21 @@ ul.object_menu
   :clear both
 
 #latestAdditions
+  :border-bottom 1px solid #7A7A7A
+  
   h3 a
+    :border-top 1px solid #7A7A7A
     :color white !important
     :text-decoration none !important
     :font-size 1.5em
+    :padding 0.3em 0 0 0
+    :display block
     
   p
     :margin 0 
     
   p.credit
     :color #333333
-    :border-bottom 1px solid #7A7A7A
-    :padding 0 0 1.3em 0
     :margin 0 0 1.3em 0
     
   p.type
@@ -282,7 +284,12 @@ ul.object_menu
     :float right
   
   p.screencast
-    :background-image url(/images/icon_screencasts.gif)
+    :background-image url(/images/icon_screencasts_dark.gif)
+  p.tutorial
+    :background-image url(/images/icon_tutorials_dark.gif)
+  p.project
+    :background-image url(/images/icon_projects_dark.gif)
+    
 .help
   :cursor pointer
   .box_content

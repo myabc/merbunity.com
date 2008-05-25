@@ -518,7 +518,6 @@ ul.object_menu {
 
 #what,
 #latestAdditions {
-  padding: 0 0 0 14px;
   width: 340px;
   float: right; }
 
@@ -526,26 +525,33 @@ ul.object_menu {
   display: block;
   clear: both; }
 
-#latestAdditions h3 a {
-  color: white !important;
-  text-decoration: none !important;
-  font-size: 1.5em; }
-#latestAdditions p {
-  margin: 0; }
-#latestAdditions p.credit {
-  color: #333333;
-  border-bottom: 1px solid #7A7A7A;
-  padding: 0 0 1.3em 0;
-  margin: 0 0 1.3em 0; }
-#latestAdditions p.type {
-  background: left center no-repeat;
-  font-weight: bold;
-  text-align: right;
-  padding: 0 0 0 20px;
-  margin-top: -1.4em;
-  float: right; }
-#latestAdditions p.screencast {
-  background-image: url(/images/icon_screencasts.gif); }
+#latestAdditions {
+  border-bottom: 1px solid #7A7A7A; }
+  #latestAdditions h3 a {
+    border-top: 1px solid #7A7A7A;
+    color: white !important;
+    text-decoration: none !important;
+    font-size: 1.5em;
+    padding: 0.3em 0 0 0;
+    display: block; }
+  #latestAdditions p {
+    margin: 0; }
+  #latestAdditions p.credit {
+    color: #333333;
+    margin: 0 0 1.3em 0; }
+  #latestAdditions p.type {
+    background: left center no-repeat;
+    font-weight: bold;
+    text-align: right;
+    padding: 0 0 0 20px;
+    margin-top: -1.4em;
+    float: right; }
+  #latestAdditions p.screencast {
+    background-image: url(/images/icon_screencasts_dark.gif); }
+  #latestAdditions p.tutorial {
+    background-image: url(/images/icon_tutorials_dark.gif); }
+  #latestAdditions p.project {
+    background-image: url(/images/icon_projects_dark.gif); }
 
 .help {
   cursor: pointer; }

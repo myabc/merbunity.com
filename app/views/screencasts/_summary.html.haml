@@ -1,14 +1,16 @@
-%h3= link_to screencast.title, url(:screencast, screencast)
-%p.meta
+%h3.title= link_to screencast.title, url(:screencast, screencast)
+%p.type.tu Screencast
+%p= (screencast.description || "").truncate(200)
+%p.credit 
+  Author:
+  = screencast.owner.login
+  |
   - if screencast.published?
+    Published: 
     = time_format(screencast.published_on)
   - else 
     - for_publishers do
       Status:
-    = screencast.published_status
-  | 
-  Author:
-  = screencast.owner.login
-%p.description= (screencast.description || "").truncate(200)
-%p.comment_count= comment_count_text(screencast)
-      
+      = screencast.published_status
+  |
+  = comment_count_text(screencast)
