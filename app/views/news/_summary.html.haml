@@ -1,0 +1,6 @@
+%h3= link_to(news_item.title, url(:news, news_item))
+%p.summary= news_item.description
+%p.credit
+  = time_format news_item.created_at
+  | Reporter: 
+  = news_item.owner.login
