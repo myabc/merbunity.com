@@ -1,0 +1,25 @@
+- throw_content :for_header, "Welcome"
+- throw_content :for_atom_link, atom_link(absolute_url(:controller => "welcome", :action => "index", :format => :atom))
+- throw_content :feed_url, "http://feeds.feedburner.com/Merbunity-Recent"
+      
+%div#latestNews
+  %h2 News
+  = partial "news/news_item_summary", :with => @news_items, :as => "news_item"
+
+%div#what
+  %h2 What is This?
+  %p
+    Welcome to Merbunity.  This is a community site for the
+    = link_to "Merb", "http://merbivore.com"
+    web framework.  There's some great tutorials and news here.  If we don't have what you're looking for, you can always contribute back to the community and write a tutorial or direct your own screencast.  This really is a community site, and relies on our community for all the good stuff.
+  -if !logged_in?
+    %p
+      You can get started right away.
+      = link_to "Signup", url(:new_person)
+      and help make Merb great.
+
+%div#latestAdditions
+  %h2 Latest Additions
+  - for item in @recent_items
+    = partial "#{collection_named_route_for(item)}/summary", :with => item, :as => item.class.name.snake_case
+  

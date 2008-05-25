@@ -123,11 +123,11 @@ class Person < DataMapper::Base
   end
   
   def send_activation_notification
-    deliver_email(:activation_notification, :subject => "Welcome to Merbunity.  Please activate your account.")
+    deliver_email(:activation_notification, :subject => "Welcome to Merbunity. ")
   end
 
   def send_signup_notification
-    deliver_email(:signup_notification, :subject => "Welcome to Merbunity")
+    deliver_email(:signup_notification, :subject => "Welcome to Merbunity.  Please activate your account.")
   end
 
   def send_forgot_password

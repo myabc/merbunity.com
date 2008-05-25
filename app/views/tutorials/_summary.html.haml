@@ -1,19 +1,16 @@
-%div{:class => "tutorial summary item"}
-  %h3.title
-    = link_to tutorial.title, url(:tutorial, tutorial)
-  %p.meta
-    - if tutorial.published?
-      = time_format(tutorial.published_on)
-    - else 
-      - for_publishers do
-        Status:
-        = tutorial.published_status
-    | 
-    Author:
-    = tutorial.owner.login
-          
-  %p.description
-    = (tutorial.description || "").truncate(200)
-    
-  %p.comment_count
-    = comment_count_text(tutorial)
+%h3.title= link_to tutorial.title, url(:tutorial, tutorial)
+%p.type.screencast Screencast
+%p= (tutorial.description || "").truncate(200)
+%p.credit 
+  Author:
+  = tutorial.owner.login
+  |
+  - if tutorial.published?
+    Published: 
+    = time_format(tutorial.published_on)
+  - else 
+    - for_publishers do
+      Status:
+      = tutorial.published_status
+  |
+  = comment_count_text(tutorial)

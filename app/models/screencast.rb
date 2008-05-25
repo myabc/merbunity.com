@@ -26,19 +26,17 @@ class Screencast < DataMapper::Base
       errors.add(:video_file, "Only Video files are allowed") if !uploaded_file.blank? && self.content_type !~ /video/
      }
 
-  after_create    :save_file_to_os
-  after_destroy   :delete_associated_file!
+  after_create      :save_file_to_os
+  after_destroy     :delete_associated_file!
+  before_validation :check_for_updated_file
   
   def initialize(hash = {})
     hash = hash.nil? ? {} : hash
-    if hash[:uploaded_file]
-      @original_filename = hash[:uploaded_file]["filename"]
-      @tmp_file = hash[:uploaded_file]["tempfile"]
-      @size = hash[:uploaded_file]["size"]
-      @content_type = hash[:uploaded_file]["content_type"]
-    end
     @download_count ||= 0
     super(hash)
+    if hash[:uploaded_file]
+      setup_screencast_file_from_upload
+    end
   end
   
   def filename
@@ -72,6 +70,21 @@ class Screencast < DataMapper::Base
     FileUtils.mkdir_p(file_path)
     FileUtils.copy tmp_file.path, (full_path)
     FileUtils.chmod(0744, full_path)
+  end
+  
+  def check_for_updated_file
+    if !self.new_record? && !self.uploaded_file.nil?
+      FileUtils.mv(full_path, "#{full_path}_old")
+      setup_screencast_file_from_upload
+      save_file_to_os
+    end
+  end
+  
+  def setup_screencast_file_from_upload
+    self.original_filename = self.uploaded_file["filename"]
+    @tmp_file = self.uploaded_file["tempfile"]
+    self.size = self.uploaded_file["size"]
+    self.content_type = self.uploaded_file["content_type"]
   end
 
   

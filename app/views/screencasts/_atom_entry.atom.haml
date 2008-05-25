@@ -1,5 +1,5 @@
 %entry
-  %title{:type => "text"}= screencast.title
+  %title{:type => "text"}= escape_xml screencast.title
   %author
     %name= screencast.owner.attribute_to
   %id= absolute_url(:screencast, screencast)

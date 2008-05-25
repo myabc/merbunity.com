@@ -7,6 +7,12 @@ $( function() {
 				return false;
 			}
 		});
+		
+		// Make collapsing help sections
+		$('.help').click(function(event){
+			$(this).children('.box_content').slideToggle();
+		}).children('.box_content').hide();
+		
 			
   	// Set the display for definition lists
 		$('dt').click(function(event){

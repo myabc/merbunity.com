@@ -1,20 +1,14 @@
-%div{:class => "screencast summary item"}
-  %h3.title
-    = link_to screencast.title, url(:screencast, screencast)
-  %p.meta
-    - if screencast.published?
-      = time_format(screencast.published_on)
-    - else 
-      - for_publishers do
-        Status:
-      = screencast.published_status
-    | 
-    Author:
-    = screencast.owner.login
-          
-  %p.description
-    = (screencast.description || "").truncate(200)
-  
-  %p.comment_count
-    = comment_count_text(screencast)
-        
+%h3= link_to screencast.title, url(:screencast, screencast)
+%p.meta
+  - if screencast.published?
+    = time_format(screencast.published_on)
+  - else 
+    - for_publishers do
+      Status:
+    = screencast.published_status
+  | 
+  Author:
+  = screencast.owner.login
+%p.description= (screencast.description || "").truncate(200)
+%p.comment_count= comment_count_text(screencast)
+      
