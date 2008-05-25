@@ -1,40 +1,6 @@
-- throw_content :for_header, "Welcome"
+- throw_content :for_header, "News"
 - throw_content :for_atom_link, atom_link(url(:news, :format => "atom"))
 - throw_content :feed_url, "http://feeds.feedburner.com/MerbunityNews"
 
-%div#latestNews
-  %h2 News
-  = partial :news_item_summary, :with => @news_items, :as => "news_item"
-  = paginate_links(:news, @page)
-  
-%div#latestAdditions
-  %h2 Latest Additions
-  %h3 Single Page Merb App
-  %p.type.screentcast Screencast
-  %p
-    A quick runthrough of merb-slices, showing how to create a slice and then do some 
-    overrides from the main application.
-  %p.credit By Adam Soon
-  
-  %h3 Single Page Merb App
-  %p.type Screencast
-  %p
-    A quick runthrough of merb-slices, showing how to create a slice and then do some 
-    overrides from the main application.
-  %p.credit By Adam Soon
-  
-  %h3 Single Page Merb App
-  %p.type Screencast
-  %p
-    A quick runthrough of merb-slices, showing how to create a slice and then do some 
-    overrides from the main application.
-  %p.credit By Adam Soon
-  
-  %h3 Single Page Merb App
-  %p.type Screencast
-  %p
-    A quick runthrough of merb-slices, showing how to create a slice and then do some 
-    overrides from the main application.
-  %p.credit By Adam Soon
-  
-  
+= partial :summary, :with => @news_items, :as => "news_item"
+= paginate_links(:news, @page)

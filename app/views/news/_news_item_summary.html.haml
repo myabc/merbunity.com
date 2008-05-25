@@ -1,7 +1,0 @@
-%h3= news_item.title
-%p.credit
-  = time_format news_item.created_at
-  | Reporter: 
-  = news_item.owner.login
-%p.summary= news_item.description
-%p.readMore= link_to "Read More…", url(:news, news_item), :class => "more"

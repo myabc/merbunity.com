@@ -4,8 +4,15 @@
       
 %div#latestNews
   %h2 News
-  = partial "news/news_item_summary", :with => @news_items, :as => "news_item"
-
+  - for news_item in @news_items
+    %h3= news_item.title
+    %p.credit
+      = time_format news_item.created_at
+      | Reporter: 
+      = news_item.owner.login
+    %p.summary= news_item.description
+    %p.readMore= link_to "Read More…", url(:news, news_item), :class => "more"
+  
 %div#what
   %h2 What is This?
   %p

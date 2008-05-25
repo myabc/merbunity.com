@@ -47,15 +47,15 @@ body
   
   a
     :background left center no-repeat
-    :color white
-    :text-decoration none
+    :color white !important
+    :text-decoration none !important
     :padding 0.5em 0 0.5em 22px
     :display block
     
   li.current 
     a.current
       :font-weight bold
-      :color = !merbunity_blue
+      :color = !merbunity_blue !important
       
     ul
       :padding-left 1em
@@ -101,6 +101,7 @@ body
   :margin 0 auto 0 auto
   :padding 0 235px 100px 0
   :position relative
+  
   #content_box
     .content_header
       :background-color = !almost_black
@@ -109,6 +110,12 @@ body
       :padding 0.1em 0.5em
       :color = !heading_text_color
       :margin-bottom 0.6em
+      
+  a
+    :color #0066CC
+  a:visited
+    :color #0066CC
+    
   br.clear
     :clear both
       
@@ -201,6 +208,7 @@ ul.object_menu
       :position relative
       :top -0.4em
 
+/ Text styles
 #content
   h1
     :font
@@ -232,18 +240,47 @@ ul.object_menu
   ul
     :margin 0 0 1.3em 0
 
+/ General summary styles
+p.credit
+  :color #555555
+  
+h3 a
+  :border-top 1px solid #7A7A7A
+  :color white !important
+  :text-decoration none !important
+  :font
+    :weight bold
+    :size 1.5em
+  :padding 0.3em 0 0 0
+  :display block
+
+p.summary
+  :margin-bottom 0 !important
+
+p.type
+  :background left center no-repeat
+  :font-weight bold
+  :text-align right
+  :padding 0 0 0 20px
+  :margin-top -1.4em !important
+  :float right
+
+p.screencast
+  :background-image url(/images/icon_screencasts_dark.gif)
+p.tutorial
+  :background-image url(/images/icon_tutorials_dark.gif)
+p.project
+  :background-image url(/images/icon_projects_dark.gif)  
+    
+/ Frontpage layout
 #latestNews
   :border-right 1px solid #7A7A7A
   :padding 0 15px 0 0
   :width 259px
   :float left
   
-  p.summary,
   p.credit
-    :margin-bottom 0
-  
-  p.credit
-    :color #555555
+    :margin-bottom 0 !important
     
 #intro
   :background white
@@ -265,37 +302,7 @@ ul.object_menu
 
 #latestAdditions
   :border-bottom 1px solid #7A7A7A
-  
-  h3 a
-    :border-top 1px solid #7A7A7A
-    :color white !important
-    :text-decoration none !important
-    :font-size 1.5em
-    :padding 0.3em 0 0 0
-    :display block
-    
-  p
-    :margin 0 
-    
-  p.credit
-    :color #333333
-    :margin 0 0 1.3em 0
-    
-  p.type
-    :background left center no-repeat
-    :font-weight bold
-    :text-align right
-    :padding 0 0 0 20px
-    :margin-top -1.4em
-    :float right
-  
-  p.screencast
-    :background-image url(/images/icon_screencasts_dark.gif)
-  p.tutorial
-    :background-image url(/images/icon_tutorials_dark.gif)
-  p.project
-    :background-image url(/images/icon_projects_dark.gif)
-    
+
 .help
   :cursor pointer
   .box_content

@@ -31,27 +31,29 @@
     padding-top: 8px !important; }
   #header #login_box {
     border-left: 1px solid #A4A096;
-    padding: 8px 0 0 20px;
-    height: 45px;
+    padding: 0 0 0 20px;
+    height: 53px;
     position: absolute;
     right: 0;
     top: 0;
     width: 270px; }
     #header #login_box p {
+      margin: 8px 0 0 0;
       float: left; }
       #header #login_box p strong {
+        font-weight: bold;
         display: block; }
     #header #login_box p#loginDetails {
-      margin: 0 0 0 50px; }
+      margin-left: 45px; }
     #header #login_box ul {
+      border-left: 1px solid #A4A096;
+      padding: 8px 0 0 15px;
+      height: 45px;
       float: right; }
-      #header #login_box ul li {
-        float: left;
-        padding: 0 0 0 0.5em; }
     #header #login_box img {
       position: absolute;
       top: 8px;
-      left: 0; }
+      left: 15px; }
     #header #login_box .details {
       position: relative;
       width: 110px;
@@ -339,13 +341,13 @@ body {
   margin-bottom: 1em; }
   #mainNav a {
     background: left center no-repeat;
-    color: white;
-    text-decoration: none;
+    color: white !important;
+    text-decoration: none !important;
     padding: 0.5em 0 0.5em 22px;
     display: block; }
   #mainNav li.current a.current {
     font-weight: bold;
-    color: rgb(0,153,255); }
+    color: rgb(0,153,255) !important; }
   #mainNav li.current ul {
     padding-left: 1em;
     margin-bottom: 0.4em;
@@ -393,6 +395,10 @@ body {
     padding: 0.1em 0.5em;
     color: rgb(229,225,211);
     margin-bottom: 0.6em; }
+  #content a {
+    color: #0066CC; }
+  #content a:visited {
+    color: #0066CC; }
   #content br.clear {
     clear: both; }
 
@@ -478,6 +484,7 @@ ul.object_menu {
       position: relative;
       top: -0.4em; }
 
+
 #content h1 {
   font-weight: bold;
   font-size: 1.5em;
@@ -502,16 +509,47 @@ ul.object_menu {
 #content ul {
   margin: 0 0 1.3em 0; }
 
+
+p.credit {
+  color: #555555; }
+
+h3 a {
+  border-top: 1px solid #7A7A7A;
+  color: white !important;
+  text-decoration: none !important;
+  font-weight: bold;
+  font-size: 1.5em;
+  padding: 0.3em 0 0 0;
+  display: block; }
+
+p.summary {
+  margin-bottom: 0 !important; }
+
+p.type {
+  background: left center no-repeat;
+  font-weight: bold;
+  text-align: right;
+  padding: 0 0 0 20px;
+  margin-top: -1.4em !important;
+  float: right; }
+
+p.screencast {
+  background-image: url(/images/icon_screencasts_dark.gif); }
+
+p.tutorial {
+  background-image: url(/images/icon_tutorials_dark.gif); }
+
+p.project {
+  background-image: url(/images/icon_projects_dark.gif); }
+
+
 #latestNews {
   border-right: 1px solid #7A7A7A;
   padding: 0 15px 0 0;
   width: 259px;
   float: left; }
-  #latestNews p.summary,
   #latestNews p.credit {
-    margin-bottom: 0; }
-  #latestNews p.credit {
-    color: #555555; }
+    margin-bottom: 0 !important; }
 
 #intro {
   background: white;
@@ -532,31 +570,6 @@ ul.object_menu {
 
 #latestAdditions {
   border-bottom: 1px solid #7A7A7A; }
-  #latestAdditions h3 a {
-    border-top: 1px solid #7A7A7A;
-    color: white !important;
-    text-decoration: none !important;
-    font-size: 1.5em;
-    padding: 0.3em 0 0 0;
-    display: block; }
-  #latestAdditions p {
-    margin: 0; }
-  #latestAdditions p.credit {
-    color: #333333;
-    margin: 0 0 1.3em 0; }
-  #latestAdditions p.type {
-    background: left center no-repeat;
-    font-weight: bold;
-    text-align: right;
-    padding: 0 0 0 20px;
-    margin-top: -1.4em;
-    float: right; }
-  #latestAdditions p.screencast {
-    background-image: url(/images/icon_screencasts_dark.gif); }
-  #latestAdditions p.tutorial {
-    background-image: url(/images/icon_tutorials_dark.gif); }
-  #latestAdditions p.project {
-    background-image: url(/images/icon_projects_dark.gif); }
 
 .help {
   cursor: pointer; }
