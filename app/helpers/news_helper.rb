@@ -6,7 +6,6 @@ module Merb
       if logged_in?
         items << ["Got News?", url(:new_news)] if current_person.admin? || current_person.publisher?
       end
-      items << ["Subscribe","http://feeds.feedburner.com/MerbunityNews"]
       items
     end
 

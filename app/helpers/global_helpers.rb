@@ -6,6 +6,11 @@ module Merb
     include Merbunity::PermissionHelpers
     include Merbunity::MenuHelper
     
+    def nice_class_name(klass, opts = {})
+      name = klass.name.snake_case.gsub("_", " ").split(" ").map{|i| i.capitalize}
+      name[-1] = name.last.pluralize if opts[:plural]
+      name.join " "
+    end
     
     # Returns a named route for an object.  This is because some objects may be ambiguous as to where they are displayed
     def named_route_for(obj)
@@ -15,7 +20,18 @@ module Merb
       when Screencast
         :screencast
       when Tutorial
-        :screencast
+        :tutorial
+      end
+    end
+    
+    def collection_named_route_for(obj)
+      case obj
+      when NewsItem
+        :news
+      when Screencast
+        :screencasts
+      when Tutorial
+        :tutorials
       end
     end
     
@@ -55,11 +71,6 @@ module Merb
       out = self_closing_tag(:img, attrs) unless person.nil?
     end
     
-    def auto_discover_atom(feed_url)
-      throw_content :auto_discover_atom,
-          "<link href=\"#{feed_url}\" rel=\"alternate\" title=\"ATOM\" type=\"application/atom+xml\" />"
-    end
-    
     def atom_link(feed_url, opts = {})
       opts[:text] ||= "Subscribe"
       link_to( opts[:text], feed_url, :rel => "alternate",  :type => "application/atom+xml", :class => "feed")
@@ -74,7 +85,7 @@ module Merb
       
       out = "<ul class='page_links'>"
       
-      out << "<li>#{link_to(opts[:previous], paginate_url(url_name, page, opts))}</li>" if page.prev?
+      out << "<li>#{link_to(opts[:previous], paginate_url(url_name, page.prev.number, opts))}</li>" if page.prev?
       
       first_index = (page.number - opts[:pages] / 2)
       first_index = 1 if first_index < 1

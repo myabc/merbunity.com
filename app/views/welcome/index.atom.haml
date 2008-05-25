@@ -1,0 +1,10 @@
+%feed{:xmlns => "http://www.w3.org/2005/Atom"}
+  %id= absolute_url(:controller => "welcome", :action => "index", :format => :atom)
+  %title=       "Merbunity - Recent Content Feed"
+  %subtitle=    "Recent Content from the Merb Community"
+  %link{:rel => "self", :href => "http://feeds.feedburner.com/Merbunity-Recent"}
+  %link{:rel => "alternative", :href => "#{absolute_url(:controller => "welcome", :action => "index", :format => :atom)}" }
+  %generator    "http://merbunity.com"
+  %updated= @feed_items.empty? ? time_format(Time.now, "%Y-%m-%dT%TZ") : time_format(@feed_items.first.updated_at.to_time.utc, "%Y-%m-%dT%TZ")
+  - @feed_items.each do |item|
+    = partial "#{collection_named_route_for(item)}/atom_entry", :with => item, :as => item.class.name.snake_case

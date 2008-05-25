@@ -1,5 +1,5 @@
 %entry
-  %title{:type => "text"}= news_item.title
+  %title{:type => "text"}= escape_xml( news_item.title )
   %author
     %name= news_item.owner.attribute_to
   %id= absolute_url(:news, news_item)

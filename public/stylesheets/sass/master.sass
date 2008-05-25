@@ -227,26 +227,41 @@ ul.object_menu
     :margin 0 0 1.3em 0
 
 #latestNews
-  :width 245px
+  :border-right 1px solid #7A7A7A
+  :padding 0 15px 0 0
+  :width 259px
   :float left
   
-  p
-    :margin 0
+  p.summary,
+  p.credit
+    :margin-bottom 0
   
   p.credit
     :color #555555
+    
+#intro
+  :background white
+  :padding 1.3em 0 0 0
+  :display block
+  :clear both
   
-  p.readMore
-    :margin-bottom 1.3em
-  
+  p
+    :margin 0 10px 1.3em 10px
+    
+#what,
 #latestAdditions
-  :border-left 1px solid #7A7A7A
   :padding 0 0 0 14px
-  :width 325px
+  :width 340px
   :float right
-  
-  h3
-    :color white
+
+#what p 
+  :display block
+  :clear both
+
+#latestAdditions
+  h3 a
+    :color white !important
+    :text-decoration none !important
     :font-size 1.5em
     
   p
@@ -268,3 +283,7 @@ ul.object_menu
   
   p.screencast
     :background-image url(/images/icon_screencasts.gif)
+.help
+  :cursor pointer
+  .box_content
+    :display none

@@ -1,6 +1,6 @@
 - throw_content :for_header, "Welcome"
 - throw_content :for_atom_link, atom_link(url(:news, :format => "atom"))
-- auto_discover_atom("http://feeds.feedburner.com/MerbunityNews")
+- throw_content :feed_url, "http://feeds.feedburner.com/MerbunityNews"
 
 %div#latestNews
   %h2 News
