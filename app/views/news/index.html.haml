@@ -1,6 +1,7 @@
 - throw_content :for_header, "News"
 - throw_content :for_atom_link, atom_link(url(:news, :format => "atom"))
 - throw_content :feed_url, "http://feeds.feedburner.com/MerbunityNews"
+- page_title "News"
 
 = partial :summary, :with => @news_items, :as => "news_item"
 = paginate_links(:news, @page)

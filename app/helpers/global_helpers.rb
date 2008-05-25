@@ -36,13 +36,13 @@ module Merb
     end
     
     # helpers defined here available to all views.  
-    def page_title=(title)
-      @_page_title = title
+    def page_title(title = nil)
+      @_page_title ||= title
     end
     
-    def page_title
-      @_page_title
-    end
+    # def page_title
+    #   @_page_title
+    # end
     
     def time_format(date, format = "%B %d, %Y")
       date.strftime(format)
