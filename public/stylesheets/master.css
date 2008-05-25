@@ -103,7 +103,7 @@ input.text, input.title, textarea, select, .field.file {
   margin: 0.5em 0;
   border: 1px solid #bbb;
   font-family: inherit; }
-  input.textfocus, input.titlefocus, textareafocus, selectfocus, .field.filefocus {
+  input.textfocus,   input.titlefocus,   textareafocus,   selectfocus,   .field.filefocus {
     border: 1px solid #666; }
 
 input.text, input.title, input.password, .field.file {
