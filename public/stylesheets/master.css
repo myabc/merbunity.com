@@ -364,6 +364,11 @@ body {
     background-image: url(/images/icon_sites.gif); }
   #mainNav #ProjectsNav {
     background-image: url(/images/icon_projects.gif); }
+  #mainNav #currentFeed {
+    border-bottom: 1px solid #1B1B1B;
+    background-image: url(/images/rss_badge.gif);
+    padding: 0.8em 0 0.8em 52px;
+    margin-bottom: 0.3em; }
 
 #sponsors a {
   border: 1px solid #666666;
