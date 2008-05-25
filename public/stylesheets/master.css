@@ -103,7 +103,7 @@ input.text, input.title, textarea, select, .field.file {
   margin: 0.5em 0;
   border: 1px solid #bbb;
   font-family: inherit; }
-  input.textfocus,   input.titlefocus,   textareafocus,   selectfocus,   .field.filefocus {
+  input.textfocus, input.titlefocus, textareafocus, selectfocus, .field.filefocus {
     border: 1px solid #666; }
 
 input.text, input.title, input.password, .field.file {
@@ -336,9 +336,9 @@ body {
   font-size: 80%; }
 
 #mainNav {
-  background: left bottom no-repeat url(/images/nav_bkg.gif);
-  padding: 1em 15px 5em 15px;
-  margin-bottom: 1em; }
+  background: #111111;
+  padding: 1em 15px 1.5em 15px;
+  margin-bottom: 0 !important; }
   #mainNav a {
     background: left center no-repeat;
     color: white !important;
@@ -372,15 +372,18 @@ body {
     padding: 0.8em 0 0.8em 52px;
     margin-bottom: 0.3em; }
 
-#sponsors a {
-  border: 1px solid #666666;
-  background: left top no-repeat url(/images/sponsor_ivey.gif);
-  text-indent: -1000em;
-  letter-spacing: -1000em;
-  width: 200px;
-  height: 100px;
-  margin: 0 0 10px 0;
-  display: block; }
+#sponsors {
+  background: left bottom no-repeat url(/images/nav_bkg.gif);
+  padding: 0 0 60px 0; }
+  #sponsors a {
+    background: left top no-repeat url(/images/sponsor_ivey.gif);
+    border-bottom: 10px solid #111111;
+    text-indent: -1000em;
+    letter-spacing: -1000em;
+    width: 200px;
+    height: 100px;
+    margin: 0 0 0 0;
+    display: block; }
 
 #content {
   background: bottom left no-repeat url(/images/content_bkg.gif);

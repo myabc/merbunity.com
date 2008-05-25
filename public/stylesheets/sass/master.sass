@@ -41,9 +41,9 @@ body
     :size 80%
     
 #mainNav
-  :background left bottom no-repeat url(/images/nav_bkg.gif)
-  :padding 1em 15px 5em 15px
-  :margin-bottom 1em
+  :background = !almost_black
+  :padding 1em 15px 1.5em 15px
+  :margin-bottom 0 !important
   
   a
     :background left center no-repeat
@@ -85,14 +85,17 @@ body
   
     
 #sponsors
+  :background left bottom no-repeat url(/images/nav_bkg.gif)
+  :padding 0 0 60px 0
+  
   a
-    :border 1px solid #666666
     :background left top no-repeat url(/images/sponsor_ivey.gif)
+    :border-bottom 10px solid #111111
     :text-indent -1000em
     :letter-spacing -1000em
     :width 200px
     :height 100px
-    :margin 0 0 10px 0
+    :margin 0 0 0 0
     :display block
     
 #content
