@@ -2,14 +2,16 @@ require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper.rb')
 
 describe "Merbunity::Publishable" do
   
-  class MyPublishableModel < DataMapper::Base
+  class MyPublishableModel
+    include DataMapper::Resource
     include Merbunity::Publishable
-    include Merbunity::Permissions::ProtectedModel  
+    include Merbunity::Permissions::ProtectedModel
+    property :id, Fixnum, :key => true
     is_commentable(:pending, :published)
   end
 
   before(:all) do
-    DataMapper::Base.auto_migrate!
+    DataMapper.auto_migrate!
   end
 
   before(:each) do
@@ -287,9 +289,11 @@ end
 
 describe Merbunity::PublishableController do
   
-  class PublishableModel < DataMapper::Base
+  class PublishableModel
+    include DataMapper::Resource
     include Merbunity::Publishable
     include Merbunity::Permissions::ProtectedModel
+    property :id, Fixnum, :key => true
   end
   
   class PublishableController < Application
