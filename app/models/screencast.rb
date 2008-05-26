@@ -15,17 +15,17 @@ class Screencast
   property :description,              String,   :nullable => false
   property :body,                     DataMapper::Types::Text, :nullable => false
   property :size,                     Integer
-  property :original_filename,        String
-  property :content_type,             String
-  property :download_count,           Integer
+  property :original_filename,        String,   :nullable => false
+  property :content_type,             String,   :nullable => false
+  property :download_count,           Integer,  :nullable => false, :default => 0
   
   whistler_properties :title, :body, :description
   validates_with_method :valid_upload?
   
   
-  before :save,     :check_for_updated_file
-  after  :save,     :save_file_to_os
-  after  :destroy,  :delete_associated_file!
+  before :save,               :check_for_updated_file
+  after  :save,               :save_file_to_os
+  after  :destroy,            :delete_associated_file!
 
   
   def initialize(hash = {})
