@@ -1,5 +1,6 @@
 require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper.rb')
 
+
 describe "Merbunity::Publishable" do
   
   class MyPublishableModel
@@ -20,13 +21,16 @@ describe "Merbunity::Publishable" do
     
     @person = Person.new(valid_person_hash)
     @person.save
+    @person.reload
     @p = MyPublishableModel.new(:owner => @person)
     
     @publisher = Person.new(valid_person_hash)    
     @publisher.save
     @publisher.make_publisher!
+    @publisher.reload
     
     @other_person = Person.create(valid_person_hash)
+    @other_person.reload
     
     1.upto(4) do |i| 
       p = MyPublishableModel.create(:owner => @person) 
@@ -205,7 +209,7 @@ describe "Merbunity::Publishable" do
   it "should add a drafts method to the user model" do
     d = @person.draft_my_publishable_models
     d.should have(3).items
-    d.all?{|s| s.owner == @person}.should be_true    
+    d.all?{|s| s.owner.id == @person.id}.should be_true    
   end
   
   it "should make a person a publisher after a set number of published screencasts" do
@@ -293,11 +297,12 @@ describe Merbunity::PublishableController do
     include DataMapper::Resource
     include Merbunity::Publishable
     include Merbunity::Permissions::ProtectedModel
-    property :id, Integer, :key => true
+    property :id, Integer, :serial => true
   end
   
   class PublishableController < Application
     publishable_resource PublishableModel
+    skip_before :non_publisher_help
   end
   
   before(:all) do
@@ -355,7 +360,7 @@ describe Merbunity::PublishableController do
   it "should get the index of pending objects for a user if they are not a publisher" do
     p = Person.create(valid_person_hash)
     p.should_not be_a_publisher
-    1.upto(3){ pm = PublishableModel.create(:owner => p); p.publish(pm) }
+    1.upto(3){ pm = PublishableModel.create(:owner => p); p.publish(pm)}
     
     @person.should_not be_a_publisher
     1.upto(2){ z = PublishableModel.create(:owner => @person); z.publish!(@person)}
@@ -367,7 +372,7 @@ describe Merbunity::PublishableController do
     result = c.assigns(:publishable_models)
     result.should_not be_nil
     result.should have(2).items
-    result.each{|r| r.owner.should == @person}
+    result.each{|r| r.owner.id.should == @person.id}
   end
   
   it "should get the index of all pending objects for a user if they are a publisher" do
