@@ -26,7 +26,7 @@ class Screencast
 
   after  :create,   :save_file_to_os
   after  :destroy,  :delete_associated_file!
-  before :valid?, :check_for_updated_file
+  before :valid_upload, :check_for_updated_file
   
   def initialize(hash = {})
     hash = hash.nil? ? {} : hash
@@ -58,6 +58,15 @@ class Screencast
     return "" if self.body.nil?
     @_display_body ||= RedCloth.new(self.body.gsub(/<code.*?<\/code>/mi){|s| s.gsub(/&lt;/,"<")}).to_html
   end
+  
+  protected
+  def valid_upload
+    if new_record?
+      return [false, "There is no video file uploaded"] if uploaded_file.blank?
+      return [false, "Only Video files are allowed"] if !uploaded_file.blank? && self.content_type !~ /video/
+    end
+    true
+  end
  
   private 
   def delete_associated_file!
@@ -84,14 +93,7 @@ class Screencast
     self.size = self.uploaded_file["size"]
     self.content_type = self.uploaded_file["content_type"]
   end
-  
-  def valid_upload?
-    if new_record?
-      return [false, "There is no video file uploaded"] if uploaded_file.blank?
-      return [false, "Only Video files are allowed"] if !uploaded_file.blank? && self.content_type !~ /video/
-    end
-    true
-  end
+
 
   
 end
