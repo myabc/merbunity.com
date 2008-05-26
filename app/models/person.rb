@@ -87,7 +87,7 @@ class Person
   ##############  Generated Code ######################
   
   def login=(value)
-    @login = value.downcase unless value.nil?
+    attribute_set(:login, value.downcase) unless value.nil?
   end
   
   # Activates the person in the database
