@@ -5,13 +5,12 @@ describe Person, "forgotten password" do
     Person.auto_migrate!
     @person = Person.create(valid_person_hash.with(:password => "test", :password_confirmation => "test"))  
     @person.activate
+    @person.reload
   end
-  
+
   it "should be valid" do
     @person.should_not be_new_record
-    repository do
-      Person.authenticate(@person.login, "test") == @person.reload
-    end
+    Person.authenticate(@person.login, "test") == @person.reload
   end
   
   it "should not have a forgotten password" do
