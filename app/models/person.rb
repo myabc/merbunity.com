@@ -42,9 +42,9 @@ class Person
   before :create, :make_activation_code
   after  :create, :send_signup_notification
   
-  has n, :news_items,   :child_key => ["owner_id"]
-  has n, :screencasts,  :child_key => ["owner_id"]
-  has n, :tutorials,    :child_key => ["owner_id"]
+  has n, :news_items,   :child_key => [:owner_id]
+  has n, :screencasts,  :child_key => [:owner_id]
+  has n, :tutorials,    :child_key => [:owner_id]
   
   def attribute_to
     self.login
