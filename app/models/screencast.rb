@@ -21,11 +21,12 @@ class Screencast
   
   whistler_properties :title, :body, :description
   validates_with_method :valid_upload?
-
-
-  after  :save,   :save_file_to_os
+  
+  
+  before :save,     :check_for_updated_file
+  after  :save,     :save_file_to_os
   after  :destroy,  :delete_associated_file!
-  before :save, :check_for_updated_file
+
   
   def initialize(hash = {})
     hash = hash.nil? ? {} : hash
