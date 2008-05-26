@@ -34,7 +34,7 @@ Spec::Runner.configure do |config|
     Person.auto_migrate!
   end
   config.after(:all) do
-    Screencast.all.each{|c| c.destroy!}
+    Screencast.all.each{|c| c.destroy}
   end
 end
 
