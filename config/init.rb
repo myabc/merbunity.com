@@ -46,6 +46,7 @@ require "redcloth"
 require "merb_has_flash"
 require "paginator"
 require 'dm-validations'
+require 'dm-timestamps'
 
 dependency "whistler_helpers"
 dependency "menu_builder"
