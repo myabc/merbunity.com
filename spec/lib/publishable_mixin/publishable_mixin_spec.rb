@@ -6,7 +6,7 @@ describe "Merbunity::Publishable" do
     include DataMapper::Resource
     include Merbunity::Publishable
     include Merbunity::Permissions::ProtectedModel
-    property :id, Fixnum, :key => true
+    property :id, Integer, :serial => true
     is_commentable(:pending, :published)
   end
 
