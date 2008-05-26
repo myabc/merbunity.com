@@ -52,7 +52,7 @@ describe Screencast do
   it "should requre that uploaded_file be present" do
     screencast = Screencast.new(valid_screencast_hash.except(:uploaded_file))
     screencast.save
-    screencast.errors.on(:video_file).should_not be_nil
+    screencast.errors.on(:valid_upload?).should_not be_nil
   end
   
   it "should not have an error if the uploaded file has a video mime type" do
@@ -69,7 +69,7 @@ describe Screencast do
     ["pic.jpg", "text.txt"].each do |file|
       screencast = Screencast.new(valid_screencast_hash.with(do_uploaded_file(video_file_root / file)))
       screencast.save
-      screencast.errors.on(:video_file).should_not be_nil
+      screencast.errors.on(:valid_upload?).should_not be_nil
     end
   end
   
@@ -164,7 +164,7 @@ describe Screencast, "states" do
   
   it "should be a valid screencast" do
     @screencast.save
-    @screencast.errors.should have(0).items   
+    @screencast.errors.keys.should have(0).items   
   end
   
   it "should belong to an person" do
