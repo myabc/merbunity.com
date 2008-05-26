@@ -1,3 +1,4 @@
+unless defined?(Tutorial)
 class Tutorial
   include DataMapper::Resource
   include Merbunity::WhistlerHelpers::DataMapper
@@ -20,4 +21,5 @@ class Tutorial
     return "" if self.body.nil?
     @_display_body ||= RedCloth.new(self.body.gsub(/<code.*?<\/code>/mi){|s| s.gsub(/&lt;/,"<")}).to_html
   end
+end
 end
