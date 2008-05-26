@@ -10,24 +10,18 @@ class Screencast
   attr_accessor :uploaded_file
   attr_reader   :tmp_file
   
-  property :id,                       Integer, :serial => true
-  property :title,                    String
-  property :description,              String
-  property :body,                     DataMapper::Types::Text
+  property :id,                       Integer,  :serial => true
+  property :title,                    String,   :nullable => false
+  property :description,              String,   :nullable => false
+  property :body,                     DataMapper::Types::Text, :nullable => false
   property :size,                     Integer
   property :original_filename,        String
   property :content_type,             String
   property :download_count,           Integer
   
   whistler_properties :title, :body, :description
-  validates_present :title, :description, :body
-  
-  before :valid? do
-    if new_record?
-      errors.add(:video_file, "There is no video file uploaded") if uploaded_file.blank?
-      errors.add(:video_file, "Only Video files are allowed") if !uploaded_file.blank? && self.content_type !~ /video/
-    end
-  end
+  # validates_present :title, :description, :body
+  validates_with_method :valid_updload?
 
 
   after  :create,   :save_file_to_os
@@ -89,6 +83,14 @@ class Screencast
     @tmp_file = self.uploaded_file["tempfile"]
     self.size = self.uploaded_file["size"]
     self.content_type = self.uploaded_file["content_type"]
+  end
+  
+  def valid_upload?
+    if new_record?
+      return [false, "There is no video file uploaded"] if uploaded_file.blank?
+      return [false, "Only Video files are allowed"] if !uploaded_file.blank? && self.content_type !~ /video/
+    end
+    true
   end
 
   
