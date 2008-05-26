@@ -1,4 +1,6 @@
-class Screencast < DataMapper::Base
+class Screencast
+  include DataMapper::Resource
+  include Merbunity::WhistlerHelpers::DataMapper
   
   include Merbunity::Permissions::ProtectedModel
   include Merbunity::Publishable
@@ -8,27 +10,29 @@ class Screencast < DataMapper::Base
   attr_accessor :uploaded_file
   attr_reader   :tmp_file
   
-  property :title,                    :string
-  property :description,              :string
-  property :body,                     :text
-  property :size,                     :integer
-  property :original_filename,        :string
-  property :content_type,             :string
-  property :created_at,               :datetime
-  property :updated_at,               :datetime
-  property :download_count,           :integer
+  property :id,                       Integer, :serial => true
+  property :title,                    String
+  property :description,              String
+  property :body,                     DataMapper::Types::Text
+  property :size,                     Integer
+  property :original_filename,        String
+  property :content_type,             String
+  property :download_count,           Integer
   
   whistler_properties :title, :body, :description
-  validates_presence_of :title, :description, :body
+  validates_present :title, :description, :body
   
-  validates_each :uploaded_file,:groups => [:create], :logic => lambda{
+  before :valid? do
+    if new_record?
       errors.add(:video_file, "There is no video file uploaded") if uploaded_file.blank?
       errors.add(:video_file, "Only Video files are allowed") if !uploaded_file.blank? && self.content_type !~ /video/
-     }
+    end
+  end
 
-  after_create      :save_file_to_os
-  after_destroy     :delete_associated_file!
-  before_validation :check_for_updated_file
+
+  after  :create,   :save_file_to_os
+  after  :destroy,  :delete_associated_file!
+  before :valid?, :check_for_updated_file
   
   def initialize(hash = {})
     hash = hash.nil? ? {} : hash

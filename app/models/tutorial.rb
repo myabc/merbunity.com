@@ -1,17 +1,19 @@
-class Tutorial < DataMapper::Base
+class Tutorial
+  include DataMapper::Resource
+  include Merbunity::WhistlerHelpers::DataMapper
+  
   include Merbunity::Permissions::ProtectedModel
   include Merbunity::Publishable
   is_commentable :published, :pending
   
-  property :title,                    :string
-  property :description,              :string
-  property :body,                     :text
-  property :created_at,               :datetime
-  property :updated_at,               :datetime
+  property :id,                       Integer, :serial => true
+  property :title,                    String
+  property :description,              String
+  property :body,                     DataMapper::Types::Text
   
   whistler_properties :title, :body, :description
   
-  validates_presence_of :title, :description, :body
+  validates_present :title, :description, :body
   
   def display_body
     return "" if self.body.nil?

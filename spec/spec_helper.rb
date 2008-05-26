@@ -38,6 +38,5 @@ Spec::Runner.configure do |config|
   end
 end
 
-DataMapper::Base.auto_migrate!
-
+DataMapper.auto_migrate!
 
