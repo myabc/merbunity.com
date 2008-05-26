@@ -20,6 +20,6 @@ module Merbunity
   end
 end
 
-Merb::BootLoader.after_app_loads do
-  DataMapper::Base.send(:extend, Merbunity::DataMapper::Extensions)
-end
+# Merb::BootLoader.after_app_loads do
+#   DataMapper::Base.send(:extend, Merbunity::DataMapper::Extensions)
+# end

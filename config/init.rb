@@ -1,12 +1,12 @@
 # Make the app's "gems" directory a place where gems are loaded from
 Gem.clear_paths
 Gem.path.unshift(Merb.root / "gems")
-
-gem "datamapper", "<= 0.3.2"
-gem "data_objects", "= 0.2.0"
-gem "do_mysql", "<= 0.2.4"  if Merb.env?(:production)
-gem "do_sqlite3", "<= 0.2.5" unless Merb.env?(:production)
-gem "merb_datamapper", "<= 0.9.1"
+# 
+# gem "datamapper", "<= 0.3.2"
+# gem "data_objects", "= 0.2.0"
+# gem "do_mysql", "<= 0.2.4"  if Merb.env?(:production)
+# gem "do_sqlite3", "<= 0.2.5" unless Merb.env?(:production)
+# gem "merb_datamapper", "<= 0.9.1"
 
 
 
@@ -45,15 +45,16 @@ require "whistler"
 require "redcloth"
 require "merb_has_flash"
 require "paginator"
+require 'dm-validations'
+require 'dm-timestamps'
 
-dependency "permissions/permissions"
-dependency "datamapper_extensions"
-dependency "publishable_mixin/model"
-dependency "publishable_mixin/controller"
-dependency "comment_mixin"
-# dependency "publishable_mixin/general_publishable_controller"
 dependency "whistler_helpers"
 dependency "menu_builder"
+dependency "permissions/permissions"
+dependency "publishable_mixin/model"
+dependency "publishable_mixin/controller"
+dependency "datamapper_extensions"
+dependency "comment_mixin"
 
 ### This defines which test framework the generators will use
 ### rspec is turned on by default
@@ -95,8 +96,6 @@ Merb::BootLoader.after_app_loads do
    end
    $tickler.priority = -10
   end
-    
-  
   
 end
 

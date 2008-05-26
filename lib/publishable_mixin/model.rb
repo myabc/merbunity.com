@@ -1,3 +1,4 @@
+require File.join(Merb.root / "app" / "models" / "person")
 module Merbunity
   module Publishable
     
@@ -11,29 +12,28 @@ module Merbunity
     def self.included(base)
       base.class_eval do
         
-        property        :published_on,          :datetime unless self.properties.any?{|p| p.name == :published_on }
-        property        :published_status,      :string   unless self.properties.any?{|p| p.name == :published_status }
-        property        :created_at,            :datetime unless self.properties.any?{|p| p.name == :created_at }
+        property        :published_on,          DateTime                      unless self.properties.any?{|p| p.name == :published_on }
+        property        :published_status,      String, :default => "Draft"   unless self.properties.any?{|p| p.name == :published_status }
+        property        :created_at,            DateTime                      unless self.properties.any?{|p| p.name == :created_at }
+        property        :updated_at,            DateTime                      unless self.properties.any?{|p| p.name == :updated_at }
         
         # before_create   :set_initial_published_status
         
-        belongs_to :owner, :class => "Person"
-        belongs_to :publisher, :class => "Person"
+        belongs_to :owner,     :class_name => "Person"
+        belongs_to :publisher, :class_name => "Person"
 
-        before_create :set_publishable_defaults
-        
-        # validates_presence_of   :owner, :groups => [:create] # This is causing an error on the main server :(
+        before :save, :set_publishable_defaults
         
         def self.status_values
           @status_values ||= {:published => "Published", :pending => "Pending", :draft => "Draft"}
         end
  
         def self.pending(opts={})
-          self.all({:order => "created_at DESC"}.merge!(opts).merge!(:published_status => status_values[:pending]))
+          self.all({:order => [:created_at.desc]}.merge!(opts).merge!(:published_status => status_values[:pending]))
         end
         
         def self.published(opts={})
-          self.all({:order => "published_on DESC"}.merge!(opts).merge!(:published_status => status_values[:published]))
+          self.all({:order => [:published_on.desc]}.merge!(opts).merge!(:published_status => status_values[:published]))
         end
         
         def self.find_published(id)
@@ -42,7 +42,7 @@ module Merbunity
         
         def self.drafts(opts = {}) 
           # self.all({:order => "created_at DESC"}.merge!(opts).merge!(:published_on => nil, :draft_status => true))
-          self.all({:order => "created_at DESC"}.merge!(opts).merge!(:published_status => status_values[:draft]))
+          self.all({:order => [:created_at.desc]}.merge!(opts).merge!(:published_status => status_values[:draft]))
         end
         
         def self.published_count(opts = {})
@@ -73,8 +73,7 @@ module Merbunity
         
         def draft_#{bn}
           @_draft_#{bn} ||= #{base.name}.drafts(:owner_id => self.id)
-        end
-        
+        end        
       EOF
       Person.class_eval(person_methods)
       
@@ -113,18 +112,19 @@ module Merbunity
            
            # make the owner a publisher if they have published enough articles
            self.owner.make_publisher! if !self.owner.publisher? && self.owner.published_item_count >= self.class.publishables_to_be_publisher
-           @published_status = self.class.status_values[:published]
+           self.published_status = self.class.status_values[:published]
          end
        elsif the_publisher == self.owner
          # This is going from draft to published
-         @published_status = self.class.status_values[:pending]
+         self.published_status = self.class.status_values[:pending]
        else
          #This is only a draft
-         @published_status = self.class.status_values[:draft]
+         self.published_status = self.class.status_values[:draft]
        end
      end
 
      def set_initial_published_status
+       self.published_status = self.class.status_values[:draft]
        # self.send(:set_publish_data, self.owner) if self.owner.publisher?
      end
      

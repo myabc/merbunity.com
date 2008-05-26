@@ -248,7 +248,7 @@ end
 
 describe Screencast, "whistler" do
   before(:all) do
-    DataMapper::Base.auto_migrate!
+    DataMapper.auto_migrate!
   end
   
   [:description, :title, :body].each do |prop|
