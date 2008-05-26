@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '../models/screencast')
+# require File.join(File.dirname(__FILE__), '../models/screencast')
 class Screencasts < Application
   publishable_resource Screencast
   before :ensure_logged_in_for_pending, :only => :download
