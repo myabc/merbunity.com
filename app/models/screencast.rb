@@ -1,4 +1,6 @@
-class Screencast < DataMapper::Base
+class Screencast
+  include DataMapper::Resource
+  include Merbunity::WhistlerHelpers::DataMapper
   
   include Merbunity::Permissions::ProtectedModel
   include Merbunity::Publishable
@@ -8,27 +10,23 @@ class Screencast < DataMapper::Base
   attr_accessor :uploaded_file
   attr_reader   :tmp_file
   
-  property :title,                    :string
-  property :description,              :string
-  property :body,                     :text
-  property :size,                     :integer
-  property :original_filename,        :string
-  property :content_type,             :string
-  property :created_at,               :datetime
-  property :updated_at,               :datetime
-  property :download_count,           :integer
+  property :id,                       Integer,  :serial => true
+  property :title,                    String,   :nullable => false
+  property :description,              String,   :nullable => false
+  property :body,                     DataMapper::Types::Text, :nullable => false
+  property :size,                     Integer
+  property :original_filename,        String,   :nullable => false
+  property :content_type,             String,   :nullable => false
+  property :download_count,           Integer,  :nullable => false, :default => 0
   
   whistler_properties :title, :body, :description
-  validates_presence_of :title, :description, :body
+  validates_with_method :valid_upload?
   
-  validates_each :uploaded_file,:groups => [:create], :logic => lambda{
-      errors.add(:video_file, "There is no video file uploaded") if uploaded_file.blank?
-      errors.add(:video_file, "Only Video files are allowed") if !uploaded_file.blank? && self.content_type !~ /video/
-     }
+  
+  before :save,               :check_for_updated_file
+  after  :save,               :save_file_to_os
+  after  :destroy,            :delete_associated_file!
 
-  after_create      :save_file_to_os
-  after_destroy     :delete_associated_file!
-  before_validation :check_for_updated_file
   
   def initialize(hash = {})
     hash = hash.nil? ? {} : hash
@@ -60,7 +58,7 @@ class Screencast < DataMapper::Base
     return "" if self.body.nil?
     @_display_body ||= RedCloth.new(self.body.gsub(/<code.*?<\/code>/mi){|s| s.gsub(/&lt;/,"<")}).to_html
   end
- 
+  
   private 
   def delete_associated_file!
     FileUtils.rm(full_path) if File.file?(full_path)
@@ -86,6 +84,15 @@ class Screencast < DataMapper::Base
     self.size = self.uploaded_file["size"]
     self.content_type = self.uploaded_file["content_type"]
   end
+  
+  def valid_upload?
+    if new_record?
+      return [false, "There is no video file uploaded"] if uploaded_file.blank?
+      return [false, "Only Video files are allowed"]  if !uploaded_file.blank? && self.content_type !~ /video/
+    end
+    true
+  end
+
 
   
 end
