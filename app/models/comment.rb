@@ -1,11 +1,15 @@
-class Comment < DataMapper::Base
+class Comment
+  include DataMapper::Resource
   
-  property :body,       :string
-  property :created_at, :datetime
+  include Merbunity::WhistlerHelpers::DataMapper
   
-  belongs_to :owner, :class => "Person"
+  property :id,         Integer, :serial => true
+  property :body,       String
+  property :created_at, DateTime
   
-  validates_presence_of :owner, :groups => :create
+  belongs_to :owner, :class_name => "Person"
+  
+  validates_present :owner, :groups => :create
   
   whistler_properties :body
 

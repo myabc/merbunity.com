@@ -1,3 +1,4 @@
+require File.join(Merb.root / "app" / "models" / "person")
 module Merbunity
   module Publishable
     
@@ -11,16 +12,17 @@ module Merbunity
     def self.included(base)
       base.class_eval do
         
-        property        :published_on,          :datetime unless self.properties.any?{|p| p.name == :published_on }
-        property        :published_status,      :string   unless self.properties.any?{|p| p.name == :published_status }
-        property        :created_at,            :datetime unless self.properties.any?{|p| p.name == :created_at }
+        property        :published_on,          DateTime  unless self.properties.any?{|p| p.name == :published_on }
+        property        :published_status,      String    unless self.properties.any?{|p| p.name == :published_status }
+        property        :created_at,            DateTime  unless self.properties.any?{|p| p.name == :created_at }
+        property        :updated_at,            DateTime  unless self.properties.any?{|p| p.name == :created_at }
         
         # before_create   :set_initial_published_status
         
-        belongs_to :owner, :class => "Person"
-        belongs_to :publisher, :class => "Person"
+        belongs_to :owner,     :class_name => "Person"
+        belongs_to :publisher, :class_name => "Person"
 
-        before_create :set_publishable_defaults
+        before :create, :set_publishable_defaults
         
         # validates_presence_of   :owner, :groups => [:create] # This is causing an error on the main server :(
         
@@ -73,8 +75,7 @@ module Merbunity
         
         def draft_#{bn}
           @_draft_#{bn} ||= #{base.name}.drafts(:owner_id => self.id)
-        end
-        
+        end        
       EOF
       Person.class_eval(person_methods)
       

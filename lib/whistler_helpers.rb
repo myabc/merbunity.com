@@ -12,7 +12,7 @@ module Merbunity
         def whistler_properties(*props)
           @_whistler_properties = props.flatten.uniq
 
-          before_save :whistle      
+          before :save, :whistle      
         end
 
         def get_whistler_properties
@@ -35,8 +35,4 @@ module Merbunity
       
     end
   end
-end
-
-Merb::BootLoader.before_app_loads do
-  DataMapper::Base.send(:include, Merbunity::WhistlerHelpers::DataMapper)
 end
