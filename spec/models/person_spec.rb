@@ -9,7 +9,7 @@ describe Person, "forgotten password" do
   
   it "should be valid" do
     @person.should_not be_new_record
-    Person.authenticate(@person.login, "test").should == @person
+    Person.authenticate(@person.login, "test").id.should == @person.id
   end
   
   it "should not have a forgotten password" do
