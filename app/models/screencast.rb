@@ -20,13 +20,12 @@ class Screencast
   property :download_count,           Integer
   
   whistler_properties :title, :body, :description
-  # validates_present :title, :description, :body
-  validates_with_method :valid_updload?
+  validates_with_method :valid_upload?
 
 
-  after  :create,   :save_file_to_os
+  after  :save,   :save_file_to_os
   after  :destroy,  :delete_associated_file!
-  before :valid_upload, :check_for_updated_file
+  before :save, :check_for_updated_file
   
   def initialize(hash = {})
     hash = hash.nil? ? {} : hash
@@ -59,15 +58,6 @@ class Screencast
     @_display_body ||= RedCloth.new(self.body.gsub(/<code.*?<\/code>/mi){|s| s.gsub(/&lt;/,"<")}).to_html
   end
   
-  protected
-  def valid_upload
-    if new_record?
-      return [false, "There is no video file uploaded"] if uploaded_file.blank?
-      return [false, "Only Video files are allowed"] if !uploaded_file.blank? && self.content_type !~ /video/
-    end
-    true
-  end
- 
   private 
   def delete_associated_file!
     FileUtils.rm(full_path) if File.file?(full_path)
@@ -92,6 +82,14 @@ class Screencast
     @tmp_file = self.uploaded_file["tempfile"]
     self.size = self.uploaded_file["size"]
     self.content_type = self.uploaded_file["content_type"]
+  end
+  
+  def valid_upload?
+    if new_record?
+      return [false, "There is no video file uploaded"] if uploaded_file.blank?
+      return [false, "Only Video files are allowed"]  if !uploaded_file.blank? && self.content_type !~ /video/
+    end
+    true
   end
 
 
