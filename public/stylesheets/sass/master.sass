@@ -259,13 +259,14 @@ h3 a
 
 p.summary
   :margin-bottom 0 !important
+  :width 440px
 
 p.type
   :background left center no-repeat
   :font-weight bold
   :text-align right
   :padding 0 0 0 20px
-  :margin-top -1.4em !important
+  :margin-top -1.6em !important
   :float right
 
 p.screencast
@@ -276,35 +277,33 @@ p.project
   :background-image url(/images/icon_projects_dark.gif)  
     
 / Frontpage layout
+#latestNews,
+#latestAdditions
+  p.summary
+    :width 100%
+  
 #latestNews
-  :border-right 1px solid #7A7A7A
-  :padding 0 15px 0 0
-  :width 259px
+  :width 260px
   :float left
   
   p.credit
     :margin-bottom 0 !important
     
-#intro
-  :background white
-  :padding 1.3em 0 0 0
-  :display block
-  :clear both
-  
-  p
-    :margin 0 10px 1.3em 10px
-    
 #what,
 #latestAdditions
-  :width 340px
+  :border-left 1px solid #7A7A7A
+  :padding-left 15px
+  :width 339px
   :float right
 
 #what p 
   :display block
   :clear both
 
-#latestAdditions
-  :border-bottom 1px solid #7A7A7A
+#latestAdditions h3 a
+  :padding-right 80px
+  :line-height 0.9
+  :margin-bottom 0.15em
 
 .help
   :cursor pointer
