@@ -226,7 +226,7 @@ describe "Merbunity::Publishable" do
   end
   
   it "should have and belong to many pending comments" do
-    DataMapper::Base.auto_migrate!
+    DataMapper.auto_migrate!
     Comment.all.size.should == 0
     Person.all.size.should == 0
     MyPublishableModel.all.size.should == 0
@@ -257,7 +257,7 @@ describe "Merbunity::Publishable" do
   end
   
   it "should have and belong to many comments" do
-    DataMapper::Base.auto_migrate!
+    DataMapper.auto_migrate!
     p = Person.create(valid_person_hash)
     m = MyPublishableModel.create(:owner => p)
     c = Comment.create(valid_comment_hash)
@@ -293,7 +293,7 @@ describe Merbunity::PublishableController do
     include DataMapper::Resource
     include Merbunity::Publishable
     include Merbunity::Permissions::ProtectedModel
-    property :id, Fixnum, :key => true
+    property :id, Integer, :key => true
   end
   
   class PublishableController < Application
@@ -325,7 +325,9 @@ describe Merbunity::PublishableController do
   end
   
   it "should raise an error if what is passed does not include Merbunity::Publishable" do
-    class One < DataMapper::Base
+    class One
+      include DataMapper::Resource
+      property :id, Integer, :serial => true
     end
     lambda do
       class GoodToGo < Merb::Controller
