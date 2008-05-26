@@ -279,8 +279,8 @@ describe Person, "the password fields for Person" do
     @person.should respond_to(:password_confirmation)
   end
   
-  it "should have a protected password_required method" do
-    @person.protected_methods.should include("password_required?")
+  it "should respond_to password_required?" do
+    @person.should respond_to("password_required?")
   end
   
   it "should respond to crypted_password" do
@@ -453,13 +453,13 @@ describe Person, "remember_me" do
   end
   
   it "should set remember_token_expires_at to a specific date" do
-    time = Time.mktime(2009,12,25)
+    time = DateTime.civil(2009,12,25)
     @person.remember_me_until(time)
     @person.remember_token_expires_at.should == time    
   end
   
   it "should set the remember_me token when remembering" do
-    time = Time.mktime(2009,12,25)
+    time = DateTime.civil(2009,12,25)
     @person.remember_me_until(time)
     @person.remember_token.should_not be_nil
     @person.save
@@ -467,19 +467,19 @@ describe Person, "remember_me" do
   end
   
   it "should remember me for" do
-    t = Time.now
-    Time.stub!(:now).and_return(t)
-    today = Time.now
+    t = DateTime.now
+    DateTime.stub!(:now).and_return(t)
+    today = DateTime.now
     remember_until = today + (2* Merb::Const::WEEK)
     @person.remember_me_for( Merb::Const::WEEK * 2)
-    @person.remember_token_expires_at.should == (remember_until)
+    @person.remember_token_expires_at.sg.should == (remember_until).sg
   end
   
   it "should remember_me for two weeks" do
-    t = Time.now
-    Time.stub!(:now).and_return(t)
+    t = DateTime.now
+    DateTime.stub!(:now).and_return(t)
     @person.remember_me
-    @person.remember_token_expires_at.should == (Time.now + (2 * Merb::Const::WEEK ))
+    @person.remember_token_expires_at.sg.should == (DateTime.now + (2 * Merb::Const::WEEK )).sg
   end
   
   it "should forget me" do
