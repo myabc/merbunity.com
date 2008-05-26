@@ -4,6 +4,7 @@ begin
 rescue 
   nil
 end
+unless defined?(Person)
 class Person
   include DataMapper::Resource
   include AuthenticatedSystem::Model
@@ -139,4 +140,5 @@ class Person
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), :person => self)
   end
     
+end
 end

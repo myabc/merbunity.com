@@ -1,3 +1,4 @@
+unless defined?(NewsItem)
 class NewsItem
   include DataMapper::Resource
   include Merbunity::WhistlerHelpers::DataMapper
@@ -41,4 +42,5 @@ class NewsItem
     end
     true
   end
+end
 end

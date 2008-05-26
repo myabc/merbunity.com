@@ -4,6 +4,8 @@ require 'merb-core'
 
 Merb.start_environment(:adapter => 'runner', :environment => ENV['MERB_ENV'] || 'test')
 
+DataMapper.logger = DataMapper::Logger.new(STDOUT, 0)
+
 module Merbunity
   module Spec
     module Helpers

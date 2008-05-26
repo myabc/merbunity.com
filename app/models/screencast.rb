@@ -1,3 +1,4 @@
+unless defined?(Screencast)
 class Screencast
   include DataMapper::Resource
   include Merbunity::WhistlerHelpers::DataMapper
@@ -93,4 +94,5 @@ class Screencast
     true
   end  
 
+end
 end
