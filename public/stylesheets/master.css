@@ -547,7 +547,7 @@ p.project {
   background-image: url(/images/icon_projects_dark.gif); }
 
 
-#latestNews,
+#latestNews p,
 #latestAdditions p.summary {
   width: 100%; }
 
