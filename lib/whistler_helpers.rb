@@ -10,9 +10,8 @@ module Merbunity
       module ClassMethods
       
         def whistler_properties(*props)
+          before :save, :whistle if @_whistler_properties.nil?
           @_whistler_properties = props.flatten.uniq
-
-          before :save, :whistle      
         end
 
         def get_whistler_properties
@@ -24,12 +23,10 @@ module Merbunity
       module InstanceMethods
         private
         def whistle
-          return unless self.dirty?
           self.class.get_whistler_properties.each do |prop|
             ivar = self.send(prop)
-            self.send("#{prop}=".to_sym, (Whistler.white_list(self.send(prop)))) unless ivar.nil? || !dirty_attributes.include?(prop)
+            self.send("#{prop}=".to_sym, (Whistler.white_list(self.send(prop)))) if !ivar.nil? && (new_record? || dirty_attributes.detect{|a| a.name == prop})
           end
-          
         end
       end
       

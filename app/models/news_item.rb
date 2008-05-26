@@ -4,8 +4,8 @@ class NewsItem
   
   property :id,           Integer, :serial => true
   property :body,         DataMapper::Types::Text
-  property :description,  DataMapper::Types::Text
-  property :title,        String
+  property :description,  DataMapper::Types::Text, :nullable => false
+  property :title,        String, :nullable => false
   property :created_at,   DateTime
   property :updated_at,   DateTime
   
@@ -15,7 +15,6 @@ class NewsItem
   
   whistler_properties :body, :description, :title
   
-  validates_present :title,:description
   validates_present :owner
   
   validates_with_method :valid_owner?
