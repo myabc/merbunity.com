@@ -13,7 +13,7 @@ class Person
   
   property :id,                         Integer, :serial => true
   property :login,                      String
-  property :email,                      String
+  property :email,                      String,  :nullable => false, :length => 3..100 
   property :crypted_password,           String
   property :salt,                       String
   property :activation_code,            String
@@ -26,11 +26,10 @@ class Person
   property :admin_since,                DateTime
   property :published_item_count,       Integer,   :default => 0
   
+  validates_present           :login
   validates_length            :login,                   :within => 3..40
   validates_is_unique         :login
-  validates_present           :email
-  validates_format            :email,                   :with => :email_address
-  validates_length            :email,                   :within => 3..100
+  validates_format            :email,                   :as => :email_address
   validates_is_unique         :email
   validates_present           :password,                :if => proc {|m| m.password_required?}
   validates_present           :password_confirmation,   :if => proc {|m| m.password_required?}
