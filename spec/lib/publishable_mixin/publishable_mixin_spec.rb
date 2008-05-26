@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper.rb')
 
 describe "Merbunity::Publishable" do
   
-  class MyPublishableModel
+  class ::MyPublishableModel
     include DataMapper::Resource
     include Merbunity::Publishable
     include Merbunity::Permissions::ProtectedModel
@@ -293,7 +293,7 @@ end
 
 describe Merbunity::PublishableController do
   
-  class PublishableModel
+  class ::PublishableModel
     include DataMapper::Resource
     include Merbunity::Publishable
     include Merbunity::Permissions::ProtectedModel
