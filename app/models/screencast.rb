@@ -64,6 +64,7 @@ class Screencast
   end
 
   def save_file_to_os
+    return if self.new_record?
     FileUtils.mkdir_p(file_path)
     FileUtils.copy @tmp_file.path, (full_path)
     FileUtils.chmod(0744, full_path)
