@@ -1,4 +1,3 @@
-require File.join(Merb.root / "app" / "models" / "person")
 module Merbunity
   module Publishable
     
