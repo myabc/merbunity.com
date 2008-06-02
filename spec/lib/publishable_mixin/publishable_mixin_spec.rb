@@ -228,66 +228,6 @@ describe "Merbunity::Publishable" do
     
     p.should be_publisher
   end
-  
-  it "should have and belong to many pending comments" do
-    DataMapper.auto_migrate!
-    Comment.all.size.should == 0
-    Person.all.size.should == 0
-    MyPublishableModel.all.size.should == 0
-    
-    p = Person.create(valid_person_hash)
-    
-    m = MyPublishableModel.create(:owner => p)
-    c = Comment.create(valid_comment_hash)
-    
-    m.pending_comments << c
-    m.pending_comments.size.should == 1
-    m.save!
-    
-    # database.adapter.connection do |db|
-    #   blah= db.create_command("SELECT * FROM comments_my_publishable_models")
-    #   blah.execute_reader do |reader|
-    #     reader.each do
-    #       puts reader.current_row.inspect
-    #     end
-    #   end
-    # end
-    
-    m.reload!
-    m.should have(1).pending_comments
-    
-    z = MyPublishableModel[m.id]
-    z.should have(1).pending_comments
-  end
-  
-  it "should have and belong to many comments" do
-    DataMapper.auto_migrate!
-    p = Person.create(valid_person_hash)
-    m = MyPublishableModel.create(:owner => p)
-    c = Comment.create(valid_comment_hash)
-    m.comments << c
-    m.should have(1).comments
-    m.save
-    
-    z = MyPublishableModel[m.id]
-    z.should have(1).comments
-  end
-
-  it "should not mix pending and normal comments" do
-    m = MyPublishableModel.create(:owner => @person)
-    c = Comment.create(valid_comment_hash.with(:owner => @person))
-    pc = Comment.create(valid_comment_hash.with(:owner => @person))
-    m.comments << c
-    m.pending_comments << pc
-    m.save
-    
-    k = MyPublishableModel[m.id]
-    k.comments.should include(c)
-    k.pending_comments.should include(pc)
-  
-    k.comments.should_not include(pc)
-    k.pending_comments.should_not include(c)
-  end
 end
 
 
