@@ -2,21 +2,32 @@ class Comments < Application
   
   before :login_required
   
-  after :send_notification, :if => lambda{|c| c.send(:logged_in?) }
+  # after :send_notification, :if => lambda{|c| c.send(:logged_in?) }
   
   def create(id, klass, comment)
     klass = Object.const_get(klass)
-    @obj = klass[id]
+    @obj = klass.get(id)
     meth =      @obj.published? ? :comments : :pending_comments
     inc_meth =  @obj.published? ? :comment_count : :pending_comment_count
     
     @comment = Comment.new( comment )
     @comment.owner = current_person
+    @comment.status = (@obj.published? ? "published" : "pending")
+    @comment.commentable_class = @obj.class
+    @comment.save
     
-    return redirect(request.referrer) unless @comment.save
-    
-    @obj.send(meth) << @comment
-    @obj.send("#{inc_meth}=".to_sym, (@obj.send(inc_meth).next))
+    return redirect(request.referer) if @comment.new_record?
+
+    case @obj
+    when Screencast
+      CommentsScreencasts.create(:screencast_id => @obj.id, :comment_id => @comment.id)
+    when Tutorial
+      CommentsTutorials.create(:tutorial_id => @obj.id, :comment_id => @comment.id)
+    when NewsItem
+      CommentsNewsItems.create(:news_item_id => @obj.id, :comment_id => @comment.id)
+    end
+
+    @obj.send(:"#{inc_meth}=", (@obj.send(inc_meth).next))
     @obj.save
     
     flash[:notice] = "Your comment has joined the discussion" unless @obj.new_record?

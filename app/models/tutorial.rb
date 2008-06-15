@@ -6,12 +6,16 @@ class Tutorial
   include Merbunity::Permissions::ProtectedModel
   include Merbunity::Publishable
 
-  is_commentable :published, :pending
-
+  # Commentable stuff
+    has n, :comments_tutorials, :class_name => "CommentsTutorials"
+    has n, :comments,         :through => :comments_tutorials, Comment.status => "published" 
+    has n, :pending_comments, :through => :comments_tutorials, Comment.status => "pending", :class_name => "Comment"
+  
   property :id,                       Integer,                  :serial => true
   property :title,                    String,                   :nullable => false
   property :description,              String,                   :nullable => false
   property :body,                     DataMapper::Types::Text,  :nullable => false
+  property :comment_count,            Integer,  :nullable => false, :default => 0
 
   whistler_properties :title, :body, :description
 

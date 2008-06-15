@@ -9,8 +9,7 @@ class NewsItem
   property :title,        String, :nullable => false
   property :created_at,   DateTime
   property :updated_at,   DateTime
-  
-  is_commentable
+  property :comment_count,            Integer,  :nullable => false, :default => 0
   
   belongs_to :owner, :class_name => "Person"
   
@@ -18,7 +17,25 @@ class NewsItem
   
   validates_present :owner
   
+  def valid_owner?
+    if new_record?
+      return [false, "must be a publisher, or admin.  Sorry"]  if self.owner.nil? || !(self.owner.publisher? || self.owner.admin?)
+    end
+    true
+  end
+  
   validates_with_method :valid_owner?
+  
+  
+  # Commentable stuff
+  has n, :comments_news_items, :class_name => "CommentsNewsItems"
+
+  has n,  :comments, 
+          :through => :comments_news_items, 
+          :class_name => "Comment",
+          :remote_relationship_name => :comment,
+          NewsItem.comments_news_items.comment.status => "published"
+
   
   def display_body
     return "" if self.body.nil?
@@ -34,13 +51,6 @@ class NewsItem
   def destroyable_by?(user = nil); ((!user.nil? && user != :false) && user.admin?); end
   def publishable_by?(user); ((!user.nil? && user != :false) && (user.admin? || user.publisher?));  end
   
-  protected
-  
-  def valid_owner?
-    if new_record?
-      return [false, "must be a publisher, or admin.  Sorry"]  if self.owner.nil? || !(self.owner.publisher? || self.owner.admin?)
-    end
-    true
-  end
+
 end
 end

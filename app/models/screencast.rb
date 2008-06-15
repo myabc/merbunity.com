@@ -5,7 +5,21 @@ class Screencast
 
   include Merbunity::Permissions::ProtectedModel
   include Merbunity::Publishable
-  is_commentable :published, :pending
+
+  # Commentable stuff ----------- here in anticipation of snoflake schema style polymorphism
+  has n,  :comments_screencasts, :class_name => "CommentsScreencasts", :child_key => [:screencast_id]
+  
+  has n,  :comments, 
+          :through => :comments_screencasts, 
+          :class_name => "Comment",
+          :remote_relationship_name => :comment,
+          Screencast.comments_screencasts.comment.status => "published"
+          
+  has n,  :pending_comments, 
+          :through => :comments_screencasts, 
+          :class_name => "Comment", 
+          :remote_relationship_name => :comment,
+          Screencast.comments_screencasts.comment.status => "pending"
 
 
   attr_accessor :uploaded_file
@@ -19,6 +33,8 @@ class Screencast
   property :original_filename,        String,   :nullable => false
   property :content_type,             String,   :nullable => false
   property :download_count,           Integer,  :nullable => false, :default => 0
+  property :comment_count,            Integer,  :nullable => false, :default => 0
+  property :pending_comment_count,    Integer,  :nullable => false, :default => 0
 
   whistler_properties :title, :body, :description
   validates_with_method :valid_upload?
@@ -65,7 +81,7 @@ class Screencast
   end
 
   def save_file_to_os
-    return if self.new_record?
+    return unless @tmp_file
     FileUtils.mkdir_p(file_path)
     FileUtils.copy @tmp_file.path, (full_path)
     FileUtils.chmod(0744, full_path)

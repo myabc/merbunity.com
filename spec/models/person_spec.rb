@@ -35,7 +35,7 @@ describe Person, "forgotten password" do
     @person.forgot_password!
     @person.send(:password_reset_key=, key1)
     @person.save
-    @person.reload!
+    @person.reload
     @person.password_reset_key.should == key1
     
     person = Person.create(valid_person_hash)
@@ -47,11 +47,11 @@ describe Person, "forgotten password" do
   it "should remove the forgotten password key if present when it is authenticated with the password" do
     # If the user remembers to log in then the password is no longer forgotten and this should be reset
     @person.forgot_password!
-    @person.reload!
+    @person.reload
     
     @person.password_reset_key.should_not be_nil
     Person.authenticate(@person.login, "test")
-    @person.reload!
+    @person.reload
     @person.password_reset_key.should be_nil
   end
 end

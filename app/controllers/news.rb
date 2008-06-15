@@ -9,7 +9,7 @@ class News < Application
   def index(page = 0)
     provides :atom
     @pager = Paginator.new(NewsItem.count, 10) do |offset, per_page|
-                  NewsItem.all(:limit => per_page, :offset => offset, :order => "created_at DESC")
+                  NewsItem.all(:limit => per_page, :offset => offset, :order => [:created_at.desc])
              end
     @page = @pager.page(page)
     @news_items = @page.items
@@ -68,51 +68,9 @@ class News < Application
     redirect "/"
   end
   
-  # def new
-  #   only_provides :html
-  #   @news_story = NewsStory.new
-  #   render
-  # end
-  # 
-  # def edit
-  #   only_provides :html
-  #   @news_story = NewsStory.first(params[:id])
-  #   raise NotFound unless @news_story
-  #   render
-  # end
-  # 
-  # def create
-  #   @news_story = NewsStory.new(params[:news_story])
-  #   if @news_story.save
-  #     redirect url(:news_story, @news_story)
-  #   else
-  #     render :new
-  #   end
-  # end
-  # 
-  # def update
-  #   @news_story = NewsStory.first(params[:id])
-  #   raise NotFound unless @news_story
-  #   if @news_story.update_attributes(params[:news_story])
-  #     redirect url(:news_story, @news_story)
-  #   else
-  #     raise BadRequest
-  #   end
-  # end
-  # 
-  # def destroy
-  #   @news_story = NewsStory.first(params[:id])
-  #   raise NotFound unless @news_story
-  #   if @news_story.destroy!
-  #     redirect url(:news_stories)
-  #   else
-  #     raise BadRequest
-  #   end
-  # end
-  
   private
   def find_news_item
-    @news_item = NewsItem.first(params[:id])
+    @news_item = NewsItem.get(params[:id])
     raise NotFound unless @news_item
     @news_item
   end
