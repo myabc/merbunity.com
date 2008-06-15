@@ -33,81 +33,79 @@ describe Comments, "Create action" do
     
   end
   
-  # it "should setup the spec correctly" do
-  #   @publisher.should be_publisher
-  #   @person.should_not be_publisher
-  #   
-  #   Person.first(:id => @person.id).should_not be_publisher
-  #   Person.first(:id => @publisher.id).should be_publisher
-  #   
-  #   @pending_screencast.should be_pending
-  #   @published_screencast.should be_published
-  # end
-  # 
-  # it "should create a pending comment on the pending screencast" do
-  #   count = @pending_screencast.pending_comments.size
-  #   controller = dispatch_to(Comments, :create, :comment => valid_comment_hash.except(:owner), 
-  #                                               :klass => "Screencast",
-  #                                               :id => @pending_screencast.id ) do |c| 
-  #     c.stub!(:current_person).and_return(@person)  
-  #   end
-  #   puts @pending_screencast.class
-  #   @pending_screencast.reload
-  #   @pending_screencast.comments.should be_empty
-  #   @pending_screencast.pending_comments.size.should == count.next
-  #   controller.flash[:notice].should_not be_blank
-  # end
+  it "should setup the spec correctly" do
+    @publisher.should be_publisher
+    @person.should_not be_publisher
+    
+    Person.first(:id => @person.id).should_not be_publisher
+    Person.first(:id => @publisher.id).should be_publisher
+    
+    @pending_screencast.should be_pending
+    @published_screencast.should be_published
+  end
+  
+  it "should create a pending comment on the pending screencast" do
+    count = @pending_screencast.pending_comments.size
+    controller = dispatch_to(Comments, :create, :comment => valid_comment_hash.except(:owner), 
+                                                :klass => "Screencast",
+                                                :id => @pending_screencast.id ) do |c| 
+      c.stub!(:current_person).and_return(@person)  
+    end
+    @pending_screencast = Screencast.get(@pending_screencast.id)
+    @pending_screencast.comments.should be_empty
+    @pending_screencast.pending_comments.size.should == count.next
+    controller.flash[:notice].should_not be_blank
+  end
   
   it "should create a published comment on a published screencast" do
-    # count = @published_screencast.comments.size
+    count = @published_screencast.comments.size
     controller = dispatch_to(Comments, :create, :comment => valid_comment_hash.except(:owner),
                                                 :klass => "Screencast", 
                                                 :id => @published_screencast.id ) do |c|
       c.stub!(:current_person).and_return(@person)
     end
-    # @published_screencast.reload# = Screencast.get(@published_screencast.id)
-    # @published_screencast.comments.size.should == count.next
-    puts @published_screencast.pending_comments.inspect
-    # @published_screencast.pending_comments.should be_empty
+    @published_screencast = Screencast.get(@published_screencast.id)
+    @published_screencast.comments.size.should == count.next
+    @published_screencast.pending_comments.should be_empty
     controller.flash[:notice].should_not be_blank
   end
   
-  # it "should set the owner of the comment to the current_person" do
-  #   p = Person.new(valid_person_hash)
-  #   p.save
-  #   controller = dispatch_to(Comments,:create,  :comment => valid_comment_hash.except(:owner),
-  #                                               :klass => "Screencast",
-  #                                               :id => @published_screencast.id) do |c|
-  #     c.stub!(:current_person).and_return(p)
-  #   end
-  #   controller.assigns(:comment).owner.should == p
-  # end
-  # 
-  # it "should redirect to the referrer if the comment doesn't save" do
-  #   c = mock("comment", :null_object => true)
-  #   c.stub!(:save).and_return false
-  #   c.stub!(:id).and_return(123445)
-  #   Comment.should_receive(:new).and_return(c)
-  #   controller = dispatch_to(Comments, :create, :comment => valid_comment_hash.except(:owner),
-  #                                               :klass => "Screencast",
-  #                                               :id => @published_screencast.id) do |ctr|
-  #     ctr.stub!(:current_person).and_return(@person)
-  #     ctr.request.stub!(:referrer).and_return("REFERRER")
-  #   end
-  #   controller.should redirect_to("REFERRER")    
-  # end
-  # 
-  # it "should send a notice to the objects owner to alert them of the ticket" do
-  #   c = dispatch_to(Comments, :create, :comment => valid_comment_hash.except(:owner),
-  #                                 :klass => "Screencast",
-  #                                 :id => @published_screencast.id) do |c|
-  #     c.stub!(:current_person).and_return(@person)
-  #   end
-  #   email = Merb::Mailer.deliveries.last
-  #   email.should_not be_nil
-  #   email.assigns(:headers).should include("to: #{@published_screencast.owner.email}")
-  #   email.text.should match(%r!#{@person.login}!)
-  #   email.text.should match(%r!#{c.absolute_url(:screencast, @published_screencast)}!)
-  # end
+  it "should set the owner of the comment to the current_person" do
+    p = Person.new(valid_person_hash)
+    p.save
+    controller = dispatch_to(Comments,:create,  :comment => valid_comment_hash.except(:owner),
+                                                :klass => "Screencast",
+                                                :id => @published_screencast.id) do |c|
+      c.stub!(:current_person).and_return(p)
+    end
+    controller.assigns(:comment).owner.should == p
+  end
+  
+  it "should redirect to the referrer if the comment doesn't save" do
+    c = mock("comment", :null_object => true)
+    c.stub!(:save).and_return false
+    c.stub!(:id).and_return(123445)
+    Comment.should_receive(:new).and_return(c)
+    controller = dispatch_to(Comments, :create, :comment => valid_comment_hash.except(:owner),
+                                                :klass => "Screencast",
+                                                :id => @published_screencast.id) do |ctr|
+      ctr.stub!(:current_person).and_return(@person)
+      ctr.request.stub!(:referer).and_return("REFERRER")
+    end
+    controller.should redirect_to("REFERRER")    
+  end
+  
+  it "should send a notice to the objects owner to alert them of the ticket" do
+    c = dispatch_to(Comments, :create, :comment => valid_comment_hash.except(:owner),
+                              :klass => "Screencast",
+                              :id => @published_screencast.id) do |c|
+      c.stub!(:current_person).and_return(@person)
+    end
+    email = Merb::Mailer.deliveries.last
+    email.should_not be_nil
+    email.assigns(:headers).should include("to: #{@published_screencast.owner.email}")
+    email.text.should match(%r!#{@person.login}!)
+    email.text.should match(%r!#{c.absolute_url(:screencast, @published_screencast)}!)
+  end
   
 end

@@ -2,7 +2,7 @@ class Comments < Application
   
   before :login_required
   
-  # after :send_notification, :if => lambda{|c| c.send(:logged_in?) }
+  after :send_notification, :if => lambda{|c| c.send(:logged_in?) }
   
   def create(id, klass, comment)
     klass = Object.const_get(klass)
