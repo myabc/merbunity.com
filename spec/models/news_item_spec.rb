@@ -138,7 +138,7 @@ describe NewsItem do
     ns = NewsItem.new(valid_news_item_hash.with(:owner => @publisher))
     ns.save
     ns.should_not be_new_record
-    @publisher.reload!
+    @publisher.reload
     @publisher.news_items.should include(ns)
   end
   

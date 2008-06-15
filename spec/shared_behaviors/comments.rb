@@ -30,7 +30,7 @@ describe "a model with pending comments", :shared => true do
     m.pending_comments.size.should == 1
     m.save!
     
-    m.reload!
+    m.reload
     m.should have(1).pending_comments
     
     z = @klass[m.id]

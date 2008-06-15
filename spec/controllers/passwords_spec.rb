@@ -56,7 +56,7 @@ describe Passwords do
     
     it "should show the old password confirmation box if the user does not have a forgotten password" do
       @person.clear_forgot_password!
-      @person.reload!
+      @person.reload
       @person.should_not have_forgotten_password
       
       c = dispatch_edit
@@ -70,7 +70,7 @@ describe Passwords do
     
     it "should not show the old password ocnfirmation box if the user does have a forgotten password" do
       @person.forgot_password!
-      @person.reload!
+      @person.reload
       
       c = dispatch_edit
       c.body.should have_tag(:form, :action => url(:passwords), :method => "post") do |d|
@@ -90,7 +90,7 @@ describe Passwords do
     it "should set the persons password to forgotten" do
       @person.should_not have_forgotten_password
       dispatch_create
-      @person.reload!
+      @person.reload
       @person.should have_forgotten_password
     end
     
@@ -103,8 +103,8 @@ describe Passwords do
       
       dispatch_create(:email => person.email)
       
-      person.reload!
-      @person.reload!
+      person.reload
+      @person.reload
       
       @person.should_not have_forgotten_password
       person.should have_forgotten_password
@@ -133,7 +133,7 @@ describe Passwords do
     it "should send a notification email that the password is to be resent" do
       c = dispatch_create
       c.should redirect_to("/")
-      @person.reload!
+      @person.reload
       @deliveries.last.should_not be_nil
       @deliveries.last.text.should include("http://merbunity.com#{url(:passwords, @person.password_reset_key)}")
     end
@@ -159,7 +159,7 @@ describe Passwords do
     it "should log the user in" do
       @person.forgot_password!
       c = dispatch_show(:id => @person.password_reset_key)
-      @person.reload!
+      @person.reload
       c.should be_logged_in
       c.send(:current_person).should == @person
     end
@@ -180,21 +180,21 @@ describe Passwords do
       @person.forgot_password!
       @person.password_reset_key.should_not be_nil
       c = dispatch_update(:person => {:password => "gahh", :password_confirmation => "gahh"})
-      @person.reload! 
+      @person.reload 
       Person.authenticate(@person.login, "gahh").should == @person      
     end
     
     it "should change the password when given a current password if there is no password_reset_key present" do
       @person.should_not have_forgotten_password
       c = dispatch_update(:person => {:password => "gahh", :password_confirmation => "gahh"}, :current_password => "test")
-      @person.reload!
+      @person.reload
       Person.authenticate(@person.login, "gahh").should == @person
     end
     
     it "should not change the password when not given a current password if there is no password_reset_key present" do
       @person.should_not have_forgotten_password?
       c = dispatch_update(:person => {:password => "gahh", :password_confirmation => "gahh"})
-      @person.reload!
+      @person.reload
       Person.authenticate(@person.login, "gahh").should be_nil
       Person.authenticate(@person.login, "test").should == @person
     end
@@ -202,7 +202,7 @@ describe Passwords do
     it "should not change the password when the current password is wrong" do
       @person.should_not have_forgotten_password?
       c = dispatch_update(:person => {:password => "gahh", :password_confirmation => "gahh"}, :current_password => "wrong")
-      @person.reload!
+      @person.reload
       Person.authenticate(@person.login, "wrong").should be_nil
       Person.authenticate(@person.login, "test").should == @person
     end
@@ -211,14 +211,14 @@ describe Passwords do
       @person.forgot_password!
       @person.should have_forgotten_password
       dispatch_update(:person => {:password => "gahh", :password_confirmation => "gahh"})
-      @person.reload!
+      @person.reload
       @person.should_not have_forgotten_password
     end
     
     it "should redirect to edit back to edit if the passwords do not match and not delete the forgotten password" do
       @person.forgot_password!
       c = dispatch_update(:person => {:password => "blah", :password_confirmation => "foo"})
-      @person.reload!
+      @person.reload
       Person.authenticate(@person.login, "blah").should be_nil
       c.should redirect_to(url(:edit_password_form))
       @person.should have_forgotten_password
@@ -227,7 +227,7 @@ describe Passwords do
     it "should redirect to home if the password was changed" do
       @person.forgot_password!
       c = dispatch_update(:person => {:password => "blah", :password_confirmation =>"blah"})
-      @person.reload!
+      @person.reload
       Person.authenticate(@person.login, "blah").should_not be_nil
       c.should redirect_to("/")
     end
