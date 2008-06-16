@@ -192,7 +192,7 @@ describe Passwords do
     end
     
     it "should not change the password when not given a current password if there is no password_reset_key present" do
-      @person.should_not have_forgotten_password?
+      @person.should_not have_forgotten_password
       c = dispatch_update(:person => {:password => "gahh", :password_confirmation => "gahh"})
       @person.reload
       Person.authenticate(@person.login, "gahh").should be_nil
@@ -200,7 +200,7 @@ describe Passwords do
     end
     
     it "should not change the password when the current password is wrong" do
-      @person.should_not have_forgotten_password?
+      @person.should_not have_forgotten_password
       c = dispatch_update(:person => {:password => "gahh", :password_confirmation => "gahh"}, :current_password => "wrong")
       @person.reload
       Person.authenticate(@person.login, "wrong").should be_nil
