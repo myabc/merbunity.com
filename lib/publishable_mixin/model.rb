@@ -15,11 +15,15 @@ module Merbunity
         property        :published_status,      String, :default => "Draft"   unless self.properties.any?{|p| p.name == :published_status }
         property        :created_at,            DateTime                      unless self.properties.any?{|p| p.name == :created_at }
         property        :updated_at,            DateTime                      unless self.properties.any?{|p| p.name == :updated_at }
+        property        :owner_id,              Integer
+        property        :publisher_id,          Integer
+        property :comment_count,            Integer,  :nullable => false, :default => 0
+        property :pending_comment_count,    Integer,  :nullable => false, :default => 0
         
         # before_create   :set_initial_published_status
         
-        belongs_to :owner,     :class_name => "Person"
-        belongs_to :publisher, :class_name => "Person"
+        belongs_to :owner,     :class_name => "Person", :child_key => [:owner_id]
+        belongs_to :publisher, :class_name => "Person", :child_key => [:owner_id]
 
         before :save, :set_publishable_defaults
         
@@ -28,15 +32,17 @@ module Merbunity
         end
  
         def self.pending(opts={})
-          self.all({:order => [:created_at.desc]}.merge!(opts).merge!(:published_status => status_values[:pending]))
+          the_opts = {:order => [:created_at.desc]}.merge!(opts).merge!(:published_status => status_values[:pending])
+          Merb.logger.info the_opts.inspect
+          self.all(the_opts)
         end
         
         def self.published(opts={})
-          self.all({:order => [:published_on.desc]}.merge!(opts).merge!(:published_status => status_values[:published]))
+          self.all({:order => [:published_on.desc]}.merge(opts).merge(:published_status => status_values[:published]))
         end
         
         def self.find_published(id)
-          self.first(:id => id, :published_status => status_values[:published])
+          self.get(:id => id, :published_status => status_values[:published])
         end         
         
         def self.drafts(opts = {}) 
@@ -60,6 +66,8 @@ module Merbunity
       person_methods =<<-EOF
         def pending_#{bn = base.name.snake_case.pluralize}
           @_pending#{bn} ||= #{base.name}.pending(:owner_id => self.id)
+          puts @_pending#{bn}.inspect
+          @_pending#{bn}
         end
         
         def #{bn}

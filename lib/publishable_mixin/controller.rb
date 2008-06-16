@@ -24,7 +24,7 @@ module Merbunity
           
           def my_pending
             ivar = self.class.publishable_collection_ivar_name
-            obj = instance_variable_set("@#{ivar}",current_person.send("pending_#{ivar}".to_sym))
+            obj = instance_variable_set("@#{ivar}",current_person.send(:"pending_#{ivar}"))
             @page_header =  "My Pending #{self.class.publishable_collection_ivar_name.capitalize}"
             display obj, :pending
           end
@@ -32,16 +32,16 @@ module Merbunity
           def publish(id)
             klass = self.class.publishable_klass
             ivar = self.class.publishable_collection_ivar_name.singularize
-            obj = klass.find(id)
+            obj = klass.get(id)
             raise NotFound unless obj
             obj.publish!(current_person) if current_person.can_publish?(obj)
-            redirect url("#{self.class.publishable_collection_ivar_name.singularize}".to_sym, obj)
+            redirect url(:"#{self.class.publishable_collection_ivar_name.singularize}", obj)
           end
           
           def drafts
             klass = self.class.publishable_klass
             ivar = self.class.publishable_collection_ivar_name
-            collection = instance_variable_set("@#{ivar}", current_person.send("draft_#{ivar}".to_sym))
+            collection = instance_variable_set("@#{ivar}", current_person.send(:"draft_#{ivar}"))
             @page_header =  "Draft #{self.class.publishable_collection_ivar_name.capitalize}"
             display collection, :pending     
           end
