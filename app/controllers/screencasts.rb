@@ -1,7 +1,9 @@
 # require File.join(File.dirname(__FILE__), '../models/screencast')
 class Screencasts < Application
   publishable_resource Screencast
+  
   before :ensure_logged_in_for_pending, :only => :download
+  
   params_protected :screencast => [:owner, :owner_id, :published_on, :draft_status]
 
   # only let a person who can view this download it

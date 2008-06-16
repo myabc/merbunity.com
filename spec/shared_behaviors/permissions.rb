@@ -40,7 +40,7 @@ describe "a controller that implements the publishable mixin", :shared => true d
   end
   
   it "should have a publish route for memebers" do
-    request_to("/#{@c_ivar}/123/publish", :put).should route_to(@klass, :publish).with(:id => 123)
+    request_to("/#{@c_ivar}/123/publish", :put).should route_to(@klass, :publish).with(:id => "123", :format => nil)
   end
   
   it "should setup a drafts route for a collection" do
