@@ -1,0 +1,10 @@
+Merbunity Bot
+==============================
+
+Create a XMPP account somewhere.
+Make the config awesome
+Start the bot.
+    /path/to/merbunity-bot start -- /path/to/config.yml
+
+Send JSON to the bot
+   {"body":"hello","rcpts":["user@suckerfest.com"]}

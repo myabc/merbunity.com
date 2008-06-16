@@ -1,20 +1,39 @@
-class Tutorial < DataMapper::Base
+unless defined?(Tutorial)
+class Tutorial
+  include DataMapper::Resource
+  include Merbunity::WhistlerHelpers::DataMapper
+
   include Merbunity::Permissions::ProtectedModel
   include Merbunity::Publishable
-  is_commentable :published, :pending
-  
-  property :title,                    :string
-  property :description,              :string
-  property :body,                     :text
-  property :created_at,               :datetime
-  property :updated_at,               :datetime
-  
+
+  property :id,                       Integer,                  :serial => true
+  property :title,                    String,                   :nullable => false
+  property :description,              String,                   :nullable => false
+  property :body,                     Text,                     :nullable => false
+  property :comment_count,            Integer,                  :nullable => false, :default => 0
+
   whistler_properties :title, :body, :description
+
+
+  # Commentable stuff ----------- here in anticipation of snoflake schema style polymorphism
+  has n,  :commentable_tutorials, :class_name => "CommentableTutorials", :child_key => [:tutorial_id]
   
-  validates_presence_of :title, :description, :body
-  
+  has n,  :comments, 
+          :through => :commentable_tutorials, 
+          :class_name => "Comment",
+          :remote_relationship_name => :comment,
+          Tutorial.commentable_tutorials.comment.status => "published"
+          
+  has n,  :pending_comments, 
+          :through => :commentable_tutorials, 
+          :class_name => "Comment", 
+          :remote_relationship_name => :comment,
+          Tutorial.commentable_tutorials.comment.status => "pending"
+          
+        
   def display_body
     return "" if self.body.nil?
     @_display_body ||= RedCloth.new(self.body.gsub(/<code.*?<\/code>/mi){|s| s.gsub(/&lt;/,"<")}).to_html
   end
+end
 end

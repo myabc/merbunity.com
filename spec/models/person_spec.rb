@@ -5,11 +5,12 @@ describe Person, "forgotten password" do
     Person.auto_migrate!
     @person = Person.create(valid_person_hash.with(:password => "test", :password_confirmation => "test"))  
     @person.activate
+    @person.reload
   end
-  
+
   it "should be valid" do
     @person.should_not be_new_record
-    Person.authenticate(@person.login, "test").should == @person
+    Person.authenticate(@person.login, "test") == @person.reload
   end
   
   it "should not have a forgotten password" do
@@ -34,7 +35,7 @@ describe Person, "forgotten password" do
     @person.forgot_password!
     @person.send(:password_reset_key=, key1)
     @person.save
-    @person.reload!
+    @person.reload
     @person.password_reset_key.should == key1
     
     person = Person.create(valid_person_hash)
@@ -46,11 +47,11 @@ describe Person, "forgotten password" do
   it "should remove the forgotten password key if present when it is authenticated with the password" do
     # If the user remembers to log in then the password is no longer forgotten and this should be reset
     @person.forgot_password!
-    @person.reload!
+    @person.reload
     
     @person.password_reset_key.should_not be_nil
     Person.authenticate(@person.login, "test")
-    @person.reload!
+    @person.reload
     @person.password_reset_key.should be_nil
   end
 end
@@ -278,8 +279,8 @@ describe Person, "the password fields for Person" do
     @person.should respond_to(:password_confirmation)
   end
   
-  it "should have a protected password_required method" do
-    @person.protected_methods.should include("password_required?")
+  it "should respond_to password_required?" do
+    @person.should respond_to("password_required?")
   end
   
   it "should respond to crypted_password" do
@@ -452,13 +453,13 @@ describe Person, "remember_me" do
   end
   
   it "should set remember_token_expires_at to a specific date" do
-    time = Time.mktime(2009,12,25)
+    time = DateTime.civil(2009,12,25)
     @person.remember_me_until(time)
     @person.remember_token_expires_at.should == time    
   end
   
   it "should set the remember_me token when remembering" do
-    time = Time.mktime(2009,12,25)
+    time = DateTime.civil(2009,12,25)
     @person.remember_me_until(time)
     @person.remember_token.should_not be_nil
     @person.save
@@ -466,19 +467,19 @@ describe Person, "remember_me" do
   end
   
   it "should remember me for" do
-    t = Time.now
-    Time.stub!(:now).and_return(t)
-    today = Time.now
+    t = DateTime.now
+    DateTime.stub!(:now).and_return(t)
+    today = DateTime.now
     remember_until = today + (2* Merb::Const::WEEK)
     @person.remember_me_for( Merb::Const::WEEK * 2)
-    @person.remember_token_expires_at.should == (remember_until)
+    @person.remember_token_expires_at.sg.should == (remember_until).sg
   end
   
   it "should remember_me for two weeks" do
-    t = Time.now
-    Time.stub!(:now).and_return(t)
+    t = DateTime.now
+    DateTime.stub!(:now).and_return(t)
     @person.remember_me
-    @person.remember_token_expires_at.should == (Time.now + (2 * Merb::Const::WEEK ))
+    @person.remember_token_expires_at.sg.should == (DateTime.now + (2 * Merb::Const::WEEK )).sg
   end
   
   it "should forget me" do

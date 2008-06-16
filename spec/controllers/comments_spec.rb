@@ -17,9 +17,10 @@ describe Comments, "Create action" do
   
   before(:each) do
     Merb::Mailer.deliveries.clear
-    database.table("comments_screencast").drop!
-    database.table("pending_comments_screencast").drop!
-    database.table("comments").drop!
+  
+    CommentsNewsItems.auto_migrate!
+    CommentsScreencasts.auto_migrate!
+    CommentsTutorials.auto_migrate!
     Comment.auto_migrate!
     
     @pending_screencast = Screencast.new(valid_screencast_hash.with(:owner => @person ))
@@ -50,7 +51,7 @@ describe Comments, "Create action" do
                                                 :id => @pending_screencast.id ) do |c| 
       c.stub!(:current_person).and_return(@person)  
     end
-    @pending_screencast.reload!
+    @pending_screencast = Screencast.get(@pending_screencast.id)
     @pending_screencast.comments.should be_empty
     @pending_screencast.pending_comments.size.should == count.next
     controller.flash[:notice].should_not be_blank
@@ -63,7 +64,7 @@ describe Comments, "Create action" do
                                                 :id => @published_screencast.id ) do |c|
       c.stub!(:current_person).and_return(@person)
     end
-    @published_screencast.reload!
+    @published_screencast = Screencast.get(@published_screencast.id)
     @published_screencast.comments.size.should == count.next
     @published_screencast.pending_comments.should be_empty
     controller.flash[:notice].should_not be_blank
@@ -89,15 +90,15 @@ describe Comments, "Create action" do
                                                 :klass => "Screencast",
                                                 :id => @published_screencast.id) do |ctr|
       ctr.stub!(:current_person).and_return(@person)
-      ctr.request.stub!(:referrer).and_return("REFERRER")
+      ctr.request.stub!(:referer).and_return("REFERRER")
     end
     controller.should redirect_to("REFERRER")    
   end
   
   it "should send a notice to the objects owner to alert them of the ticket" do
     c = dispatch_to(Comments, :create, :comment => valid_comment_hash.except(:owner),
-                                  :klass => "Screencast",
-                                  :id => @published_screencast.id) do |c|
+                              :klass => "Screencast",
+                              :id => @published_screencast.id) do |c|
       c.stub!(:current_person).and_return(@person)
     end
     email = Merb::Mailer.deliveries.last

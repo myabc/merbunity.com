@@ -24,7 +24,7 @@ module Merbunity
           
           def my_pending
             ivar = self.class.publishable_collection_ivar_name
-            obj = instance_variable_set("@#{ivar}",current_person.send("pending_#{ivar}".to_sym))
+            obj = instance_variable_set("@#{ivar}",current_person.send(:"pending_#{ivar}"))
             @page_header =  "My Pending #{self.class.publishable_collection_ivar_name.capitalize}"
             display obj, :pending
           end
@@ -32,16 +32,16 @@ module Merbunity
           def publish(id)
             klass = self.class.publishable_klass
             ivar = self.class.publishable_collection_ivar_name.singularize
-            obj = klass.find(id)
+            obj = klass.get(id)
             raise NotFound unless obj
             obj.publish!(current_person) if current_person.can_publish?(obj)
-            redirect url("#{self.class.publishable_collection_ivar_name.singularize}".to_sym, obj)
+            redirect url(:"#{self.class.publishable_collection_ivar_name.singularize}", obj)
           end
           
           def drafts
             klass = self.class.publishable_klass
             ivar = self.class.publishable_collection_ivar_name
-            collection = instance_variable_set("@#{ivar}", current_person.send("draft_#{ivar}".to_sym))
+            collection = instance_variable_set("@#{ivar}", current_person.send(:"draft_#{ivar}"))
             @page_header =  "Draft #{self.class.publishable_collection_ivar_name.capitalize}"
             display collection, :pending     
           end
@@ -61,7 +61,7 @@ module Merbunity
           def index(page = 0)
             provides :atom
             @pager = Paginator.new(#{base.publishable_klass}.published_count, 10) do |offset, per_page|
-                          #{base.publishable_klass}.published(:limit => per_page, :offset => offset)
+                          #{base.publishable_klass}.published(:limit => per_page.to_i, :offset => offset.to_i)
                      end
             @page = @pager.page(page)
             @#{base.publishable_collection_ivar_name} = @page.items    
@@ -115,7 +115,7 @@ module Merbunity
 
           def destroy(id)
             raise Unauthorized unless current_person.can_destroy?(@#{base.publishable_singular_name})
-            if @#{base.publishable_singular_name}.destroy!
+            if @#{base.publishable_singular_name}.destroy
               flash[:notice] = "#{base.publishable_klass} Deleted"
               redirect url(:#{base.publishable_collection_ivar_name})
             else
@@ -127,13 +127,13 @@ module Merbunity
           private
 
           def find_#{base.publishable_collection_ivar_name}
-            @#{base.publishable_singular_name} = #{base.publishable_klass}.first(params[:id])
+            @#{base.publishable_singular_name} = #{base.publishable_klass}.get(params[:id])
             raise NotFound if @#{base.publishable_singular_name}.nil?
             @#{base.publishable_singular_name}
           end
 
           def ensure_logged_in_for_pending
-            @#{base.publishable_singular_name} = #{base.publishable_klass}.first(:id => params[:id])
+            @#{base.publishable_singular_name} = #{base.publishable_klass}.get(:id => params[:id])
             throw(:halt, :access_denied) if(@#{base.publishable_singular_name}.nil? || !@#{base.publishable_singular_name}.viewable_by?(current_person))
           end
 

@@ -1,6 +1,6 @@
 #comments
   %h3= comment_page_heading
-  = partial "shared/comments/detail", :with => comments.to_a, :as => "comment"
+  = partial "shared/comments/detail", :with => object.send(comments_method), :as => "comment"
   
   - when_logged_in do
     %p

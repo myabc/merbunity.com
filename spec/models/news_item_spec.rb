@@ -3,7 +3,7 @@ require File.join( File.dirname(__FILE__), "..", "spec_helper" )
 describe NewsItem do
   
   before(:all) do
-    DataMapper::Base.auto_migrate!
+    DataMapper.auto_migrate!
     @publisher = Person.new(valid_person_hash)
     @publisher.save
     @publisher.activate
@@ -22,6 +22,7 @@ describe NewsItem do
   it "should be a valid news story" do
     ns = NewsItem.new(valid_news_item_hash)
     ns.save
+    puts ns.errors.inspect unless ns.errors.empty?
     ns.errors.should be_empty
   end
   
@@ -63,8 +64,9 @@ describe NewsItem do
   it "should not be valid if the person is not a publisher or admin" do
     ns = NewsItem.new(valid_news_item_hash.with(:owner => @person))
     ns.save
-    ns.errors.on(:owner).should_not be_nil
-    ns.errors.on(:owner).should have(1).item
+    ns.should be_new_record
+    ns.errors.on(:valid_owner?).should_not be_nil
+    ns.errors.on(:valid_owner?).should have(1).item
   end
   
   it "should be valid if the person is a publisher" do
@@ -136,7 +138,7 @@ describe NewsItem do
     ns = NewsItem.new(valid_news_item_hash.with(:owner => @publisher))
     ns.save
     ns.should_not be_new_record
-    @publisher.reload!
+    @publisher.reload
     @publisher.news_items.should include(ns)
   end
   

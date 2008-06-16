@@ -2,11 +2,9 @@
 Gem.clear_paths
 Gem.path.unshift(Merb.root / "gems")
 
-gem "datamapper", "<= 0.3.2"
-gem "data_objects", "= 0.2.0"
-gem "do_mysql", "<= 0.2.4"  if Merb.env?(:production)
-gem "do_sqlite3", "<= 0.2.5" unless Merb.env?(:production)
-gem "merb_datamapper", "<= 0.9.1"
+
+require 'dm-core'
+load 'merb-core/vendor/facets/inflect.rb' # Required because extlib requires gem version of english inflector which overwrites the vendored one
 
 
 
@@ -40,20 +38,24 @@ use_orm :datamapper
 require "merb-assets"
 require "merb-haml"
 require "merb_param_protection"
-require  "merb-action-args"
+require "merb-action-args"
 require "whistler"
 require "redcloth"
 require "merb_has_flash"
 require "paginator"
+require 'dm-validations'
+require 'dm-timestamps'
+require 'dm-aggregates'
 
-dependency "permissions/permissions"
-dependency "datamapper_extensions"
-dependency "publishable_mixin/model"
-dependency "publishable_mixin/controller"
-dependency "comment_mixin"
-# dependency "publishable_mixin/general_publishable_controller"
 dependency "whistler_helpers"
 dependency "menu_builder"
+dependency "permissions/permissions"
+dependency "publishable_mixin/model"
+dependency "publishable_mixin/controller"
+dependency "datamapper_extensions"
+
+dependency "comment_mixin"
+
 
 ### This defines which test framework the generators will use
 ### rspec is turned on by default
@@ -76,28 +78,10 @@ use_test :rspec
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
 
-Language::English::Inflect.word "news", "news"
-
 Merb::BootLoader.after_app_loads do
+  
   Merb.add_mime_type(:atom,  :to_atom,  %w[application/atom+xml], :Encoding => "UTF-8")
   ### Add dependencies here that must load after the application loads:
-
-  # dependency "magic_admin" # this gem uses the app's model classes
-  # Keep alive for the databse
-  if Merb.env?(:production)
-   $tickler = Thread.new do
-     loop do
-       DataMapper.database.query("SELECT * FROM people LIMIT 1")
-       Merb.logger.info "Tickled Database at #{Time.new}"
-       Merb.logger.info.flush
-       sleep(5*60)
-     end
-   end
-   $tickler.priority = -10
-  end
-    
-  
-  
 end
 
 begin 

@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
 describe "News Controller Setup", :shared => true do
   before(:all) do
-    DataMapper::Base.auto_migrate!
+    DataMapper.auto_migrate!
     
     @person = Person.new(valid_person_hash)
     @person.save
@@ -29,7 +29,7 @@ describe "News Controller Setup", :shared => true do
   end
   
   after(:each) do
-    @ns.destroy!
+    @ns.destroy
   end
 end
 
@@ -37,7 +37,7 @@ describe News, "index action"  do
   it_should_behave_like "News Controller Setup"
   
   def latest_10
-    @latest_10 ||= NewsItem.all(:order => "created_at DESC", :limit => 10)
+    @latest_10 ||= NewsItem.all(:order => [:created_at.desc], :limit => 10)
   end
   
   it "should show the 10 latest news items with no-one logged in" do
@@ -69,7 +69,7 @@ describe News, "show action" do
   end
   
   it "should raise a not found error if the news item is not there" do
-    NewsItem.first(999).should be_nil
+    NewsItem.get(999).should be_nil
     lambda do
       dispatch_to(News, :show, :id => 999)
     end.should raise_error(Merb::ControllerExceptions::NotFound)

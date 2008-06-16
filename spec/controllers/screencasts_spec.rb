@@ -24,8 +24,6 @@ describe Screencasts, "index action" do
         end
       end
     end
-    
-       
   end
   
   before(:each) do
@@ -152,7 +150,7 @@ describe Screencasts, "edit action" do
   it "should ask the object if the current user can edit it" do
     s = Screencast.new(valid_screencast_hash.with(:owner => @p))    
     s.save
-    Screencast.should_receive(:first).with(s.id.to_s).and_return(s)
+    Screencast.should_receive(:get).with(s.id.to_s).and_return(s)
     dispatch_to(Screencasts, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
       s.should_receive(:editable_by?).any_number_of_times.with(@p).and_return true
@@ -163,7 +161,7 @@ describe Screencasts, "edit action" do
     s = Screencast.new(valid_screencast_hash.with(:owner => @p))
     s.save
     s.should_receive(:editable_by?).any_number_of_times.with(@p).and_return true
-    Screencast.should_receive(:first).with(s.id.to_s).and_return(s)
+    Screencast.should_receive(:get).with(s.id.to_s).and_return(s)
     c = dispatch_to(Screencasts, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
     end
@@ -174,7 +172,7 @@ describe Screencasts, "edit action" do
     s = Screencast.new(valid_screencast_hash.with(:owner => @p))    
     s.save
     s.should_receive(:editable_by?).with(@p).and_return false
-    Screencast.should_receive(:first).with(s.id.to_s).and_return(s)
+    Screencast.should_receive(:get).with(s.id.to_s).and_return(s)
     lambda do
       dispatch_to(Screencasts, :edit, :id => s.id) do |c|
         c.stub!(:current_person).and_return @p
@@ -185,7 +183,7 @@ describe Screencasts, "edit action" do
   it "should show an edit form" do
     s = Screencast.new(valid_screencast_hash.with(:owner => @p))
     s.save
-    Screencast.should_receive(:first).with(s.id.to_s).and_return(s)
+    Screencast.should_receive(:get).with(s.id.to_s).and_return(s)
     s.should_receive(:editable_by?).any_number_of_times.with(@p).and_return true
     controller = dispatch_to(Screencasts, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
@@ -327,7 +325,7 @@ describe Screencasts, "delete action" do
   
   it "should ask the screencast if it can be destroyed by the current person" do
     @s.should_receive(:destroyable_by?).and_return(true)
-    Screencast.should_receive(:first).and_return(@s)
+    Screencast.should_receive(:get).and_return(@s)
     dispatch_to(Screencasts, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}
   end
   
@@ -364,7 +362,7 @@ end
 describe Screencasts, "Download Action" do
   
   before(:all) do
-    DataMapper::Base.auto_migrate!
+    DataMapper.auto_migrate!
   end
   
   before(:each) do

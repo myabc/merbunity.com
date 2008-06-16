@@ -6,10 +6,11 @@
 
 - with_unpublished @tutorial do
   - @comments_url = url(:add_comment, :id => @tutorial, :klass => "Tutorial")
-  = partial "shared/comments/comments", :with => @tutorial.pending_comments, :as => "comments", :comment_page_heading => "Comments about this pending tutorial"
+  = partial "shared/comments/comments", :with => @tutorial, :as => "object", :comment_page_heading => "Comments about this pending tutorial", :comments_method => :pending_comments
   
 - with_published @tutorial do
   - @comments_url = url(:add_comment, :id => @tutorial, :klass => "Tutorial")
-  = partial "shared/comments/comments", :with => @tutorial.comments, :as => "comments", :comment_page_heading => "Comments"
+
+  = partial "shared/comments/comments", :with => @tutorial, :as => "object", :comment_page_heading => "Comments", :comments_method => :comments
   
 - throw_content :for_object_menu, partial(:object_menu, :with => @tutorial, :as => "tutorial")
