@@ -64,15 +64,17 @@ module AuthenticatedSystem
         # the existence of an activation code means they have not activated yet
         activation_code.nil?
       end
-      
+
+      def password_required?
+        crypted_password.blank? || !password.blank?
+      end
+            
       protected
       def make_activation_code
         self.activation_code = self.class.make_key
       end
       
-      def password_required?
-        crypted_password.blank? || !password.blank?
-      end
+
             
     end
     

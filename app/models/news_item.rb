@@ -1,23 +1,41 @@
-class NewsItem < DataMapper::Base
+unless defined?(NewsItem)
+class NewsItem
+  include DataMapper::Resource
+  include Merbunity::WhistlerHelpers::DataMapper
   
-  property :body, :text
-  property :description, :text
-  property :title, :string
-  property :created_at, :datetime
-  property :updated_at, :datetime
+  property :id,           Integer, :serial => true
+  property :body,         DataMapper::Types::Text
+  property :description,  DataMapper::Types::Text, :nullable => false
+  property :title,        String, :nullable => false
+  property :created_at,   DateTime
+  property :updated_at,   DateTime
+  property :comment_count,            Integer,  :nullable => false, :default => 0
   
-  is_commentable
-  
-  belongs_to :owner, :class => "Person"
+  belongs_to :owner, :class_name => "Person"
   
   whistler_properties :body, :description, :title
   
-  validates_presence_of :title,:description
-  validates_presence_of :owner
+  validates_present :owner
   
-  validates_each :owner, :groups => [:create], :logic => lambda{
-    errors.add(:owner, "must be a publisher, or admin.  Sorry") unless !self.owner.nil? && (self.owner.publisher? || self.owner.admin?)
-  }
+  def valid_owner?
+    if new_record?
+      return [false, "must be a publisher, or admin.  Sorry"]  if self.owner.nil? || !(self.owner.publisher? || self.owner.admin?)
+    end
+    true
+  end
+  
+  validates_with_method :valid_owner?
+  
+  
+  # Commentable stuff
+  has n, :comments_news_items, :class_name => "CommentableNewsItems"
+
+  has n,  :comments, 
+          :through => :comments_news_items, 
+          :class_name => "Comment",
+          :remote_relationship_name => :comment,
+          NewsItem.comments_news_items.comment.status => "published"
+
   
   def display_body
     return "" if self.body.nil?
@@ -32,4 +50,7 @@ class NewsItem < DataMapper::Base
   def editable_by?(user = nil); ((!user.nil? && user != :false) && (user.admin? || user == self.owner)); end
   def destroyable_by?(user = nil); ((!user.nil? && user != :false) && user.admin?); end
   def publishable_by?(user); ((!user.nil? && user != :false) && (user.admin? || user.publisher?));  end
+  
+
+end
 end

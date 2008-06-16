@@ -2,8 +2,8 @@ require File.join( File.dirname(__FILE__), "..", "spec_helper" )
 
 describe Comment do
   
-  before(:all) do
-    DataMapper::Base.auto_migrate!
+  before(:each) do
+    Comment.auto_migrate!
   end
   
   it "should have a body of text" do
@@ -25,14 +25,14 @@ describe Comment do
   it "should have created at timestamps" do
     c = Comment.create(valid_comment_hash)
     c.created_at.should_not be_nil
-    c.created_at.should be_a_kind_of(Time)
+    c.created_at.should be_a_kind_of(DateTime)
   end
 end
 
 describe Comment, "white listing" do
   
-  before(:all) do
-    DataMapper::Base.auto_migrate!
+  before(:each) do
+    Comment.auto_migrate!
   end
   
   it "should white list on create" do

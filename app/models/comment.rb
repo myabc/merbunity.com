@@ -1,11 +1,26 @@
-class Comment < DataMapper::Base
+class Comment
+  include DataMapper::Resource
   
-  property :body,       :string
-  property :created_at, :datetime
+  include Merbunity::WhistlerHelpers::DataMapper
   
-  belongs_to :owner, :class => "Person"
+  property :id,                 Integer, :serial => true
+  property :body,               Text
+  property :created_at,         DateTime
+  property :status,             String
+  property :commentable_class,  Class
   
-  validates_presence_of :owner, :groups => :create
+  belongs_to :owner, :class_name => "Person"
+  
+  has 1, :commentable_screencasts, :class_name => "CommentableScreencasts", :child_key => [:comment_id]
+  has 1, :screencast, :through => :commentable_screencasts
+  
+  has 1, :commentable_tutorials,   :class_name => "CommentableTutorials", :child_key => [:comment_id]
+  has 1, :tutorial, :through => :commentable_tutorials
+  
+  has 1, :commentable_news_items,  :class_name => "CommentableNewsItems", :child_key => [:comment_id]
+  has 1, :news_item, :through  => :commentable_news_items
+  
+  validates_present :owner, :groups => :create
   
   whistler_properties :body
 

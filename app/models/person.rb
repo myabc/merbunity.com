@@ -4,44 +4,44 @@ begin
 rescue 
   nil
 end
-class Person < DataMapper::Base
-  
+unless defined?(Person)
+class Person
+  include DataMapper::Resource
   include AuthenticatedSystem::Model
   include Merbunity::Permissions::User
   
   attr_accessor :password, :password_confirmation
   
-  property :login,                      :string
-  property :email,                      :string
-  property :crypted_password,           :string
-  property :salt,                       :string
-  property :activation_code,            :string
-  property :activated_at,               :datetime
-  property :remember_token_expires_at,  :datetime
-  property :remember_token,             :string
-  property :created_at,                 :datetime
-  property :updated_at,                 :datetime
-  property :publisher_since,            :datetime
-  property :admin_since,                :datetime
-  property :published_item_count,       :integer,   :default => 0
+  property :id,                         Integer, :serial => true
+  property :login,                      String,  :nullable => false, :length => 3..40, :unique => true
+  property :email,                      String,  :nullable => false, :length => 3..100 
+  property :crypted_password,           String
+  property :salt,                       String
+  property :activation_code,            String
+  property :activated_at,               DateTime
+  property :remember_token_expires_at,  DateTime
+  property :remember_token,             String
+  property :created_at,                 DateTime
+  property :updated_at,                 DateTime
+  property :publisher_since,            DateTime
+  property :admin_since,                DateTime
+  property :published_item_count,       Integer,   :default => 0
   
-  validates_length_of         :login,                   :within => 3..40
-  validates_uniqueness_of     :login
-  validates_presence_of       :email
-  validates_format_of         :email,                   :with => :email_address
-  validates_length_of         :email,                   :within => 3..100
-  validates_uniqueness_of     :email
-  validates_presence_of       :password,                :if => proc {password_required?}
-  validates_presence_of       :password_confirmation,   :if => proc {password_required?}
-  validates_length_of         :password,                :within => 4..40, :if => proc {password_required?}
-  validates_confirmation_of   :password,                :if => proc{|m| !m.password.nil?}
+  validates_format            :email,                   :as => :email_address
+  validates_is_unique         :email
+  validates_present           :password,                :if => proc {|m| m.password_required?}
+  validates_present           :password_confirmation,   :if => proc {|m| m.password_required?}
+  validates_length            :password,                :within => 4..40, :if => proc { |m| m.password_required?}
+  validates_is_confirmed      :password,                :if => proc{|m| !m.password.nil?}
     
-  before_save :encrypt_password
-  before_create :ensure_defaults # Should not be required :(
-  before_create :make_activation_code
-  after_create :send_signup_notification
+  before :save,   :encrypt_password
+  before :create, :ensure_defaults # Should not be required :(
+  before :create, :make_activation_code
+  after  :create, :send_signup_notification
   
-  has_many :news_items, :foreign_key => "owner_id"
+  has n, :news_items,   :child_key => [:owner_id]
+  has n, :screencasts,  :child_key => [:owner_id]
+  has n, :tutorials,    :child_key => [:owner_id]
   
   def attribute_to
     self.login
@@ -85,7 +85,7 @@ class Person < DataMapper::Base
   ##############  Generated Code ######################
   
   def login=(value)
-    @login = value.downcase unless value.nil?
+    attribute_set(:login, value.downcase) unless value.nil?
   end
   
   # Activates the person in the database
@@ -100,8 +100,8 @@ class Person < DataMapper::Base
   end
   
   ################ FORGOTTEN PASSWORD STUFF ########################
-  property :password_reset_key, :string, :writer => :protected
-  validates_uniqueness_of :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}
+  property :password_reset_key, String, :writer => :protected
+  validates_is_unique :password_reset_key, :if => Proc.new{|m| !m.password_reset_key.nil?}
   
   def forgot_password! # Must be a unique password key before it goes in the database
     pwreset_key_success = false
@@ -139,4 +139,5 @@ class Person < DataMapper::Base
     PersonMailer.dispatch_and_deliver(action, params.merge(:from => from, :to => self.email), :person => self)
   end
     
+end
 end

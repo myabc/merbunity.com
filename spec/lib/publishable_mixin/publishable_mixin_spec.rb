@@ -1,15 +1,18 @@
 require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper.rb')
 
+
 describe "Merbunity::Publishable" do
   
-  class MyPublishableModel < DataMapper::Base
+  class ::MyPublishableModel
+    include DataMapper::Resource
     include Merbunity::Publishable
-    include Merbunity::Permissions::ProtectedModel  
+    include Merbunity::Permissions::ProtectedModel
+    property :id, Integer, :serial => true
     is_commentable(:pending, :published)
   end
 
   before(:all) do
-    DataMapper::Base.auto_migrate!
+    DataMapper.auto_migrate!
   end
 
   before(:each) do
@@ -18,13 +21,16 @@ describe "Merbunity::Publishable" do
     
     @person = Person.new(valid_person_hash)
     @person.save
+    @person.reload
     @p = MyPublishableModel.new(:owner => @person)
     
     @publisher = Person.new(valid_person_hash)    
     @publisher.save
     @publisher.make_publisher!
+    @publisher.reload
     
     @other_person = Person.create(valid_person_hash)
+    @other_person.reload
     
     1.upto(4) do |i| 
       p = MyPublishableModel.create(:owner => @person) 
@@ -203,7 +209,7 @@ describe "Merbunity::Publishable" do
   it "should add a drafts method to the user model" do
     d = @person.draft_my_publishable_models
     d.should have(3).items
-    d.all?{|s| s.owner == @person}.should be_true    
+    d.all?{|s| s.owner.id == @person.id}.should be_true    
   end
   
   it "should make a person a publisher after a set number of published screencasts" do
@@ -222,78 +228,21 @@ describe "Merbunity::Publishable" do
     
     p.should be_publisher
   end
-  
-  it "should have and belong to many pending comments" do
-    DataMapper::Base.auto_migrate!
-    Comment.all.size.should == 0
-    Person.all.size.should == 0
-    MyPublishableModel.all.size.should == 0
-    
-    p = Person.create(valid_person_hash)
-    
-    m = MyPublishableModel.create(:owner => p)
-    c = Comment.create(valid_comment_hash)
-    
-    m.pending_comments << c
-    m.pending_comments.size.should == 1
-    m.save!
-    
-    # database.adapter.connection do |db|
-    #   blah= db.create_command("SELECT * FROM comments_my_publishable_models")
-    #   blah.execute_reader do |reader|
-    #     reader.each do
-    #       puts reader.current_row.inspect
-    #     end
-    #   end
-    # end
-    
-    m.reload!
-    m.should have(1).pending_comments
-    
-    z = MyPublishableModel[m.id]
-    z.should have(1).pending_comments
-  end
-  
-  it "should have and belong to many comments" do
-    DataMapper::Base.auto_migrate!
-    p = Person.create(valid_person_hash)
-    m = MyPublishableModel.create(:owner => p)
-    c = Comment.create(valid_comment_hash)
-    m.comments << c
-    m.should have(1).comments
-    m.save
-    
-    z = MyPublishableModel[m.id]
-    z.should have(1).comments
-  end
-
-  it "should not mix pending and normal comments" do
-    m = MyPublishableModel.create(:owner => @person)
-    c = Comment.create(valid_comment_hash.with(:owner => @person))
-    pc = Comment.create(valid_comment_hash.with(:owner => @person))
-    m.comments << c
-    m.pending_comments << pc
-    m.save
-    
-    k = MyPublishableModel[m.id]
-    k.comments.should include(c)
-    k.pending_comments.should include(pc)
-  
-    k.comments.should_not include(pc)
-    k.pending_comments.should_not include(c)
-  end
 end
 
 
 describe Merbunity::PublishableController do
   
-  class PublishableModel < DataMapper::Base
+  class ::PublishableModel
+    include DataMapper::Resource
     include Merbunity::Publishable
     include Merbunity::Permissions::ProtectedModel
+    property :id, Integer, :serial => true
   end
   
   class PublishableController < Application
     publishable_resource PublishableModel
+    skip_before :non_publisher_help
   end
   
   before(:all) do
@@ -321,7 +270,9 @@ describe Merbunity::PublishableController do
   end
   
   it "should raise an error if what is passed does not include Merbunity::Publishable" do
-    class One < DataMapper::Base
+    class One
+      include DataMapper::Resource
+      property :id, Integer, :serial => true
     end
     lambda do
       class GoodToGo < Merb::Controller
@@ -349,7 +300,7 @@ describe Merbunity::PublishableController do
   it "should get the index of pending objects for a user if they are not a publisher" do
     p = Person.create(valid_person_hash)
     p.should_not be_a_publisher
-    1.upto(3){ pm = PublishableModel.create(:owner => p); p.publish(pm) }
+    1.upto(3){ pm = PublishableModel.create(:owner => p); p.publish(pm)}
     
     @person.should_not be_a_publisher
     1.upto(2){ z = PublishableModel.create(:owner => @person); z.publish!(@person)}
@@ -361,7 +312,7 @@ describe Merbunity::PublishableController do
     result = c.assigns(:publishable_models)
     result.should_not be_nil
     result.should have(2).items
-    result.each{|r| r.owner.should == @person}
+    result.each{|r| r.owner.id.should == @person.id}
   end
   
   it "should get the index of all pending objects for a user if they are a publisher" do

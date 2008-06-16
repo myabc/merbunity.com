@@ -2,9 +2,11 @@ require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper.rb')
 
 describe Merbunity::Permissions::ProtectedModel do
   
-  class MyProtectedModel < DataMapper::Base
+  class MyProtectedModel
+    include DataMapper::Resource
     include Merbunity::Permissions::ProtectedModel
     attr_reader :owner
+    property :id, Integer, :serial => true
     
     def initialize(opts = {})
       @owner = opts[:owner]

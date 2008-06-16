@@ -38,7 +38,7 @@ describe Welcome do
     @recent_items = @recent_items.sort_by{|item| item.published_on }.reverse
     @recent_items = @recent_items[0,5]
     
-    @news_items = NewsItem.all(:order => "created_at DESC", :limit => 3)
+    @news_items = NewsItem.all(:order => [:created_at.desc], :limit => 3)
     
   end
   
