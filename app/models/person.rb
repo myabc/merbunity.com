@@ -13,7 +13,7 @@ class Person
   attr_accessor :password, :password_confirmation
   
   property :id,                         Integer, :serial => true
-  property :login,                      String,  :nullable => false, :length => 3..40
+  property :login,                      String,  :nullable => false, :length => 3..40, :unique => true
   property :email,                      String,  :nullable => false, :length => 3..100 
   property :crypted_password,           String
   property :salt,                       String
@@ -27,7 +27,6 @@ class Person
   property :admin_since,                DateTime
   property :published_item_count,       Integer,   :default => 0
   
-  validates_is_unique         :login
   validates_format            :email,                   :as => :email_address
   validates_is_unique         :email
   validates_present           :password,                :if => proc {|m| m.password_required?}
