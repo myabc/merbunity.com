@@ -7,19 +7,19 @@ class Screencast
   include Merbunity::Publishable
 
   # Commentable stuff ----------- here in anticipation of snoflake schema style polymorphism
-  has n,  :comments_screencasts, :class_name => "CommentsScreencasts", :child_key => [:screencast_id]
+  has n,  :commentable_screencasts, :class_name => "CommentableScreencasts", :child_key => [:screencast_id]
   
   has n,  :comments, 
-          :through => :comments_screencasts, 
+          :through => :commentable_screencasts, 
           :class_name => "Comment",
           :remote_relationship_name => :comment,
-          Screencast.comments_screencasts.comment.status => "published"
+          Screencast.commentable_screencasts.comment.status => "published"
           
   has n,  :pending_comments, 
-          :through => :comments_screencasts, 
+          :through => :commentable_screencasts, 
           :class_name => "Comment", 
           :remote_relationship_name => :comment,
-          Screencast.comments_screencasts.comment.status => "pending"
+          Screencast.commentable_screencasts.comment.status => "pending"
 
 
   attr_accessor :uploaded_file
