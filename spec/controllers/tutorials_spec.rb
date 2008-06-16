@@ -93,7 +93,7 @@ describe Tutorials, "show action" do
   end
   
   it "should render a not found error if there is no tutorial found" do
-    Tutorial.should_receive(:first).and_return nil
+    Tutorial.should_receive(:get).and_return nil
     lambda do
       c = dispatch_to(Tutorials, :show, :id => 12345)
     end.should raise_error( Merb::Controller::NotFound)
@@ -111,7 +111,7 @@ describe Tutorials, "show action" do
     ms.stub!(:id).and_return(234)
     ms.stub!(:owner).and_return(@p1)
     ms.should_receive(:viewable_by?).and_return true
-    Tutorial.should_receive(:first).and_return ms
+    Tutorial.should_receive(:get).and_return ms
     dispatch_to(Tutorials, :show, :id => ms.id)
   end
   
@@ -119,7 +119,7 @@ describe Tutorials, "show action" do
     ms = mock("tutorial", :null_object => true)
     ms.stub!(:id).and_return 345
     ms.should_receive(:viewable_by?).and_return false
-    Tutorial.should_receive(:first).and_return ms
+    Tutorial.should_receive(:get).and_return ms
     lambda do
       dispatch_to(Tutorials, :show, :id => ms.id)
     end.should raise_error(Merb::Controller::Unauthorized)
@@ -146,7 +146,7 @@ describe Tutorials, "edit action" do
   it "should ask the object if the current user can edit it" do
     s = Tutorial.new(valid_tutorial_hash.with(:owner => @p))    
     s.save
-    Tutorial.should_receive(:first).with(s.id.to_s).and_return(s)
+    Tutorial.should_receive(:get).with(s.id.to_s).and_return(s)
     dispatch_to(Tutorials, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
       s.should_receive(:editable_by?).any_number_of_times.with(@p).and_return true
@@ -157,7 +157,7 @@ describe Tutorials, "edit action" do
     s = Tutorial.new(valid_tutorial_hash.with(:owner => @p))
     s.save
     s.should_receive(:editable_by?).any_number_of_times.with(@p).and_return true
-    Tutorial.should_receive(:first).with(s.id.to_s).and_return(s)
+    Tutorial.should_receive(:get).with(s.id.to_s).and_return(s)
     c = dispatch_to(Tutorials, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
     end
@@ -168,7 +168,7 @@ describe Tutorials, "edit action" do
     s = Tutorial.new(valid_tutorial_hash.with(:owner => @p))    
     s.save
     s.should_receive(:editable_by?).with(@p).and_return false
-    Tutorial.should_receive(:first).with(s.id.to_s).and_return(s)
+    Tutorial.should_receive(:get).with(s.id.to_s).and_return(s)
     lambda do
       dispatch_to(Tutorials, :edit, :id => s.id) do |c|
         c.stub!(:current_person).and_return @p
@@ -179,7 +179,7 @@ describe Tutorials, "edit action" do
   it "should show an edit form" do
     s = Tutorial.new(valid_tutorial_hash.with(:owner => @p))
     s.save
-    Tutorial.should_receive(:first).with(s.id.to_s).and_return(s)
+    Tutorial.should_receive(:get).with(s.id.to_s).and_return(s)
     s.should_receive(:editable_by?).any_number_of_times.with(@p).and_return true
     controller = dispatch_to(Tutorials, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
@@ -227,7 +227,7 @@ describe Tutorials, "update action" do
     s = Tutorial.new(valid_tutorial_hash.with(:owner => @p))    
     s.save
     s.should_receive(:editable_by?).with(@p).and_return true
-    Tutorial.should_receive(:first).and_return(s)
+    Tutorial.should_receive(:get).and_return(s)
     dispatch_to(Tutorials, :update, :id => 123, :tutorial => {:title => "blah"}) do |c|
       c.stub!(:current_person).and_return @p
     end
@@ -237,7 +237,7 @@ describe Tutorials, "update action" do
     s = Tutorial.new(valid_tutorial_hash.with(:owner => @p))
     s.save
     s.should_receive(:editable_by?).with(@p).and_return false
-    Tutorial.should_receive(:first).and_return s
+    Tutorial.should_receive(:get).and_return s
     lambda do
       dispatch_to(Tutorials, :update, :id => 123, :tutorial => {:title => "blah"}) do |c|
         c.stub!(:current_person).and_return @p
@@ -249,7 +249,7 @@ describe Tutorials, "update action" do
     s = Tutorial.new(valid_tutorial_hash.with(:owner => @p))    
     s.save
     s.should_receive(:editable_by?).with(@p).and_return true
-    Tutorial.should_receive(:first).and_return s
+    Tutorial.should_receive(:get).and_return s
     attrs = {:title => "My New Title"}
     s.should_receive(:update_attributes) do |args|
       args['title'].should == "My New Title"
@@ -267,7 +267,7 @@ describe Tutorials, "update action" do
     s.save    
     s.should_receive(:editable_by?).and_return(true)
     s.should_receive(:update_attributes).and_return false
-    Tutorial.should_receive(:first).and_return s
+    Tutorial.should_receive(:get).and_return s
     attrs = {:title => "My New Title"}
     c = dispatch_to(Tutorials, :update, :id => s.id, :tutorial => attrs) do |c|
       c.stub!(:current_person).and_return @p
@@ -284,7 +284,7 @@ describe Tutorials, "update action" do
       args[:owner].should be_nil
       true
     end
-    Tutorial.should_receive(:first).and_return s
+    Tutorial.should_receive(:get).and_return s
     attrs = {:title => "My Titel", :owner => 1}
     c = dispatch_to(Tutorials, :update, :id => s.id, :tutorial => attrs ) do |c|
       c.stub!(:current_person).and_return @p
@@ -321,13 +321,13 @@ describe Tutorials, "delete action" do
   
   it "should ask the tutorial if it can be destroyed by the current person" do
     @s.should_receive(:destroyable_by?).and_return(true)
-    Tutorial.should_receive(:first).and_return(@s)
+    Tutorial.should_receive(:get).and_return(@s)
     dispatch_to(Tutorials, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}
   end
   
   it "should raise an unauthorized error if it can't be destroyed by the current person" do
     @s.should_receive(:destroyable_by?).and_return(false)
-    Tutorial.should_receive(:first).and_return(@s)
+    Tutorial.should_receive(:get).and_return(@s)
     lambda do
       dispatch_to(Tutorials, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}    
     end.should raise_error(Merb::Controller::Unauthorized)
@@ -335,7 +335,7 @@ describe Tutorials, "delete action" do
   
   it "should redirect to url(:tutorials) if the delete is successful" do
     @s.should_receive(:destroyable_by?).and_return(true)    
-    Tutorial.should_receive(:first).and_return(@s)
+    Tutorial.should_receive(:get).and_return(@s)
     c = dispatch_to(Tutorials, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}
     c.should redirect_to(url(:tutorials))
   end
