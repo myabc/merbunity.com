@@ -13,6 +13,6 @@
     =preserve(@news_item.display_body)
 
 - @comments_url = url(:add_comment, :id => @news_item, :klass => "NewsItem")
-= partial "shared/comments/comments", :with => @news_item.comments, :as => "comments", :comment_page_heading => "Comment On #{@news_item.title}"
+= partial "shared/comments/comments", :with => @news_item, :as => "object", :comment_page_heading => "Comment On #{@news_item.title}", :comments_method => :comments
 
 - throw_content :for_object_menu, partial(:object_menu, :with => @news_item, :as => "news_item")

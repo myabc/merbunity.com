@@ -11,14 +11,14 @@ class Comment
   
   belongs_to :owner, :class_name => "Person"
   
-  has 1, :comments_screencasts, :class_name => "CommentsScreencasts", :child_key => [:comment_id]
-  has 1, :screencast, :through => :comments_screencasts
+  has 1, :commentable_screencasts, :class_name => "CommentableScreencasts", :child_key => [:comment_id]
+  has 1, :screencast, :through => :commentable_screencasts
   
-  has 1, :comments_tutorials,   :class_name => "CommentsTutorials", :child_key => [:comment_id]
-  has 1, :tutorial, :through => :comments_tutorials
+  has 1, :commentable_tutorials,   :class_name => "CommentableTutorials", :child_key => [:comment_id]
+  has 1, :tutorial, :through => :commentable_tutorials
   
-  has 1, :comments_news_items,  :class_name => "CommentsNewsItems", :child_key => [:comment_id]
-  has 1, :news_item, :through  => :comments_news_items
+  has 1, :commentable_news_items,  :class_name => "CommentableNewsItems", :child_key => [:comment_id]
+  has 1, :news_item, :through  => :commentable_news_items
   
   validates_present :owner, :groups => :create
   

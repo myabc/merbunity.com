@@ -20,11 +20,11 @@ class Comments < Application
 
     case @obj
     when Screencast
-      CommentsScreencasts.create(:screencast_id => @obj.id, :comment_id => @comment.id)
+      CommentableScreencasts.create(:screencast_id => @obj.id, :comment_id => @comment.id)
     when Tutorial
-      CommentsTutorials.create(:tutorial_id => @obj.id, :comment_id => @comment.id)
+      CommentableTutorials.create(:tutorial_id => @obj.id, :comment_id => @comment.id)
     when NewsItem
-      CommentsNewsItems.create(:news_item_id => @obj.id, :comment_id => @comment.id)
+      CommentableNewsItems.create(:news_item_id => @obj.id, :comment_id => @comment.id)
     end
 
     @obj.send(:"#{inc_meth}=", (@obj.send(inc_meth).next))

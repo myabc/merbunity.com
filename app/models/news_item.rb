@@ -28,7 +28,7 @@ class NewsItem
   
   
   # Commentable stuff
-  has n, :comments_news_items, :class_name => "CommentsNewsItems"
+  has n, :comments_news_items, :class_name => "CommentableNewsItems"
 
   has n,  :comments, 
           :through => :comments_news_items, 

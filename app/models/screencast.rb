@@ -33,8 +33,6 @@ class Screencast
   property :original_filename,        String,   :nullable => false
   property :content_type,             String,   :nullable => false
   property :download_count,           Integer,  :nullable => false, :default => 0
-  property :comment_count,            Integer,  :nullable => false, :default => 0
-  property :pending_comment_count,    Integer,  :nullable => false, :default => 0
 
   whistler_properties :title, :body, :description
   validates_with_method :valid_upload?
