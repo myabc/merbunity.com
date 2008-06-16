@@ -104,7 +104,7 @@ module Merbunity
        if the_publisher.publisher?
          # This is being published for realz
          unless self.published?
-           @published_on = DateTime.now
+           self.published_on = DateTime.now
            self.publisher = the_publisher
            self.owner.published_item_count = (self.owner.published_item_count || 0) + 1
            self.owner.save
@@ -129,7 +129,7 @@ module Merbunity
      
      # Shoudln't need this :(
      def set_publishable_defaults
-       @published_status ||= self.class.status_values[:draft]
+       self.published_status ||= self.class.status_values[:draft]
      end
    end
  end
