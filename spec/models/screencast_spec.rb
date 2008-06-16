@@ -253,18 +253,19 @@ describe Screencast, "whistler" do
   
   [:description, :title, :body].each do |prop|
     it "should white list on create" do
-      Whistler.stub!(:white_list).and_return(true)
-      Whistler.should_receive(:white_list).once.with("#{prop}").and_return("#{prop}")    
+      Whistler.stub!(:white_list).and_return("WHITELISTED")    
       c = Screencast.new(valid_screencast_hash.with(prop => "#{prop}"))
       c.save
+      c.send(prop).should == "WHITELISTED"
     end
   
     it "should white list on save if the #{prop} has changed" do
-      c = Screencast.new(valid_screencast_hash.with(prop => "not #{prop} here"))
+      c = Screencast.new(valid_screencast_hash.with(prop => "I've Been Whitelisted"))
       c.save
-      Whistler.should_receive(:white_list).with("#{prop}").and_return("#{prop}")
+      Whistler.stub!(:white_list).and_return("WHITELISTED")
       c.send("#{prop}=", "#{prop}")
-      c.save    
+      c.save
+      c.send(prop).should == "WHITELISTED"
     end
   
     it "should not white list the #{prop} attribute when it has not changed" do
