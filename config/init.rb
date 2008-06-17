@@ -34,9 +34,13 @@ use_orm :datamapper
 ### Uncomment for Sequel ORM
 # use_orm :sequel
 # 
+# 
+dependency "merb-slices"
+dependency "merb-auth"
 
 require "merb-assets"
 require "merb-haml"
+require "merb-mailer"
 require "merb_param_protection"
 require "merb-action-args"
 require "whistler"
@@ -46,6 +50,9 @@ require "paginator"
 require 'dm-validations'
 require 'dm-timestamps'
 require 'dm-aggregates'
+
+
+
 
 dependency "whistler_helpers"
 dependency "menu_builder"
@@ -78,13 +85,15 @@ use_test :rspec
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
 
+
+
+Merb::BootLoader.before_app_loads do
+  Merb::Slices::config[:merb_auth][:layout] = :application
+  Merb::Slices::config[:merb_auth][:forgotten_password] = true  
+end
+
 Merb::BootLoader.after_app_loads do
   
   Merb.add_mime_type(:atom,  :to_atom,  %w[application/atom+xml], :Encoding => "UTF-8")
   ### Add dependencies here that must load after the application loads:
-end
-
-begin 
-  require File.join(File.dirname(__FILE__), '..', 'lib', 'authenticated_system/authenticated_dependencies') 
-rescue LoadError
 end

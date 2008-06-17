@@ -18,9 +18,9 @@ describe Comments, "Create action" do
   before(:each) do
     Merb::Mailer.deliveries.clear
   
-    CommentsNewsItems.auto_migrate!
-    CommentsScreencasts.auto_migrate!
-    CommentsTutorials.auto_migrate!
+    CommentableNewsItems.auto_migrate!
+    CommentableScreencasts.auto_migrate!
+    CommentableTutorials.auto_migrate!
     Comment.auto_migrate!
     
     @pending_screencast = Screencast.new(valid_screencast_hash.with(:owner => @person ))

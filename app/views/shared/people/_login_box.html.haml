@@ -6,7 +6,7 @@
       %strong= current_person.login
     %ul
       %li= link_to "Logout", url(:logout)
-      %li= link_to "Change Password", url(:edit_password)
+      %li= link_to "Change Password", url(:merb_auth_edit_password_form)
     
   - when_not_logged_in do
     %p  

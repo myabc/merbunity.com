@@ -1,9 +1,8 @@
-
 - form_tag :action => url(:login), :id => "login" do
-  %p= text_field      :name => "login",       :label => "Login"
+  %p= text_field      :name => "email",       :label => "Email"
   %p= password_field  :name => "password",    :label => "Password"  
   %p= checkbox_field :name => "remember_me", :label => {:title => "Remember Me", :class => "inline"}
   %p= submit_button "Login"
 
 %br/
-= link_to "Forgot your password?", url(:new_password)
+= link_to "Forgot your password?", url(:new_merb_auth_password)
