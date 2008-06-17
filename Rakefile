@@ -87,6 +87,7 @@ namespace :merbunity do
       
       p = Person.new(valid_person_hash)
       p.login = "person"
+      p.email = "person@merbunity.com"
       p.password = "password"
       p.password_confirmation = "password"
       p.save
@@ -95,6 +96,7 @@ namespace :merbunity do
           
       p = Person.new(valid_person_hash)
       p.login = "publisher"
+      p.email = "email@merbunity.com"
       p.password = "password"
       p.password_confirmation = "password"
       p.save
@@ -104,6 +106,7 @@ namespace :merbunity do
           
       p = Person.new(valid_person_hash)
       p.login = "admin"
+      p.email = "admin@merbunity.com"
       p.password = "password"
       p.password_confirmation = "password"
       p.save

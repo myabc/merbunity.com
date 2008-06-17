@@ -10,7 +10,6 @@ class Tutorial
   property :title,                    String,                   :nullable => false
   property :description,              String,                   :nullable => false
   property :body,                     Text,                     :nullable => false
-  property :comment_count,            Integer,                  :nullable => false, :default => 0
 
   whistler_properties :title, :body, :description
 

@@ -24,6 +24,7 @@ Merb::Router.prepare do |r|
   # RESTful routes
   # r.resources :posts
   # 
+  r.add_slice(:MerbAuth, :path => '', :default_routes => false)
   r.match("/").to(:controller => "welcome", :action => "index", :format => "html")
   r.match("/index.:format").to(:controller => "welcome", :action => "index")
   
@@ -35,8 +36,8 @@ Merb::Router.prepare do |r|
       
   r.resources :news
   r.resources :feedback
-  r.resources :passwords
-  r.match("/passwords", :method => "put").to(:controller => "passwords", :action => "update")
+  # r.resources :passwords
+  # r.match("/passwords", :method => "put").to(:controller => "passwords", :action => "update")
   
   ###########################################################################################################
   #                                                                                                         #
@@ -64,5 +65,3 @@ Merb::Router.prepare do |r|
   # Change this for your home page to be available at /
   # r.match('/').to(:controller => 'whatever', :action =>'index')
 end
-
-AuthenticatedSystem.add_routes rescue nil

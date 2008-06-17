@@ -9,8 +9,7 @@ class NewsItem
   property :title,        String, :nullable => false
   property :created_at,   DateTime
   property :updated_at,   DateTime
-  property :comment_count,            Integer,  :nullable => false, :default => 0
-  
+
   belongs_to :owner, :class_name => "Person"
   
   whistler_properties :body, :description, :title
