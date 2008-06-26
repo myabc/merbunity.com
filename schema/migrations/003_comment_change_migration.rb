@@ -44,7 +44,7 @@ class CommentChangeMigration < ActiveRecord::Migration
         c.status = "pending"
         c.commentable_class = Tutorial
         raise "Tutorial Pending" unless c.save
-        ct = CommentableTutorial.new
+        ct = CommentableTutorials.new
         ct.tutorial = t
         ct.comment = c
         raise "Pending Tutorial Comment Join" unless ct.save
