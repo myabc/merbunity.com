@@ -35,6 +35,10 @@ module Merbunity
             obj = klass.get(id)
             raise NotFound unless obj
             obj.publish!(current_person) if current_person.can_publish?(obj)
+            
+            # Ping everyone listening in on IM
+            send_im_notice obj
+            
             redirect url(:"#{self.class.publishable_collection_ivar_name.singularize}", obj)
           end
           
@@ -45,6 +49,20 @@ module Merbunity
             @page_header =  "Draft #{self.class.publishable_collection_ivar_name.capitalize}"
             display collection, :pending     
           end
+          
+          def send_im_notice(obj)
+            begin
+              the_url = absolute_url("#{self.class.publishable_collection_ivar_name.singularize}".to_sym, obj)
+              msg = "New #{obj.class.name} - #{obj.title}"
+              msg << "<br/>"
+              msg << link_to(the_url,the_url)
+              Broadcaster.deliver(msg)     
+            rescue => e
+              Merb.logger.error e.message
+              Merb.logger.error e.backtrace
+            end
+          end
+          
         end
         base.class_eval(get_controller_parts(base))
                 

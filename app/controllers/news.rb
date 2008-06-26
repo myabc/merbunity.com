@@ -33,6 +33,7 @@ class News < Application
     @news_item.owner = current_person
     if @news_item.save
       flash[:notice] = "Published your News"
+      send_im_notice @news_item
       redirect url(:news, @news_item)
     else
       flash[:error] = "There were issues"
@@ -78,6 +79,20 @@ class News < Application
   def non_publisher_help
     return true if !logged_in? || current_person.publisher?
     partial(:non_publisher_help, :format => :html)
+  end
+  
+  def send_im_notice(news)
+    Merb.logger.info "Sending the IM Ping"
+    begin
+      the_url = absolute_url(:news, news)
+      msg = "News - #{news.title}"
+      msg << "<br/>"
+      msg << link_to(the_url, the_url)
+      Broadcaster.deliver(msg)
+    rescue => e
+      Merb.logger.error e.message
+      Merb.logger.error e.backtrace
+    end
   end
   
 end
