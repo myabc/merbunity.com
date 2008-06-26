@@ -42,6 +42,7 @@ describe Person, "in merbcasts" do
   end
   
   it "should not say that an person is a publisher if they have not yet been made a publisher" do
+    hash = valid_person_hash
     person = Person.new(hash)
     person.save
     person.activate
@@ -49,6 +50,7 @@ describe Person, "in merbcasts" do
   end
   
   it "should have a publish method that tells the obj to publish" do
+    hash = valid_person_hash
     person = Person.new(hash)    
     person.save
     person.activate
