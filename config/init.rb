@@ -94,7 +94,7 @@ Merb::BootLoader.before_app_loads do
   
   send_to = Merb.env?(:production) ? "notifications@merbunity.com" : "dev-notifications@merbunity.com"
   Merb.logger.info "mongrel@merbunity.com/pid#{$$}"
-  puts "SEND TO #{send_to}"
+  puts "SET TO SEND TO #{send_to}"
   Broadcaster.setup("mongrel@merbunity.com/pid#{$$}", "8Q4113", send_to)
 end
 
