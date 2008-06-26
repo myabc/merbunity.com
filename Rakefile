@@ -96,7 +96,7 @@ namespace :merbunity do
           
       p = Person.new(valid_person_hash)
       p.login = "publisher"
-      p.email = "email@merbunity.com"
+      p.email = "publisher@merbunity.com"
       p.password = "password"
       p.password_confirmation = "password"
       p.save

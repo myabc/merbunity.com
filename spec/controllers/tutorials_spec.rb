@@ -149,6 +149,7 @@ describe Tutorials, "edit action" do
     Tutorial.should_receive(:get).with(s.id.to_s).and_return(s)
     dispatch_to(Tutorials, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
+      c.stub!(:logged_in?).and_return(true)
       s.should_receive(:editable_by?).any_number_of_times.with(@p).and_return true
     end    
   end
@@ -160,6 +161,7 @@ describe Tutorials, "edit action" do
     Tutorial.should_receive(:get).with(s.id.to_s).and_return(s)
     c = dispatch_to(Tutorials, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
+      c.stub!(:logged_in?).and_return(true)
     end
     c.should be_successful    
   end
@@ -172,6 +174,7 @@ describe Tutorials, "edit action" do
     lambda do
       dispatch_to(Tutorials, :edit, :id => s.id) do |c|
         c.stub!(:current_person).and_return @p
+        c.stub!(:logged_in?).and_return(true)
       end
     end.should raise_error(Merb::Controller::Unauthorized)
   end
@@ -183,6 +186,7 @@ describe Tutorials, "edit action" do
     s.should_receive(:editable_by?).any_number_of_times.with(@p).and_return true
     controller = dispatch_to(Tutorials, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
+      c.stub!(:logged_in?).and_return(true)
     end
     controller.body.should have_tag(:form, 
                                     :action => url(:tutorial, :id => s.id), 
@@ -219,6 +223,7 @@ describe Tutorials, "update action" do
     lambda do
       dispatch_to(Tutorials, :update, :id => 999, :tutorial => {:title => "my title"}) do |c|
         c.stub!(:current_person).and_return(@p)
+        c.stub!(:logged_in?).and_return(true)
       end 
     end.should raise_error(Merb::Controller::NotFound)    
   end
@@ -230,6 +235,7 @@ describe Tutorials, "update action" do
     Tutorial.should_receive(:get).and_return(s)
     dispatch_to(Tutorials, :update, :id => 123, :tutorial => {:title => "blah"}) do |c|
       c.stub!(:current_person).and_return @p
+      c.stub!(:logged_in?).and_return(true)
     end
   end
   
@@ -241,6 +247,7 @@ describe Tutorials, "update action" do
     lambda do
       dispatch_to(Tutorials, :update, :id => 123, :tutorial => {:title => "blah"}) do |c|
         c.stub!(:current_person).and_return @p
+        c.stub!(:logged_in?).and_return(true)
       end
     end.should raise_error(Merb::Controller::Unauthorized)
   end
@@ -258,6 +265,7 @@ describe Tutorials, "update action" do
     
     c = dispatch_to(Tutorials, :update, :id => s.id, :tutorial => attrs) do |c|
       c.stub!(:current_person).and_return(@p)
+      c.stub!(:logged_in?).and_return(true)
     end
     c.should redirect_to(url(:tutorial, s))
   end
@@ -271,6 +279,7 @@ describe Tutorials, "update action" do
     attrs = {:title => "My New Title"}
     c = dispatch_to(Tutorials, :update, :id => s.id, :tutorial => attrs) do |c|
       c.stub!(:current_person).and_return @p
+      c.stub!(:logged_in?).and_return(true)
       c.should_receive(:render).with(:edit)
     end
   end
@@ -288,6 +297,7 @@ describe Tutorials, "update action" do
     attrs = {:title => "My Titel", :owner => 1}
     c = dispatch_to(Tutorials, :update, :id => s.id, :tutorial => attrs ) do |c|
       c.stub!(:current_person).and_return @p
+      c.stub!(:logged_in?).and_return(true)
     end
     c.params[:tutorial][:title].should_not be_nil
     c.params[:tutorial][:owner].should be_nil
@@ -315,6 +325,7 @@ describe Tutorials, "delete action" do
     lambda do
       dispatch_to(Tutorials, :destroy, :id => 99854) do |c|
         c.stub!(:current_person).and_return(@p)
+        c.stub!(:logged_in?).and_return(true)
       end
     end.should raise_error(Merb::Controller::NotFound)
   end
@@ -322,21 +333,21 @@ describe Tutorials, "delete action" do
   it "should ask the tutorial if it can be destroyed by the current person" do
     @s.should_receive(:destroyable_by?).and_return(true)
     Tutorial.should_receive(:get).and_return(@s)
-    dispatch_to(Tutorials, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}
+    dispatch_to(Tutorials, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return(@p);c.stub!(:logged_in?).and_return(true)}
   end
   
   it "should raise an unauthorized error if it can't be destroyed by the current person" do
     @s.should_receive(:destroyable_by?).and_return(false)
     Tutorial.should_receive(:get).and_return(@s)
     lambda do
-      dispatch_to(Tutorials, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}    
+      dispatch_to(Tutorials, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return(@p);c.stub!(:logged_in?).and_return(true)}    
     end.should raise_error(Merb::Controller::Unauthorized)
   end
   
   it "should redirect to url(:tutorials) if the delete is successful" do
     @s.should_receive(:destroyable_by?).and_return(true)    
     Tutorial.should_receive(:get).and_return(@s)
-    c = dispatch_to(Tutorials, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}
+    c = dispatch_to(Tutorials, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return(@p);c.stub!(:logged_in?).and_return(true)}
     c.should redirect_to(url(:tutorials))
   end
   

@@ -133,7 +133,7 @@ module Merbunity
           end
 
           def ensure_logged_in_for_pending
-            @#{base.publishable_singular_name} = #{base.publishable_klass}.get(:id => params[:id])
+            @#{base.publishable_singular_name} = #{base.publishable_klass}.get(params[:id])
             throw(:halt, :access_denied) if(@#{base.publishable_singular_name}.nil? || !@#{base.publishable_singular_name}.viewable_by?(current_person))
           end
 

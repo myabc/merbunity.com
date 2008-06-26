@@ -8,10 +8,14 @@ describe "Merbunity::Publishable" do
     include Merbunity::Publishable
     include Merbunity::Permissions::ProtectedModel
     property :id, Integer, :serial => true
-    is_commentable(:pending, :published)
+    
   end
 
   before(:all) do
+    DataMapper.auto_migrate!
+  end
+  
+  after(:each) do
     DataMapper.auto_migrate!
   end
 
@@ -21,15 +25,18 @@ describe "Merbunity::Publishable" do
     
     @person = Person.new(valid_person_hash)
     @person.save
-    @person.reload
+
     @p = MyPublishableModel.new(:owner => @person)
     
     @publisher = Person.new(valid_person_hash)    
     @publisher.save
     @publisher.make_publisher!
-    @publisher.reload
+
     
     @other_person = Person.create(valid_person_hash)
+    
+    @person.reload
+    @publisher.reload
     @other_person.reload
     
     1.upto(4) do |i| 
@@ -52,6 +59,10 @@ describe "Merbunity::Publishable" do
         MyPublishableModel.create(:owner => p)
       end
     end
+    
+    @person.reload
+    @publisher.reload
+    @other_person.reload
   end
   
   it "should setup the test correctly" do
@@ -254,10 +265,6 @@ describe Merbunity::PublishableController do
     @person = Person.create(valid_person_hash)
     PublishableModel.auto_migrate!
   end
-  
-  it "should setup the specs properly" do
-    PublishableController.should include(AuthenticatedSystem::Controller)
-  end
 
   it "should add publishable_resource to Merb::Controller" do
     Merb::Controller.should respond_to(:publishable_resource)    
@@ -308,6 +315,7 @@ describe Merbunity::PublishableController do
     c = dispatch_to(PublishableController, :pending) do |controller|
       controller.stub!(:display).and_return("DISPLAYED")
       controller.stub!(:current_person).and_return(@person)
+      controller.stub!(:logged_in?).and_return(true)
     end
     result = c.assigns(:publishable_models)
     result.should_not be_nil
@@ -328,6 +336,7 @@ describe Merbunity::PublishableController do
     c = dispatch_to(PublishableController, :pending) do |controller|
       controller.stub!(:display).and_return("DISPLAYED")
       controller.stub!(:current_person).and_return(publisher)
+      controller.stub!(:logged_in?).and_return(true)
     end
     result = c.assigns(:publishable_models)
     result.should_not be_nil
@@ -344,6 +353,7 @@ describe Merbunity::PublishableController do
     c = dispatch_to(PublishableController, :pending) do |controller|
       controller.stub!(:display).and_return("DISPLAYED")
       controller.stub!(:current_person).and_return(pub)
+      controller.stub!(:logged_in?).and_return(true)
     end
     result = c.assigns(:publishable_models)
     result.should_not be_nil
@@ -362,7 +372,11 @@ describe Merbunity::PublishableController do
   
   it "should be successful when a user logs in" do
     p = Person.create(valid_person_hash)
-    c = dispatch_to(PublishableController, :drafts){|c| c.stub!(:current_person).and_return p; c.stub!(:display).and_return true}
+    c = dispatch_to(PublishableController, :drafts) do |c| 
+      c.stub!(:current_person).and_return p
+      c.stub!(:logged_in?).and_return(true)
+      c.stub!(:display).and_return true
+    end
     c.should be_successful    
   end
   
@@ -371,6 +385,7 @@ describe Merbunity::PublishableController do
     1.upto(6){ PublishableModel.create(:owner => p)}
     c = dispatch_to(PublishableController, :drafts) do |c| 
       c.stub!(:current_person).and_return p
+      c.stub!(:logged_in?).and_return(true)
       c.stub!(:display).and_return true
     end
     c.assigns(:publishable_models).should == p.draft_publishable_models

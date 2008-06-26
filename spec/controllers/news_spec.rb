@@ -47,7 +47,7 @@ describe News, "index action"  do
   end
   
   it "should show the 10 latest news items with the publisher logged in" do
-    controller = dispatch_to(News, :index){|c| c.stub!(:current_person).and_return(@publisher)}
+    controller = dispatch_to(News, :index){|c| c.stub!(:current_person).and_return(@publisher); c.stub!(:logged_in?).and_return(true)}
     controller.assigns(:news_items).should == latest_10
     controller.should be_successful
   end
@@ -63,7 +63,7 @@ describe News, "show action" do
   end
   
   it "should show the specified news item with a publisher logged in" do
-    controller = dispatch_to(News, :show, :id => @ns.id){|c| c.stub!(:current_person).and_return(@publisher)}
+    controller = dispatch_to(News, :show, :id => @ns.id){|c| c.stub!(:current_person).and_return(@publisher); c.stub!(:logged_in?).and_return(true)}
     controller.assigns(:news_item).should == @ns
     controller.should be_successful
   end
@@ -112,6 +112,7 @@ describe News, "Create action" do
     lambda do
       @c = dispatch_to(News, :create, :news_item => valid_news_item_hash.without(:owner)) do |k|
         k.stub!(:current_person).and_return(@publisher)
+        k.stub!(:logged_in?).and_return(true)
       end
       @c.assigns(:news_item).owner.should == @publisher
     end.should change(NewsItem, :count).by(1)
@@ -124,6 +125,7 @@ describe News, "Create action" do
     lambda do
       c = dispatch_to(News, :create, :news_item => valid_news_item_hash.without(:owner)) do |k|
         k.stub!(:current_person).and_return(person)
+        k.stub!(:logged_in?).and_return(true)
       end
     end.should raise_error(Merb::ControllerExceptions::Unauthorized)
   end
@@ -134,6 +136,7 @@ describe News, "Create action" do
     NewsItem.should_receive(:new).and_return(news_mock)
     c = dispatch_to(News, :create, :news_item => valid_news_item_hash.without(:owner)) do |k|
       k.stub!(:current_person).and_return(@publisher)
+      k.stub!(:logged_in?).and_return(true)
     end
     c.should be_successful
     c.flash[:error].should_not be_blank

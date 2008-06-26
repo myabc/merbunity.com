@@ -17,13 +17,13 @@ module Merbunity
         property        :updated_at,            DateTime                      unless self.properties.any?{|p| p.name == :updated_at }
         property        :owner_id,              Integer
         property        :publisher_id,          Integer
-        property :comment_count,            Integer,  :nullable => false, :default => 0
-        property :pending_comment_count,    Integer,  :nullable => false, :default => 0
+        property        :comment_count,         Integer,  :nullable => false, :default => 0
+        property        :pending_comment_count, Integer,  :nullable => false, :default => 0
         
         # before_create   :set_initial_published_status
         
         belongs_to :owner,     :class_name => "Person", :child_key => [:owner_id]
-        belongs_to :publisher, :class_name => "Person", :child_key => [:owner_id]
+        belongs_to :publisher, :class_name => "Person", :child_key => [:publisher_id]
 
         before :save, :set_publishable_defaults
         
@@ -42,7 +42,7 @@ module Merbunity
         end
         
         def self.find_published(id)
-          self.get(:id => id, :published_status => status_values[:published])
+          self.first(:id => id, :published_status => status_values[:published])
         end         
         
         def self.drafts(opts = {}) 
@@ -63,10 +63,10 @@ module Merbunity
       end
       
       base.send(:include, InstanceMethods)
-      person_methods =<<-EOF
+      Person.class_eval <<-Ruby, __FILE__, __LINE__
         def pending_#{bn = base.name.snake_case.pluralize}
           @_pending#{bn} ||= #{base.name}.pending(:owner_id => self.id)
-          puts @_pending#{bn}.inspect
+
           @_pending#{bn}
         end
         
@@ -81,8 +81,7 @@ module Merbunity
         def draft_#{bn}
           @_draft_#{bn} ||= #{base.name}.drafts(:owner_id => self.id)
         end        
-      EOF
-      Person.class_eval(person_methods)
+      Ruby
       
     end
     

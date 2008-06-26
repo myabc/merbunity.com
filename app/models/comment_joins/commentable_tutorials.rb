@@ -3,7 +3,7 @@ class CommentableTutorials
   
   storage_names[:default] = "comments_tutorials"
   
-  property :comment_id, Integer, :key => true
+  property :comment_id, Integer,  :key => true
   property :tutorial_id, Integer, :key => true
   
   belongs_to :comment 
