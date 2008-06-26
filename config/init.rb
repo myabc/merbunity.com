@@ -91,6 +91,11 @@ Merb::BootLoader.before_app_loads do
   MA[:forgotten_password] = true
   MA[:use_activation] = true unless Merb.env?(:development)
   DataObjects::Sqlite3.logger = DataMapper::Logger.new(STDOUT, :debug) if Merb.env?(:development)
+  
+  send_to = Merb.env?(:production) ? "notifications@merbunity.com" : "dev-notifications@merbunity.com"
+  Merb.logger.info "mongrel@merbunity.com/pid#{$$}"
+  puts "SEND TO #{send_to}"
+  Broadcaster.setup("mongrel@merbunity.com/pid#{$$}", "8Q4113", send_to)
 end
 
 Merb::BootLoader.after_app_loads do
