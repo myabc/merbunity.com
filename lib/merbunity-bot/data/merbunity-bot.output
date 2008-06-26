@@ -1,0 +1,25 @@
+D, [2008-06-27T00:45:42.108874 #35051] DEBUG -- : Starting on 35051
+D, [2008-06-27T00:45:52.044567 #35051] DEBUG -- : Handling message: <message from='mongrel@merbunity.com' to='dev-notifications@merbunity.com' xmlns='jabber:client'> ... </>
+D, [2008-06-27T00:45:52.044786 #35051] DEBUG -- : Checking access for mongrel@merbunity.com
+"News - This is some news&lt;br/&gt;&lt;a href=\"http://localhost:4000/news/53\"&gt;http://localhost:4000/news/53&lt;/a&gt;"
+I, [2008-06-27T00:45:52.061295 #35051]  INFO -- : mongrel@merbunity.com delivered "News - This is some news<br/><a href=\"http://localhost:4000/news/53\">http://localhost:4000/news/53</a>" to []
+D, [2008-06-27T00:59:20.667457 #35051] DEBUG -- : Handling message: <message from='mongrel@merbunity.com/pid3608217652219' type='chat' to='dev-notifications@merbunity.com' xmlns='jabber:client'> ... </>
+D, [2008-06-27T00:59:20.667656 #35051] DEBUG -- : Checking access for mongrel@merbunity.com/pid3608217652219
+"bye my stuff"
+I, [2008-06-27T00:59:20.668435 #35051]  INFO -- : mongrel@merbunity.com/pid3608217652219 delivered "bye my stuff" to ["has.sox@gmail.com", "mongrel@merbunity.com"]
+D, [2008-06-27T00:59:47.304437 #35051] DEBUG -- : Handling message: <message from='mongrel@merbunity.com/pid3608217652219' type='chat' to='dev-notifications@merbunity.com' xmlns='jabber:client'> ... </>
+D, [2008-06-27T00:59:47.304624 #35051] DEBUG -- : Checking access for mongrel@merbunity.com/pid3608217652219
+"&lt;a href='http://google.com'&gt;Come to Google&lt;/a&gt;"
+I, [2008-06-27T00:59:47.305570 #35051]  INFO -- : mongrel@merbunity.com/pid3608217652219 delivered "<a href='http://google.com'>Come to Google</a>" to ["has.sox@gmail.com", "mongrel@merbunity.com"]
+D, [2008-06-27T01:09:36.907747 #35051] DEBUG -- : Handling message: <message from='mongrel@merbunity.com/pid36436F127C3F7' type='chat' to='dev-notifications@merbunity.com' xmlns='jabber:client'> ... </>
+D, [2008-06-27T01:09:36.907913 #35051] DEBUG -- : Checking access for mongrel@merbunity.com/pid36436F127C3F7
+"Tutorial - asdfasd&lt;br/&gt;&lt;a href=\"http://local.merbunity.com:4000/tutorials/2\"&gt;http://local.merbunity.com:4000/tutorials/2&lt;/a&gt;"
+I, [2008-06-27T01:09:36.908737 #35051]  INFO -- : mongrel@merbunity.com/pid36436F127C3F7 delivered "Tutorial - asdfasd<br/><a href=\"http://local.merbunity.com:4000/tutorials/2\">http://local.merbunity.com:4000/tutorials/2</a>" to ["has.sox@gmail.com", "mongrel@merbunity.com"]
+D, [2008-06-27T01:10:27.847266 #35051] DEBUG -- : Handling message: <message from='mongrel@merbunity.com/pid36445E128710F' type='chat' to='dev-notifications@merbunity.com' xmlns='jabber:client'> ... </>
+D, [2008-06-27T01:10:27.847450 #35051] DEBUG -- : Checking access for mongrel@merbunity.com/pid36445E128710F
+"New Screencast - asdf&lt;br/&gt;&lt;a href=\"http://local.merbunity.com:4000/screencasts/4\"&gt;http://local.merbunity.com:4000/screencasts/4&lt;/a&gt;"
+I, [2008-06-27T01:10:27.848364 #35051]  INFO -- : mongrel@merbunity.com/pid36445E128710F delivered "New Screencast - asdf<br/><a href=\"http://local.merbunity.com:4000/screencasts/4\">http://local.merbunity.com:4000/screencasts/4</a>" to ["has.sox@gmail.com", "mongrel@merbunity.com"]
+D, [2008-06-27T01:11:37.000233 #35051] DEBUG -- : Handling message: <message from='mongrel@merbunity.com/pid36491B879A473' type='chat' to='dev-notifications@merbunity.com' xmlns='jabber:client'> ... </>
+D, [2008-06-27T01:11:37.000611 #35051] DEBUG -- : Checking access for mongrel@merbunity.com/pid36491B879A473
+"News - asdf&lt;br/&gt;&lt;a href=\"http://local.merbunity.com:4000/news/2\"&gt;http://local.merbunity.com:4000/news/2&lt;/a&gt;"
+I, [2008-06-27T01:11:37.001456 #35051]  INFO -- : mongrel@merbunity.com/pid36491B879A473 delivered "News - asdf<br/><a href=\"http://local.merbunity.com:4000/news/2\">http://local.merbunity.com:4000/news/2</a>" to ["has.sox@gmail.com", "mongrel@merbunity.com"]
