@@ -1,4 +1,5 @@
 unless defined?(Tutorial)
+Comment
 class Tutorial
   include DataMapper::Resource
   include Merbunity::WhistlerHelpers::DataMapper

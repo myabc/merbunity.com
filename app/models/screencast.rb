@@ -1,4 +1,5 @@
 unless defined?(Screencast)
+Comment
 class Screencast
   include DataMapper::Resource
   include Merbunity::WhistlerHelpers::DataMapper

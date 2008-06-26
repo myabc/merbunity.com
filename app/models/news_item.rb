@@ -1,4 +1,5 @@
 unless defined?(NewsItem)
+Comment
 class NewsItem
   include DataMapper::Resource
   include Merbunity::WhistlerHelpers::DataMapper
