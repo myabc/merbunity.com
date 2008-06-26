@@ -80,13 +80,13 @@ describe Merbunity::Permissions::ProtectedModel do
   
   it "should not be viewable by nil or :false if the item is not published" do
     @mpm.should_not be_viewable_by(nil)
-    @mpm.should_not be_viewable_by(:false)
+    @mpm.should_not be_viewable_by(false)
   end
   
   it "should be viewable by nil or false if the item is published" do
     m = MyProtectedModel.new(:owner => @owner, :published => true)
     m.should be_viewable_by(nil)
-    m.should be_viewable_by(:false)
+    m.should be_viewable_by(false)
   end
   
   it "should be editable by an admin" do
@@ -107,7 +107,7 @@ describe Merbunity::Permissions::ProtectedModel do
   
   it "should not be editable by a person who is nil or :false" do
     @mpm.should_not be_editable_by(nil)
-    @mpm.should_not be_editable_by(:false)
+    @mpm.should_not be_editable_by(false)
   end
   
   it "should be destroyable by an admin" do
@@ -135,7 +135,7 @@ describe Merbunity::Permissions::ProtectedModel do
   
   it "should not be destroyable_by a user how is nil or :false" do
     @mpm.should_not be_destroyable_by(nil)
-    @mpm.should_not be_destroyable_by(:false)
+    @mpm.should_not be_destroyable_by(false)
   end
   
   it "should be publishable by an admin" do
@@ -156,7 +156,7 @@ describe Merbunity::Permissions::ProtectedModel do
   
   it "should not be publishable by a nil or :false" do
     @mpm.should_not be_publishable_by(nil)
-    @mpm.should_not be_publishable_by(:false)
+    @mpm.should_not be_publishable_by(false)
   end
   
   it "should be viewable when a user who is not a publisher, owner or admin and the model is publshed" do

@@ -153,6 +153,7 @@ describe Screencasts, "edit action" do
     Screencast.should_receive(:get).with(s.id.to_s).and_return(s)
     dispatch_to(Screencasts, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
+      c.stub!(:logged_in?).and_return(true)
       s.should_receive(:editable_by?).any_number_of_times.with(@p).and_return true
     end    
   end
@@ -164,6 +165,7 @@ describe Screencasts, "edit action" do
     Screencast.should_receive(:get).with(s.id.to_s).and_return(s)
     c = dispatch_to(Screencasts, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
+      c.stub!(:logged_in?).and_return(true)
     end
     c.should be_successful    
   end
@@ -176,6 +178,7 @@ describe Screencasts, "edit action" do
     lambda do
       dispatch_to(Screencasts, :edit, :id => s.id) do |c|
         c.stub!(:current_person).and_return @p
+        c.stub!(:logged_in?).and_return(true)
       end
     end.should raise_error(Merb::Controller::Unauthorized)
   end
@@ -187,6 +190,7 @@ describe Screencasts, "edit action" do
     s.should_receive(:editable_by?).any_number_of_times.with(@p).and_return true
     controller = dispatch_to(Screencasts, :edit, :id => s.id) do |c|
       c.stub!(:current_person).and_return @p
+      c.stub!(:logged_in?).and_return(true)
     end
     controller.body.should have_tag(:form, 
                                     :action => url(:screencast, :id => s.id), 
@@ -223,6 +227,7 @@ describe Screencasts, "update action" do
     lambda do
       dispatch_to(Screencasts, :update, :id => 999, :screencast => {:title => "my title"}) do |c|
         c.stub!(:current_person).and_return(@p)
+        c.stub!(:logged_in?).and_return(true)
       end 
     end.should raise_error(Merb::Controller::NotFound)    
   end
@@ -234,6 +239,7 @@ describe Screencasts, "update action" do
     Screencast.should_receive(:first).and_return(s)
     dispatch_to(Screencasts, :update, :id => 123, :screencast => {:title => "blah"}) do |c|
       c.stub!(:current_person).and_return @p
+      c.stub!(:logged_in?).and_return(true)
     end
   end
   
@@ -245,6 +251,7 @@ describe Screencasts, "update action" do
     lambda do
       dispatch_to(Screencasts, :update, :id => 123, :screencast => {:title => "blah"}) do |c|
         c.stub!(:current_person).and_return @p
+        c.stub!(:logged_in?).and_return(true)
       end
     end.should raise_error(Merb::Controller::Unauthorized)
   end
@@ -262,6 +269,7 @@ describe Screencasts, "update action" do
     
     c = dispatch_to(Screencasts, :update, :id => s.id, :screencast => attrs) do |c|
       c.stub!(:current_person).and_return(@p)
+      c.stub!(:logged_in?).and_return(true)
     end
     c.should redirect_to(url(:screencast, s))
   end
@@ -275,6 +283,7 @@ describe Screencasts, "update action" do
     attrs = {:title => "My New Title"}
     c = dispatch_to(Screencasts, :update, :id => s.id, :screencast => attrs) do |c|
       c.stub!(:current_person).and_return @p
+      c.stub!(:logged_in?).and_return(true)
       c.should_receive(:render).with(:edit)
     end
   end
@@ -292,6 +301,7 @@ describe Screencasts, "update action" do
     attrs = {:title => "My Titel", :owner => 1}
     c = dispatch_to(Screencasts, :update, :id => s.id, :screencast => attrs ) do |c|
       c.stub!(:current_person).and_return @p
+      c.stub!(:logged_in?).and_return(true)
     end
     c.params[:screencast][:title].should_not be_nil
     c.params[:screencast][:owner].should be_nil
@@ -319,6 +329,7 @@ describe Screencasts, "delete action" do
     lambda do
       dispatch_to(Screencasts, :destroy, :id => 99854) do |c|
         c.stub!(:current_person).and_return(@p)
+        c.stub!(:logged_in?).and_return(true)
       end
     end.should raise_error(Merb::Controller::NotFound)
   end
@@ -326,21 +337,21 @@ describe Screencasts, "delete action" do
   it "should ask the screencast if it can be destroyed by the current person" do
     @s.should_receive(:destroyable_by?).and_return(true)
     Screencast.should_receive(:get).and_return(@s)
-    dispatch_to(Screencasts, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}
+    dispatch_to(Screencasts, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return(@p);c.stub!(:logged_in?).and_return(true)}
   end
   
   it "should raise an unauthorized error if it can't be destroyed by the current person" do
     @s.should_receive(:destroyable_by?).and_return(false)
     Screencast.should_receive(:first).and_return(@s)
     lambda do
-      dispatch_to(Screencasts, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}    
+      dispatch_to(Screencasts, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return(@p);c.stub!(:logged_in?).and_return(true)}    
     end.should raise_error(Merb::Controller::Unauthorized)
   end
   
   it "should redirect to url(:screencasts) if the delete is successful" do
     @s.should_receive(:destroyable_by?).and_return(true)    
     Screencast.should_receive(:first).and_return(@s)
-    c = dispatch_to(Screencasts, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return @p}
+    c = dispatch_to(Screencasts, :destroy, :id => @s.id){|c| c.stub!(:current_person).and_return(@p);c.stub!(:logged_in?).and_return(true)}
     c.should redirect_to(url(:screencasts))
   end
   
@@ -391,6 +402,7 @@ describe Screencasts, "Download Action" do
     lambda do
       c = dispatch_to(Screencasts, :download, :id => @sc.id) do |k|
         k.stub!(:current_person).and_return(@person)
+        k.stub!(:logged_in?).and_return(true)
         k.should_receive(:send_file).and_return( true )
       end
       c.should be_successful
@@ -403,6 +415,7 @@ describe Screencasts, "Download Action" do
     lambda do
       c = dispatch_to(Screencasts, :download, :id => @sc.id) do |k|
         k.stub!(:current_person).and_return(@person)
+        k.stub!(:logged_in?).and_return(true)
         k.should_receive(:send_file).and_return(true)
       end
     end.should change(@sc, :download_count).by(1)

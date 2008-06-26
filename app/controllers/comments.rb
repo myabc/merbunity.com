@@ -30,6 +30,7 @@ class Comments < Application
     @obj.send(:"#{inc_meth}=", (@obj.send(inc_meth).next))
     @obj.save
     
+    
     flash[:notice] = "Your comment has joined the discussion" unless @obj.new_record?
     case content_type
     when :html

@@ -1,5 +1,5 @@
 # This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of ActiveRecord to incrementally modify your database, and
+# please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
 # Note that this schema.rb definition is the authoritative source for your database schema. If you need
@@ -9,13 +9,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2) do
+ActiveRecord::Schema.define(:version => 3) do
 
   create_table "comments", :force => true do |t|
     t.text     "body"
     t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "commentable_class"
+    t.string   "status"
   end
 
   create_table "comments_news_items", :id => false, :force => true do |t|
@@ -51,20 +53,6 @@ ActiveRecord::Schema.define(:version => 2) do
 
   add_index "news_items", ["created_at"], :name => "news_item_created_at_idx"
   add_index "news_items", ["owner_id"], :name => "news_item_owner_idx"
-
-  create_table "pending_comments_screencasts", :id => false, :force => true do |t|
-    t.integer "screencast_id"
-    t.integer "comment_id"
-  end
-
-  add_index "pending_comments_screencasts", ["screencast_id"], :name => "p_cmnt_scrn_scrn_id_idx"
-
-  create_table "pending_comments_tutorials", :id => false, :force => true do |t|
-    t.integer "tutorial_id"
-    t.integer "comment_id"
-  end
-
-  add_index "pending_comments_tutorials", ["tutorial_id"], :name => "p_cmnt_tut_tut_id_idx"
 
   create_table "people", :force => true do |t|
     t.string   "login"

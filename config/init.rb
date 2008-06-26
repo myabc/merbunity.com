@@ -4,6 +4,7 @@ Gem.path.unshift(Merb.root / "gems")
 
 
 require 'dm-core'
+require 'do_sqlite3' if Merb.env?(:development)
 load 'merb-core/vendor/facets/inflect.rb' # Required because extlib requires gem version of english inflector which overwrites the vendored one
 
 
@@ -61,8 +62,6 @@ dependency "publishable_mixin/model"
 dependency "publishable_mixin/controller"
 dependency "datamapper_extensions"
 
-dependency "comment_mixin"
-
 
 ### This defines which test framework the generators will use
 ### rspec is turned on by default
@@ -85,11 +84,11 @@ use_test :rspec
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
 
-
-
 Merb::BootLoader.before_app_loads do
-  Merb::Slices::config[:merb_auth][:layout] = :application
-  Merb::Slices::config[:merb_auth][:forgotten_password] = true  
+  MA[:layout] = :application
+  MA[:forgotten_password] = true
+  MA[:use_activation] = true unless Merb.env?(:development)
+  DataObjects::Sqlite3.logger = DataMapper::Logger.new(STDOUT, :debug) if Merb.env?(:development)
 end
 
 Merb::BootLoader.after_app_loads do

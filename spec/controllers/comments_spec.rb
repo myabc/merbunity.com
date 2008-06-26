@@ -50,7 +50,9 @@ describe Comments, "Create action" do
                                                 :klass => "Screencast",
                                                 :id => @pending_screencast.id ) do |c| 
       c.stub!(:current_person).and_return(@person)  
+      c.stub!(:logged_in?).and_return(true)
     end
+    @pending_screencast.reload
     @pending_screencast = Screencast.get(@pending_screencast.id)
     @pending_screencast.comments.should be_empty
     @pending_screencast.pending_comments.size.should == count.next
@@ -63,6 +65,7 @@ describe Comments, "Create action" do
                                                 :klass => "Screencast", 
                                                 :id => @published_screencast.id ) do |c|
       c.stub!(:current_person).and_return(@person)
+      c.stub!(:logged_in?).and_return(true)
     end
     @published_screencast = Screencast.get(@published_screencast.id)
     @published_screencast.comments.size.should == count.next
@@ -77,6 +80,7 @@ describe Comments, "Create action" do
                                                 :klass => "Screencast",
                                                 :id => @published_screencast.id) do |c|
       c.stub!(:current_person).and_return(p)
+      c.stub!(:logged_in?).and_return(true)
     end
     controller.assigns(:comment).owner.should == p
   end
@@ -90,6 +94,7 @@ describe Comments, "Create action" do
                                                 :klass => "Screencast",
                                                 :id => @published_screencast.id) do |ctr|
       ctr.stub!(:current_person).and_return(@person)
+      ctr.stub!(:logged_in?).and_return(true)
       ctr.request.stub!(:referer).and_return("REFERRER")
     end
     controller.should redirect_to("REFERRER")    
@@ -100,6 +105,7 @@ describe Comments, "Create action" do
                               :klass => "Screencast",
                               :id => @published_screencast.id) do |c|
       c.stub!(:current_person).and_return(@person)
+      c.stub!(:logged_in?).and_return(true)
     end
     email = Merb::Mailer.deliveries.last
     email.should_not be_nil

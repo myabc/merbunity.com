@@ -26,7 +26,11 @@
 
   - for_publishers(screencast) do
     - with_unpublished(screencast) do
-      = publish_button(url(:publish_screencast, screencast))
+      - if screencast.pending? && !current_person.publisher?
+        .note
+          Waiting to be published
+      - else
+        = publish_button(url(:publish_screencast, screencast))
         
 
 

@@ -19,4 +19,8 @@
 
   - for_publishers(tutorial) do
     - with_unpublished(tutorial) do
-      = publish_button(url(:publish_tutorial, tutorial))
+      - if tutorial.pending? && !current_person.publisher?
+        .note
+          Waiting to be published
+      - else
+        = publish_button(url(:publish_tutorial, tutorial))

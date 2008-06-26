@@ -7,6 +7,7 @@ class NewsItem
   property :body,         DataMapper::Types::Text
   property :description,  DataMapper::Types::Text, :nullable => false
   property :title,        String, :nullable => false
+  property :comment_count,Integer, :default => 0
   property :created_at,   DateTime
   property :updated_at,   DateTime
 
