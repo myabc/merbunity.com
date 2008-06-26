@@ -1,0 +1,10 @@
+---
+debug: false
+jid: dev-notifications@merbunity.com/botdev
+pass: 218B25
+controllers:
+  - mongrel@merbunity.com
+admins:
+  - halorgium@gmail.com
+  - halorgium@jabber.meta.net.nz
+  - has.sox@gmail.com

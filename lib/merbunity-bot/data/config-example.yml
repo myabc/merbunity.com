@@ -1,0 +1,8 @@
+---
+debug: false
+jid: user@domain/resource
+pass: zomg
+controllers:
+  - mongrel@domain
+admins:
+  - admin@domain
