@@ -62,6 +62,8 @@ dependency "publishable_mixin/model"
 dependency "publishable_mixin/controller"
 dependency "datamapper_extensions"
 
+dependency "merbunity-bot/lib/broadcaster"
+
 
 ### This defines which test framework the generators will use
 ### rspec is turned on by default
