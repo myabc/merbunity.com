@@ -9,7 +9,7 @@ class Tutorial
 
   property :id,                       Integer,                  :serial => true
   property :title,                    String,                   :nullable => false
-  property :description,              String,                   :nullable => false
+  property :description,              String,                   :nullable => false, :length => 255
   property :body,                     Text,                     :nullable => false
 
   whistler_properties :title, :body, :description

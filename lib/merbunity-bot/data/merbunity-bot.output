@@ -23,3 +23,6 @@ D, [2008-06-27T01:11:37.000233 #35051] DEBUG -- : Handling message: <message fro
 D, [2008-06-27T01:11:37.000611 #35051] DEBUG -- : Checking access for mongrel@merbunity.com/pid36491B879A473
 "News - asdf&lt;br/&gt;&lt;a href=\"http://local.merbunity.com:4000/news/2\"&gt;http://local.merbunity.com:4000/news/2&lt;/a&gt;"
 I, [2008-06-27T01:11:37.001456 #35051]  INFO -- : mongrel@merbunity.com/pid36491B879A473 delivered "News - asdf<br/><a href=\"http://local.merbunity.com:4000/news/2\">http://local.merbunity.com:4000/news/2</a>" to ["has.sox@gmail.com", "mongrel@merbunity.com"]
+/opt/local/lib/ruby/1.8/rexml/text.rb:311:in `clone': can't clone NilClass (TypeError)
+	from /opt/local/lib/ruby/1.8/rexml/text.rb:311:in `unnormalize'
+	from /opt/local/lib/ruby/1.8/rexml/attribute.rb:137:in `value'

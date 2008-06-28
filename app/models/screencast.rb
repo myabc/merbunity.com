@@ -28,7 +28,7 @@ class Screencast
 
   property :id,                       Integer,  :serial => true
   property :title,                    String,   :nullable => false
-  property :description,              String,   :nullable => false
+  property :description,              String,   :nullable => false, :length => 255
   property :body,                     DataMapper::Types::Text, :nullable => false
   property :size,                     Integer
   property :original_filename,        String,   :nullable => false
