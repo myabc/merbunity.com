@@ -32,7 +32,9 @@
         = site_menu
         %ul#sponsors
           / %li#engineYard= link_to("Engine Yard", "/")
+          %li#engineYard= link_to("Engine Yard", "http://engineyard.com")
           %li#ivey= link_to("Ivey & Brown",  "http://iveyandbrown.com/?merbunity")
+          
         -if thrown_content? :for_side
           = catch_content(:for_side)
       #content_box  
