@@ -285,7 +285,7 @@ describe Tutorials, "update action" do
   end
   
   it "should strip the :owner attribute from the params hash" do
-    s = Tutorial.new(valid_person_hash.with(:owner => @p))    
+    s = Tutorial.new(valid_tutorial_hash.with(:owner => @p))    
     s.save
     s.should_receive(:editable_by?).and_return(true)
     s.should_receive(:update_attributes) do |args|

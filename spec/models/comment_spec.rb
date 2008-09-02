@@ -12,7 +12,7 @@ describe Comment do
   end
   
   it "should have an owner who is a person in the system" do
-    p = Person.create(valid_comment_hash)
+    p = Person.create(valid_person_hash)
     c = Comment.create(valid_comment_hash.with(:owner => p))
     c.owner.should == p
   end

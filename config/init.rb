@@ -89,9 +89,6 @@ use_test :rspec
 Merb::BootLoader.before_app_loads do
   MA[:layout] = :application
   MA[:forgotten_password] = true
-  MA[:use_activation] = true unless Merb.env?(:development)
-  DataObjects::Sqlite3.logger = DataMapper::Logger.new(STDOUT, :debug) if Merb.env?(:development)
-  
   send_to = Merb.env?(:production) ? "notifications@merbunity.com" : "dev-notifications@merbunity.com"
   Merb.logger.info "mongrel@merbunity.com/pid#{$$}"
   puts "SET TO SEND TO #{send_to}"

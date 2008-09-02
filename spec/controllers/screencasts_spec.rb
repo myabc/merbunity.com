@@ -289,7 +289,7 @@ describe Screencasts, "update action" do
   end
   
   it "should strip the :owner attribute from the params hash" do
-    s = Screencast.new(valid_person_hash.with(:owner => @p))    
+    s = Screencast.new(valid_screencast_hash.with(:owner => @p))
     s.save
     s.should_receive(:editable_by?).and_return(true)
     s.should_receive(:update_attributes) do |args|

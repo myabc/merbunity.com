@@ -40,5 +40,7 @@ Spec::Runner.configure do |config|
   end
 end
 
+DataObjects::Sqlite3.logger = DataMapper::Logger.new(StringIO.new, :error)
 DataMapper.auto_migrate!
+
 

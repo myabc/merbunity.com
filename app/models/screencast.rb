@@ -90,7 +90,7 @@ class Screencast
 
   def check_for_updated_file
     if !self.new_record? && !self.uploaded_file.nil?
-      FileUtils.mv(full_path, "#{full_path}_old")
+      FileUtils.mv(full_path, "#{full_path}_old") if File.exists?(full_path)
       setup_screencast_file_from_upload
       save_file_to_os
     end

@@ -10,3 +10,7 @@ Merb::Config.use { |c|
 class Merb::Mailer
  self.delivery_method = :test_send
 end
+
+Merb::BootLoader.before_app_loads do
+  DataObjects::Sqlite3.logger = DataMapper::Logger.new(STDOUT, :debug)
+end
