@@ -1,8 +1,8 @@
 - throw_content :for_header, "Signup To Merbunity"
 = error_messages_for @person
-- form_for @person, :action => url(:people) do
-  %p= text_control      :login,                 :label => "Login"
-  %p= text_control      :email,                 :label => "Email"
-  %p= password_control  :password,              :label => "Password"
-  %p= password_control  :password_confirmation, :label => "Password Confirmation"
-  %p= submit_button     "Sign Up"
+= form_for @person, :action => url(:people) do
+  %p= text_field      :login,                 :label => "Login"
+  %p= text_field      :email,                 :label => "Email"
+  %p= password_field  :password,              :label => "Password"
+  %p= password_field  :password_confirmation, :label => "Password Confirmation"
+  %p= submit     "Sign Up"

@@ -1,5 +1,5 @@
 class InitialStartMigration < ActiveRecord::Migration
-            
+       
   def self.up
     
     create_table :people do |t|

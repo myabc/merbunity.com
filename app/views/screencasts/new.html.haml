@@ -6,5 +6,5 @@
   = error_messages_for @screencast
 
 .form
-  -form_for @screencast, :action => url(:screencast, @screencast), :multipart => true do
+  =form_for @screencast, :action => url(:screencast, @screencast), :multipart => true do
     = partial :form, :with => @screencast, :as => "screencast"

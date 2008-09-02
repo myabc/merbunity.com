@@ -1,7 +1,7 @@
 .field 
-  = text_control       :title,         :label => "Title", :class => "title"
+  = text_field       :title,         :label => "Title", :class => "title"
 .field 
-  = preserve(text_area_control(:description,   :label => "Description", :class => "description"))
+  = preserve(text_area(:description,   :label => "Description", :class => "description"))
  
 .field 
   %label{:for => "screencast_body"} Detail
@@ -9,11 +9,11 @@
     You can use 
     = link_to "textile markup", "http://hobix.com/textile/quick.html", :target => "_blank" 
     for the body of your news article
-  =preserve(text_area_control(:body, :class => "body"))
+  =preserve(text_area(:body, :class => "body"))
 
 %label{:for => "screencast_uploaded_file"} ScreenCast File
 .field.file
-  = file_control       :uploaded_file
+  = file_field       :uploaded_file
   
   - unless screencast.original_filename.nil?
     %p
@@ -21,7 +21,7 @@
       = link_to screencast.original_filename, url(:download_screencast, screencast)
 
 - unless @screencast.new_record? || @screencast.draft?
-  = checkbox_field :name => "save_as_draft", :boolean => "true", :label => {:title => "Save as Draft?", :class => "inline"}
+  = check_box :name => "save_as_draft", :boolean => "true", :label => {:title => "Save as Draft?", :class => "inline"}
         
 .field 
-  = submit_button "Save"
+  = submit "Save"
