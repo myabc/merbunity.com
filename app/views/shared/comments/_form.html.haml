@@ -2,7 +2,7 @@
   You can use 
   = link_to "textile markup", "http://hobix.com/textile/quick.html", :target => "_blank" 
   for your comment
--form_for comment, :action => comment_url do
-  = text_area_control :body, :label => "Comment"
+=form comment, :action => comment_url do
+  = text_area :body, :label => "Comment"
   %br/
-  = submit_button "Add Your Voice"
+  = submit "Add Your Voice"
