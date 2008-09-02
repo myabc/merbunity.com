@@ -21,12 +21,14 @@ class Tutorial
   has n,  :comments, 
           :through => :commentable_tutorials, 
           :class_name => "Comment",
+          :child_key  => [:tutorial_id],
           :remote_relationship_name => :comment,
           Tutorial.commentable_tutorials.comment.status => "published"
           
   has n,  :pending_comments, 
           :through => :commentable_tutorials, 
           :class_name => "Comment", 
+          :child_key  => [:tutorial_id],
           :remote_relationship_name => :comment,
           Tutorial.commentable_tutorials.comment.status => "pending"
           

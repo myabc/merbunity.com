@@ -13,12 +13,14 @@ class Screencast
   has n,  :comments, 
           :through => :commentable_screencasts, 
           :class_name => "Comment",
+          :child_key  => [:screencast_id],
           :remote_relationship_name => :comment,
           Screencast.commentable_screencasts.comment.status => "published"
           
   has n,  :pending_comments, 
           :through => :commentable_screencasts, 
           :class_name => "Comment", 
+          :child_key  => [:screencast_id],
           :remote_relationship_name => :comment,
           Screencast.commentable_screencasts.comment.status => "pending"
 
