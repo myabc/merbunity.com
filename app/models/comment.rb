@@ -4,12 +4,12 @@ class Comment
   include Merbunity::WhistlerHelpers::DataMapper
   
   property :id,                 Integer, :serial => true
-  property :body,               Text
+  property :body,               Text, :lazy => false
   property :created_at,         DateTime
   property :status,             String
-  property :commentable_class,  Class
+  property :commentable_class,  MerbunityClass
   
-  belongs_to :owner, :class_name => "Person"
+  belongs_to :owner, :class_name => "Person", :child_key => [:owner_id]
   
   has 1, :commentable_screencasts, :class_name => "CommentableScreencasts", :child_key => [:comment_id]
   has 1, :screencast, :through => :commentable_screencasts

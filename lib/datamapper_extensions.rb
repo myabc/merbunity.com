@@ -1,6 +1,6 @@
 module DataMapper
   module Types
-    class Class < DataMapper::Type
+    class MerbunityClass < DataMapper::Type
       primitive String
 
       def self.load(value, property)
@@ -8,7 +8,14 @@ module DataMapper
       end
 
       def self.dump(value, property)
-        value.nil? ? nil : value.name
+        case value
+        when String
+          value
+        when nil
+          nil
+        when Class
+          value.name
+        end
       end
     end # class URI
   end # module Types

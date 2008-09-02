@@ -124,6 +124,11 @@ module Merb
       "#{type}Comments (#{count})"
     end
       
+    def delete_button(named_url, obj, text, opts = {})
+      form_for obj, {:action => url(named_url), :method => :delete}.merge(opts) do
+        puts button(text, :class => "delete")
+      end            
+    end
     
     
     private

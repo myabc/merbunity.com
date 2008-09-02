@@ -18,7 +18,7 @@ class News < Application
   end
   # 
   def show
-    display @news_story
+    display @news_item
   end
   
   def new(news_item = {})

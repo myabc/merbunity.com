@@ -12,7 +12,7 @@ class NewsItem
   property :created_at,   DateTime
   property :updated_at,   DateTime
 
-  belongs_to :owner, :class_name => "Person"
+  belongs_to :owner, :class_name => "Person", :child_key => [:owner_id]
   
   whistler_properties :body, :description, :title
   
@@ -34,6 +34,7 @@ class NewsItem
   has n,  :comments, 
           :through => :comments_news_items, 
           :class_name => "Comment",
+          :child_key  => [:news_item_id],
           :remote_relationship_name => :comment,
           NewsItem.comments_news_items.comment.status => "published"
 
