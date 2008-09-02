@@ -10,3 +10,7 @@ Merb::Mailer.config = {
   :port => "25",
   :domain => "merbunity.com"
 }
+
+Merb::BootLoader.before_app_loads do
+  MA[:use_activation] = true unless Merb.env?(:development)
+end
