@@ -13,9 +13,9 @@
       Publisher: 
       = screencast.publisher.login
   .description
-    = screencast.description
+    = formatted(screencast.description)
   .body
-    = preserve(screencast.display_body)
+    = preserve(formatted(screencast.body))
   .download
     Download:
     = link_to screencast.original_filename, url(:download_screencast, screencast)

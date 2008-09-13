@@ -58,7 +58,7 @@ describe NewsItem do
   
   it "should render the body via display_body with textile" do
     ns = NewsItem.new(valid_news_item_hash.with(:body => "h2. Header"))    
-    ns.display_body.should have_tag(:h2){|t| t.should contain("Header")}
+    formatted(ns.body).should have_tag(:h2){|t| t.should contain("Header")}
   end
   
   it "should not be valid if the person is not a publisher or admin" do
@@ -140,27 +140,6 @@ describe NewsItem do
     ns.should_not be_new_record
     @publisher.reload
     @publisher.news_items.should include(ns)
-  end
-  
-  it "should not double escape script tags inside a code tag" do
-    ni = NewsItem.new(valid_news_item_hash)
-    orig = "<pre><code class=\"html\">&lt;script type=\"text/html\">&lt;/script></code></pre>"
-    expected = "<pre><code class=\"html\">&lt;script type=\"text/html\"&gt;&lt;/script&gt;</code></pre>"
-    ni.body = orig
-    ni.save
-    ni.body.should == orig
-    ni.display_body.should == expected
-  end
-  
-  it "should not unescape script tags outside a code block" do
-    ni = NewsItem.new(valid_news_item_hash)
-    orig = "<p>&lt;script type=\"text/javascript\">Stuff&lt;/script></p>"
-    expected = "<p>&lt;script type=&#8221;text/javascript&#8221;&gt;Stuff&lt;/script&gt;</p>"
-    
-    ni.body = orig
-    ni.save
-    ni.body.should == orig
-    ni.display_body.should == expected
   end
 
 end

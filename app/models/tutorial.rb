@@ -2,7 +2,6 @@ unless defined?(Tutorial)
 Comment
 class Tutorial
   include DataMapper::Resource
-  include Merbunity::WhistlerHelpers::DataMapper
 
   include Merbunity::Permissions::ProtectedModel
   include Merbunity::Publishable
@@ -12,7 +11,6 @@ class Tutorial
   property :description,              String,                   :nullable => false, :length => 255
   property :body,                     Text,                     :nullable => false
 
-  whistler_properties :title, :body, :description
 
 
   # Commentable stuff ----------- here in anticipation of snoflake schema style polymorphism
@@ -32,10 +30,5 @@ class Tutorial
           :remote_relationship_name => :comment,
           Tutorial.commentable_tutorials.comment.status => "pending"
           
-        
-  def display_body
-    return "" if self.body.nil?
-    @_display_body ||= RedCloth.new(self.body.gsub(/<code.*?<\/code>/mi){|s| s.gsub(/&lt;/,"<")}).to_html
-  end
 end
 end

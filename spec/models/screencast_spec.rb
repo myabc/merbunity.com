@@ -122,7 +122,7 @@ describe Screencast do
   it "should render textile of the body in display body" do
     sc = Screencast.new(valid_screencast_hash.with(:body => "h1. Heading"))
     sc.save
-    sc.display_body.should have_tag(:h1){|t| t.should contain("Heading")}
+    formatted(sc.body).should have_tag(:h1){|t| t.should contain("Heading")}
   end
   
   it "should change the screencast if a new one is added" do
@@ -178,27 +178,7 @@ describe Screencast, "states" do
     screencast.errors.should have(1).item
     screencast.errors.on(:owner).should_not be_empty
   end
-  
-  it "should not double escape script tags inside a code tag" do
-    sc = Screencast.new(valid_screencast_hash)
-    orig = "<pre><code class=\"html\">&lt;script type=\"text/html\">&lt;/script></code></pre>"
-    expected = "<pre><code class=\"html\">&lt;script type=\"text/html\"&gt;&lt;/script&gt;</code></pre>"
-    sc.body = orig
-    sc.save
-    sc.body.should == orig
-    sc.display_body.should == expected
-  end
-  
-  it "should not unescape script tags outside a code block" do
-    sc = Screencast.new(valid_screencast_hash)
-    orig = "<p>&lt;script type=\"text/javascript\">Stuff&lt;/script></p>"
-    expected = "<p>&lt;script type=&#8221;text/javascript&#8221;&gt;Stuff&lt;/script&gt;</p>"
-    
-    sc.body = orig
-    sc.save
-    sc.body.should == orig
-    sc.display_body.should == expected
-  end
+
 end
 
 describe Screencast, "Class Methods" do
@@ -246,35 +226,4 @@ describe Screencast, "Class Methods" do
   
 end
 
-describe Screencast, "whistler" do
-  before(:all) do
-    DataMapper.auto_migrate!
-  end
-  
-  [:description, :title, :body].each do |prop|
-    it "should white list on create" do
-      Whistler.stub!(:white_list).and_return("WHITELISTED")    
-      c = Screencast.new(valid_screencast_hash.with(prop => "#{prop}"))
-      c.save
-      c.send(prop).should == "WHITELISTED"
-    end
-  
-    it "should white list on save if the #{prop} has changed" do
-      c = Screencast.new(valid_screencast_hash.with(prop => "I've Been Whitelisted"))
-      c.save
-      Whistler.stub!(:white_list).and_return("WHITELISTED")
-      c.send("#{prop}=", "#{prop}")
-      c.save
-      c.send(prop).should == "WHITELISTED"
-    end
-  
-    it "should not white list the #{prop} attribute when it has not changed" do
-      c = Screencast.new(valid_screencast_hash.with(prop => "#{prop}"))
-      c.save
-      Whistler.should_not_receive(:white_list)
-      c.save    
-    end
-  end
-  
-end
 

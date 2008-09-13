@@ -5,12 +5,14 @@
 = partial :detail, :with => @screencast, :as => "screencast"
 
 - with_unpublished @screencast do
+  - comments = @screencast.pending_comments
   - @comments_url = url(:add_comment, :id => @screencast, :klass => "Screencast")
-  = partial "shared/comments/comments", :with => @screencast, :as => "object", :comment_page_heading => "Comments about this pending screencast", :comments_method => :pending_comments
+  = partial "shared/comments/comments", :with => @screencast, :as => "object", :comment_page_heading => "Comments about this pending screencast", :comments => comments
   
 - with_published @screencast do
+  - comments = @screencast.comments
   - @comments_url = url(:add_comment, :id => @screencast, :klass => "Screencast")
-  = partial "shared/comments/comments", :with => @screencast, :as => "object", :comment_page_heading => "Comments", :comments_method => :comments
+  = partial "shared/comments/comments", :with => @screencast, :as => "object", :comment_page_heading => "Comments",  :comments => comments
   
 - throw_content :for_object_menu, partial(:object_menu, :with => @screencast, :as => "screencast")
 

@@ -1,6 +1,6 @@
 %h3.title= link_to screencast.title, url(:screencast, screencast)
 %p.type.screencast Screencast
-%p.summary= (screencast.description || "").truncate(200)
+%p.summary= (formatted(screencast.description) || "").truncate(200)
 %p.credit 
   Author:
   = screencast.owner.login

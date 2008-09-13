@@ -1,13 +1,11 @@
 class Comment
   include DataMapper::Resource
   
-  include Merbunity::WhistlerHelpers::DataMapper
-  
-  property :id,                 Integer, :serial => true
-  property :body,               Text, :lazy => false
-  property :created_at,         DateTime
-  property :status,             String
-  property :commentable_class,  MerbunityClass
+  property :id,                 Integer,        :serial => true
+  property :body,               Text,           :lazy => false
+  property :created_at,         DateTime,       :lazy => false
+  property :status,             String,         :lazy => false
+  property :commentable_class,  MerbunityClass, :lazy => false
   
   belongs_to :owner, :class_name => "Person", :child_key => [:owner_id]
   
@@ -21,7 +19,5 @@ class Comment
   has 1, :news_item, :through  => :commentable_news_items
   
   validates_present :owner, :groups => :create
-  
-  whistler_properties :body
 
 end

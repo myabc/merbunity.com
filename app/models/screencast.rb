@@ -2,7 +2,6 @@ unless defined?(Screencast)
 Comment
 class Screencast
   include DataMapper::Resource
-  include Merbunity::WhistlerHelpers::DataMapper
 
   include Merbunity::Permissions::ProtectedModel
   include Merbunity::Publishable
@@ -37,7 +36,6 @@ class Screencast
   property :content_type,             String,   :nullable => false
   property :download_count,           Integer,  :nullable => false, :default => 0
 
-  whistler_properties :title, :body, :description
   validates_with_method :valid_upload?
 
   before :save,               :check_for_updated_file
@@ -70,12 +68,7 @@ class Screencast
   def full_path
     file_path / filename
   end
-
-  def display_body
-    return "" if self.body.nil?
-    @_display_body ||= RedCloth.new(self.body.gsub(/<code.*?<\/code>/mi){|s| s.gsub(/&lt;/,"<")}).to_html
-  end
-
+  
   private 
   def delete_associated_file!
     FileUtils.rm(full_path) if File.file?(full_path)
