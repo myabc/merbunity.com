@@ -13,8 +13,8 @@ module Merbunity
         
         property        :published_on,          DateTime                      unless self.properties.any?{|p| p.name == :published_on }
         property        :published_status,      String, :default => "Draft"   unless self.properties.any?{|p| p.name == :published_status }
-        property        :created_at,            DateTime                      unless self.properties.any?{|p| p.name == :created_at }
-        property        :updated_at,            DateTime                      unless self.properties.any?{|p| p.name == :updated_at }
+        property        :created_at,            DateTime, :lazy => false      unless self.properties.any?{|p| p.name == :created_at }
+        property        :updated_at,            DateTime, :lazy => false      unless self.properties.any?{|p| p.name == :updated_at }
         property        :owner_id,              Integer
         property        :publisher_id,          Integer
         property        :comment_count,         Integer,  :nullable => false, :default => 0

@@ -58,33 +58,6 @@ describe Tutorial do
     p.reload
     p.tutorials.should include(tutorial)
   end
-  
-  it "should render textile of the body in display body" do
-    tut = Tutorial.new(valid_tutorial_hash.with(:body => "h1. Heading"))
-    tut.save
-    tut.display_body.should have_tag(:h1){|t| t.should contain("Heading")}
-  end
-  
-  it "should not double escape script tags inside a code tag" do
-    tut = Tutorial.new(valid_tutorial_hash)
-    orig = "<pre><code class=\"html\">&lt;script type=\"text/html\">&lt;/script></code></pre>"
-    expected = "<pre><code class=\"html\">&lt;script type=\"text/html\"&gt;&lt;/script&gt;</code></pre>"
-    tut.body = orig
-    tut.save
-    tut.body.should == orig
-    tut.display_body.should == expected
-  end
-  
-  it "should not unescape script tags outside a code block" do
-    tut = Tutorial.new(valid_tutorial_hash)
-    orig = "<p>&lt;script type=\"text/javascript\">Stuff&lt;/script></p>"
-    expected = "<p>&lt;script type=&#8221;text/javascript&#8221;&gt;Stuff&lt;/script&gt;</p>"
-    
-    tut.body = orig
-    tut.save
-    tut.body.should == orig
-    tut.display_body.should == expected
-  end
 
 end
 
@@ -129,37 +102,6 @@ describe Tutorial, "Class Methods" do
     d = Tutorial.drafts
     d.should have(6).items   
     d.all?{|s| s.draft?}.should be_true
-  end
-  
-end
-
-describe Tutorial, "whistler" do
-  before(:all) do
-    DataMapper.auto_migrate!
-  end
-  
-  [:description, :title, :body].each do |prop|
-    it "should white list on create" do
-      Whistler.stub!(:white_list).and_return(true)
-      Whistler.should_receive(:white_list).once.with("#{prop}").and_return("#{prop}")    
-      c = Tutorial.create(valid_tutorial_hash.with(prop => "#{prop}"))
-      c.save
-    end
-  
-    it "should white list on save if the #{prop} has changed" do
-      c = Tutorial.new(valid_tutorial_hash.with(prop => "not #{prop} here"))
-      c.save
-      Whistler.should_receive(:white_list).with("#{prop}").and_return("#{prop}")
-      c.send("#{prop}=", "#{prop}")
-      c.save    
-    end
-      
-    it "should not white list the #{prop} attribute when it has not changed" do
-      c = Tutorial.new(valid_tutorial_hash.with(prop => "#{prop}"))
-      # c.save
-      Whistler.should_not_receive(:white_list)
-      # c.save    
-    end
   end
   
 end

@@ -30,6 +30,7 @@ Spec::Runner.configure do |config|
   config.include(Merb::Test::RouteHelper)
   config.include(Merb::Test::ControllerHelper)
   config.include(Merbunity::Spec::Helpers)
+  config.include(Merb::FormattingHelpers)
   
   config.before(:all) do
     Screencast.auto_migrate!

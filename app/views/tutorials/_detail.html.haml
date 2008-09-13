@@ -13,9 +13,9 @@
       Publisher: 
       = tutorial.publisher.login
   .description
-    = tutorial.description
+    = formatted(tutorial.description)
   .body
-    = preserve(tutorial.display_body)
+    = preserve(formatted(tutorial.body))
 
   - for_publishers(tutorial) do
     - with_unpublished(tutorial) do

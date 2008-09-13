@@ -5,6 +5,7 @@ module Merb
     include Merbunity::PublishableHelpers
     include Merbunity::PermissionHelpers
     include Merbunity::MenuHelper
+    include FormattingHelpers
     
     def nice_class_name(klass, opts = {})
       name = klass.name.snake_case.gsub("_", " ").split(" ").map{|i| i.capitalize}

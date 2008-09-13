@@ -2,7 +2,6 @@ unless defined?(NewsItem)
 Comment
 class NewsItem
   include DataMapper::Resource
-  include Merbunity::WhistlerHelpers::DataMapper
   
   property :id,           Integer, :serial => true
   property :body,         DataMapper::Types::Text
@@ -14,7 +13,6 @@ class NewsItem
 
   belongs_to :owner, :class_name => "Person", :child_key => [:owner_id]
   
-  whistler_properties :body, :description, :title
   
   validates_present :owner
   
@@ -37,12 +35,6 @@ class NewsItem
           :child_key  => [:news_item_id],
           :remote_relationship_name => :comment,
           NewsItem.comments_news_items.comment.status => "published"
-
-  
-  def display_body
-    return "" if self.body.nil?
-    @_display_body ||= RedCloth.new(self.body.gsub(/<code.*?<\/code>/mi){|s| s.gsub(/&lt;/,"<")}).to_html
-  end
   
   def published?
     true

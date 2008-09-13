@@ -8,6 +8,6 @@
     .gravatar
       = gravatar(comment.owner, :size => 50 )
     %p.body
-      = RedCloth.new("#{comment.body}").to_html
+      = formatted(comment.body)
   %p.timestamp
     

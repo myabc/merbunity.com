@@ -1,6 +1,6 @@
 %h3.title= link_to tutorial.title, url(:tutorial, tutorial)
 %p.type.tutorial Tutorial
-%p.summary= (tutorial.description || "").truncate(200)
+%p.summary= (formatted(tutorial.description) || "").truncate(200)
 %p.credit 
   Author:
   = tutorial.owner.login
