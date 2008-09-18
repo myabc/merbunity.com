@@ -26,6 +26,10 @@ class PendingFeatures < Application
     render
   end
   
+  def about
+    render
+  end
+  
   protected
   def set_page_header
     throw_content(:for_header, self.action_name.capitalize)
