@@ -89,6 +89,7 @@ use_test :rspec
 Merb::BootLoader.before_app_loads do
   MA[:layout] = :application
   MA[:forgotten_password] = true
+  MA[:from_email] = "info@merbunity.com"
   send_to = Merb.env?(:production) ? "notifications@merbunity.com" : "dev-notifications@merbunity.com"
   Merb.logger.info "mongrel@merbunity.com/pid#{$$}"
   puts "SET TO SEND TO #{send_to}"
