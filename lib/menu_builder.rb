@@ -41,7 +41,8 @@ module Merbunity
         [nil,         "People",       url(:people)],
         #[nil,         "Blogs",        url(:blogs)],
         [nil,         "Sites",        url(:sites)],
-        [nil,         "Projects",     url(:projects)]
+        [nil,         "Projects",     url(:projects)],
+        [nil,         "About",        url(:about)]
       ]
     end
 

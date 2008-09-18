@@ -52,6 +52,7 @@ Merb::Router.prepare do |r|
     f.match("/projects").to(:action => "projects").name(:projects)
     f.match("/terms_of_service").to(:action => "terms_of_service").name(:tos)
     f.match("/faq").to(:action => "faq").name(:faq)
+    f.match("/about").to(:action => "about").name(:about)
   end
 
   # r.resources :screencasts, :collection => {:pending => :get}
