@@ -1,3 +1,7 @@
+require File.dirname(__FILE__) + "/../config/rubundler"
+r = Rubundler.new
+r.setup_env
+
 require "rubygems"
 
 # Add the local gems dir if found within the app root; any dependencies loaded
