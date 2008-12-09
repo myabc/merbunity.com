@@ -35,8 +35,6 @@ add_dependency "do_sqlite3",                "=0.9.9",           :require => 'do_
 
 add_dependency "merb_datamapper",           merb_gems_version
 
-
-
 add_dependency 'nokogiri', '>=1.0.6'
 add_dependency 'webrat', '=0.3.2'
 
