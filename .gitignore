@@ -19,4 +19,4 @@ src/*
 gems/*
 .gemrc
 config/deploy.rb
-database.yml
+config/database.yml

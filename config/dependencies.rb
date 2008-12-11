@@ -34,7 +34,7 @@ add_dependency "dm-timestamps",             dm_gems_version,    :require => 'dm-
 add_dependency "dm-types",                  dm_gems_version,    :require => 'dm-types'
 add_dependency "dm-validations",            dm_gems_version,    :require => 'dm-validations' 
 add_dependency "do_sqlite3",                "=0.9.9",           :require => 'do_sqlite3'
-add_dependency "do_postgres",                "=0.9.9"          
+add_dependency "do_postgres",               "=0.9.9",           :require => 'do_postgres' 
 
 add_dependency "merb_datamapper",           merb_gems_version
 add_dependency "merb-haml",     merb_gems_version
