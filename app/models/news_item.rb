@@ -1,0 +1,2 @@
+class NewsItem < Article
+end
