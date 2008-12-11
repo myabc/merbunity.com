@@ -1,3 +1,4 @@
+add_source "http://gems.github.com/"
 add_source "http://gems.rubyforge.org/"
 
 add_gem 'rspec', '=1.1.11'
@@ -5,6 +6,7 @@ add_gem 'rake'
 add_gem 'rcov'
 add_gem 'mongrel'
 add_gem 'hoe'
+add_gem 'haml'
 # add_gem "data_objects", '=0.9.8'
 
 merb_gems_version = "1.0.3"
@@ -32,10 +34,11 @@ add_dependency "dm-timestamps",             dm_gems_version,    :require => 'dm-
 add_dependency "dm-types",                  dm_gems_version,    :require => 'dm-types'
 add_dependency "dm-validations",            dm_gems_version,    :require => 'dm-validations' 
 add_dependency "do_sqlite3",                "=0.9.9",           :require => 'do_sqlite3'
+add_dependency "do_postgres",                "=0.9.9"          
 
 add_dependency "merb_datamapper",           merb_gems_version
+add_dependency "merb-haml",     merb_gems_version
 
 add_dependency 'nokogiri', '>=1.0.6'
 add_dependency 'webrat', '=0.3.2'
-
 
