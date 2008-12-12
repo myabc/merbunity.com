@@ -1,0 +1,14 @@
+%fieldset{ :for => :article}
+  %ul
+    %li
+      %label{:for => :title}Title:
+      =text_field :title
+    %li
+      %label{:for => :slug}Slug:
+      =text_field :slug
+    %li
+      %label{:for => :description}Description:
+      =text_area :description
+    %li
+      %label{:for => :description}Body:
+      =text_area :body
