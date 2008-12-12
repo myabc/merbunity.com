@@ -1,5 +1,11 @@
-%h1 NewsItems controller, show action
-
-%p
-  Edit this file in
-  %tt app/views/news_items/show.html.haml
+%h1 
+  News Item - 
+  = @news_item.title
+%ul
+  %li
+    ="(#{@news_item.slug})"
+  %li 
+    %p=  @news_item.description
+  %li
+    %p= @news_item.body
+  

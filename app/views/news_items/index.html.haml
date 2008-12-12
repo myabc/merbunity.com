@@ -1,5 +1,27 @@
-%h1 NewsItems controller, index action
+%h1 News Items 
 
-%p
-  Edit this file in
-  %tt app/views/news_items/index.html.haml
+%table
+  %tr
+    %th
+      Title
+    %th
+      Slug
+    %th
+      Description
+    %th
+      Last updated
+    %th
+      &nbsp;
+  - @news_items.each do |article|
+    %tr
+      %td
+        =article.title
+      %td
+        =article.slug
+      %td
+        =article.description
+      %td
+        =article.updated_at
+      %td
+        %a{:href => url(:news_item, article)}Show|
+        %a{:href => url(:edit_news_item, article)}Edit

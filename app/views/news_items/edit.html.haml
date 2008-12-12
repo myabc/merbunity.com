@@ -1,5 +1,12 @@
-%h1 NewsItems controller, edit action
+%h1=" Edit News Item - #{@news_item.title}"
 
-%p
-  Edit this file in
-  %tt app/views/news_items/edit.html.haml
+= error_messages_for :news_item
+
+= form_for(@news_item, :action => url(:news_item, @news_item)) do
+  = partial "articles/form"
+
+  %ul.buttons
+    %li
+      = submit "Save News Item" 
+    %li
+      %a{:href => url(:news_items)}Cancel

@@ -7,6 +7,7 @@ add_gem 'rcov'
 add_gem 'mongrel'
 add_gem 'hoe'
 add_gem 'haml'
+add_gem 'ruby-debug'
 # add_gem "data_objects", '=0.9.8'
 
 merb_gems_version = "1.0.3"
