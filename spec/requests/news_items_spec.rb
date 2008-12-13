@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
 given "a news_item exists" do
   request(resource(:news_items), :method => "POST", 
-    :params => { :news_item => { :id => nil }})
+    :params => { :news_item => { :id => nil, :title => "A Title", :description => "A description" }})
 end
 
 describe "resource(:news_items)" do
@@ -49,6 +49,7 @@ end
 describe "resource(@news_item)" do 
   describe "a successful DELETE", :given => "a news_item exists" do
      before(:each) do
+       puts NewsItem.first.inspect
        @response = request(resource(NewsItem.first), :method => "DELETE")
      end
 
