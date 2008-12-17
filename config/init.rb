@@ -1,8 +1,6 @@
 # Go to http://wiki.merbivore.com/pages/init-rb
-require File.dirname(__FILE__) + "/rubundler"
-r = Rubundler.new
-r.setup_env
-r.setup_requirements
+ 
+require 'config/dependencies.rb' 
  
 use_orm :datamapper
 use_test :rspec

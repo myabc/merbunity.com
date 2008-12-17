@@ -16,7 +16,8 @@ src/*
 .hgignore
 .hg/*
 .svn/*
-gems/*
+gems/gems
+gems/specifications
 .gemrc
 config/deploy.rb
 config/database.yml
