@@ -2,12 +2,12 @@
 
 = error_messages_for :news_item
 
-= form_for(@news_item, :action => url(:news_items)) do
-  = partial "articles/form"
+= form_for @news_item, :action => resource(:news_items) do
+  = partial :form
 
   %ul.buttons
     %li
-      = submit "Save News Item" 
+      = submit "Save" 
     %li
-      %a{:href => url(:news_items)}Cancel
+      %a{:href => resource(:news_items)}Cancel
 

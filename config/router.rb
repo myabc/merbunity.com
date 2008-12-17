@@ -27,6 +27,7 @@
 
 Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do
+  
   resources :news_items
   # RESTful routes
   # resources :posts
@@ -38,7 +39,6 @@ Merb::Router.prepare do
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent
   # clients from calling your create or destroy actions with a GET
-  default_routes
   
   # Change this for your home page to be available at /
   # match('/').to(:controller => 'whatever', :action =>'index')

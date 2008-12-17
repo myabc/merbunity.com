@@ -1,50 +1,75 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
-# given "a news_item exists" do
-#   request(resource(:news_items), :method => "POST", 
-#     :params => { :news_item => { :id => nil, :title => "A Title", :description => "A description" }})
-# end
-# 
-# describe "resource(:news_items)" do
-#   describe "GET" do
-#     
-#     before(:each) do
-#       @response = request(resource(:news_items))
-#     end
-#     
-#     it "responds successfully" do
-#       @response.should be_successful
-#     end
-# 
-#     it "contains a list of news_items" do
-#       pending
-#       @response.should have_xpath("//ul")
-#     end
-#     
-#   end
-#   
-#   describe "GET", :given => "a news_item exists" do
-#     before(:each) do
-#       @response = request(resource(:news_items))
-#     end
-#     
-#     it "has a list of news_items" do
-#       pending
-#       @response.should have_xpath("//ul/li")
-#     end
-#   end
-#   
-#   describe "a successful POST" do
-#     before(:each) do
-#       @response = request(resource(:news_items), :method => "POST", 
-#         :params => { :news_item => { :id => nil }})
-#     end
-#     
-#     it "redirects to resource(:news_items)" do
-#     end
-#     
-#   end
-# end
+given "a news_item exists" do
+  NewsItem.make
+end
+
+describe "resource(:news_items)" do
+  # describe "GET" do
+  #   
+  #   before(:each) do
+  #     @response = request(resource(:news_items))
+  #   end
+  #   
+  #   it "responds successfully" do
+  #     @response.should be_successful
+  #   end
+  # 
+  #   it "contains a list of news_items" do
+  #     @response.should have_xpath("//ul")
+  #   end
+  #   
+  # end
+  # 
+  # describe "GET", :given => "a news_item exists" do
+  #   before(:each) do
+  #     @response = request(resource(:news_items))
+  #   end
+  #   
+  #   it "has a list of news_items" do
+  #     @response.should have_xpath("//ul/li")
+  #   end
+  # end
+  # 
+  describe "a successful POST" do
+    before(:each) do
+      NewsItem.all.destroy!
+    end
+    
+    def default_params(params={})
+      {
+        :title        => Sham.title,
+        :description  => Sham.paragraph,
+        :body         => Sham.paragraphs
+      }.merge(params)
+    end
+    
+    def fill_out_news_item_form!(params = {})
+      params = default_params(params)
+      visit resource(:news_items, :new)
+      fill_in "Title",        :with => params[:title]
+      fill_in "Description",  :with => params[:description]
+      fill_in "Body",         :with => params[:body]
+      response = click_button("Save")
+    end
+    
+    it "create a new post" do
+      fill_out_news_item_form!      
+      NewsItem.all.should have(1).item
+    end
+    
+    it "should redirect to the new news item" do
+      response = request(resource(:news_items), :method => "POST", :params => {:news_item => default_params})
+      response.should redirect_to(resource(NewsItem.first))
+    end
+    
+    it "should render the new form when there is a problem with the post" do
+      response = request(resource(:news_items), :method => "POST", :params => {:news_item => {:body => "foo"}})
+      response.status.should == Merb::Controller::Conflict.status
+      response.should have_xpath("//form[@action=\"#{resource(:news_items)}\"]")
+    end
+  end
+end
 # 
 # describe "resource(@news_item)" do 
 #   describe "a successful DELETE", :given => "a news_item exists" do
@@ -60,15 +85,40 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 #    end
 # end
 # 
-# describe "resource(:news_items, :new)" do
-#   before(:each) do
-#     @response = request(resource(:news_items, :new))
-#   end
-#   
-#   it "responds successfully" do
-#     @response.should be_successful
-#   end
-# end
+describe "resource(:news_items, :new)" do
+  before(:each) do
+    @response = request(resource(:news_items, :new))
+  end
+  
+  it "responds successfully" do
+    @response.should be_successful
+  end
+  
+  it "should render a news item form" do
+    xpath = "//form[@action=\"#{resource(:news_items)}\"][@method='post'][not(input[@name='_method'])]"
+    @response.should have_xpath(xpath)
+  end
+  
+  it "should have a title field" do
+    xpath = "//form//input[@name='news_item[title]']"
+    @response.should have_xpath(xpath)
+  end
+  
+  it "should have a description field" do
+    xpath = "//form//textarea[@name='news_item[description]']"
+    @response.should have_xpath(xpath)
+  end
+  
+  it "should have a body field" do
+    xpath = "//form//textarea[@name='news_item[body]']"
+    @response.should have_xpath(xpath)
+  end
+  
+  it "should have a submit button" do
+    xpath = "//form//input[@type='submit']"
+    @response.should have_xpath(xpath)
+  end
+end
 # 
 # describe "resource(@news_item, :edit)", :given => "a news_item exists" do
 #   before(:each) do

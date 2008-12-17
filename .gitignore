@@ -21,3 +21,4 @@ gems/specifications
 .gemrc
 config/deploy.rb
 config/database.yml
+spec/requests/log

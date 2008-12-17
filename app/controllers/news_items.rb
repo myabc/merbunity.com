@@ -1,4 +1,4 @@
-class NewsItems < Application
+class NewsItems < Articles
   
   # GET /news_items
   def index
@@ -33,9 +33,10 @@ class NewsItems < Application
   def create(news_item)
     @news_item = NewsItem.new(news_item)
     if @news_item.save
-      redirect resource(@news_item), :message => {:notice => "News item successfully created"}
+      redirect resource(@news_item), :message => {:notice => "News Reported"}
     else
-      message[:error] = "News item failed to be created"
+      message[:error] = "News Item not created"
+      self.status = Conflict.status
       render :new 
     end
   end

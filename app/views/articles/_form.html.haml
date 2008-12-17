@@ -1,14 +1,8 @@
 %fieldset{ :for => :article}
   %ul
     %li
-      %label{:for => :title}Title:
-      =text_field :title
+      =text_field :title, :label => "Title:"
     %li
-      %label{:for => :slug}Slug:
-      =text_field :slug
+      =text_area :description, :label => "Description:"
     %li
-      %label{:for => :description}Description:
-      =text_area :description
-    %li
-      %label{:for => :description}Body:
-      =text_area :body
+      =text_area :body, :label => "Body:"
