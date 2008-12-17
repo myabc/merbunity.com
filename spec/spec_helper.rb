@@ -19,11 +19,44 @@ end
 Merb.start_environment(:testing => true, :adapter => 'runner', :environment => ENV['MERB_ENV'] || 'test')
 
 require File.join(File.dirname(__FILE__), "blueprints", "blueprints")
+Dir[File.join(File.dirname(__FILE__), "shared_specs", "**/*.rb")].each{ |f| require f }
+
+module CustomMatchers
+
+  class BeUnauthenticated
+    def matches?(target)
+      @target = target
+      @target.status == 401
+    end
+    def failure_message
+      "expected #{@target.url} to be unauthenticated (401) but was #{@target.status}"
+    end
+    def negative_failure_message
+      "expected #{@target.url} to be authenticated but was unauthenticated (401)"
+    end
+  end
+  
+  def require_authentication
+    BeUnauthenticated.new
+  end
+end
+
+module LoginHelper
+  def login(login = nil, password = nil)
+    u = User.make(:login => "fred", :password => "sekrit", :password_confirmation => "sekrit") if !login
+    login     ||= "fred"
+    password  ||= "sekrit"
+    request(url(:login), :method => "PUT", :params => {:login => login, :password => password})
+  end
+end
 
 Spec::Runner.configure do |config|
   config.include(Merb::Test::ViewHelper)
   config.include(Merb::Test::RouteHelper)
   config.include(Merb::Test::ControllerHelper)
+  config.include(LoginHelper)
+  config.include(CustomMatchers)
+  config.before(:each) { Sham.reset }
 end
 
 DataMapper.auto_migrate!

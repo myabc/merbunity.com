@@ -4,6 +4,28 @@ given "a news_item exists" do
   NewsItem.make
 end
 
+describe "a news item form", :shared => true do
+  it "should have a title field" do
+    xpath = "//form//input[@name='news_item[title]']"
+    @response.should have_xpath(xpath)
+  end
+  
+  it "should have a description field" do
+    xpath = "//form//textarea[@name='news_item[description]']"
+    @response.should have_xpath(xpath)
+  end
+  
+  it "should have a body field" do
+    xpath = "//form//textarea[@name='news_item[body]']"
+    @response.should have_xpath(xpath)
+  end
+  
+  it "should have a submit button" do
+    xpath = "//form//input[@type='submit']"
+    @response.should have_xpath(xpath)
+  end
+end
+
 describe "resource(:news_items)" do
   # describe "GET" do
   #   
@@ -99,36 +121,31 @@ describe "resource(:news_items, :new)" do
     @response.should have_xpath(xpath)
   end
   
-  it "should have a title field" do
-    xpath = "//form//input[@name='news_item[title]']"
-    @response.should have_xpath(xpath)
-  end
-  
-  it "should have a description field" do
-    xpath = "//form//textarea[@name='news_item[description]']"
-    @response.should have_xpath(xpath)
-  end
-  
-  it "should have a body field" do
-    xpath = "//form//textarea[@name='news_item[body]']"
-    @response.should have_xpath(xpath)
-  end
-  
-  it "should have a submit button" do
-    xpath = "//form//input[@type='submit']"
-    @response.should have_xpath(xpath)
-  end
+  it_should_behave_like "a news item form"
 end
-# 
-# describe "resource(@news_item, :edit)", :given => "a news_item exists" do
-#   before(:each) do
-#     @response = request(resource(NewsItem.first, :edit))
-#   end
-#   
-#   it "responds successfully" do
-#     @response.should be_successful
-#   end
-# end
+
+describe "resource(@news_item, :edit)", :given => "a news_item exists" do
+  before(:each) do
+    @news_item = NewsItem.first
+    @response = request(resource(@news_item, :edit))
+  end
+  
+  it "responds successfully" do
+    @response.should be_successful
+  end
+  
+  it "should render a news item edit form" do
+    xpath = "//form[@action=\"#{resource(@news_item)}\"][@method='post'][input[@name='_method'][@value='put']]"
+    @response.should have_xpath(xpath)
+  end
+  
+  it_should_behave_like "a news item form"
+  
+  it "should have the title of the news item on the page" do
+    xpath = "//*[contains(text(), '#{@news_item.title}')]"
+  end
+  
+end
 # 
 # describe "resource(@news_item)", :given => "a news_item exists" do
 #   

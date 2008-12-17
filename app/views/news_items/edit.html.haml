@@ -3,7 +3,7 @@
 = error_messages_for :news_item
 
 = form_for(@news_item, :action => url(:news_item, @news_item)) do
-  = partial "articles/form"
+  = partial :form
 
   %ul.buttons
     %li
