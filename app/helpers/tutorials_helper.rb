@@ -1,12 +1,12 @@
 module Merb
-  module NewsItemsHelper
+  module TutorialsHelper
     
     def named_index_route
-      :news_items
+      :tutorials
     end
     
     def article_header(sense = :plural)
-      sense == :plural ? "News Items" : "News Item"
+      sense == :plural ? "Tutorials" : "Tutorial"
     end
 
   end

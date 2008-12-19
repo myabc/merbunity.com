@@ -1,4 +1,4 @@
-%h1=" Edit News Item - #{@article.title}"
+%h1=" Edit - #{@article.title}"
 
 = error_messages_for @article
 
@@ -7,6 +7,6 @@
 
   %ul.buttons
     %li
-      = submit "Save News Item" 
+      = submit "Save" 
     %li
-      %a{:href => resource(:news_items)}Cancel
+      %a{:href => resource(named_index_route)}Cancel

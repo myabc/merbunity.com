@@ -28,3 +28,7 @@ dependency "do_postgres",               "=0.9.9"
 dependency "merb_datamapper",           merb_gems_version
 dependency "merb-haml",                 merb_gems_version
 
+dependency "cucumber",                  :require_as  => nil
+dependency "david-merb_cucumber",       :require_as => nil
+
+

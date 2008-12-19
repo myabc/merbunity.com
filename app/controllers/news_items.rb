@@ -1,5 +1,4 @@
 class NewsItems < Articles
-  before :find_member, :only => [:show, :edit, :update, :delete, :destroy]
   
   # GET /news_items
   def index
@@ -7,24 +6,9 @@ class NewsItems < Articles
     render
   end
 
-  # GET /news_items/:id
-  def show(slug)
-    render
-  end
-
   # GET /news_items/new
   def new(news_item = {})
     @article = NewsItem.new(news_item)
-    render
-  end
-
-  # GET /news_items/:id/edit
-  def edit(slug)
-    render
-  end
-
-  # GET /news_items/:id/delete
-  def delete
     render
   end
 
@@ -41,7 +25,7 @@ class NewsItems < Articles
   end
 
   # PUT /news_items/:id
-  def update(slug, news_item)
+  def update(slug, news_item)    
     if @article.update_attributes(news_item)
       redirect resource(@article), :message => { :notice => "Updated Successfully"}
     else

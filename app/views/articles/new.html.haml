@@ -1,0 +1,15 @@
+%h1
+  New
+  = article_header :singular
+
+= error_messages_for @article
+
+= form_for @article, :action => resource(named_index_route) do
+  = partial :form
+
+  %ul.buttons
+    %li
+      = submit "Save" 
+    %li
+      %a{:href => resource(named_index_route)}Cancel
+

@@ -1,0 +1,6 @@
+%h1
+  Delete
+  = @article.title
+
+= form_for @article, :action => resource(@article), :method => :delete do
+  =submit "Delete"

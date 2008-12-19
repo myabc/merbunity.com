@@ -16,6 +16,8 @@ class Article
   before(:create, :set_new_slug)
   after( :create, :reload)
   
+  belongs_to :owner, :class_name => "User"
+  
   private 
   def set_new_slug
     return unless new_record?
