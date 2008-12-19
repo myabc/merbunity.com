@@ -38,11 +38,11 @@ describe "an article", :shared => true do
     a2.errors.on(:slug).should_not be_blank
   end
   
-  it "should not allow you to set the slug manually" do
-    article = @klass.make(:title => "foo")
-    lambda do
-      article.slug = "foo bar"
-    end.should raise_error(NoMethodError)
+  it "should allow you to set the slug manually" do
+    @article.slug = "foo bar"
+    @article.save
+    @article.reload
+    @article.slug.should == "foo-bar"
   end
   
   it "should have a description" do

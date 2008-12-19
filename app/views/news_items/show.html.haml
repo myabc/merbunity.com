@@ -1,11 +1,10 @@
 %h1 
-  News Item - 
-  = @news_item.title
+  = @article.title
 %ul
   %li
-    ="(#{@news_item.slug})"
+    ="(#{@article.slug})"
   %li 
-    %p=  @news_item.description
+    %p.description=  @article.description
   %li
-    %p= @news_item.body
+    %p.content= @article.body
   

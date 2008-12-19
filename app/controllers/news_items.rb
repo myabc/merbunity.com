@@ -1,26 +1,25 @@
 class NewsItems < Articles
+  before :find_member, :only => [:show, :edit, :update, :delete, :destroy]
   
   # GET /news_items
   def index
-    @news_items = NewsItem.all
+    @articles = NewsItem.all
     render
   end
 
   # GET /news_items/:id
-  def show(id)
-    @news_item = NewsItem.get(id) 
+  def show(slug)
     render
   end
 
   # GET /news_items/new
-  def new
-    @news_item = NewsItem.new
+  def new(news_item = {})
+    @article = NewsItem.new(news_item)
     render
   end
 
   # GET /news_items/:id/edit
-  def edit(id)
-    @news_item = NewsItem.get(id) 
+  def edit(slug)
     render
   end
 
@@ -31,9 +30,9 @@ class NewsItems < Articles
 
   # POST /news_items
   def create(news_item)
-    @news_item = NewsItem.new(news_item)
-    if @news_item.save
-      redirect resource(@news_item), :message => {:notice => "News Reported"}
+    @article = NewsItem.new(news_item)
+    if @article.save
+      redirect resource(@article), :message => {:notice => "News Reported"}
     else
       message[:error] = "News Item not created"
       self.status = Conflict.status
@@ -42,18 +41,26 @@ class NewsItems < Articles
   end
 
   # PUT /news_items/:id
-  def update(id, news_item)
-    @news_item = NewsItem.get(id)
-    raise NotFound unless @news_item 
-    if @news_item.update_attributes(news_item)
-      redirect resource(@news_item)
+  def update(slug, news_item)
+    if @article.update_attributes(news_item)
+      redirect resource(@article), :message => { :notice => "Updated Successfully"}
     else
-      display @news_item, :edit
+      message[:error] = "News Item not updated"
+      self.status = Conflict.status
+      display @article, :edit
     end
   end
 
   # DELETE /news_items/:id
-  def destroy
-    render
+  def destroy(slug)
+    @article.destroy
+    redirect resource(:news_items)
+  end
+  
+  private
+  def find_member
+    @article = NewsItem.first(:slug => params[:slug])
+    raise NotFound unless @article
+    @article
   end
 end

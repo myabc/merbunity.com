@@ -1,27 +1,9 @@
 %h1 News Items 
 
-%table
-  %tr
-    %th
-      Title
-    %th
-      Slug
-    %th
-      Description
-    %th
-      Last updated
-    %th
-      &nbsp;
-  - @news_items.each do |article|
-    %tr
-      %td
-        =article.title
-      %td
-        =article.slug
-      %td
-        =article.description
-      %td
-        =article.updated_at
-      %td
-        %a{:href => url(:news_item, article)}Show|
-        %a{:href => url(:edit_news_item, article)}Edit
+- unless @articles.blank?
+  %ul.articles
+    = partial :list_summary, :with => @articles, :as => "article"
+- else
+  .articles
+    No News Were Found
+
