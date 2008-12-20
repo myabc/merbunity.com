@@ -11,5 +11,7 @@ Given /^[tT]he following users exist:$/ do |users_table|
 end
 
 Given /^[tT]he default user exists$/ do
-  User.make(:login => "fred", :password => "sekrit", :password_confirmation => "sekrit")
+  unless User.first(:login => "fred")
+    User.make(:login => "fred", :password => "sekrit", :password_confirmation => "sekrit")
+  end
 end

@@ -37,7 +37,6 @@ When /^I attach the file at "(.*)" to "(.*)" $/ do |path, field|
   attach_file(field, path)
 end
 
-
 When /^I (.*?) directly (to|from) (.*?) without params$/ do | method, _, url|
   request(url, :method => method)
 end

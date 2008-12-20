@@ -27,8 +27,10 @@
 
 Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do
-  identify NewsItem => :slug do
+  identify NewsItem => :slug, User => :slug do
+    match("/signup").to(:controller => "people", :action => "new").name(:signup)
     resources :news_items
+    resources :people, User
   end
   # RESTful routes
   # resources :posts

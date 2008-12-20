@@ -13,5 +13,15 @@ class User
   
   property :id,     Serial
   property :login,  String
+  property :slug,   Slug,   :unique => true,    :nullabel => false
   
+  before(:valid?, :set_new_slug)
+  before(:create, :set_new_slug)
+  after( :create, :reload)
+    
+  private 
+  def set_new_slug
+    return unless new_record?
+    self.slug ||= login
+  end
 end

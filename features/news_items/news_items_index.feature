@@ -11,9 +11,7 @@ Feature: news item index
     And the request should be successful
   
   Scenario: Logged in Access
-    Given the following users exist:
-      | login | password | 
-      | fred  | sekrit   |
+    Given the default user exists
     Given 5 published news item articles
     And I login as fred with sekrit
     When I go to /news_items

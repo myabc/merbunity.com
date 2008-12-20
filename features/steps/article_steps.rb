@@ -4,9 +4,6 @@ Given /^(\d+?) published (.*?) articles?$/ do |number, klass|
   (1..number.to_i).each{ klass.make }
 end
 
-Given /^no articles exist$/ do
-  Article.all.destroy!
-end
 
 Given /^a published (.*?) article with (.*?) "(.*?)" and owned by "(.*?)"$/ do |klass, field, value, login|
   klass = get_klass(klass)
@@ -15,5 +12,5 @@ Given /^a published (.*?) article with (.*?) "(.*?)" and owned by "(.*?)"$/ do |
 end
 
 def get_klass(klass)
-    klass = Object.full_const_get(klass.gsub(" ", "_").camel_case)
+    klass = Object.full_const_get(klass.gsub(" ", "_").camel_case.singularize)
 end

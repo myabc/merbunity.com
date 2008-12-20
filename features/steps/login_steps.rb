@@ -10,6 +10,10 @@ Given /^I login as (.*?) with (.*?)$/ do | login, password |
   response.status.should_not == 401
 end
 
+When /^I logout$/ do
+  request(url(:logout), :method => "DELETE")
+end
+
 Then /^I should require authentication$/ do
   response.status.should == 401
 end
