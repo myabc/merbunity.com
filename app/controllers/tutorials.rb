@@ -1,5 +1,4 @@
-class Tutorials < Articles
-  
+class Tutorials < Articles  
   
   # GET /tutorials
   def index

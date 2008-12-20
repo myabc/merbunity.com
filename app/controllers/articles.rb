@@ -1,8 +1,8 @@
 class Articles < Application
   abstract!
-  before :find_member,          :only => [:show, :edit, :update, :delete, :destroy]
-  before :ensure_authenticated, :exclude => [:index, :show]
-  before :is_owner,             :only => [:edit, :update, :delete, :destroy]
+  before :find_member,          :only     => [:show, :edit, :update, :delete, :destroy]
+  before :ensure_authenticated, :exclude  => [:index, :show]
+  before :is_owner,             :only     => [:edit, :update, :delete, :destroy]
   
   # This makes it so that for an inhertied controller, when rendering, first
   # it will look in that controllers views for the template, but, failing that

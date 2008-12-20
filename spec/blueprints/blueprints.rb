@@ -10,6 +10,13 @@ NewsItem.blueprint do
   body        { Sham.paragraphs}
 end
 
+Tutorial.blueprint do
+  title       { Sham.name }
+  description { Sham.paragraph }
+  body        { Sham.paragraphs}
+end
+
+
 User.blueprint do
   login                 { Sham.name }
   password              { Sham.word }

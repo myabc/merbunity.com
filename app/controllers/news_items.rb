@@ -8,6 +8,7 @@ class NewsItems < Articles
 
   # GET /news_items/new
   def new(news_item = {})
+    only_provides :html
     @article = NewsItem.new(news_item)
     render
   end
