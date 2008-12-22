@@ -22,8 +22,9 @@ dependency "dm-migrations",             dm_gems_version
 dependency "dm-timestamps",             dm_gems_version
 dependency "dm-types",                  dm_gems_version
 dependency "dm-validations",            dm_gems_version 
-dependency "do_sqlite3",                "=0.9.9"
-dependency "do_postgres",               "=0.9.9"
+dependency "do_sqlite3",                "=0.9.9", :require_as => nil
+dependency "do_postgres",               "=0.9.9", :require_as => nil
+dependency "do_mysql",                  "=0.9.9", :require_as => nil
 
 dependency "merb_datamapper",           merb_gems_version
 dependency "merb-haml",                 merb_gems_version
