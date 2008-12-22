@@ -9,18 +9,15 @@ class Articles < Application
   # it will look in the articles view directory
   self.template_roots << [Merb.dir_for(:view), :article_template_location]
   
-  # GET /news_items/:id
   def show(slug)
     render
   end
   
-  # GET /news_items/:id/edit
   def edit(slug)
     only_provides :html
     render
   end
 
-  # GET /news_items/:id/delete
   def delete
     render
   end
