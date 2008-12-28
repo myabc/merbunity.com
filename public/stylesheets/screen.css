@@ -18,7 +18,7 @@ li {
 /* Base styles */
 body {
   background-color: #f1f1f1;
-  background-position: top center;
+  background-position: center -45px;
   background-repeat: no-repeat;
   background-image: url(/images/page-bkg.gif);
   font-size: 72%;
@@ -31,8 +31,8 @@ body {
   width: 980px; }
 
 #logo {
-  background: 0 60px no-repeat url(/images/logo.gif);
-  height: 175px;
+  background: 0 20px no-repeat url(/images/logo.gif);
+  height: 110px;
   /* Hide text */
   letter-spacing: -1000em;
   text-indent: -1000em; }
@@ -88,7 +88,7 @@ body {
 
 /* Sidebar */
 #side h2 {
-  background: #00ccff;
+  background: #0099ff;
   font-weight: bold;
   font-size: 1.7em;
   color: white;
@@ -117,3 +117,10 @@ body {
     margin: 0 0 1em 45px;
     display: block;
     clear: both; }
+
+/* Home */
+#home {
+  background-position: center top; }
+  #home #logo {
+    background-position: 0 60px;
+    height: 175px; }
