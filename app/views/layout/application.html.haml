@@ -1,0 +1,33 @@
+!!! 1.1
+%html
+  %head
+    %title Rubunity
+    = css_include_tag(:screen)
+    
+  %body
+    %h1#logo Rubunity
+    
+    %div#wrapper
+      %ul#navigation
+        %li= link_to("Home", "/", :class => "current")
+        %li= link_to("News", resource(:news_items))
+        %li= link_to("Tutorials", resource(:tutorials))
+        %li= link_to("People", resource(:people))
+        %li#login-link= link_to("Login", "/")
+      
+      %div#side
+        %h2 Feature
+        %p
+          Enthusiastically generate empowered technology and holistic total 
+          linkage. Assertively redefine resource-leveling solutions via 
+          accurate potentialities.
+        
+        
+      %div#main
+        = catch_content(:for_layout)
+        
+      %div#footer
+        %h1 Meta
+        %p 
+          Design and code by <br/>
+          Daniel Neighman and Luke Sutton
