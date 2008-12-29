@@ -52,18 +52,19 @@ body
   :text-indent -1000em
 
 #wrapper
-  :background white 715px 0 repeat-y url(/images/column-split.gif)
+  :background white 720px 0 repeat-y url(/images/column-split.gif)
   
 #main, #side
   :padding-top 1.5em
   
 #main
-  :margin-left= !margin
+  :padding-left= !margin
   :width= (9 * !column) + (8 * !margin)
   :float left
   
 #side
-  :margin-right= !margin
+  :padding-left= !margin
+  :padding-right= !margin
   :width= (!margin * 2) + (!column * 3)
   :float right
 
@@ -153,3 +154,88 @@ body
     :background-position 0 60px
     :height 175px
     
+  #main, #side
+    :background no-repeat url(/images/home-bkg.gif)
+    :padding-top 65px
+    :margin-top 8px
+    
+  #side
+    :background-position right top
+    
+  #main 
+    h2
+      :background= !cherry
+      :font
+        :weight bold
+        :size 2.4em
+      :color white
+      :padding 3px 4px
+      :margin 0 0 0.3em 80px
+      :float left
+      
+    p
+      :margin-left 80px
+      :margin-right 20px
+      :clear both
+      
+  /* Reposition highlights
+  #wrapper
+    :padding-top 18.4em
+    :position relative
+  
+  #navigation
+    :position absolute
+    :left 0
+    :top 0
+    
+  h2.highlights
+    :position absolute
+    :left -1000em
+  
+  ul.highlights
+    :border-bottom 1px solid #cccccc
+    :background white
+    :margin-top 8px
+    :height 16em
+    :width 100%
+    :position absolute
+    :left 0
+    :top 2.4em
+    
+    li
+      :background 80px 2em no-repeat
+      :padding-left= (3 * !column) + (4 * !margin)
+      :padding-top 3em
+      :height 13em
+      :float left
+      :position relative
+      
+    li.tutorial
+      :background-image url(/images/highlights/tutorial.gif)
+    
+    h3
+      :font
+        :size 3.5em
+        :weight bold
+      :color= !dark_grey
+      :line-height 0.85
+      :width= (7 * !column) + (6 * !margin)
+      
+    p.meta
+      :margin-top 2em
+      :color= !dark_grey
+      
+      strong
+        :text-transform uppercase
+        :display block
+        
+    p.link a
+      :width 100%
+      :height 16em
+      :position absolute
+      :left 0
+      :top 0
+      /* Hide text
+      :text-indent -1000em
+      :letter-spacing -1000em
+        

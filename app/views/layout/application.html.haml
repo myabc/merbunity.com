@@ -13,7 +13,7 @@
         %li= link_to("News", resource(:news_items))
         %li= link_to("Tutorials", resource(:tutorials))
         %li= link_to("People", resource(:people))
-        %li#login-link= link_to("Login", "/")
+        %li#login-link= link_to("Login", url(:login))
       
       %div#side
         %h2 Feature
@@ -24,6 +24,7 @@
         
         
       %div#main
+        
         = catch_content(:for_layout)
         
       %div#footer

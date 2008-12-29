@@ -38,18 +38,19 @@ body {
   text-indent: -1000em; }
 
 #wrapper {
-  background: white 715px 0 repeat-y url(/images/column-split.gif); }
+  background: white 720px 0 repeat-y url(/images/column-split.gif); }
 
 #main, #side {
   padding-top: 1.5em; }
 
 #main {
-  margin-left: 20px;
+  padding-left: 20px;
   width: 700px;
   float: left; }
 
 #side {
-  margin-right: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   width: 220px;
   float: right; }
 
@@ -120,7 +121,75 @@ body {
 
 /* Home */
 #home {
-  background-position: center top; }
+  background-position: center top;
+  /* Reposition highlights */ }
   #home #logo {
     background-position: 0 60px;
     height: 175px; }
+  #home #main, #home #side {
+    background: no-repeat url(/images/home-bkg.gif);
+    padding-top: 65px;
+    margin-top: 8px; }
+  #home #side {
+    background-position: right top; }
+  #home #main h2 {
+    background: #ab004a;
+    font-weight: bold;
+    font-size: 2.4em;
+    color: white;
+    padding: 3px 4px;
+    margin: 0 0 0.3em 80px;
+    float: left; }
+  #home #main p {
+    margin-left: 80px;
+    margin-right: 20px;
+    clear: both; }
+  #home #wrapper {
+    padding-top: 18.4em;
+    position: relative; }
+  #home #navigation {
+    position: absolute;
+    left: 0;
+    top: 0; }
+  #home h2.highlights {
+    position: absolute;
+    left: -1000em; }
+  #home ul.highlights {
+    border-bottom: 1px solid #cccccc;
+    background: white;
+    margin-top: 8px;
+    height: 16em;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 2.4em; }
+    #home ul.highlights li {
+      background: 80px 2em no-repeat;
+      padding-left: 260px;
+      padding-top: 3em;
+      height: 13em;
+      float: left;
+      position: relative; }
+    #home ul.highlights li.tutorial {
+      background-image: url(/images/highlights/tutorial.gif); }
+    #home ul.highlights h3 {
+      font-size: 3.5em;
+      font-weight: bold;
+      color: #333333;
+      line-height: 0.85;
+      width: 540px; }
+    #home ul.highlights p.meta {
+      margin-top: 2em;
+      color: #333333; }
+      #home ul.highlights p.meta strong {
+        text-transform: uppercase;
+        display: block; }
+    #home ul.highlights p.link a {
+      width: 100%;
+      height: 16em;
+      position: absolute;
+      left: 0;
+      top: 0;
+      /* Hide text */
+      text-indent: -1000em;
+      letter-spacing: -1000em; }
