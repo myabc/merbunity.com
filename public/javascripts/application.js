@@ -1,6 +1,6 @@
 $.fn.cycleHighlights = function() {
   var WIDTH = "970px";
-  var FREQUENCY = 6000;
+  var FREQUENCY = 8000;
   
   var ul = $(this);
   var entries = ul.find("li");
@@ -18,7 +18,7 @@ $.fn.cycleHighlights = function() {
     next = $(entries[nextIndex]);
     current.css({"z-index": 1});
     next.css({"z-index": 2});
-    next.animate({left: "0px"}, 600, "linear", hideCurrent);
+    next.animate({left: "0px"}, 600, "swing", hideCurrent);
     window.setTimeout(cycle, FREQUENCY);
   };
   

@@ -221,6 +221,16 @@ body {
       top: 0; }
     #home.javascript ul.highlights li.tutorial {
       background-image: url(/images/highlights/tutorial.gif); }
+    #home.javascript ul.highlights li.screencast {
+      background-image: url(/images/highlights/screencast.gif); }
+    #home.javascript ul.highlights li.event {
+      background-image: url(/images/highlights/event.gif); }
+    #home.javascript ul.highlights li.person {
+      background-image: url(/images/highlights/person.gif); }
+    #home.javascript ul.highlights li.news {
+      background-image: url(/images/highlights/news-item.gif); }
+    #home.javascript ul.highlights li.site {
+      background-image: url(/images/highlights/site.gif); }
   #home .addition {
     background: 42px 0 no-repeat;
     padding-top: 4em;
