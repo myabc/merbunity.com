@@ -32,11 +32,18 @@
               = image_tag("sponsors/ivey-brown.gif", :alt => "The Ivey & brown logo.")
         
       %div#main
-        
+        %h1#page-title= @page_title
         = catch_content(:for_layout)
         
       %div#footer
-        %h1 Meta
-        %p 
+        %h1 Help and Legal
+        %p#credits
           Design and code by <br/>
           Daniel Neighman and Luke Sutton
+        %p#creative-commons
+          All contents Creative Commons <br/>
+          licensed unless noted otherwise
+        %p#help-legal
+          Please read our Terms of Service. <br/>
+          If you need help there is our FAQ. <br/>
+          To give us feedback, please use this form.

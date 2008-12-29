@@ -6,7 +6,12 @@
     :style solid
     :color= !bright_blue
   :padding 28px 0 1em 0
+  :position relative
   
+  h1, #help-legal
+    :position absolute
+    :top 28px
+    
   h1
     :background= !dark_grey
     :font
@@ -14,12 +19,25 @@
       :size 1.5em
     :color white
     :padding 3px 4px
-    :margin 0 0 0.5em 45px
-    :float left
+    :left 45px
     
   p
+    :background left top no-repeat
     :font-size 0.95em
     :color= !dark_grey
-    :margin 0 0 1em 45px
+    :margin 0 0 0 45px
+    :padding 0 0 1.5em 40px
     :display block
-    :clear both
+  
+  #credits, #help-legal
+    :margin-top 3em
+    
+  #credits
+    :background-image url(/images/footer/credit.gif)
+    
+  #creative-commons
+    :background-image url(/images/footer/creative-commons.gif)
+
+  #help-legal
+    :background-image url(/images/footer/help.gif)
+    :left 25em

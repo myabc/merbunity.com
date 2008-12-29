@@ -83,6 +83,9 @@ body {
       color: white !important; }
   #navigation #login-link {
     float: right; }
+    #navigation #login-link a {
+      background: left center no-repeat url(/images/navigation/login.gif);
+      padding-left: 21px; }
 
 /* Sidebar */
 #side h2 {
@@ -111,21 +114,34 @@ body {
   border-top-width: 8px;
   border-top-style: solid;
   border-top-color: #00ccff;
-  padding: 28px 0 1em 0; }
+  padding: 28px 0 1em 0;
+  position: relative; }
+  #footer h1, #footer #help-legal {
+    position: absolute;
+    top: 28px; }
   #footer h1 {
     background: #333333;
     font-weight: bold;
     font-size: 1.5em;
     color: white;
     padding: 3px 4px;
-    margin: 0 0 0.5em 45px;
-    float: left; }
+    left: 45px; }
   #footer p {
+    background: left top no-repeat;
     font-size: 0.95em;
     color: #333333;
-    margin: 0 0 1em 45px;
-    display: block;
-    clear: both; }
+    margin: 0 0 0 45px;
+    padding: 0 0 1.5em 40px;
+    display: block; }
+  #footer #credits, #footer #help-legal {
+    margin-top: 3em; }
+  #footer #credits {
+    background-image: url(/images/footer/credit.gif); }
+  #footer #creative-commons {
+    background-image: url(/images/footer/creative-commons.gif); }
+  #footer #help-legal {
+    background-image: url(/images/footer/help.gif);
+    left: 25em; }
 
 /* Home */
 #home {
@@ -140,6 +156,9 @@ body {
     margin-top: 8px; }
   #home #side {
     background-position: right top; }
+  #home #main h1 {
+    position: absolute;
+    left: -1000em; }
   #home #main h2 {
     background: #ab004a;
     font-weight: bold;
