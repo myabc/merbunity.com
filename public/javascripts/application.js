@@ -1,6 +1,6 @@
 $.fn.cycleHighlights = function() {
   var WIDTH = "970px";
-  var FREQUENCY = 20000;
+  var FREQUENCY = 12000;
   
   var ul = $(this);
   var entries = ul.find("li");
