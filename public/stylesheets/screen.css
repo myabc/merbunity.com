@@ -146,7 +146,7 @@ body {
 /* Home */
 #home {
   background-position: center top;
-  /* Reposition highlights */
+  /* Tweak hightlights when JS is present */
   /* Latest Additions */ }
   #home #logo {
     background-position: 0 60px;
@@ -168,17 +168,25 @@ body {
     padding: 3px 4px;
     margin: 0 0 0.3em 100px;
     float: left; }
-  #home #wrapper {
+  #home ul.highlights h3 {
+    font-weight: bold; }
+  #home ul.highlights p.meta {
+    margin-top: 2em;
+    color: #333333; }
+    #home ul.highlights p.meta strong {
+      text-transform: uppercase;
+      display: block; }
+  #home.javascript #wrapper {
     padding-top: 18.4em;
     position: relative; }
-  #home #navigation {
+  #home.javascript #navigation {
     position: absolute;
     left: 0;
     top: 0; }
-  #home h2.highlights {
+  #home.javascript h2.highlights {
     position: absolute;
     left: -1000em; }
-  #home ul.highlights {
+  #home.javascript ul.highlights {
     border-bottom: 1px solid #cccccc;
     background: white;
     margin-top: 8px;
@@ -186,29 +194,14 @@ body {
     width: 100%;
     position: absolute;
     left: 0;
-    top: 2.4em; }
-    #home ul.highlights li {
-      background: 80px 2em no-repeat;
-      padding-left: 260px;
-      padding-top: 3em;
-      height: 13em;
-      float: left;
-      position: relative; }
-    #home ul.highlights li.tutorial {
-      background-image: url(/images/highlights/tutorial.gif); }
-    #home ul.highlights h3 {
+    top: 2.4em;
+    overflow: hidden; }
+    #home.javascript ul.highlights h3 {
       font-size: 3.5em;
-      font-weight: bold;
       color: #333333;
       line-height: 0.85;
       width: 540px; }
-    #home ul.highlights p.meta {
-      margin-top: 2em;
-      color: #333333; }
-      #home ul.highlights p.meta strong {
-        text-transform: uppercase;
-        display: block; }
-    #home ul.highlights p.link a {
+    #home.javascript ul.highlights p.link a {
       width: 100%;
       height: 16em;
       position: absolute;
@@ -217,6 +210,17 @@ body {
       /* Hide text */
       text-indent: -1000em;
       letter-spacing: -1000em; }
+    #home.javascript ul.highlights li {
+      background: white 80px 2em no-repeat;
+      padding-left: 260px;
+      padding-top: 3em;
+      height: 13em;
+      float: left;
+      position: absolute;
+      left: 0;
+      top: 0; }
+    #home.javascript ul.highlights li.tutorial {
+      background-image: url(/images/highlights/tutorial.gif); }
   #home .addition {
     background: 42px 0 no-repeat;
     padding-top: 4em;

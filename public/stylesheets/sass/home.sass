@@ -28,49 +28,10 @@
       :padding 3px 4px
       :margin 0 0 0.3em 100px
       :float left
-    
-  /* Reposition highlights
-  #wrapper
-    :padding-top 18.4em
-    :position relative
-  
-  #navigation
-    :position absolute
-    :left 0
-    :top 0
-    
-  h2.highlights
-    :position absolute
-    :left -1000em
-  
+
   ul.highlights
-    :border-bottom 1px solid #cccccc
-    :background white
-    :margin-top 8px
-    :height 16em
-    :width 100%
-    :position absolute
-    :left 0
-    :top 2.4em
-    
-    li
-      :background 80px 2em no-repeat
-      :padding-left= (3 * !column) + (4 * !margin)
-      :padding-top 3em
-      :height 13em
-      :float left
-      :position relative
-      
-    li.tutorial
-      :background-image url(/images/highlights/tutorial.gif)
-    
     h3
-      :font
-        :size 3.5em
-        :weight bold
-      :color= !dark_grey
-      :line-height 0.85
-      :width= (7 * !column) + (6 * !margin)
+      :font-weight bold
       
     p.meta
       :margin-top 2em
@@ -79,16 +40,61 @@
       strong
         :text-transform uppercase
         :display block
-        
-    p.link a
-      :width 100%
-      :height 16em
+      
+  /* Tweak hightlights when JS is present
+  &.javascript
+    #wrapper
+      :padding-top 18.4em
+      :position relative
+  
+    #navigation
       :position absolute
       :left 0
       :top 0
-      /* Hide text
-      :text-indent -1000em
-      :letter-spacing -1000em
+    
+    h2.highlights
+      :position absolute
+      :left -1000em
+    
+    ul.highlights
+      :border-bottom 1px solid #cccccc
+      :background white
+      :margin-top 8px
+      :height 16em
+      :width 100%
+      :position absolute
+      :left 0
+      :top 2.4em
+      :overflow hidden
+      
+      h3
+        :font-size 3.5em
+        :color= !dark_grey
+        :line-height 0.85
+        :width= (7 * !column) + (6 * !margin)
+        
+      p.link a
+        :width 100%
+        :height 16em
+        :position absolute
+        :left 0
+        :top 0
+        /* Hide text
+        :text-indent -1000em
+        :letter-spacing -1000em
+        
+      li
+        :background white 80px 2em no-repeat
+        :padding-left= (3 * !column) + (4 * !margin)
+        :padding-top 3em
+        :height 13em
+        :float left
+        :position absolute
+        :left 0
+        :top 0
+      
+      li.tutorial
+        :background-image url(/images/highlights/tutorial.gif)
   
   /* Latest Additions
   .addition
