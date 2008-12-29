@@ -1,0 +1,34 @@
+/* Layout
+#logo,
+#wrapper
+  :margin 0 auto
+  :width= !layout
+
+#logo
+  :background 0 20px no-repeat url(/images/logo.gif)
+  :height 110px
+  /* Hide text
+  :letter-spacing -1000em
+  :text-indent -1000em
+
+#wrapper
+  :background white 720px 0 repeat-y url(/images/column-split.gif)
+  
+#main, #side
+  :padding-top 1.5em
+  
+#main
+  :padding-left= !margin
+  :width= (9 * !column) + (8 * !margin)
+  :float left
+  
+#side
+  :padding-left= !margin
+  :padding-right= !margin
+  :width= (!margin * 2) + (!column * 3)
+  :float right
+
+#footer
+  :width 100%
+  :clear both
+  

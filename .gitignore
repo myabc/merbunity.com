@@ -22,3 +22,5 @@ gems/specifications
 config/deploy.rb
 config/database.yml
 spec/requests/log
+public/stylesheets/*.css
+!public/stylesheets/screen.css
