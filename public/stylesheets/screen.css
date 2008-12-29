@@ -146,7 +146,8 @@ body {
 /* Home */
 #home {
   background-position: center top;
-  /* Reposition highlights */ }
+  /* Reposition highlights */
+  /* Latest Additions */ }
   #home #logo {
     background-position: 0 60px;
     height: 175px; }
@@ -165,12 +166,8 @@ body {
     font-size: 2.4em;
     color: white;
     padding: 3px 4px;
-    margin: 0 0 0.3em 80px;
+    margin: 0 0 0.3em 100px;
     float: left; }
-  #home #main p {
-    margin-left: 80px;
-    margin-right: 20px;
-    clear: both; }
   #home #wrapper {
     padding-top: 18.4em;
     position: relative; }
@@ -220,3 +217,35 @@ body {
       /* Hide text */
       text-indent: -1000em;
       letter-spacing: -1000em; }
+  #home .addition {
+    background: 42px 0 no-repeat;
+    padding-top: 4em;
+    padding-left: 100px;
+    margin-bottom: 1.5em;
+    width: 520px;
+    float: left;
+    position: relative; }
+    #home .addition h3 {
+      font-size: 1.7em;
+      font-weight: bold;
+      margin-bottom: 0.3em; }
+    #home .addition .type, #home .addition .meta {
+      color: #666666;
+      margin: 0;
+      position: absolute;
+      left: 100px; }
+    #home .addition .type {
+      font-weight: bold;
+      font-size: 1.2em;
+      top: 0; }
+    #home .addition .meta {
+      padding-bottom: 0.2em;
+      width: 520px;
+      border-bottom: 1px solid #cccccc;
+      top: 1.5em; }
+  #home .news {
+    background-image: url(/images/icon/news-item.gif); }
+  #home .person {
+    background-image: url(/images/icon/person.gif); }
+  #home .site {
+    background-image: url(/images/icon/site.gif); }

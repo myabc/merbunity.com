@@ -26,13 +26,8 @@
         :size 2.4em
       :color white
       :padding 3px 4px
-      :margin 0 0 0.3em 80px
+      :margin 0 0 0.3em 100px
       :float left
-      
-    p
-      :margin-left 80px
-      :margin-right 20px
-      :clear both
     
   /* Reposition highlights
   #wrapper
@@ -94,3 +89,46 @@
       /* Hide text
       :text-indent -1000em
       :letter-spacing -1000em
+  
+  /* Latest Additions
+  .addition
+    :background 42px 0 no-repeat
+    :padding-top 4em
+    :padding-left= !column + (2 * !margin)
+    :margin-bottom 1.5em
+    :width= (7 * !column) + (5 * !margin)
+    :float left
+    :position relative
+    
+    h3
+      :font
+        :size 1.7em
+        :weight bold
+      :margin-bottom 0.3em
+        
+    .type, .meta
+      :color= !mid_grey
+      :margin 0
+      :position absolute
+      :left= !column + (2 * !margin)
+      
+    .type
+      :font
+        :weight bold
+        :size 1.2em
+      :top 0
+      
+    .meta
+      :padding-bottom 0.2em
+      :width= (7 * !column) + (5 * !margin)
+      :border-bottom 1px solid #cccccc
+      :top 1.5em
+      
+  .news
+    :background-image url(/images/icon/news-item.gif)
+    
+  .person
+    :background-image url(/images/icon/person.gif)
+    
+  .site
+    :background-image url(/images/icon/site.gif)
