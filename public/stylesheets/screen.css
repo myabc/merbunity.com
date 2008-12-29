@@ -97,6 +97,14 @@ body {
   width: 100%;
   float: left; }
 
+#sponsors li {
+  margin-bottom: 1.5em;
+  width: 100%;
+  float: left; }
+#sponsors a {
+  border: 1px solid #DFDFDF;
+  display: block; }
+
 /* Footer */
 #footer {
   background: #E6E6E6 45px 2px no-repeat url(/images/footer-bkg.gif);
