@@ -20,10 +20,21 @@
       :background= !bright_blue
       :color white !important
   
-  #login-link
+  #subscribe-link,
+  #login-link,
+  #logged-in
     :float right
     
     a
-      :background left center no-repeat url(/images/navigation/login.gif)
+      :background left center no-repeat
       :padding-left 21px
+  
+  #subscribe-link a
+    :background-image url(/images/navigation/subscribe.gif)
+    
+  #login-link a
+    :background-image url(/images/navigation/login.gif)
+    
+  #logged-in a
+    :background-image url(/images/navigation/logged-in.gif)
     

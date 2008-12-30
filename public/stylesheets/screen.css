@@ -81,11 +81,17 @@ body {
     #navigation a.current {
       background: #00ccff;
       color: white !important; }
-  #navigation #login-link {
+  #navigation #login-link,
+  #navigation #logged-in {
     float: right; }
-    #navigation #login-link a {
-      background: left center no-repeat url(/images/navigation/login.gif);
+    #navigation #login-link a,
+    #navigation #logged-in a {
+      background: left center no-repeat;
       padding-left: 21px; }
+  #navigation #login-link a {
+    background-image: url(/images/navigation/login.gif); }
+  #navigation #logged-in a {
+    background-image: url(/images/navigation/logged-in.gif); }
 
 /* Sidebar */
 #side h2 {
