@@ -30,6 +30,16 @@ body {
   line-height: 1.3;
   margin-bottom: 1.35em; }
 
+#main h1 {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #cccccc;
+  font-weight: bold;
+  font-size: 3em;
+  color: #333333;
+  padding: 0 0 0.5em 0;
+  margin: 0 0 0.5em 0; }
+
 /* Layout */
 #logo,
 #wrapper {
@@ -81,13 +91,17 @@ body {
     #navigation a.current {
       background: #00ccff;
       color: white !important; }
+  #navigation #subscribe-link,
   #navigation #login-link,
   #navigation #logged-in {
     float: right; }
+    #navigation #subscribe-link a,
     #navigation #login-link a,
     #navigation #logged-in a {
       background: left center no-repeat;
       padding-left: 21px; }
+  #navigation #subscribe-link a {
+    background-image: url(/images/navigation/subscribe.gif); }
   #navigation #login-link a {
     background-image: url(/images/navigation/login.gif); }
   #navigation #logged-in a {
@@ -148,6 +162,53 @@ body {
   #footer #help-legal {
     background-image: url(/images/footer/help.gif);
     left: 25em; }
+
+/* Form */
+form {
+  width: 100%;
+  float: left; }
+
+input.text,
+input.password,
+textarea {
+  background: #f1f1f1;
+  border: 2px solid #999999;
+  font-size: 1.2em;
+  padding: 0.3em 0;
+  margin: 0 0 0.5em 0;
+  width: 296px;
+  float: left;
+  clear: both; }
+
+label {
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #666666;
+  padding: 0 0 0.3em 0;
+  display: block;
+  clear: both; }
+
+#save-form {
+  background: #ab004a;
+  border: 0;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: white;
+  padding: 0.35em 0.6em;
+  margin: 0.5em 0 0 0;
+  float: left;
+  clear: both; }
+
+/* Error message */
+div.error {
+  border: 2px solid #CDCCA3;
+  background: #FFFFCC 10px 0.5em no-repeat url(/images/form/error.gif);
+  padding: 1em 10px 1em 72px;
+  margin: 0 0 1.5em 0;
+  min-height: 35px; }
+  div.error h2 {
+    font-weight: bold;
+    margin: 0 0 0.4em 0; }
 
 /* Home */
 #home {
@@ -269,3 +330,14 @@ body {
     background-image: url(/images/icon/person.gif); }
   #home .site {
     background-image: url(/images/icon/site.gif); }
+
+/* Login */
+#login form, #login #main h1, #sign-up form, #sign-up #main h1 {
+  margin-left: 80px;
+  width: 540px; }
+
+#login form {
+  background: 360px 0 no-repeat url(/images/signup-login/login.gif);
+  min-height: 160px; }
+  #login form div.error {
+    width: 214px; }
