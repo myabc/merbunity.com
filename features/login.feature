@@ -8,6 +8,6 @@ Feature: Login
     When I go to /login
     And I fill in "login" with "i_dont_exist"
     And I fill in "password" with "and_i_dont_have_a_password"
-    And I press "Log In"
+    And I press "Login"
     Then the login request should fail
     Then I should see an error message
