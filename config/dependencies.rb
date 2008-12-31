@@ -1,4 +1,4 @@
-merb_gems_version = "1.0.6.1"
+merb_gems_version = "1.0.7"
 dm_gems_version   = "0.9.8"
 
 dependency 'extlib',                    '=0.9.9'        
@@ -29,7 +29,7 @@ dependency "do_mysql",                  "=0.9.9", :require_as => nil
 dependency "merb_datamapper",           merb_gems_version
 dependency "merb-haml",                 merb_gems_version
 
-dependency "cucumber",                  :require_as  => nil
+dependency "cucumber",                  "0.1.13", :require_as  => nil
 dependency "david-merb_cucumber",       :require_as => nil
 
 
