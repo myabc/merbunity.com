@@ -17,21 +17,26 @@
     :padding 0.7em 1.2em
     
     &.current
-      :background= !bright_blue
+      :background-color= !bright_blue !important
       :color white !important
   
   #subscribe-link,
+  #sign-up-link,
   #login-link,
   #logged-in
     :float right
     
     a
-      :background left center no-repeat
+      :background 1.2em center no-repeat
+      :text-indent 1.2em
       :padding-left 21px
   
   #subscribe-link a
     :background-image url(/images/navigation/subscribe.gif)
-    
+  
+  #sign-up-link a
+    :background-image url(/images/navigation/sign-up.gif)
+  
   #login-link a
     :background-image url(/images/navigation/login.gif)
     

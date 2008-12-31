@@ -10,11 +10,12 @@
     
     %div#wrapper
       %ul#navigation
-        %li= link_to("Home", "/", :class => "current")
-        %li= link_to("News", resource(:news_items))
-        %li= link_to("Tutorials", resource(:tutorials))
-        %li= link_to("People", resource(:people))
-        %li#login-link= link_to("Login", url(:login))
+        %li= main_nav_link("Home", url(:home))
+        %li= main_nav_link("News", resource(:news_items))
+        %li= main_nav_link("Tutorials", resource(:tutorials))
+        %li= main_nav_link("People", resource(:people))
+        %li#sign-up-link= main_nav_link("Sign-up", url(:signup))
+        %li#login-link= main_nav_link("Login", url(:login))
       
       %div#side
         %h2 Feature
@@ -48,3 +49,4 @@
           Please read our Terms of Service. <br/>
           If you need help there is our FAQ. <br/>
           To give us feedback, please use this form.
+          

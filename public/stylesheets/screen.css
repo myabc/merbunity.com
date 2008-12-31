@@ -89,19 +89,24 @@ body {
     text-decoration: none !important;
     padding: 0.7em 1.2em; }
     #navigation a.current {
-      background: #00ccff;
+      background-color: #00ccff !important;
       color: white !important; }
   #navigation #subscribe-link,
+  #navigation #sign-up-link,
   #navigation #login-link,
   #navigation #logged-in {
     float: right; }
     #navigation #subscribe-link a,
+    #navigation #sign-up-link a,
     #navigation #login-link a,
     #navigation #logged-in a {
-      background: left center no-repeat;
+      background: 1.2em center no-repeat;
+      text-indent: 1.2em;
       padding-left: 21px; }
   #navigation #subscribe-link a {
     background-image: url(/images/navigation/subscribe.gif); }
+  #navigation #sign-up-link a {
+    background-image: url(/images/navigation/sign-up.gif); }
   #navigation #login-link a {
     background-image: url(/images/navigation/login.gif); }
   #navigation #logged-in a {
