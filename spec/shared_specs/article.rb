@@ -5,6 +5,8 @@ describe "an article", :shared => true do
     @article = @klass.make
   end
   
+  it_should_behave_like "a draftable resource"
+  
   it "should have a title" do
     @article.title.should_not be_blank
   end

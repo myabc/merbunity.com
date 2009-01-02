@@ -5,7 +5,7 @@ class Article
   property :type,         Discriminator
   property :title,        String, :length => 255,     :nullable => false, :unique => true
   property :description,  Text,   :lazy   => false,   :nullable => false
-  property :slug,         Slug,   :unique => true,    :nullabel => false
+  property :slug,         Slug,   :unique => true,    :nullable => false
   property :body,         Text
   property :created_at,   DateTime
   property :created_on,   Date
