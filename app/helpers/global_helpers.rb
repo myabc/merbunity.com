@@ -4,7 +4,7 @@ module Merb
     def main_nav_link(text, url, opts = {})
       if url == "/"
         opts[:class] = "current" if request.env["REQUEST_PATH"] == url
-      elsif request.env["REQUEST_PATH"].match(%r{^#{url}})
+      elsif request.env["REQUEST_PATH"] && request.env["REQUEST_PATH"].match(%r{^#{url}})
         opts[:class] = "current"
       end
       link_to(text, url, opts)

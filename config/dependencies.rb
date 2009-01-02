@@ -31,5 +31,7 @@ dependency "merb-haml",                 merb_gems_version
 
 dependency "cucumber",                  "0.1.13", :require_as  => nil
 dependency "david-merb_cucumber",       :require_as => nil
+dependency "faker"
+dependency "machinist",          "=0.1.7.1", :require_as => nil
 
 
