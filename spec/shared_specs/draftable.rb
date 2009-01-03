@@ -156,6 +156,14 @@ describe "a draftable resource", :shared => true do
     it "should save the draft in the foo_drafts table" do
       Foo::Draft.storage_name.should == "foo_drafts"
     end
+    
+    it "should allow parameters to be pased to unpublished" do
+      f1 = Foo.new(:title => "foo", :body => "bar")
+      f2 = Foo.new(:title => "bar", :body => "baz")
+      f1.save_draft; f2.save_draft
+      f1.reload; f2.reload
+      Foo.unpublished(:title => "foo").first.should == f1
+    end
   end
   
   

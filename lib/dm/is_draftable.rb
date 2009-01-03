@@ -19,6 +19,7 @@ module DataMapper
            
          end
        RUBY
+       
        self.class_eval do
          include DataMapper::Is::Draftable::InstanceMethods
          extend  DataMapper::Is::Draftable::ClassMethods
@@ -26,9 +27,9 @@ module DataMapper
          
          property :published_on, DateTime, :nullable => true, :default => nil
        end
-       self.default_scope.update(:published_on.not => nil)
        
-     end
+       self.default_scope.update(:published_on.not => nil)
+     end # is_draftable
      
      module InstanceMethods
        def save_draft
@@ -65,20 +66,20 @@ module DataMapper
          self.published_on = DateTime.now
          save
        end
-       
-     end
+     end # InstanceMethods
      
      module ClassMethods
        def draftable_fields
          @draftable_fields
        end
        
-       def unpublished
+       def unpublished(params = {})
          with_scope(:published_on => nil) do
-           all
+           all(params)
          end
        end
-     end
+       
+     end # ClassMethods
    end # Draftable
   end # Is
 end # DataMapper

@@ -16,10 +16,5 @@ Merb::Config.use do |c|
 end
  
 Merb::BootLoader.before_app_loads do
-  # This will get executed after dependencies have been loaded but before your app's classes have loaded.
   Merb.push_path(:dm_extensions, Merb.root / "lib", "dm/**/*.rb")
-end
- 
-Merb::BootLoader.after_app_loads do
-  # This will get executed after your app's classes have been loaded.
 end
