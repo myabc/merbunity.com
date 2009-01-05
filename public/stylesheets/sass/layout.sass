@@ -12,20 +12,21 @@
   :text-indent -1000em
 
 #wrapper
-  :background white 720px 0 repeat-y url(/images/column-split.gif)
+  :background white 740px 0 repeat-y url(/images/column-split.gif)
   
 #main, #side
   :padding-top 1.5em
   
 #main
   :padding-left= !margin
+  :padding-right= !margin
   :width= (9 * !column) + (8 * !margin)
   :float left
   
 #side
   :padding-left= !margin
   :padding-right= !margin
-  :width= (!margin * 2) + (!column * 3)
+  :width= !margin + (!column * 3)
   :float right
 
 #footer

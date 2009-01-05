@@ -54,20 +54,21 @@ body {
   text-indent: -1000em; }
 
 #wrapper {
-  background: white 720px 0 repeat-y url(/images/column-split.gif); }
+  background: white 740px 0 repeat-y url(/images/column-split.gif); }
 
 #main, #side {
   padding-top: 1.5em; }
 
 #main {
   padding-left: 20px;
+  padding-right: 20px;
   width: 700px;
   float: left; }
 
 #side {
   padding-left: 20px;
   padding-right: 20px;
-  width: 220px;
+  width: 200px;
   float: right; }
 
 #footer {
