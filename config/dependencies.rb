@@ -1,4 +1,4 @@
-merb_gems_version = "1.0.7"
+merb_gems_version = "1.0.7.1"
 dm_gems_version   = "0.9.8"
 
 dependency 'extlib',                    '=0.9.9'        
