@@ -114,8 +114,13 @@ body {
     background-image: url(/images/navigation/sign-up.gif); }
   #navigation #login-link a {
     background-image: url(/images/navigation/login.gif); }
-  #navigation #logged-in a {
-    background-image: url(/images/navigation/logged-in.gif); }
+  #navigation #logged-in #profile-link {
+    background-image: url(/images/navigation/logged-in.gif);
+    padding-right: 0; }
+  #navigation #logged-in #logout-link {
+    text-decoration: underline !important;
+    text-indent: 0;
+    padding-left: 0.6em; }
 
 /* Sidebar */
 #side h2 {
