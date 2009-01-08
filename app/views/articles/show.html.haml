@@ -1,5 +1,6 @@
-%h1 
-  = @article.title
+- @page_title = @article.title
+- @page_id = page_id
+
 .article
   %p.slub
     ="(#{@article.slug})"
