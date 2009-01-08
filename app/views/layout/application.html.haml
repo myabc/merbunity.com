@@ -34,7 +34,8 @@
               = image_tag("sponsors/ivey-brown.gif", :alt => "The Ivey & brown logo.")
         
       %div#main
-        %h1#page-title= @page_title
+        %h1#page-title
+          %span= @page_title
         = catch_content(:for_layout)
         
       %div#footer

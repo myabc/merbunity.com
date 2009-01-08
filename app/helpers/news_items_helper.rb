@@ -9,5 +9,9 @@ module Merb
       sense == :plural ? "News Items" : "News Item"
     end
 
+    def page_id
+      "news-items"
+    end
+
   end
 end # Merb

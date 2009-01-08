@@ -31,14 +31,20 @@ body {
   margin-bottom: 1.35em; }
 
 #main h1 {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: #cccccc;
-  font-weight: bold;
-  font-size: 3em;
-  color: #333333;
-  padding: 0 0 0.5em 0;
-  margin: 0 0 0.5em 0; }
+  background: bottom left no-repeat url(/images/titles/main.gif);
+  padding: 10px 0 35px 0;
+  margin: 0 0 -10px 0; }
+  #main h1 span {
+    background: left center no-repeat;
+    font-weight: bold;
+    font-size: 3em;
+    color: #333333;
+    padding: 15px 0 15px 45px;
+    display: block; }
+#main p.empty {
+  font-size: 3.5em;
+  color: #666666;
+  margin-top: 0.5em; }
 
 /* Layout */
 #logo,
@@ -56,9 +62,6 @@ body {
 #wrapper {
   background: white 740px 0 repeat-y url(/images/column-split.gif); }
 
-#main, #side {
-  padding-top: 1.5em; }
-
 #main {
   padding-left: 20px;
   padding-right: 20px;
@@ -66,6 +69,7 @@ body {
   float: left; }
 
 #side {
+  padding-top: 1.5em;
   padding-left: 20px;
   padding-right: 20px;
   width: 200px;
@@ -347,3 +351,11 @@ div.error {
   min-height: 160px; }
   #login form div.error {
     width: 214px; }
+
+#news-items #main h1 {
+  background-image: url(/images/titles/news-items.gif); }
+  #news-items #main h1 span {
+    background-image: url(/images/icon/news-item.gif); }
+
+#tutorials #main h1 span {
+  background-image: url(/images/icon/tutorial.gif); }

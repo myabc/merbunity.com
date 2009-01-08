@@ -1,9 +1,9 @@
-%h1= article_header
+- @page_title = article_header
+- @page_id = page_id
 
 - unless @articles.blank?
   %ul.articles
     = partial :list_summary, :with => @articles, :as => "article"
 - else
-  .articles
-    No News Were Found
+  %p.empty No entries available
 
