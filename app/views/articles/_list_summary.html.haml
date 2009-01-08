@@ -1,2 +1,10 @@
 %li
-  = partial :summary, :article => article
+  %h2= article.title
+  %p.description= article.description
+  %p.credits
+    Updated on
+    = article.updated_at.formatted(:short)
+    %br/
+    by TODO
+  = image_tag("profiles/small.gif", :class => "profile-image", :title => "A nice picture of TODO")
+  %p.read-more= link_to("Read More…", resource(article), :title => "Read this entire article.")

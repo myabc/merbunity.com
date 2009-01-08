@@ -46,6 +46,39 @@ body {
   color: #666666;
   margin-top: 0.5em; }
 
+/* Article Listing */
+#article-listing {
+  width: 100%;
+  float: left; }
+  #article-listing li {
+    border-bottom: 1px solid #E6E6E6;
+    padding-top: 1.3em;
+    width: 100%;
+    float: left;
+    position: relative; }
+  #article-listing h2,
+  #article-listing p.description {
+    width: 380px; }
+  #article-listing h2 {
+    font-weight: bold;
+    font-size: 2.2em;
+    margin-bottom: 0.1em; }
+  #article-listing p.description,
+  #article-listing p.credits {
+    color: #333333; }
+  #article-listing p.description {
+    margin-bottom: 0; }
+  #article-listing p.credits,
+  #article-listing img.profile-image {
+    position: absolute;
+    top: 1.45em; }
+  #article-listing p.credits {
+    font-size: 1.1em;
+    width: 172px;
+    right: 0; }
+  #article-listing img.profile-image {
+    right: 180px; }
+
 /* Layout */
 #logo,
 #wrapper {

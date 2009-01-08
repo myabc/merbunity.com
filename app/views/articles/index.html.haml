@@ -2,7 +2,7 @@
 - @page_id = page_id
 
 - unless @articles.blank?
-  %ul.articles
+  %ul#article-listing
     = partial :list_summary, :with => @articles, :as => "article"
 - else
   %p.empty No entries available
