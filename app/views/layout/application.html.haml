@@ -14,7 +14,7 @@
         %li= main_nav_link("News", resource(:news_items))
         %li= main_nav_link("Tutorials", resource(:tutorials))
         %li= main_nav_link("People", resource(:people))
-        - if session.user
+        - if logged_in?
           %li#logged-in
             = link_to("<strong>#{session.user.login}</strong>", resource(session.user), :id => "profile-link")
             = link_to("logout", url(:logout), :id => "logout-link")

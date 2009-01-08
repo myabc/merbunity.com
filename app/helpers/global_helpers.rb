@@ -9,5 +9,9 @@ module Merb
       end
       link_to(text, url, opts)
     end
+    
+    def logged_in?
+      session.authenticated?
+    end
   end
 end
