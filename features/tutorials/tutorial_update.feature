@@ -25,7 +25,7 @@ Feature: Edit Tutorial
     When I go to /tutorials/a-title/edit
     And I fill in "title" with "A New Title"
     And I fill in "description" with "A New Description"
-    And I press "Save"
+    And I press "Publish"
     Then I should see the page /tutorials/a-title
     And the request should be successful
   
@@ -68,3 +68,36 @@ Feature: Edit Tutorial
   And I login as barney with foo
   When I go to /tutorials/foo-bar/edit
   Then I should be forbidden
+  
+  Scenario: Editing and saving as a draft
+    Given the default user exists
+    And I login as fred with sekrit
+    And no Tutorial exist
+    And no tutorial drafts exit
+    And a published Tutorial article with slug "my-slug" and owned by "fred"
+    When I go to /tutorials/my-slug/edit
+    And I fill in "title" with "My Foo"
+    And I fill in "description" with "My Foo Description"
+    And I press "Save Draft"
+    Then I should see the page /tutorials/my-slug/draft  
+    And the tutorial title should be "My Foo"
+    And the tutorial should have a description "My Foo Description"
+    And the request should be successful
+
+  Scenario: Viewing a published article after saving a draft
+    GivenScenario Editing and saving as a draft
+    When I go to /tutorials/my-slug
+    Then the tutorial title should not be "My Foo"
+    And the tutorial should not have a description "My Foo Description"
+    And the request should be successful
+
+  Scenario: When Editing An existing Draft It should save the new value
+    GivenScenario Editing and saving as a draft
+    When I go to /tutorials/my-slug/edit
+    Then I should see a "tutorial[title]" field with attribute value "My Foo"
+    And I should see a "tutorial[description]" field containing text "My Foo Description"
+    When I fill in "title" with "A New Foo"
+    And I press "Save Draft"
+    Then I should see the page /tutorials/my-slug/draft
+    And the tutorial title should be "A New Foo"
+    And the request should be successful

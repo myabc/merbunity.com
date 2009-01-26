@@ -9,9 +9,11 @@ Given /^a published (.*?) article with (.*?) "(.*?)" and owned by "(.*?)"$/ do |
   klass = get_klass(klass)
   klass.all.destroy!
   a = klass.make(field.to_sym => value, :owner => User.first(:login => login))
-  a.publish!  
+  a.publish!
 end
 
-def get_klass(klass)
-    klass = Object.full_const_get(klass.gsub(" ", "_").camel_case.singularize)
+Given /^no (.*?) drafts exit$/ do |klass|
+  klass = get_klass(klass)
+  klass = klass::Draft
+  klass.all.destroy!
 end

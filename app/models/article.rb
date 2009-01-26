@@ -28,7 +28,7 @@ class Article
   end
   
   def validate_slug
-    errors.add(:slug, "This slug is already in use") if self.class.first(:slug => slug)
+    errors.add(:slug, "This slug is already in use") if (s = self.class.first(:slug => slug)) && s != self
   end
     
   

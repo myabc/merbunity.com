@@ -1,0 +1,13 @@
+- @page_title = @article.draft.title
+- @page_id = page_id
+
+.article
+  .draft
+    Draft
+  %p.slug
+    ="(#{@article.draft.slug})"
+  %p.description
+    %p.description=  @article.draft.description
+  %p.body
+    %p.content= @article.draft.body
+  

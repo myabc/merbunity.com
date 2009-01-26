@@ -1,6 +1,6 @@
 class Articles < Application
   abstract!
-  before :find_member,          :only     => [:show, :edit, :update, :delete, :destroy]
+  before :find_member,          :only     => [:show, :edit, :update, :delete, :destroy, :draft]
   before :ensure_authenticated, :exclude  => [:index, :show]
   before :is_owner,             :only     => [:edit, :update, :delete, :destroy]
   
@@ -8,6 +8,11 @@ class Articles < Application
   # it will look in that controllers views for the template, but, failing that
   # it will look in the articles view directory
   self.template_roots << [Merb.dir_for(:view), :article_template_location]
+  
+  # GET /news_items/:id/draft
+  def draft(slug)
+    render
+  end
   
   def show(slug)
     render

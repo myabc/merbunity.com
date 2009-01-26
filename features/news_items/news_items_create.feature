@@ -71,4 +71,5 @@ Feature: Create An Article
     And I press "Save"
     Then I should see a form to create new news items
     And the request should be in conflict 
-    
+  
+  

@@ -1,5 +1,6 @@
 class NewsItems < Articles
   
+  
   # GET /news_items
   def index
     @articles = NewsItem.all
@@ -27,9 +28,23 @@ class NewsItems < Articles
   end
 
   # PUT /news_items/:id
-  def update(slug, news_item)    
-    if @article.update_attributes(news_item)
-      redirect resource(@article), :message => { :notice => "Updated Successfully"}
+  def update(slug, news_item)
+    @article.attributes = news_item
+    if params[:submit] && params[:submit] =~ /draft/i
+      @draft = true
+      result = @article.save_draft
+    else
+      @draft = false
+      result = @article.save
+      @article.publish! if result
+    end
+      
+    if result
+      if @draft
+        redirect resource(@article, :draft), :message => {:notice => "Draft Updated Successfully"}
+      else
+        redirect resource(@article), :message => { :notice => "Updated Successfully"}
+      end
     else
       message[:error] = "News Item not updated"
       self.status = Conflict.status

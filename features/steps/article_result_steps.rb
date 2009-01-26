@@ -30,3 +30,13 @@ end
 Then /^I should not see that the (.*?) is a draft$/ do |klass|
   response.should_not have_selector(".draft")  
 end
+
+Then /^the (.*?) title should (not )?be "(.*?)"$/ do |klass, sense, value|
+  meth = sense.nil? ? :should : :should_not
+  response.send(meth, have_xpath("//*[@id='page-title'][contains(.,'#{value}')]"))
+end
+
+Then /^the (.*?) should (not )?have a (.*?) "(.*?)"$/ do |klass, sense, field, value|
+  meth = sense.nil? ? :should : :should_not
+  response.send(meth, have_xpath("//*[@class='#{field}'][contains(., '#{value}')]"))
+end

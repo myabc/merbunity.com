@@ -39,11 +39,11 @@ module DataMapper
          save if new_record?
          if draft.nil?
            self.draft = self.class.const_get(:Draft).new
-           self.class.draftable_fields.each do |f|
-             self.draft.send(:"#{f}=", self.send(f))
-           end
-           draft.save
          end
+         self.class.draftable_fields.each do |f|
+           self.draft.send(:"#{f}=", self.send(f))
+         end
+         draft.save
        end
        
        def has_draft?

@@ -55,3 +55,13 @@ Then /^I should see a form to edit (.*?) (.*?)$/ do |singular_name, slug|
   xpath = "//form[@action='#{resource(article)}'][@method='post'][input[@name='_method'][@value='put']]"
   response.should match_xpath(xpath)
 end
+
+Then /^I should see a "(.*?)" field with attribute value "(.*?)"$/ do |field_name, value|
+  xpath = "//form//*[@name=\"#{field_name}\"][@value=\"#{value}\"]"
+  response.should match_xpath(xpath)
+end
+
+Then /^I should see a "(.*?)" field containing text "(.*?)"$/ do |field, value|
+  xpath = "//form//*[@name=\"#{field}\"][contains(., \"#{value}\")]"
+  response.should match_xpath(xpath)
+end

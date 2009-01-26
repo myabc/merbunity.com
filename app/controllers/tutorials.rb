@@ -26,12 +26,25 @@ class Tutorials < Articles
     end
   end
 
-  # PUT /tutorials/:id
   def update(slug, tutorial)
-    if @article.update_attributes(tutorial)
-      redirect resource(@article), :message => { :notice => "Updated Successfully"}
+    @article.attributes = tutorial
+    if params[:submit] && params[:submit] =~ /draft/i
+      @draft = true
+      result = @article.save_draft
     else
-      message[:error] = "News Item not updated"
+      @draft = false
+      result = @article.save
+      @article.publish! if result
+    end
+      
+    if result
+      if @draft
+        redirect resource(@article, :draft), :message => {:notice => "Draft Updated Successfully"}
+      else
+        redirect resource(@article), :message => { :notice => "Updated Successfully"}
+      end
+    else
+      message[:error] = "Tutorial not updated"
       self.status = Conflict.status
       display @article, :edit
     end
