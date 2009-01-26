@@ -73,7 +73,7 @@ Feature: Edit Tutorial
     Given the default user exists
     And I login as fred with sekrit
     And no Tutorial exist
-    And no tutorial drafts exit
+    And no tutorial exist with drafts
     And a published Tutorial article with slug "my-slug" and owned by "fred"
     When I go to /tutorials/my-slug/edit
     And I fill in "title" with "My Foo"

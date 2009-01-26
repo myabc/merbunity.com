@@ -11,11 +11,23 @@ class Articles < Application
   
   # GET /news_items/:id/draft
   def draft(slug)
-    render
+    if @article.has_draft?
+      return render
+    else
+      if @article.published?
+        redirect resource(@article)
+      else
+        raise InternalServerError, "Article is not published, but does not have a draft"
+      end
+    end
   end
   
   def show(slug)
-    render
+    if @article.published?
+      render
+    else
+      redirect resource(@article, :draft)
+    end
   end
   
   def edit(slug)

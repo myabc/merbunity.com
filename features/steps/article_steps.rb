@@ -12,8 +12,10 @@ Given /^a published (.*?) article with (.*?) "(.*?)" and owned by "(.*?)"$/ do |
   a.publish!
 end
 
-Given /^no (.*?) drafts exit$/ do |klass|
+Given /^no (.*?) exist with drafts$/ do |klass|
   klass = get_klass(klass)
-  klass = klass::Draft
+  draft_klass = klass::Draft
+  draft_klass.all.destroy!
   klass.all.destroy!
+  klass.unpublished.destroy!
 end

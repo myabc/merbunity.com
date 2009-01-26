@@ -25,7 +25,7 @@ Feature: Create An Tutorial
       And I fill in "description" with "My Awesome Description"
       And I fill in "body" with "My Awesome Body"
       And I press "Save Draft"
-      Then I should see the page /tutorials/my-awesome-title
+      Then I should see the page /tutorials/my-awesome-title/draft
       And I should see that the tutorial is a draft
       And the request should be successful
 
@@ -33,6 +33,7 @@ Feature: Create An Tutorial
       Given the default user exists
       And I login as fred with sekrit
       And no tutorials exist
+      And no tutorials exist with drafts
       When I go to /tutorials/new
       And I fill in "title" with "My Awesome Title"
       And I fill in "description" with "My Awesome Description"

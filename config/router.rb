@@ -31,11 +31,13 @@ Merb::Router.prepare do
     match("/signup").to(:controller => "people", :action => "new").name(:signup)
     
     resources :news_items do
-      member :draft
+      member      :draft
+      collection  :drafts
     end
     
     resources :tutorials do
-      member :draft
+      member      :draft
+      collection  :drafts
     end
     
     resources :people, User

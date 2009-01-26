@@ -5,6 +5,13 @@ class Tutorials < Articles
     @articles = Tutorial.all
     render
   end
+  
+  # GET /tutorials/drafts
+  def drafts
+    @articles = NewsItem.unpublished
+    render :index
+  end
+  
 
   # GET /tutorials/new
   def new(tutorial = {})
@@ -13,12 +20,25 @@ class Tutorials < Articles
     render
   end
   
-  # POST /tutorials
+  # POST /news_items
   def create(tutorial)
     @article = Tutorial.new(tutorial)
-    if @article.save
-      @article.publish! if params[:submit] == "Publish"
-      redirect resource(@article), :message => {:notice => "Tutorial Created"}
+    @article.owner = session.user
+    if params[:submit] && params[:submit] =~ /draft/i
+      @draft = true
+      res = @article.save_draft
+    else
+      @draft = false;
+      res = @article.save
+      @article.publish! if res
+    end
+    
+    if res
+      if @draft
+        redirect resource(@article, :draft), :message => {:notice => "Tutorial Draft Created"}
+      else
+        redirect resource(@article), :message => {:notice => "Tutorial Published"}
+      end
     else
       message[:error] = "Tutorial not created"
       self.status = Conflict.status

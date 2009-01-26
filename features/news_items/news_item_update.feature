@@ -73,7 +73,7 @@ Feature: Edit News Item
     Given the default user exists
     And I login as fred with sekrit
     And no NewsItem exist
-    And no news items drafts exit
+    And no news_items exist with drafts
     And a published News Item article with slug "my-slug" and owned by "fred"
     When I go to /news_items/my-slug/edit
     And I fill in "title" with "My Foo"

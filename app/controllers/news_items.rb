@@ -6,6 +6,12 @@ class NewsItems < Articles
     @articles = NewsItem.all
     render
   end
+  
+  # GET /news_items/drafts
+  def drafts
+    @articles = NewsItem.unpublished
+    render :index
+  end
 
   # GET /news_items/new
   def new(news_item = {})
@@ -17,9 +23,22 @@ class NewsItems < Articles
   # POST /news_items
   def create(news_item)
     @article = NewsItem.new(news_item)
-    if @article.save
-      @article.publish! if params[:submit] == "Publish"
-      redirect resource(@article), :message => {:notice => "News Reported"}
+    @article.owner = session.user
+    if params[:submit] && params[:submit] =~ /draft/i
+      @draft = true
+      res = @article.save_draft
+    else
+      @draft = false;
+      res = @article.save
+      @article.publish! if res
+    end
+    
+    if res
+      if @draft
+        redirect resource(@article, :draft), :message => {:notice => "News Draft Created"}
+      else
+        redirect resource(@article), :message => {:notice => "News Reported"}
+      end
     else
       message[:error] = "News Item not created"
       self.status = Conflict.status
