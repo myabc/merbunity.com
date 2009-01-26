@@ -12,13 +12,21 @@ Then /^the (.*?) with slug "(.*?)" should not exist$/ do |klass, slug|
 end
 
 Then /^I should see a list of articles$/ do
-  response.should have_xpath("//ul[@class='articles']/li")
+  response.should have_selector("ul#article-listing li")
 end
 
-Then /^I should see an empty articles list$/ do
-  response.should have_xpath("//div[@class='articles']")
+Then /^there should be no articles$/ do
+  response.should have_xpath("//*[@class='empty']")
 end
 
 Then /^I should see an article$/ do
   response.should have_xpath("//div[@class='article']")
+end
+
+Then /^I should see that the (.*?) is a draft$/ do |klass|
+  response.should have_selector(".draft")  
+end
+
+Then /^I should not see that the (.*?) is a draft$/ do |klass|
+  response.should_not have_selector(".draft")  
 end

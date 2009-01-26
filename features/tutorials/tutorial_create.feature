@@ -17,16 +17,30 @@ Feature: Create An Tutorial
     And I should see form fields for a tutorial article
     And the request should be successful
   
-  Scenario: Creating a new tutorial when  logged in
-    Given the default user exists
-    And I login as fred with sekrit
-    When I go to /tutorials/new
-    And I fill in "title" with "My Awesome Title"
-    And I fill in "description" with "My Awesome Description"
-    And I fill in "body" with "My Awesome Body"
-    And I press "Save"
-    Then I should see the page /tutorials/my-awesome-title
-    And the request should be successful
+    Scenario: Creating a new tutorial draft when  logged in
+      Given the default user exists
+      And I login as fred with sekrit
+      When I go to /tutorials/new
+      And I fill in "title" with "My Awesome Title"
+      And I fill in "description" with "My Awesome Description"
+      And I fill in "body" with "My Awesome Body"
+      And I press "Save Draft"
+      Then I should see the page /tutorials/my-awesome-title
+      And I should see that the tutorial is a draft
+      And the request should be successful
+
+    Scenario: Creating a published tutorial when logged in
+      Given the default user exists
+      And I login as fred with sekrit
+      And no tutorials exist
+      When I go to /tutorials/new
+      And I fill in "title" with "My Awesome Title"
+      And I fill in "description" with "My Awesome Description"
+      And I fill in "body" with "My Awesome Body"
+      And I press "Publish"
+      Then I should see the page /tutorials/my-awesome-title
+      And I should not see that the tutorial is a draft
+      And the request should be successful
     
   Scenario: Creating a new tutorial by posting directly when not logged in
     When I POST directly to /tutorials with params:

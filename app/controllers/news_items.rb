@@ -17,6 +17,7 @@ class NewsItems < Articles
   def create(news_item)
     @article = NewsItem.new(news_item)
     if @article.save
+      @article.publish! if params[:submit] == "Publish"
       redirect resource(@article), :message => {:notice => "News Reported"}
     else
       message[:error] = "News Item not created"
@@ -44,7 +45,7 @@ class NewsItems < Articles
   
   private
   def find_member
-    @article = NewsItem.first(:slug => params[:slug])
+    @article = NewsItem.first(:slug => params[:slug]) || (@draft = true; NewsItem.unpublished.first(:slug => params[:slug]))
     raise NotFound unless @article
     @article
   end

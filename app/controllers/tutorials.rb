@@ -17,6 +17,7 @@ class Tutorials < Articles
   def create(tutorial)
     @article = Tutorial.new(tutorial)
     if @article.save
+      @article.publish! if params[:submit] == "Publish"
       redirect resource(@article), :message => {:notice => "Tutorial Created"}
     else
       message[:error] = "Tutorial not created"
@@ -44,7 +45,7 @@ class Tutorials < Articles
   
   private
   def find_member
-    @article = Tutorial.first(:slug => params[:slug])
+    @article = Tutorial.first(:slug => params[:slug]) || (@draft = true; Tutorial.unpublished.first(:slug => params[:slug]))
     raise NotFound unless @article
     @article
   end

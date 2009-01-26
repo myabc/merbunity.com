@@ -21,8 +21,9 @@ describe "an article", :shared => true do
     a1 = @klass.make_unsaved(:title => "foo")
     a2 = @klass.make_unsaved(:title => "foo")
     a1.save; a2.save
-    a1.should_not be_a_new_record
-    a2.should be_a_new_record
+    a1.publish!; a2.publish!
+    a1.should be_published
+    a2.should_not be_a_new_record
     a2.errors.on(:title).should_not be_blank
   end
   
@@ -35,8 +36,9 @@ describe "an article", :shared => true do
     a1 = @klass.make_unsaved(:title => "foo bar")
     a2 = @klass.make_unsaved(:title => "foo-bar")
     a1.save; a2.save
-    a1.should_not be_a_new_record
-    a2.should be_a_new_record
+    a1.publish!; a2.publish!
+    a1.should be_published
+    a2.should_not be_published
     a2.errors.on(:slug).should_not be_blank
   end
   
@@ -76,5 +78,14 @@ describe "an article", :shared => true do
   it "shoudl have an updated_on" do
     @article.updated_on.should be_a_kind_of(Date)
   end
+  
+  describe "drafts" do
+  
+    it "should be draftable" do
+      @klass.should be_draftable
+    end
+    
+  end
+  
   
 end

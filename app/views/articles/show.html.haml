@@ -2,6 +2,9 @@
 - @page_id = page_id
 
 .article
+  - if !@article.published?
+    .draft
+      Draft
   %p.slub
     ="(#{@article.slug})"
   %p.description

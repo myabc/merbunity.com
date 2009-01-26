@@ -21,6 +21,6 @@ Feature: news item index
   Scenario: No Articles Present
     Given no articles exist
     When I go to /news_items
-    Then I should see an empty articles list
+    Then there should be no articles
     And the request should be successful
     

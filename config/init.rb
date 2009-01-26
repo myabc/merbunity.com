@@ -16,5 +16,7 @@ Merb::Config.use do |c|
 end
  
 Merb::BootLoader.before_app_loads do
-  Merb.push_path(:dm_extensions, Merb.root / "lib", "dm/**/*.rb")
+  Merb.push_path(:dm_extensions, Merb.root / "lib" / "dm", "/**/*.rb")
+  Dir[Merb.dir_for(:dm_extensions) / "**/*.rb"].each{|f| require f}
+  
 end

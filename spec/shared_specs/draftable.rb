@@ -1,4 +1,3 @@
-require 'ruby-debug'
 describe "a draftable resource", :shared => true do
   
   before(:each) do
