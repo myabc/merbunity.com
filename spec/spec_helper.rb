@@ -13,7 +13,6 @@ require "spec" # Satisfies Autotest and anyone else not using the Rake tasks
 Merb::BootLoader.before_app_loads do
   require 'faker'
   require 'machinist'
-  require 'machinist/adapters/datamapper'
 end
 
 # this loads all plugins required in your init file so don't add them
