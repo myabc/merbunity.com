@@ -2,15 +2,15 @@
   %p.meta
     - if tutorial.published?
       = time_format(tutorial.published_on)
-    - else 
+    - else
       Status:
       = tutorial.published_status
-    | 
+    |
     Author:
     = tutorial.owner.login
     - if tutorial.published?
       |
-      Publisher: 
+      Publisher:
       = tutorial.publisher.login
   .description
     = formatted(tutorial.description)

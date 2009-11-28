@@ -1,14 +1,14 @@
 %h3.title= link_to screencast.title, url(:screencast, screencast)
 %p.type.screencast Screencast
 %p.summary= (formatted(screencast.description) || "").truncate(200)
-%p.credit 
+%p.credit
   Author:
   = screencast.owner.login
   |
   - if screencast.published?
-    Published: 
+    Published:
     = time_format(screencast.published_on)
-  - else 
+  - else
     - for_publishers do
       Status:
       = screencast.published_status

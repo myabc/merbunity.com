@@ -1,6 +1,6 @@
 module Merb
     module ScreencastsHelper
-      
+
       def section_menu_items
         items ||= []
         items << ["New",          url(:new_screencast)]
@@ -11,6 +11,6 @@ module Merb
         end
         items
       end
-      
+
     end
 end

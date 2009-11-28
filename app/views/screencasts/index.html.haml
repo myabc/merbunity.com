@@ -5,7 +5,7 @@
 
 -if @screencasts.empty?
   .note
-    There are no published screencasts.  Why not 
+    There are no published screencasts.  Why not
     = link_to "make one", url(:new_screencast)
 - else
   = partial :summary, :with => @screencasts, :as => "screencast"

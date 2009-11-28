@@ -1,6 +1,6 @@
 = form :action => url(:login), :id => "login" do
   %p= text_field      :name => "email",       :label => "Email"
-  %p= password_field  :name => "password",    :label => "Password"  
+  %p= password_field  :name => "password",    :label => "Password"
   %p
     = check_box :name => "remember_me", :id => "remember_me"
     %label{:class => "inline", :for => "remember_me"} Remember Me

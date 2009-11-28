@@ -2,15 +2,15 @@
   %p.meta
     - if screencast.published?
       = time_format(screencast.published_on)
-    - else 
+    - else
       Status:
       = screencast.published_status
-    | 
+    |
     Author:
     = screencast.owner.login
     - if screencast.published?
       |
-      Publisher: 
+      Publisher:
       = screencast.publisher.login
   .description
     = formatted(screencast.description)
@@ -31,10 +31,3 @@
           Waiting to be published
       - else
         = publish_button(url(:publish_screencast, screencast))
-        
-
-
-        
-        
-    
-  

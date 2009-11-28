@@ -5,7 +5,7 @@
 .errors
   = error_messages_for @tutorial
 
-= form_for @tutorial, :action => url(:tutorial, @tutorial) do 
+= form_for @tutorial, :action => url(:tutorial, @tutorial) do
   =partial :form, :with => @tutorial, :as => "tutorial"
 
 = link_to "Cancel and Return", url(:tutorial, @tutorial)

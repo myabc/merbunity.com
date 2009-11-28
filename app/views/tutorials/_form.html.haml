@@ -1,19 +1,19 @@
-.field 
+.field
   = text_field       :title,         :label => "Title", :class => "title"
 %p.note
-  You can use 
-  = link_to "textile markup", "http://hobix.com/textile/quick.html", :target => "_blank" 
+  You can use
+  = link_to "textile markup", "http://hobix.com/textile/quick.html", :target => "_blank"
   for your tutorial.
 
-.field 
+.field
   = preserve(text_area(:description,   :label => "Description", :class => "description"))
- 
-.field 
+
+.field
   %label{:for => "tutorial_body"} Detail
   =preserve(text_area(:body, :class => "body"))
 
 - unless @tutorial.new_record? || @tutorial.draft?
   = check_box :name => "save_as_draft", :boolean => "true", :label => {:title => "Save as Draft?", :class => "inline"}
-        
-.field 
+
+.field
   = submit "Save"

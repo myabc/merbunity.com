@@ -1,8 +1,8 @@
 !!!
 %html{html_attrs}
   %head
-    %title 
-      Merbunity 
+    %title
+      Merbunity
       = page_title
     %meta{ "http-equiv" => "content-type", :content => "text/html; charset=utf-8"}
     %meta{ :name => "verify-v1", :content => "U6KOSneP6ZP651Ce6SKLHUpUhGHYoU1sfH4+bzVwDLc=" }
@@ -11,21 +11,21 @@
     = js_include_tag "chili/jquery.chili-2.0"
     = js_include_tag "application"
     %script
-      ChiliBook.recipeFolder     = "/javascripts/chili/";  
+      ChiliBook.recipeFolder     = "/javascripts/chili/";
       ChiliBook.stylesheetFolder = "/javascripts/chili_old/css/";
-      
+
     - if thrown_content? :feed_url
       %link{ :href => catch_content(:feed_url), :rel => "alternate", :title => "ATOM", :type => "application/atom+xml"}
-      
+
   %body
     #header
-      %h1 
+      %h1
         %a{:href => "/", :title => "Return to home"}
           Merbunity
 
       %h2.tagline A Merb Community
       %p.tagline News, projects and tutorials devoted to the Merb web framework
-      = partial "shared/people/login_box"  
+      = partial "shared/people/login_box"
 
     #content
       #action_content
@@ -33,11 +33,11 @@
         %ul#sponsors
           %li#engineYard= link_to("Engine Yard", "http://engineyard.com")
           %li#ivey= link_to("Ivey & Brown",  "http://iveyandbrown.com/?merbunity")
-          
+
         -if thrown_content? :for_side
           = catch_content(:for_side)
-      #content_box  
-        - if thrown_content? :for_header        
+      #content_box
+        - if thrown_content? :for_header
           %h1= catch_content :for_header
         -if thrown_content? :for_object_menu
           =catch_content :for_object_menu
@@ -45,26 +45,26 @@
           - flash_type = flash.keys.sort.first
           %div{:class => "flash #{flash_type}"}
             = flash[flash_type]
-            
+
         = catch_content :for_layout
       %br.clear
-      
+
     #footer
       %h1 Copyright & Credits
       %p
         All contents copyright it’s original authors.
         %br/
-        Site by 
+        Site by
         = link_to "Daniel Neighman", "http://hassox.blogspot.com", :target => "_blank"
-        | Web design by 
+        | Web design by
         =link_to "Luke Sutton", "http://mr-eel.com", :target => "_blank"
-        
+
       %h1 Help & Legal
       %p
         =link_to "Terms of Service", url(:tos)
         =link_to "FAQ", url(:faq)
         =link_to "Feedback", url(:new_feedback)
-        
+
     :plain
       <script type="text/javascript">
         var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -75,4 +75,3 @@
         pageTracker._initData();
         pageTracker._trackPageview();
       </script>
-      

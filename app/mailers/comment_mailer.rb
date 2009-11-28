@@ -7,5 +7,5 @@ class CommentMailer < Merb::MailController
     @url = params[:url]
     render_mail :text => :comment_notification
   end
-  
+
 end

@@ -2,5 +2,5 @@
 %p.summary= formatted(news_item.description)
 %p.credit
   = time_format news_item.created_at
-  | Reporter: 
+  | Reporter:
   = news_item.owner.login

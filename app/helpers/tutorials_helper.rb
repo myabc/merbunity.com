@@ -1,6 +1,6 @@
 module Merb
   module TutorialsHelper
-    
+
     def section_menu_items
       items ||= []
       items << ["New",          url(:new_tutorial)]

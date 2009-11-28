@@ -8,17 +8,17 @@ class Screencast
 
   # Commentable stuff ----------- here in anticipation of snoflake schema style polymorphism
   has n,  :commentable_screencasts, :class_name => "CommentableScreencasts", :child_key => [:screencast_id]
-  
-  has n,  :comments, 
-          :through => :commentable_screencasts, 
+
+  has n,  :comments,
+          :through => :commentable_screencasts,
           :class_name => "Comment",
           :child_key  => [:screencast_id],
           :remote_relationship_name => :comment,
           Screencast.commentable_screencasts.comment.status => "published"
-          
-  has n,  :pending_comments, 
-          :through => :commentable_screencasts, 
-          :class_name => "Comment", 
+
+  has n,  :pending_comments,
+          :through => :commentable_screencasts,
+          :class_name => "Comment",
           :child_key  => [:screencast_id],
           :remote_relationship_name => :comment,
           Screencast.commentable_screencasts.comment.status => "pending"
@@ -68,8 +68,8 @@ class Screencast
   def full_path
     file_path / filename
   end
-  
-  private 
+
+  private
   def delete_associated_file!
     FileUtils.rm(full_path) if File.file?(full_path)
   end
@@ -102,7 +102,7 @@ class Screencast
       return [false, "Only Video files are allowed"]    if !uploaded_file.blank? && self.content_type !~ /video/
     end
     true
-  end  
+  end
 
 end
 end

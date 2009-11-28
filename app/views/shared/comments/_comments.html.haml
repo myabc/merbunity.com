@@ -1,11 +1,11 @@
 #comments
   %h3= comment_page_heading
   = partial "shared/comments/detail", :with => comments, :as => "comment"
-  
+
   - when_logged_in do
     %p
       = partial "shared/comments/form", :with => Comment.new, :as => "comment", :comment_url => @comments_url
-    
+
   - when_not_logged_in do
     %p
       = link_to "Sign in", url(:login)

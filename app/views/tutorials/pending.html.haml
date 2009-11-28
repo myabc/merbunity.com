@@ -1,10 +1,10 @@
-- throw_content :for_header, @page_header.to_s 
+- throw_content :for_header, @page_header.to_s
 - page_title "Pending Tutorials"
 
 .content_description
   %p{:class => "note"}
     These tutorials are waiting to be published by a person in the community that is a publisher.
-    
+
 - if @tutorials.empty?
   .note
     There are no Pending Tutorials.  Why not

@@ -1,20 +1,20 @@
 - throw_content :for_header, "Welcome"
 - throw_content :for_atom_link, atom_link(absolute_url(:controller => "welcome", :action => "index", :format => :atom))
 - throw_content :feed_url, "http://feeds.feedburner.com/Merbunity-Recent"
-      
+
 %div#what
   %h2 Merb Camp
   %p
     = image_tag 'merb-camp.png'
     %p
       MerbCamp is the first official gathering for the
-      = link_to  "Merb", "http://merbivore.com" 
-      community.  The conference will take place in sunny San Diego on October 11 - 12, on the campus of UCSD, the home of 
+      = link_to  "Merb", "http://merbivore.com"
+      community.  The conference will take place in sunny San Diego on October 11 - 12, on the campus of UCSD, the home of
       = link_to "San Diego Ruby.", "http://sdruby.com/"
     %p
-      Read all about it at the official 
+      Read all about it at the official
       =link_to "Merb Camp Site", "http://merbcamp.com/"
-  
+
 
 %div#latestNews
   %h2 News
@@ -22,15 +22,14 @@
     %h3= news_item.title
     %p.credit
       = time_format news_item.created_at
-      | Reporter: 
+      | Reporter:
       = news_item.owner.login
     %p.summary= news_item.description
     %p.readMore= link_to "Read More…", url(:news, news_item), :class => "more"
-  
+
 
 
 %div#latestAdditions
   %h2 Latest Additions
   - for item in @recent_items
     = partial "#{collection_named_route_for(item)}/summary", :with => item, :as => item.class.name.snake_case
-  

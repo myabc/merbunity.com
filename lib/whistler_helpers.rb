@@ -1,14 +1,14 @@
 module Merbunity
   module WhistlerHelpers
     module DataMapper
-    
+
       def self.included(base)
         base.send(:include, InstanceMethods)
         base.send(:extend, ClassMethods)
       end
-    
+
       module ClassMethods
-      
+
         def whistler_properties(*props)
           before :save, :whistle if @_whistler_properties.nil?
           @_whistler_properties = props.flatten.uniq
@@ -17,9 +17,9 @@ module Merbunity
         def get_whistler_properties
           @_whistler_properties
         end
-      
+
       end
-    
+
       module InstanceMethods
         private
         def whistle
@@ -29,7 +29,7 @@ module Merbunity
           end
         end
       end
-      
+
     end
   end
 end

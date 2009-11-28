@@ -53,14 +53,14 @@ require 'merb-core/tasks/merb'
 include FileUtils
 
 init_env = ENV['MERB_ENV'] || 'development'
-log_file = Merb.log_path / 'rake.log' 
+log_file = Merb.log_path / 'rake.log'
 
-Merb.load_dependencies(:environment => init_env)    
+Merb.load_dependencies(:environment => init_env)
 
 require 'merb_activerecord'
 
 # # # Get Merb plugins and dependencies
-Merb::Plugins.rakefiles.each {|r| require r } 
+Merb::Plugins.rakefiles.each {|r| require r }
 
 tasks_path = File.join(File.dirname(__FILE__), "lib", "tasks")
 rake_files = Dir["#{tasks_path}/*.rb"]
@@ -81,10 +81,10 @@ namespace :merbunity do
       end
       require 'spec/spec_helpers/valid_hashes'
       # require 'spec/authenticated_system_spec_helper'
-      require 'spec/person_spec_helper'  
-      include PersonSpecHelper  
+      require 'spec/person_spec_helper'
+      include PersonSpecHelper
       # DataMapper::Base.auto_migrate!
-      
+
       p = Person.new(valid_person_hash)
       p.login = "person"
       p.email = "person@merbunity.com"
@@ -93,7 +93,7 @@ namespace :merbunity do
       p.save
       p.activate
       puts "Created person"
-          
+
       p = Person.new(valid_person_hash)
       p.login = "publisher"
       p.email = "publisher@merbunity.com"
@@ -103,7 +103,7 @@ namespace :merbunity do
       p.activate
       p.make_publisher!
       puts "Created publisher"
-          
+
       p = Person.new(valid_person_hash)
       p.login = "admin"
       p.email = "admin@merbunity.com"
@@ -111,10 +111,10 @@ namespace :merbunity do
       p.password_confirmation = "password"
       p.save
       p.activate
-      p.make_admin!    
+      p.make_admin!
       puts "Created admin"
     end
-  
+
     desc "Wipe the db's"
     task :reset => :merb_env do
       DataMapper::Base.auto_migrate!

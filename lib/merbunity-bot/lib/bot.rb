@@ -107,7 +107,7 @@ class Bot
 
     rcpts.each do |rcpt|
       msg = Jabber::Message.new(rcpt, "")
-      
+
       # Create the html part
       h = REXML::Element::new("html")
       h.add_namespace('http://jabber.org/protocol/xhtml-im')
@@ -125,7 +125,7 @@ class Bot
 
       # Add the html element to the message
       msg.add_element(h)
-      
+
       msg.type = :chat
       @client.send(msg)
     end

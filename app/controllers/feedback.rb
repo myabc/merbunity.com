@@ -1,13 +1,13 @@
 class Feedback < Application
-  
+
   def new
     only_provides :html
     render
   end
-  
+
   def create
     params[:person] = current_person if logged_in?
-    FeedbackMailer.dispatch_and_deliver(:feedback, 
+    FeedbackMailer.dispatch_and_deliver(:feedback,
       {
         :from     => "feedback@merbunity.com",
         :to       => "dneighman@gmail.com",
@@ -19,5 +19,5 @@ class Feedback < Application
     flash[:notice] = "Thankyou. We value your feedback :)"
     redirect "/"
   end
-  
+
 end

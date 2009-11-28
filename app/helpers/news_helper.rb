@@ -1,6 +1,6 @@
 module Merb
   module NewsHelper
-    
+
     def section_menu_items
       items ||= []
       if logged_in?

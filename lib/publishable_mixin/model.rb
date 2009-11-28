@@ -1,16 +1,16 @@
 module Merbunity
   module Publishable
-    
+
     def self.publishables_to_be_publisher(val = nil)
       @publishables_to_be_publisher ||= 3
       @publishables_to_be_publisher = val unless val.nil?
       @publishables_to_be_publisher
     end
     # PUBLISHABLES_TO_BE_PUBLISHER = 3
-    
+
     def self.included(base)
       base.class_eval do
-        
+
         property        :published_on,          DateTime                      unless self.properties.any?{|p| p.name == :published_on }
         property        :published_status,      String, :default => "Draft"   unless self.properties.any?{|p| p.name == :published_status }
         property        :created_at,            DateTime, :lazy => false      unless self.properties.any?{|p| p.name == :created_at }
@@ -19,49 +19,49 @@ module Merbunity
         property        :publisher_id,          Integer
         property        :comment_count,         Integer,  :nullable => false, :default => 0
         property        :pending_comment_count, Integer,  :nullable => false, :default => 0
-        
+
         # before_create   :set_initial_published_status
-        
+
         belongs_to :owner,     :class_name => "Person", :child_key => [:owner_id]
         belongs_to :publisher, :class_name => "Person", :child_key => [:publisher_id]
 
         before :save, :set_publishable_defaults
-        
+
         def self.status_values
           @status_values ||= {:published => "Published", :pending => "Pending", :draft => "Draft"}
         end
- 
+
         def self.pending(opts={})
           the_opts = {:order => [:created_at.desc]}.merge!(opts).merge!(:published_status => status_values[:pending])
           Merb.logger.info the_opts.inspect
           self.all(the_opts)
         end
-        
+
         def self.published(opts={})
           self.all({:order => [:published_on.desc]}.merge(opts).merge(:published_status => status_values[:published]))
         end
-        
+
         def self.find_published(id)
           self.first(:id => id, :published_status => status_values[:published])
-        end         
-        
-        def self.drafts(opts = {}) 
+        end
+
+        def self.drafts(opts = {})
           # self.all({:order => "created_at DESC"}.merge!(opts).merge!(:published_on => nil, :draft_status => true))
           self.all({:order => [:created_at.desc]}.merge!(opts).merge!(:published_status => status_values[:draft]))
         end
-        
+
         def self.published_count(opts = {})
           self.count(opts.merge!(:published_status => status_values[:published]))
         end
-        
+
         def self.publishables_to_be_publisher(val = nil)
           @publishables_to_be_publisher ||= 3
           @publishables_to_be_publisher = val unless val.nil?
           @publishables_to_be_publisher
         end
-        
+
       end
-      
+
       base.send(:include, InstanceMethods)
       Person.class_eval <<-Ruby, __FILE__, __LINE__
         def pending_#{bn = base.name.snake_case.pluralize}
@@ -69,23 +69,23 @@ module Merbunity
 
           @_pending#{bn}
         end
-        
+
         def #{bn}
           @_#{bn} ||= #{base.name}.all(:owner_id => self.id)
         end
-        
+
         def published_#{bn}
           @_published_#{bn} ||= #{base.name}.published(:owner_id => self.id)
         end
-        
+
         def draft_#{bn}
           @_draft_#{bn} ||= #{base.name}.drafts(:owner_id => self.id)
-        end        
+        end
       Ruby
-      
+
     end
-    
-    module InstanceMethods      
+
+    module InstanceMethods
      def pending?
        @published_status == self.class.status_values[:pending]
      end
@@ -93,7 +93,7 @@ module Merbunity
      def published?
        @published_status == self.class.status_values[:published]
      end
-     
+
      def draft?
        @published_status ||= self.class.status_values[:draft]
        @published_status == self.class.status_values[:draft]
@@ -105,8 +105,8 @@ module Merbunity
          save
        end
      end
-     
-     private 
+
+     private
      def set_publish_data(the_publisher)
        if the_publisher.publisher?
          # This is being published for realz
@@ -115,7 +115,7 @@ module Merbunity
            self.publisher = the_publisher
            self.owner.published_item_count = (self.owner.published_item_count || 0) + 1
            self.owner.save
-           
+
            # make the owner a publisher if they have published enough articles
            self.owner.make_publisher! if !self.owner.publisher? && self.owner.published_item_count >= self.class.publishables_to_be_publisher
            self.published_status = self.class.status_values[:published]
@@ -133,7 +133,7 @@ module Merbunity
        self.published_status = self.class.status_values[:draft]
        # self.send(:set_publish_data, self.owner) if self.owner.publisher?
      end
-     
+
      # Shoudln't need this :(
      def set_publishable_defaults
        self.published_status ||= self.class.status_values[:draft]

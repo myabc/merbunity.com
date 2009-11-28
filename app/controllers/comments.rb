@@ -1,21 +1,21 @@
 class Comments < Application
-  
+
   before :login_required
-  
+
   after :send_notification, :if => lambda{|c| c.send(:logged_in?) }
-  
+
   def create(id, klass, comment)
     klass = Object.const_get(klass)
     @obj = klass.get(id)
     meth =      @obj.published? ? :comments : :pending_comments
     inc_meth =  @obj.published? ? :comment_count : :pending_comment_count
-    
+
     @comment = Comment.new( comment )
     @comment.owner = current_person
     @comment.status = (@obj.published? ? "published" : "pending")
     @comment.commentable_class = @obj.class
     @comment.save
-    
+
     return redirect(request.referer) if @comment.new_record?
 
     case @obj
@@ -29,8 +29,8 @@ class Comments < Application
 
     @obj.send(:"#{inc_meth}=", (@obj.send(inc_meth).next))
     @obj.save
-    
-    
+
+
     flash[:notice] = "Your comment has joined the discussion" unless @obj.new_record?
     case content_type
     when :html
@@ -39,8 +39,8 @@ class Comments < Application
       display @comment, :show
     end
   end
-  
-  
+
+
   private
   def send_notification
     subject = "#{current_person.login} has commented on your #{@obj.class}"
@@ -56,6 +56,6 @@ class Comments < Application
                                                               :current_person => current_person,
                                                               :url => absolute_url(named_route_for(@obj), @obj))
   end
-  
-  
+
+
 end

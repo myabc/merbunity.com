@@ -15,20 +15,20 @@ class Tutorial
 
   # Commentable stuff ----------- here in anticipation of snoflake schema style polymorphism
   has n,  :commentable_tutorials, :class_name => "CommentableTutorials", :child_key => [:tutorial_id]
-  
-  has n,  :comments, 
-          :through => :commentable_tutorials, 
+
+  has n,  :comments,
+          :through => :commentable_tutorials,
           :class_name => "Comment",
           :child_key  => [:tutorial_id],
           :remote_relationship_name => :comment,
           Tutorial.commentable_tutorials.comment.status => "published"
-          
-  has n,  :pending_comments, 
-          :through => :commentable_tutorials, 
-          :class_name => "Comment", 
+
+  has n,  :pending_comments,
+          :through => :commentable_tutorials,
+          :class_name => "Comment",
           :child_key  => [:tutorial_id],
           :remote_relationship_name => :comment,
           Tutorial.commentable_tutorials.comment.status => "pending"
-          
+
 end
 end

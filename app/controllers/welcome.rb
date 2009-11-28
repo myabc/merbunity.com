@@ -1,5 +1,5 @@
 class Welcome < Application
-  
+
   def index
     provides :atom
     case content_type
@@ -16,5 +16,5 @@ class Welcome < Application
 
     render
   end
-  
+
 end

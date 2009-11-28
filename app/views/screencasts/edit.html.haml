@@ -5,7 +5,7 @@
 .errors
   = error_messages_for @screencast
 
-= form_for @screencast, :action => url(:screencast, @screencast), :multipart => true do 
+= form_for @screencast, :action => url(:screencast, @screencast), :multipart => true do
   =partial :form, :with => @screencast, :as => "screencast"
 
 = link_to "Cancel and Return", url(:screencast, @screencast)
