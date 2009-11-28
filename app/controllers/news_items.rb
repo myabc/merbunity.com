@@ -1,12 +1,12 @@
 class NewsItems < Articles
-  
-  
+
+
   # GET /news_items
   def index
     @articles = NewsItem.all
     render
   end
-  
+
   # GET /news_items/drafts
   def drafts
     @articles = NewsItem.unpublished
@@ -32,7 +32,7 @@ class NewsItems < Articles
       res = @article.save
       @article.publish! if res
     end
-    
+
     if res
       if @draft
         redirect resource(@article, :draft), :message => {:notice => "News Draft Created"}
@@ -42,7 +42,7 @@ class NewsItems < Articles
     else
       message[:error] = "News Item not created"
       self.status = Conflict.status
-      render :new 
+      render :new
     end
   end
 
@@ -57,7 +57,7 @@ class NewsItems < Articles
       result = @article.save
       @article.publish! if result
     end
-      
+
     if result
       if @draft
         redirect resource(@article, :draft), :message => {:notice => "Draft Updated Successfully"}
@@ -76,7 +76,7 @@ class NewsItems < Articles
     @article.destroy
     redirect resource(:news_items)
   end
-  
+
   private
   def find_member
     @article = NewsItem.first(:slug => params[:slug]) || (@draft = true; NewsItem.unpublished.first(:slug => params[:slug]))

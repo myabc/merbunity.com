@@ -4,10 +4,10 @@
     %title Rubunity
     = css_include_tag(:screen)
     = js_include_tag(:jquery, :application)
-    
+
   %body{:id => @page_id}
     %h1#logo Rubunity
-    
+
     %div#wrapper
       %ul#navigation
         %li= main_nav_link("Home", url(:home))
@@ -21,14 +21,14 @@
         - else
           %li#sign-up-link= main_nav_link("Sign-up", url(:signup))
           %li#login-link= main_nav_link("Login", url(:login))
-      
+
       %div#side
         %h2 Feature
         %p
-          Enthusiastically generate empowered technology and holistic total 
-          linkage. Assertively redefine resource-leveling solutions via 
+          Enthusiastically generate empowered technology and holistic total
+          linkage. Assertively redefine resource-leveling solutions via
           accurate potentialities.
-        
+
         %h2 Sponsors
         %ul#sponsors
           %li
@@ -37,12 +37,12 @@
           %li
             %a{:href => "http://iveyandbrown.com/?merbunity", :title => "Specializing in agile software development using Ruby, Merb, and Ruby on Rails."}
               = image_tag("sponsors/ivey-brown.gif", :alt => "The Ivey & brown logo.")
-        
+
       %div#main
         %h1#page-title
           %span= @page_title
         = catch_content(:for_layout)
-        
+
       %div#footer
         %h1 Help and Legal
         %p#credits
@@ -55,4 +55,3 @@
           Please read our Terms of Service. <br/>
           If you need help there is our FAQ. <br/>
           To give us feedback, please use this form.
-          

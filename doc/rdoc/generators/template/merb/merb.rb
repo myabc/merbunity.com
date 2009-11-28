@@ -228,7 +228,7 @@ HTML
 
 
 #### This is not used but kept for historical purposes
-########################## Source code ########################## 
+########################## Source code ##########################
 # Separate page onlye
 
 SRC_PAGE = <<HTML
@@ -285,38 +285,38 @@ METHOD_INDEX = FILE_INDEX
 
 INDEX = <<HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="description" content="A nifty way to interact with the Merb API" />
- 	<meta name="author" content="created by Brian Chamberlain. You can contact me using 'blchamberlain' on the gmail." />
-	<meta name="keywords" content="merb, ruby, purple, monkey, dishwasher" />
-	<title>Merb | %title% API Documentation</title>
-	<link rel="stylesheet" href="http://merbivore.com/documentation/stylesheet.css" type="text/css" media="screen" />    
-	<script type="text/javascript" src="http://merbivore.com/documentation/prototype.js" ></script>
-	<script type="text/javascript" src="http://merbivore.com/documentation/api_grease.js" ></script>
+  <meta name="author" content="created by Brian Chamberlain. You can contact me using 'blchamberlain' on the gmail." />
+ <meta name="keywords" content="merb, ruby, purple, monkey, dishwasher" />
+ <title>Merb | %title% API Documentation</title>
+ <link rel="stylesheet" href="http://merbivore.com/documentation/stylesheet.css" type="text/css" media="screen" />
+ <script type="text/javascript" src="http://merbivore.com/documentation/prototype.js" ></script>
+ <script type="text/javascript" src="http://merbivore.com/documentation/api_grease.js" ></script>
 </head>
 <body onload="setupPage();">
 <ul id="groupType">
-	<li>methods</li>
-	<li>classes</li>
-	<li>files</li>
-	<li id="loadingStatus" style="display:none;">	loading...</li>
-</ul>	
+ <li>methods</li>
+ <li>classes</li>
+ <li>files</li>
+ <li id="loadingStatus" style="display:none;">	loading...</li>
+</ul>
 <div id="listFrame">
-	<div id="listSearch">
-		<form id="searchForm" method="get" action="#" onsubmit="return false">
-			<input type="text" name="searchText" id="searchTextField" size="30" autocomplete="off" />
-	 	</form>
-	</div>
-	<div id="listScroller">
-	    Loading via ajax... this could take a sec.
-	</div>	
+ <div id="listSearch">
+  <form id="searchForm" method="get" action="#" onsubmit="return false">
+   <input type="text" name="searchText" id="searchTextField" size="30" autocomplete="off" />
+   </form>
+ </div>
+ <div id="listScroller">
+     Loading via ajax... this could take a sec.
+ </div>
 </div>
 <div id="browserBar">
-	&nbsp;&nbsp;&nbsp;<span id="browserBarInfo">%title% README</span>
+ &nbsp;&nbsp;&nbsp;<span id="browserBarInfo">%title% README</span>
 </div>
 <div id="rdocContent">
   %content%
@@ -324,13 +324,13 @@ INDEX = <<HTML
 <div id="floater">
 <strong>Documentation for %title% </strong><a href="#" onmouseover="$('tips').show();" onmouseout="$('tips').hide();">usage tips</a>
 <div id="tips" style="position:absolute;width:350px;top:15px;right:20px;padding:5px;border:1px solid #333;background-color:#fafafa;display:none;">
-	<p><strong>Some tips</strong> 
-		<ul>
-			<li> Up/Down keys move through the search list</li>
-			<li> Return/enter key loads selected item</li>
-			<li> Want to use this RDOC template for your own project? Check out <br /> http://rubyforge.org/projects/jaxdoc</li>
-		</ul>
-	</p>
+ <p><strong>Some tips</strong>
+  <ul>
+   <li> Up/Down keys move through the search list</li>
+   <li> Return/enter key loads selected item</li>
+   <li> Want to use this RDOC template for your own project? Check out <br /> http://rubyforge.org/projects/jaxdoc</li>
+  </ul>
+ </p>
 </div>
 <div id="blowOutListBox" style="display:none;">&nbsp;</div>
 <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
@@ -348,4 +348,3 @@ API_GREASE_JS = File.read(File.join(File.dirname(__FILE__), 'api_grease.js'))
 PROTOTYPE_JS = File.read(File.join(File.dirname(__FILE__), 'prototype.js'))
 end
 end
-

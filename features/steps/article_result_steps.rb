@@ -24,11 +24,11 @@ Then /^I should see an article$/ do
 end
 
 Then /^I should see that the (.*?) is a draft$/ do |klass|
-  response.should have_selector(".draft")  
+  response.should have_selector(".draft")
 end
 
 Then /^I should not see that the (.*?) is a draft$/ do |klass|
-  response.should_not have_selector(".draft")  
+  response.should_not have_selector(".draft")
 end
 
 Then /^the (.*?) title should (not )?be "(.*?)"$/ do |klass, sense, value|

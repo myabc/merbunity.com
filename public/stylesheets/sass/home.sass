@@ -1,24 +1,24 @@
 /* Home
 #home
   :background-position center top
-  
+
   #logo
     :background-position 0 60px
     :height 175px
-    
+
   #main, #side
     :background no-repeat url(/images/home-bkg.gif)
     :padding-top 65px
     :margin-top 8px
-    
+
   #side
     :background-position right top
-    
-  #main 
+
+  #main
     h1
       :position absolute
       :left -1000em
-    
+
     h2
       :background= !cherry
       :font
@@ -32,30 +32,30 @@
   ul.highlights
     h3
       :font-weight bold
-      
+
     p.meta
       :margin-top 2em
       :color= !dark_grey
-      
+
       strong
         :text-transform uppercase
         :display block
-      
+
   /* Tweak hightlights when JS is present
   &.javascript
     #wrapper
       :padding-top 18.4em
       :position relative
-  
+
     #navigation
       :position absolute
       :left 0
       :top 0
-    
+
     h2.highlights
       :position absolute
       :left -1000em
-    
+
     ul.highlights
       :border-bottom 1px solid #cccccc
       :background white
@@ -66,13 +66,13 @@
       :left 0
       :top 2.4em
       :overflow hidden
-      
+
       h3
         :font-size 3.5em
         :color= !dark_grey
         :line-height 0.85
         :width= (7 * !column) + (6 * !margin)
-        
+
       p.link a
         :width 100%
         :height 16em
@@ -82,7 +82,7 @@
         /* Hide text
         :text-indent -1000em
         :letter-spacing -1000em
-        
+
       li
         :background white 80px 2em no-repeat
         :padding-left= (3 * !column) + (4 * !margin)
@@ -92,25 +92,25 @@
         :position absolute
         :left 0
         :top 0
-      
+
       li.tutorial
         :background-image url(/images/highlights/tutorial.gif)
-        
+
       li.screencast
         :background-image url(/images/highlights/screencast.gif)
-          
+
       li.event
         :background-image url(/images/highlights/event.gif)
-        
+
       li.person
         :background-image url(/images/highlights/person.gif)
-        
+
       li.news
         :background-image url(/images/highlights/news-item.gif)
-        
+
       li.site
         :background-image url(/images/highlights/site.gif)
-  
+
   /* Latest Additions
   .addition
     :background 42px 0 no-repeat
@@ -120,36 +120,36 @@
     :width= (7 * !column) + (5 * !margin)
     :float left
     :position relative
-    
+
     h3
       :font
         :size 1.7em
         :weight bold
       :margin-bottom 0.3em
-        
+
     .type, .meta
       :color= !mid_grey
       :margin 0
       :position absolute
       :left= !column + (2 * !margin)
-      
+
     .type
       :font
         :weight bold
         :size 1.2em
       :top 0
-      
+
     .meta
       :padding-bottom 0.2em
       :width= (7 * !column) + (5 * !margin)
       :border-bottom 1px solid #cccccc
       :top 1.5em
-      
+
   .news
     :background-image url(/images/icon/news-item.gif)
-    
+
   .person
     :background-image url(/images/icon/person.gif)
-    
+
   .site
     :background-image url(/images/icon/site.gif)

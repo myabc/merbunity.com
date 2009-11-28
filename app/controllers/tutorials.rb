@@ -1,17 +1,17 @@
-class Tutorials < Articles  
-  
+class Tutorials < Articles
+
   # GET /tutorials
   def index
     @articles = Tutorial.all
     render
   end
-  
+
   # GET /tutorials/drafts
   def drafts
     @articles = NewsItem.unpublished
     render :index
   end
-  
+
 
   # GET /tutorials/new
   def new(tutorial = {})
@@ -19,7 +19,7 @@ class Tutorials < Articles
     @article = Tutorial.new(tutorial)
     render
   end
-  
+
   # POST /news_items
   def create(tutorial)
     @article = Tutorial.new(tutorial)
@@ -32,7 +32,7 @@ class Tutorials < Articles
       res = @article.save
       @article.publish! if res
     end
-    
+
     if res
       if @draft
         redirect resource(@article, :draft), :message => {:notice => "Tutorial Draft Created"}
@@ -42,7 +42,7 @@ class Tutorials < Articles
     else
       message[:error] = "Tutorial not created"
       self.status = Conflict.status
-      render :new 
+      render :new
     end
   end
 
@@ -56,7 +56,7 @@ class Tutorials < Articles
       result = @article.save
       @article.publish! if result
     end
-      
+
     if result
       if @draft
         redirect resource(@article, :draft), :message => {:notice => "Draft Updated Successfully"}
@@ -75,7 +75,7 @@ class Tutorials < Articles
     @article.destroy
     redirect resource(:tutorials)
   end
-  
+
   private
   def find_member
     @article = Tutorial.first(:slug => params[:slug]) || (@draft = true; Tutorial.unpublished.first(:slug => params[:slug]))

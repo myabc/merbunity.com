@@ -15,4 +15,4 @@ require "merb_cucumber/helpers/datamapper"
 # Uncomment if you want transactional fixtures
 # Merb::Test::World::Base.use_transactional_fixtures
 
-require File.join(File.dirname(__FILE__), "../spec/spec_helper")    
+require File.join(File.dirname(__FILE__), "../spec/spec_helper")

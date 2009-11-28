@@ -30,7 +30,7 @@ Then /^I should see the page (.*?)$/ do |url|
   URI.parse(response.url).path.should == url
 end
 
-Then /^I should be forbidden$/ do 
+Then /^I should be forbidden$/ do
   response.status.should == Merb::Controller::Forbidden.status
 end
 

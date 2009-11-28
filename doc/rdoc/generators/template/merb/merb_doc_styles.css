@@ -1,8 +1,8 @@
 html, body {
-	padding:10px 0px 0px 5px;
-	margin: 0px;
-	font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif;
-	font-size: 14px;
+ padding:10px 0px 0px 5px;
+ margin: 0px;
+ font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+ font-size: 14px;
 }
 
 body {
@@ -39,177 +39,177 @@ td, p {
 
 /*holds the whole searching/drill down stuff */
 #listFrame{
-	float:left;
-	padding: 2px;
-	width: 350px;
-	background-color: #868686;
-	border: 1px solid #999;
-	border-right: none;
+ float:left;
+ padding: 2px;
+ width: 350px;
+ background-color: #868686;
+ border: 1px solid #999;
+ border-right: none;
 }
 
 #browserBar{
-	height: 25px;
-	padding:11px 0px 0px 0px;
-	margin:0px;
-	background-color: #868686;	
+ height: 25px;
+ padding:11px 0px 0px 0px;
+ margin:0px;
+ background-color: #868686;
   border-top: 1px solid #999;
-	color: white;
+ color: white;
 }
 
 #browserBar a{
-	text-decoration: none;
+ text-decoration: none;
 }
 
 .button{
-	text-decoration: none;
-	padding:3px 8px 3px 8px;
-	border: 1px solid #66a;
-	background-color: #ccf;
-	color: #66a;
+ text-decoration: none;
+ padding:3px 8px 3px 8px;
+ border: 1px solid #66a;
+ background-color: #ccf;
+ color: #66a;
 }
 
 .buttonInactive{
-	text-decoration: none;
-	padding:3px 8px 3px 8px;
-	border: 1px solid #999;
-	background-color: #ccc;
-	color: #999;
+ text-decoration: none;
+ padding:3px 8px 3px 8px;
+ border: 1px solid #999;
+ background-color: #ccc;
+ color: #999;
 }
 
 .miniButton{
-	text-decoration: none;
-	padding:3px 2px 3px 2px;
-	border: 1px solid #66a;
-	background-color: #ccf;
-	color: #66a;
+ text-decoration: none;
+ padding:3px 2px 3px 2px;
+ border: 1px solid #66a;
+ background-color: #ccf;
+ color: #66a;
 }
 
 .miniButtonInactive{
-	text-decoration: none;
-	padding:3px 2px 3px 2px;
-	border: 1px solid #999;
-	background-color: #ccc;
-	color: #999;
+ text-decoration: none;
+ padding:3px 2px 3px 2px;
+ border: 1px solid #999;
+ background-color: #ccc;
+ color: #999;
 }
 
 #blowOutListBox{
-	position: absolute;
-	top: 63px;
-	left: 399px;
-	border: 1px solid #999;
-	padding: 0px;
-	margin: 0px;
-	z-index: 1000;
-	background-color: #ccf;
-	color: #66a;
+ position: absolute;
+ top: 63px;
+ left: 399px;
+ border: 1px solid #999;
+ padding: 0px;
+ margin: 0px;
+ z-index: 1000;
+ background-color: #ccf;
+ color: #66a;
 }
 
 #blowOutListBox ul{
-	list-style-type:none;
-	padding: 0px;
-	margin: 0px;
+ list-style-type:none;
+ padding: 0px;
+ margin: 0px;
 }
 
 #blowOutListBox ul li{
-	padding: 3px;
-	margin: 0px;
-	line-height: 1.1em;
-	
+ padding: 3px;
+ margin: 0px;
+ line-height: 1.1em;
+
 }
 
 #blowOutListBox ul li a{
-	text-decoration: none;
-	padding: 3px;
+ text-decoration: none;
+ padding: 3px;
 }
 #blowOutListBox ul li a:hover{
-	background-color: #ddf;
+ background-color: #ddf;
 }
 
 /*holds the content for browsing etc... also is the target of method/class/file name clicks */
 #rdocContent{
-	height: 600px;
-	background-color: #fff;
-	border: 1px solid #999;
-	border-left: 0px;
-	padding:5px;
-	overflow: auto;
+ height: 600px;
+ background-color: #fff;
+ border: 1px solid #999;
+ border-left: 0px;
+ padding:5px;
+ overflow: auto;
 }
 
 /*the grouping for methods,files,class,all... i.e. the tabs */
 ul#groupType{
-	list-style-type: none;
-	padding: 0px;
-	padding-left: 5px;
-	margin: 0px;
+ list-style-type: none;
+ padding: 0px;
+ padding-left: 5px;
+ margin: 0px;
 }
 
 ul#groupType li{
   color: white;
-	display:inline;
-	padding: 5px 5px 0px 5px;
-	cursor: pointer;
+ display:inline;
+ padding: 5px 5px 0px 5px;
+ cursor: pointer;
 }
 
 ul#groupType li#loadingStatus{
-	margin: 3px;
-	border: 0px;
-	padding: 3px 3px 6px 3px;
-	color: #666;
+ margin: 3px;
+ border: 0px;
+ padding: 3px 3px 6px 3px;
+ color: #666;
 }
 
 ul#groupType li.activeLi{
   border: 1px solid #999;
-	border-bottom: 0px;
-	background-color: #868686;
-	font-weight: bold;
-	padding-bottom: 1px;
+ border-bottom: 0px;
+ background-color: #868686;
+ font-weight: bold;
+ padding-bottom: 1px;
 }
 
 #listSearch{
-	height: 25px;
-	padding: 3px;
+ height: 25px;
+ padding: 3px;
 }
 
 #listSearch input[type=text]{
-	width: 340px;
-	font-size: 1.2em;
+ width: 340px;
+ font-size: 1.2em;
 }
 
 #listScroller{
-	width: 342px;
-	height: 700px;
-	margin: 3px;
-	background-color: #fcfcfc;
-	border: 1px solid #999;
-	overflow: auto;
+ width: 342px;
+ height: 700px;
+ margin: 3px;
+ background-color: #fcfcfc;
+ border: 1px solid #999;
+ overflow: auto;
 }
 
 #listScroller ul{
-	width: 500px;
-	padding:0px;
-	margin:0px;
-	list-style: none;
+ width: 500px;
+ padding:0px;
+ margin:0px;
+ list-style: none;
 }
 
 #listScroller li{
-	padding: 0px;
-	margin: 0px;
-	display: block;
-	line-height: 1.1em;
+ padding: 0px;
+ margin: 0px;
+ display: block;
+ line-height: 1.1em;
 }
 
 a, h1 a, h2 a, .sectiontitle a, #listScroller a{
   color: #11B716;
   font-weight: bold;
   text-decoration: none;
-	padding: 0px 1px 1px 1px;
-	margin: 3px;
-	font-weight: bold;
+ padding: 0px 1px 1px 1px;
+ margin: 3px;
+ font-weight: bold;
 }
 
 a:hover, h1 a:hover, h2 a:hover, .sectiontitle a:hover, #listScroller a:hover{
-	background-color: #22D716;
-	color: black;
+ background-color: #22D716;
+ color: black;
 }
 
 #browserBar a, .banner a {
@@ -222,14 +222,14 @@ a:hover, h1 a:hover, h2 a:hover, .sectiontitle a:hover, #listScroller a:hover{
 }
 
 #listScroller a.activeA {
-	background-color: #22D716;
-	color: black ;
-	border: 1px solid #ccc;
-	padding: 0px 1px 1px 1px; 
+ background-color: #22D716;
+ color: black ;
+ border: 1px solid #ccc;
+ padding: 0px 1px 1px 1px;
 }
 
 #listScroller small{
-	color: #999;
+ color: #999;
 }
 
 .activeTitle{
@@ -286,7 +286,7 @@ a:hover, h1 a:hover, h2 a:hover, .sectiontitle a:hover, #listScroller a:hover{
   font-size: 28px;
   margin: 20px 0px;
   border-bottom: 2px solid #CCCCCC;
-  
+
 /*  margin-top: 1em;
   margin-bottom: 1em;
   padding: 0.5em;
@@ -380,7 +380,7 @@ h2.title, .method .title {
   color: #7AAD00;
   font-size: 22px;
   margin: 10px 0px;
-  
+
 /*  font-size: large;
   border-bottom: 1px dashed black;
   margin: 0.3em;

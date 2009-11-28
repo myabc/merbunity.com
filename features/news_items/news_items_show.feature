@@ -3,22 +3,22 @@ Feature: View a news item
   Should be able to view a news article
   So that they get benefit from the content on the site
   So that the site is relevant
-  
+
   Scenario: A public visitor views a published news item
     Given the default user exists
     And a published News Item article with slug "foo-bar" and owned by "fred"
     When I go to /news_items/foo-bar
     Then I should see an article
     And the request should be successful
-  
+
   Scenario: A public visitor views a non existent news item
     Given no articles exist
     When I go to /news_items/i-dont-exist
     Then the response should be missing
-  
+
   Scenario: A Logged in user should be able to view the news item
     Given the following users exist:
-      | login   | password | 
+      | login   | password |
       | fred    | sekrit   |
       | barney  | foo      |
     And a published News Item article with slug "a-slug" and owned by "fred"
@@ -26,5 +26,3 @@ Feature: View a news item
     When I go to /news_items/a-slug
     Then I should see an article
     And the request should be successful
-  
-  

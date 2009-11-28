@@ -1,6 +1,6 @@
 class Article
   include DataMapper::Resource
-  
+
   property :id,           Serial
   property :type,         Discriminator
   property :title,        String, :length => 255,     :nullable => false, :unique => true
@@ -11,27 +11,27 @@ class Article
   property :created_on,   Date
   property :updated_at,   DateTime
   property :updated_on,   Date
-  
+
   is_draftable :title, :description, :slug, :body
-  
+
   before(:valid?,   :set_new_slug)
   before(:create,   :set_new_slug)
   before(:create,   :validate_slug)
   after( :create,   :reload)
-  
+
   belongs_to :owner, :class_name => "User"
-  
-  private 
+
+  private
   def set_new_slug
     return unless new_record?
     self.slug ||= title
   end
-  
+
   def validate_slug
     if (s = (self.class.first(:slug => slug) || self.class.unpublished.first(:slug => slug))) && s != self
-      errors.add(:slug, "This slug is already in use") 
+      errors.add(:slug, "This slug is already in use")
     end
   end
-    
-  
+
+
 end

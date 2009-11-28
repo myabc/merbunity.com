@@ -36,7 +36,7 @@ module CustomMatchers
       "expected #{@target.url} to be authenticated but was unauthenticated (401)"
     end
   end
-  
+
   def require_authentication
     BeUnauthenticated.new
   end
