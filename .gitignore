@@ -1,4 +1,6 @@
 test_log
+config/database.yml
+config/secret.txt
 pkg
 pkg/*
 *.log
